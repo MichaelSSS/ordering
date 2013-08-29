@@ -1,0 +1,45 @@
+2013/08/28 15:14:42 [error] [exception.CException] exception 'CException' with message 'Property "CActiveForm.class" is not defined.' in D:\mine\Web\yii\framework\base\CComponent.php:173
+Stack trace:
+#0 D:\mine\Web\yii\framework\web\CWidgetFactory.php(161): CComponent->__set('class', 'wide form')
+#1 D:\mine\Web\yii\framework\web\CBaseController.php(146): CWidgetFactory->createWidget(Object(SiteController), 'CActiveForm', Array)
+#2 D:\mine\Web\yii\framework\web\CBaseController.php(189): CBaseController->createWidget('CActiveForm', Array)
+#3 D:\mine\Web\ordering\protected\views\site\login.php(17): CBaseController->beginWidget('CActiveForm', Array)
+#4 D:\mine\Web\yii\framework\web\CBaseController.php(126): require('D:\mine\Web\ord...')
+#5 D:\mine\Web\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\mine\Web\ord...', Array, true)
+#6 D:\mine\Web\yii\framework\web\CController.php(869): CBaseController->renderFile('D:\mine\Web\ord...', Array, true)
+#7 D:\mine\Web\yii\framework\web\CController.php(782): CController->renderPartial('login', Array, true)
+#8 D:\mine\Web\ordering\protected\controllers\SiteController.php(99): CController->render('login', Array)
+#9 D:\mine\Web\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionLogin()
+#10 D:\mine\Web\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#11 D:\mine\Web\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#12 D:\mine\Web\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#13 D:\mine\Web\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#14 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#15 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#16 D:\mine\Web\ordering\index.php(13): CApplication->run()
+#17 {main}
+REQUEST_URI=/ordering/index.php
+---
+2013/08/29 12:30:23 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'oms.tbl_migration' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `tbl_migration`.
+2013/08/29 15:33:53 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "admin".' in D:\mine\Web\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\mine\Web\yii\framework\web\CController.php(270): CController->missingAction('admin')
+#1 D:\mine\Web\yii\framework\web\CWebApplication.php(282): CController->run('admin')
+#2 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/admin')
+#3 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\mine\Web\ordering\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ordering/index.php?r=site/admin
+HTTP_REFERER=http://mine/ordering/index.php
+---
+2013/08/29 16:25:28 [error] [php] Undefined index: merchandizer (D:\mine\Web\ordering\protected\controllers\SiteController.php:51)
+Stack trace:
+#0 D:\mine\Web\yii\framework\web\CController.php(286): SiteController->runAction()
+#1 D:\mine\Web\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#2 D:\mine\Web\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#3 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#4 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#5 D:\mine\Web\ordering\index.php(13): CWebApplication->run()
+REQUEST_URI=/ordering/index.php
+in D:\mine\Web\ordering\protected\controllers\SiteController.php (51)
+in D:\mine\Web\ordering\index.php (13)

@@ -28,7 +28,22 @@ class AdminController extends Controller
 
     public function actionIndex()
     {
-        echo 'admin page goes here...';
+        $model = new User;
+
+        if( isset($_GET['pageSize']) )
+            $model->currentPageSize = $_GET['pageSize'];
+
+        $fields = new AdminSearchForm('search');
+
+        if( isset($_GET['AdminSearchForm']) ){
+            $fields->attributes = $_GET['AdminSearchForm'];
+
+            if( $fields->validate() )
+                $model->searchCriteria = $fields->getCriteria();
+
+        }                
+        
+        $this->render('index',array('model'=>$model, 'fields'=>$fields));
     }
 
 }

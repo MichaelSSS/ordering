@@ -1,6 +1,6 @@
 <?php
 
-class MerchandizerController extends Controller
+class MerchandiserController extends Controller
 {
     public $defaultAction = 'index';
 
@@ -14,7 +14,7 @@ class MerchandizerController extends Controller
 	{
 		return array(
 			array('allow',
-				'roles'=>array('merchandizer'),
+				'roles'=>array('merchandiser'),
 			),
 /*
 			array('deny',
@@ -28,7 +28,7 @@ class MerchandizerController extends Controller
 
     public function actionIndex()
     {
-        echo 'merchandizer page goes here...';
+        echo 'merchandiser page goes here...';
     }
 
 }

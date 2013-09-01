@@ -8,6 +8,10 @@ class User extends CActiveRecord
 	 * @var string $username
 	 * @var string $password
 	 */
+    
+    public $currentPageSize = 10;
+    public $nextPageSize = array(10=>25,25=>2,2=>3,3=>10);
+    public $searchCriteria = array();
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -55,8 +59,13 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'Id',
-			'username' => 'Username',
+			'username' => 'User Name',
 			'password' => 'Password',
+            'firstname' => 'First Name',
+            'lastname' => 'Last Name',
+            'role' => 'Role',
+            'email' => 'Email',
+            'region' => 'Region',
 		);
 	}
 
@@ -79,4 +88,15 @@ class User extends CActiveRecord
 	{
 		return CPasswordHelper::hashPassword($password);
 	}
+
+    public function search()
+    {
+//file_put_contents('d:\\log.txt', print_r($_POST['User'],true));
+        return new CActiveDataProvider('User',array(
+            'criteria'=>$this->searchCriteria,
+            'pagination'=>array(
+                'pageSize'=>$this->currentPageSize,
+            ),
+        ));
+    }
 }

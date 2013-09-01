@@ -31,10 +31,7 @@ class SiteController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
-/*
-        if( !Yii::app()->user->isGuest )
-            $model->username = Yii::app()->user->id;
-*/
+
 		// collect user input data
 		if(isset($_POST['LoginForm']))
 		{
@@ -43,7 +40,10 @@ class SiteController extends Controller
             if($model->validate() && $model->login())
                 //echo 'you are: ' . $model->role;
 				$this->redirect(Yii::app()->createUrl($model->role . '/index'));
-		}
+		}elseif( !Yii::app()->user->isGuest )
+            $model->username = Yii::app()->user->id;
+
+
 		// display the login form
 		$this->render('login',array('model'=>$model));
 	}

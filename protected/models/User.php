@@ -89,9 +89,15 @@ class User extends CActiveRecord
 		return CPasswordHelper::hashPassword($password);
 	}
 
+    public function validatePageSize($ps)
+    {
+        return is_numeric($ps) && array_key_exists($ps, $this->nextPageSize);
+    }
+
     public function search()
     {
 //file_put_contents('d:\\log.txt', print_r($_POST['User'],true));
+
         return new CActiveDataProvider('User',array(
             'criteria'=>$this->searchCriteria,
             'pagination'=>array(

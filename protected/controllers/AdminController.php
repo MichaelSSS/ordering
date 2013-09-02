@@ -30,8 +30,9 @@ class AdminController extends Controller
     {
         $model = new User;
 
-        if( isset($_GET['pageSize']) )
+        if( isset($_GET['pageSize']) && $model->validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
+
 
         $fields = new AdminSearchForm('search');
 

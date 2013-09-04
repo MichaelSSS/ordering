@@ -16,8 +16,19 @@
         <div>Field Filter</div>
         <div id="search-fields">
         <?php 
-            echo $form->dropDownlist($fields,'keyField',$fields->keyFields);
-            echo $form->dropDownlist($fields,'criteria',$fields->criterias);
+            echo $form->dropDownlist($fields,'keyField',$fields->keyFields, 
+                                        array(
+                                            'options'=>array(
+                                                array_search('User Name',$fields->keyFields) => array('selected'=>true)
+                                        )
+            ));
+            echo $form->dropDownlist($fields,'criteria',$fields->criterias, 
+                                        array(
+                                            'options'=>array(
+                                                array_search('starts with',$fields->criterias) => array(
+                                                                                                    'selected'=>true
+                                             ))
+            ));
             echo $form->textField($fields,'keyValue');
         ?>
         </div>

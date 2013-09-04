@@ -58,14 +58,14 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'Id',
-			'username' => 'User Name',
-			'password' => 'Password',
-            'firstname' => 'First Name',
-            'lastname' => 'Last Name',
-            'role' => 'Role',
-            'email' => 'Email',
-            'region' => 'Region',
+			'id'         => 'Id',
+			'username'   => 'User Name',
+			'password'   => 'Password',
+            'firstname'  => 'First Name',
+            'lastname'   => 'Last Name',
+            'role'       => 'Role',
+            'email'      => 'Email',
+            'region'     => 'Region',
 		);
 	}
 
@@ -76,7 +76,7 @@ class User extends CActiveRecord
 	 */
 	public function validatePassword($password)
 	{
-		return CPasswordHelper::verifyPassword($password,$this->password);
+		return CPasswordHelper::verifyPassword($password, $this->password);
 	}
 
 	/**
@@ -89,20 +89,22 @@ class User extends CActiveRecord
 		return CPasswordHelper::hashPassword($password);
 	}
 
-    public function validatePageSize($ps)
-    {
-        return is_numeric($ps) && array_key_exists($ps, $this->nextPageSize);
-    }
 
     public function search()
     {
-//file_put_contents('d:\\log.txt', print_r($_POST['User'],true));
-
-        return new CActiveDataProvider('User',array(
-            'criteria'=>$this->searchCriteria,
-            'pagination'=>array(
-                'pageSize'=>$this->currentPageSize,
+        return new CActiveDataProvider('User', array(
+            'criteria'   => $this->searchCriteria,
+            'pagination' => array(
+                'pageSize' => $this->currentPageSize,
             ),
         ));
+    }
+
+    public function updateLastActionTime()
+    {
+        $currentTime = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
+        $this->lastActionTime = $currentTime;
+        $this->update(array('lastActionTime'));
+
     }
 }

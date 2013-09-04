@@ -16,18 +16,18 @@ class AdminSearchForm extends CFormModel
     public $criterias = array('equals','not equals','starts with','contains','does not contain');
 
     public $keyAttributes = array(
-        'All Columns'=>'*',
-        'User Name'=>'username',
-        'First Name'=>'firstname',
-        'Last Name'=>'lastname',
-        'Role'=>'role'
+        'All Columns' => '*',
+        'User Name'   => 'username',
+        'First Name'  => 'firstname',
+        'Last Name'   => 'lastname',
+        'Role'        => 'role'
     );
 
     public $operators = array(
-                 'equals'  => " =?",
-             'not equals'  => " <>?",
-             'starts with' => " LIKE ? '%'",
-                'contains' => " LIKE '%' ? '%'",
+        'equals'           => " =?",
+        'not equals'       => " <>?",
+        'starts with'      => " LIKE ? '%'",
+        'contains'         => " LIKE '%' ? '%'",
         'does not contain' => " NOT LIKE '%' ? '%'"
     );
 
@@ -41,8 +41,8 @@ class AdminSearchForm extends CFormModel
 		return array(
             array('keyValue', 'required', 'message'=>'please, fill the field before search'),
             array('keyValue', 'length', 'max'=>128),
-            array('keyField,criteria', 'numerical', 'message'=>'illegal filter parameters'),
-            array('keyField,criteria,keyValue','safe','on'=>'search'),
+            array('keyField, criteria', 'numerical', 'message'=>'illegal filter parameters'),
+            array('keyField, criteria, keyValue','safe','on'=>'search'),
 		);
 	}
 
@@ -59,7 +59,7 @@ class AdminSearchForm extends CFormModel
     public function getCriteria()
     {
 
-        if( $this->keyAttributes[$this->keyFields[$this->keyField]] != '*' ){
+        if( $this->keyAttributes[$this->keyFields[$this->keyField]] != '*' ) {
 
             $condition = $this->keyAttributes[$this->keyFields[$this->keyField]]
                 . $this->operators[$this->criterias[$this->criteria]];
@@ -68,16 +68,16 @@ class AdminSearchForm extends CFormModel
 
             return array(
                 'condition' => $condition,
-                'params' => array($this->keyValue)
+                'params'    => array($this->keyValue)
             );
 
-        }else{
+        } else {
 
             $numKeys = count($this->keyFields);
 
             $condition = '';
 
-            for($i=1; $i < $numKeys-1; ++$i){
+            for($i=1; $i < $numKeys-1; ++$i) {
                 $condition .= '(' 
                     . $this->keyAttributes[$this->keyFields[$i]]
                     . $this->operators[$this->criterias[$this->criteria]]
@@ -90,8 +90,8 @@ class AdminSearchForm extends CFormModel
                 . ')';
 
             return array(
-                'condition' => $condition,
-                'params' => array_fill(0,$numKeys-1,$this->keyValue)
+                'condition'  => $condition,
+                'params'     => array_fill(0,$numKeys-1,$this->keyValue)
             );
 
         }        

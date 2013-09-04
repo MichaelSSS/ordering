@@ -926,3 +926,128 @@ REQUEST_URI=/ordering/index.php?r=admin/index
 in D:\mine\Web\ordering\protected\models\User.php (94)
 in D:\mine\Web\ordering\protected\views\admin\index.php (40)
 in D:\mine\Web\ordering\protected\controllers\AdminController.php (48)
+2013/09/02 16:05:34 [error] [php] htmlspecialchars() expects parameter 1 to be string, array given (D:\mine\Web\yii\framework\web\helpers\CHtml.php:103)
+Stack trace:
+#0 D:\mine\Web\yii\framework\web\helpers\CHtml.php(158): renderAttributes()
+#1 D:\mine\Web\yii\framework\web\helpers\CHtml.php(1822): tag()
+#2 D:\mine\Web\yii\framework\web\widgets\CActiveForm.php(847): activeDropDownList()
+#3 D:\mine\Web\ordering\protected\views\admin\index.php(19): CActiveForm->dropDownList()
+#4 D:\mine\Web\yii\framework\web\CBaseController.php(126): require()
+#5 D:\mine\Web\yii\framework\web\CBaseController.php(95): AdminController->renderInternal()
+#6 D:\mine\Web\yii\framework\web\CController.php(869): AdminController->renderFile()
+#7 D:\mine\Web\yii\framework\web\CController.php(782): AdminController->renderPartial()
+#8 D:\mine\Web\ordering\protected\controllers\AdminController.php(47): AdminController->render()
+#9 D:\mine\Web\yii\framework\web\actions\CInlineAction.php(49): AdminController->actionIndex()
+#10 D:\mine\Web\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#11 D:\mine\Web\yii\framework\web\filters\CFilterChain.php(133): AdminController->runAction()
+#12 D:\mine\Web\yii\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#13 D:\mine\Web\yii\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#14 D:\mine\Web\yii\framework\web\filters\CInlineFilter.php(58): AdminController->filterAccessControl()
+#15 D:\mine\Web\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#16 D:\mine\Web\yii\framework\web\CController.php(291): CFilterChain->run()
+#17 D:\mine\Web\yii\framework\web\CController.php(265): AdminController->runActionWithFilters()
+#18 D:\mine\Web\yii\framework\web\CWebApplication.php(282): AdminController->run()
+#19 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#20 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#21 D:\mine\Web\ordering\index.php(13): CWebApplication->run()
+REQUEST_URI=/ordering/index.php?r=admin/index
+in D:\mine\Web\ordering\protected\views\admin\index.php (19)
+in D:\mine\Web\ordering\protected\controllers\AdminController.php (47)
+in D:\mine\Web\ordering\index.php (13)
+2013/09/04 15:54:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in D:\mine\Web\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('index')
+#1 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\mine\Web\ordering\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ordering/index.php?r=index
+HTTP_REFERER=http://mine/ordering/index.php
+---
+2013/09/04 15:55:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "index".' in D:\mine\Web\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('index')
+#1 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\mine\Web\ordering\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/ordering/index.php?r=index
+HTTP_REFERER=http://mine/ordering/index.php
+---
+2013/09/04 15:56:15 [error] [exception.CException] exception 'CException' with message 'Property "CWebApplication.defaultControler" is not defined.' in D:\mine\Web\yii\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\mine\Web\yii\framework\base\CModule.php(105): CComponent->__get('defaultControle...')
+#1 D:\mine\Web\ordering\protected\controllers\SiteController.php(32): CModule->__get('defaultControle...')
+#2 D:\mine\Web\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionLogin()
+#3 D:\mine\Web\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#4 D:\mine\Web\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#5 D:\mine\Web\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#6 D:\mine\Web\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#7 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#8 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#9 D:\mine\Web\ordering\index.php(13): CApplication->run()
+#10 {main}
+REQUEST_URI=/ordering/index.php
+HTTP_REFERER=http://mine/ordering/index.php
+---
+2013/09/04 20:46:21 [error] [exception.CException] exception 'CException' with message 'Property "CWebUser.role" is not defined.' in D:\mine\Web\yii\framework\base\CComponent.php:173
+Stack trace:
+#0 D:\mine\Web\yii\framework\web\auth\CWebUser.php(160): CComponent->__set('role', 'customer')
+#1 D:\mine\Web\ordering\protected\components\UserIdentity.php(19): CWebUser->__set('role', 'customer')
+#2 D:\mine\Web\ordering\protected\models\LoginForm.php(54): UserIdentity->authenticate()
+#3 D:\mine\Web\yii\framework\validators\CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#4 D:\mine\Web\yii\framework\validators\CValidator.php(213): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#5 D:\mine\Web\yii\framework\base\CModel.php(159): CValidator->validate(Object(LoginForm), NULL)
+#6 D:\mine\Web\ordering\protected\controllers\SiteController.php(31): CModel->validate()
+#7 D:\mine\Web\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionLogin()
+#8 D:\mine\Web\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 D:\mine\Web\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#10 D:\mine\Web\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 D:\mine\Web\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#12 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#13 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#14 D:\mine\Web\ordering\index.php(13): CApplication->run()
+#15 {main}
+REQUEST_URI=/ordering/index.php
+HTTP_REFERER=http://mine/ordering/index.php
+---
+2013/09/04 20:46:46 [error] [exception.CException] exception 'CException' with message 'Property "User.lastActionTime" is not defined.' in D:\mine\Web\yii\framework\base\CComponent.php:173
+Stack trace:
+#0 D:\mine\Web\yii\framework\db\ar\CActiveRecord.php(161): CComponent->__set('lastActionTime', 1378316804)
+#1 D:\mine\Web\ordering\protected\models\User.php(112): CActiveRecord->__set('lastActionTime', 1378316804)
+#2 D:\mine\Web\ordering\protected\components\UserIdentity.php(20): User->updateLastActionTime()
+#3 D:\mine\Web\ordering\protected\models\LoginForm.php(54): UserIdentity->authenticate()
+#4 D:\mine\Web\yii\framework\validators\CInlineValidator.php(42): LoginForm->authenticate('password', Array)
+#5 D:\mine\Web\yii\framework\validators\CValidator.php(213): CInlineValidator->validateAttribute(Object(LoginForm), 'password')
+#6 D:\mine\Web\yii\framework\base\CModel.php(159): CValidator->validate(Object(LoginForm), NULL)
+#7 D:\mine\Web\ordering\protected\controllers\SiteController.php(31): CModel->validate()
+#8 D:\mine\Web\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionLogin()
+#9 D:\mine\Web\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 D:\mine\Web\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 D:\mine\Web\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 D:\mine\Web\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#13 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#14 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#15 D:\mine\Web\ordering\index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/ordering/index.php
+HTTP_REFERER=http://mine/ordering/index.php
+---
+2013/09/04 22:50:52 [error] [php] Argument 2 passed to TbArray::popValue() must be an array, boolean given, called in D:\mine\Web\ordering\protected\extensions\bootstrap\widgets\TbActiveForm.php on line 701 and defined (D:\mine\Web\ordering\protected\extensions\bootstrap\helpers\TbArray.php:34)
+Stack trace:
+#0 D:\mine\Web\ordering\protected\views\site\login.php(53): TbActiveForm->checkBoxControlGroup()
+#1 D:\mine\Web\yii\framework\web\CBaseController.php(126): require()
+#2 D:\mine\Web\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#3 D:\mine\Web\yii\framework\web\CController.php(869): SiteController->renderFile()
+#4 D:\mine\Web\yii\framework\web\CController.php(782): SiteController->renderPartial()
+#5 D:\mine\Web\ordering\protected\controllers\SiteController.php(39): SiteController->render()
+#6 D:\mine\Web\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionLogin()
+#7 D:\mine\Web\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#8 D:\mine\Web\yii\framework\web\CController.php(286): SiteController->runAction()
+#9 D:\mine\Web\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#10 D:\mine\Web\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#11 D:\mine\Web\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#12 D:\mine\Web\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#13 D:\mine\Web\ordering\index.php(13): CWebApplication->run()
+REQUEST_URI=/ordering/index.php
+in D:\mine\Web\ordering\protected\extensions\bootstrap\helpers\TbArray.php (34)
+in D:\mine\Web\ordering\protected\extensions\bootstrap\widgets\TbActiveForm.php (701)
+in D:\mine\Web\ordering\protected\extensions\bootstrap\widgets\TbActiveForm.php (544)

@@ -8,12 +8,12 @@ class SiteController extends Controller
 	 */
 	public function actionError()
 	{
-		if($error=Yii::app()->errorHandler->error)
-		{
-			if(Yii::app()->request->isAjaxRequest)
+		if ($error=Yii::app()->errorHandler->error) {
+			if ( Yii::app()->request->isAjaxRequest ) {
 				echo $error['message'];
-			else
+            } else {
 				$this->render('error', $error);
+            }
 		}
 	}
 
@@ -25,24 +25,15 @@ class SiteController extends Controller
 	{
 		$model=new LoginForm;
 
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
+		if ( isset($_POST['LoginForm']) ) {
 			$model->attributes=$_POST['LoginForm'];
-			
-            if($model->validate() && $model->login())
-                //echo 'you are: ' . $model->role;
-				$this->redirect(Yii::app()->createUrl($model->role . '/index'));
-		}elseif( !Yii::app()->user->isGuest )
-            $model->username = Yii::app()->user->id;
 
+            if ( $model->validate() && $model->login() ) {
+                $this->redirect(Yii::app()->createUrl(Yii::app()->user->getState('role') . '/index'));
+            }
+		} else {
+            $model->username = Yii::app()->user->getState('rememberedName');
+        }
 
 		// display the login form
 		$this->render('login',array('model'=>$model));

@@ -13,6 +13,7 @@ class User extends CActiveRecord
     public $nextPageSize = array(10=>25,25=>2,2=>3,3=>10);
     public $searchCriteria = array();
 
+    public $confirmPassword;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
@@ -38,11 +39,42 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password', 'required'),
-			array('username, password', 'length', 'max'=>128),
+			array('username, password,confirmPassword,firstname,lastname,email', 'required'),
+			
+			array('username, password,role,firstname,lastname,email,region','safe'),
+			
+
+			array('username','unique','message'=>'Login name already exist'),
+			array('username','length','max'=>20,'message'=>'Login Name is too long'),
+			array('username','match','not'=>'true','pattern'=>'|([\x20]+)|s','message'=>'Login Name cannot contain spaces'),
+			array('email','email','message'=>'Incorrect format of Email Adress'),	
+
+			array('password','length','min'=>4,'max'=>10),
+			// array('password','match','not'=>'true','pattern'=>'|([\x20]+)|s','message'=>'Password cannot contain spaces'),
+		  array('confirmPassword', 'compare', 'compareAttribute'=>'password','message'=>'Confirm Password is not equal to Password'),
+
+			array('firstname','length','max'=>50,'message'=>'First Name is too long'),
+			
+			array('lastname','length','max'=>50,'message'=>'Last Name is too long'),					
+
 		);
 	}
 
+
+
+	protected function beforeSave()
+	    {
+
+	        if($this->isNewRecord)
+	        {
+	            $this->password = CPasswordHelper::hashPassword($this->password);
+	            // $this->username = trim($this->username);
+
+
+	        }
+	        return true;
+	}
+	
 	/**
 	 * @return array relational rules.
 	 */

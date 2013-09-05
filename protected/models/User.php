@@ -100,6 +100,11 @@ class User extends CActiveRecord
         ));
     }
 
+    public function validatePageSize($ps)
+    {
+        return is_numeric($ps) && array_key_exists($ps, $this->nextPageSize);
+    }
+
     public function updateLastActionTime()
     {
         $currentTime = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();

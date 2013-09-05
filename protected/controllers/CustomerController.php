@@ -23,12 +23,19 @@ class CustomerController extends Controller
 */
 		);
 	}
- 
+
 
 
     public function actionIndex()
     {
-        echo 'customer page goes here...';
+        $model = new Order;
+        //$assignee=Order::model()->with('assignees')->findAll();
+      //var_dump($assignee);exit;
+
+
+        $this->render('index',array('model'=>$model ));
     }
+
+
 
 }

@@ -1,20 +1,40 @@
-<h6>This page is appointed to create new and managing existing users</h6>
-
-<!----------------------------------------------------------------
---- ссылка на создание пользователя------------------------------>
-<?php echo CHtml::link('Create New User',array('admin/create'));?>
+<p>This page is appointed to create new and managing existing users</p>
 
 
+<?php echo CHtml::link('Create New User',array('user/create'));?>
 
-<div class="form">
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'search-form',
-    'enableClientValidation'=>true,
-));
-?>
-    <fieldset><legend>&nbspSearch by&nbsp</legend> 
-        <div>Field Filter</div>
-        <div id="search-fields">
+
+
+<?php /** @var BootActiveForm $form */
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    'id'=>'horizontalForm',
+    'type'=>'horizontal',
+)); ?>
+    <fieldset>
+        <legend>Search by</legend> 
+ <!--           <p>field Filter</p>
+        <div class="row">
+            <div class="span4">
+                <?php /*echo $form->dropDownListRow($model, 'keyField', array('All Columns', 'User Name', 'First Name', 'Last Name', 'Role',)); */?>
+            </div>
+            <div class="span4">
+                <?php /*echo $form->dropDownListRow($model, 'criteria', array('equals', 'not equals to', 'start with', 'contains', 'does not contain')); */?>
+            </div>
+            <div class="span4">
+                <?php /*/** @var BootActiveForm $form */
+                    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                        'id'=>'searchForm',
+                        'type'=>'search',
+                        'htmlOptions'=>array('class'=>'well'),
+                    )); */?>
+                    <?php /*echo $form->textFieldRow($model, 'textField', array('class'=>'input-medium', 'prepend'=>'<i class="icon-search"></i>')); */?>
+            </div>
+        </div>-->
+
+
+
+
+
         <?php 
             echo $form->dropDownlist($fields,'keyField',$fields->keyFields, 
                                         array(

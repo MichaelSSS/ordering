@@ -22,7 +22,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-        'bootstrap.helpers.TbHtml',
+        
 	),
 
 	'modules'=>array(
@@ -38,6 +38,9 @@ return array(
 
 	// application components
 	'components'=>array(
+		'bootstrap'=>array(
+            'class'=>'bootstrap.components.Bootstrap',
+        ),
 		'user'=>array(
             //'class'=>'RoledWebUser',
 			// enable cookie-based authentication
@@ -85,9 +88,7 @@ return array(
 				*/
 			),
 		),
-        'bootstrap' => array(
-            'class' => 'bootstrap.components.TbApi',
-        ),
+       
 	),
 
 	// application-level parameters that can be accessed

@@ -21,7 +21,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 <?php /*echo $form->dropDownListRow($model, 'criteria', array('equals', 'not equals to', 'start with', 'contains', 'does not contain')); */?>
             </div>
             <div class="span4">
-                <?php /*/** @var BootActiveForm $form */
+                <?php /** @var BootActiveForm $form *//*
                     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         'id'=>'searchForm',
                         'type'=>'search',

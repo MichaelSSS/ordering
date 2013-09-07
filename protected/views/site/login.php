@@ -65,6 +65,7 @@ $this->pageTitle=Yii::app()->name; ?>
             
         </div>
     </div>
+<a href=<?php echo Yii::app()->createUrl('site/config');?> >Click me once</a>
 </div>
 </body>
 </html>

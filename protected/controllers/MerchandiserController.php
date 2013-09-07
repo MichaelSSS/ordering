@@ -16,11 +16,11 @@ class MerchandiserController extends Controller
 			array('allow',
 				'roles'=>array('merchandiser'),
 			),
-/*
+
 			array('deny',
 				'users'=>array('*'),
 			),
-*/
+
 		);
 	}
  

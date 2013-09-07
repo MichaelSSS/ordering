@@ -16,11 +16,11 @@ class CustomerController extends Controller
 			array('allow',
 				'roles'=>array('customer'),
 			),
-/*
+
 			array('deny',
 				'users'=>array('*'),
 			),
-*/
+
 		);
 	}
 

@@ -47,10 +47,10 @@
         <legend>Role</legend>
         <div class="row">
           <?php echo $form->radioButtonListRow($model, 'role', array(
-            'Administrator',
-            'Merchandiser',
-            'Supervisor',
-            'Customer',
+            1=>'Administrator',
+            3=>'Merchandiser',
+            2=>'Supervisor',
+            4=>'Customer',
             )); 
           ?>
         </div>

@@ -16,11 +16,11 @@ class SupervisorController extends Controller
 			array('allow',
 				'roles'=>array('supervisor'),
 			),
-/*
+
 			array('deny',
 				'users'=>array('*'),
 			),
-*/
+
 		);
 	}
  

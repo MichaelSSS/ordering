@@ -22,7 +22,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-        
+        'bootstrap.helpers.TbHtml',        
 	),
 
 	'modules'=>array(

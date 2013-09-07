@@ -29,11 +29,11 @@ class CustomerController extends Controller
     public function actionIndex()
     {
         $model = new Order;
-        //$assignee=Order::model()->with('assignees')->findAll();
-      //var_dump($assignee);exit;
+      //  $fields = new CustomerSearchForm;
 
 
-        $this->render('index',array('model'=>$model ));
+
+        $this->render('index',array('model'=>$model, 'fields' =>$fields));
     }
 
 

@@ -6,39 +6,52 @@
 
 
 
+<?php /*$form=$this->beginWidget('CActiveForm', array(
+    'id'=>'search-form',
+    'enableClientValidation'=>true,
+));
+*/?>
+<fieldset><legend>&nbspSearch by&nbsp</legend>
+    <div>Field Filter</div>
+    <div id="search-fields">
+        <?php/*
+        echo $form->dropDownlist($fields,'keyField',$fields->keyFields);
+        echo $form->dropDownlist($fields,'criteria',$fields->criterias);
+        echo $form->textField($fields,'keyValue');
+       */ ?>
+    </div>
+    <input type='submit' value='Search'>
+</fieldset>
+<?php /*$this->endWidget();*/ ?>
+
+
 
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$model->search(),
-//    'filter'=>$model,
+    'filter'=>$model,
     'ajaxUpdate'=>'grid-extend,search-fields',
     'updateSelector'=>'{page}, {sort}, #page-size',
     'filterSelector'=>'{filter}, #search-fields',
 	'columns'=>array(
         'order_name',
         'total_price',
+
         'max_discount',
-		array(
-			'name'=>'delivery_date',
-		),
-		array(
-			'name'=>'status',
-			'value'=>'status',
-		),
+		'delivery_date',
+		'status',
+
 
 		array(
-			'name'=>'username',
+			'name'=>'assignee',
 			'value'=>'$data->assignees->username',
 		),
 		array(
-			'name'=>'role',
+			'name'=>'assigneesRole',
 			'value'=>'$data->assignees->role',
-            'sortable'=>'true',
+
 		),
-		array(
-			'name'=>'password',
-			'value'=>'$data->assignees->password',
-		),
+
 
 		array(
 			'class'=>'CButtonColumn',

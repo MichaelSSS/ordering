@@ -86,8 +86,14 @@ return array(
 					'class'=>'CWebLogRoute',
 				),
 				*/
+                array(
+                    'class' => 'CWebLogRoute',
+                    'categories' => 'application',
+                    'showInFireBug' => true
+                ),
 			),
 		),
+
        
 	),
 

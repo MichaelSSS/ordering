@@ -1,77 +1,74 @@
-<p>This page is appointed to create new and managing existing users</p>
+<div id="wrapper">
+<h6>This page is appointed to create new and managing existing users</h6>
 
+<?php 
+    echo CHtml::link('Create New User',array('user/create'));
 
-<?php echo CHtml::link('Create New User',array('user/create'));?>
+    $dataProvider = $model->search();
+//file_put_contents('d:\\log.txt', print_r($dataProvider->getTotalItemCount(),true));
 
+    echo '<div id="search-result">Number of Found Users <span id="search-result-count">' 
+                 . $dataProvider->getTotalItemCount() . '</span></div>';
 
+?>
 
-<?php /** @var BootActiveForm $form */
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id'=>'horizontalForm',
-    'type'=>'horizontal',
-)); ?>
-    <fieldset>
-        <legend>Search by</legend> 
- <!--           <p>field Filter</p>
-        <div class="row">
-            <div class="span4">
-                <?php /*echo $form->dropDownListRow($model, 'keyField', array('All Columns', 'User Name', 'First Name', 'Last Name', 'Role',)); */?>
-            </div>
-            <div class="span4">
-                <?php /*echo $form->dropDownListRow($model, 'criteria', array('equals', 'not equals to', 'start with', 'contains', 'does not contain')); */?>
-            </div>
-            <div class="span4">
-                <?php /** @var BootActiveForm $form *//*
-                    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-                        'id'=>'searchForm',
-                        'type'=>'search',
-                        'htmlOptions'=>array('class'=>'well'),
-                    )); */?>
-                    <?php /*echo $form->textFieldRow($model, 'textField', array('class'=>'input-medium', 'prepend'=>'<i class="icon-search"></i>')); */?>
-            </div>
-        </div>-->
+<div class="form">
 
-
-
-
-
+<?php $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'search-form',
+	'enableClientValidation'=>true,
+	'clientOptions'=>array(
+		'validateOnSubmit'=>true, 
+    ),
+));
+?>
+    <fieldset><legend>&nbspSearch by&nbsp</legend> 
+        <div>Field Filter</div>
+        <div id="search-fields">
         <?php 
-            echo $form->dropDownlist($fields,'keyField',$fields->keyFields, 
-                                        array(
+            echo $form->dropDownlist($fields,'keyField',$fields->keyFields, array(
                                             'options'=>array(
                                                 array_search('User Name',$fields->keyFields) => array('selected'=>true)
-                                        )
+                                            )
             ));
             echo $form->dropDownlist($fields,'criteria',$fields->criterias, 
                                         array(
                                             'options'=>array(
-                                                array_search('starts with',$fields->criterias) => array(
-                                                                                                    'selected'=>true
+                                                array_search('starts with',$fields->criterias) => array('selected'=>true
                                              ))
             ));
             echo $form->textField($fields,'keyValue');
         ?>
         </div>
-        <input type='submit' value='Search'>
+        <input class='btn' type='submit' value='Search'>
     </fieldset>
 <?php $this->endWidget(); ?>
 </div>
-<div id="grid-extend">
-<?php echo CHtml::link('show ' . $model->nextPageSize[$model->currentPageSize] . ' items',
-    array(
-        'admin/index',
-        'pageSize'=>$model->nextPageSize[$model->currentPageSize],
-    ),
-    array('id'=>'page-size')
-);?>
-</div>
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$model->search(),
-//    'filter'=>$model,
-    'ajaxUpdate'=>'grid-extend,search-fields',
-    'updateSelector'=>'{page}, {sort}, #page-size',
-    'filterSelector'=>'{filter}, #search-fields',
-	'columns'=>array(
+
+<?php $grid = $this->widget('OmsGridView', array(
+
+	'dataProvider'=>$dataProvider,
+    'ajaxUpdate'=>'search-result-count',
+    'updateSelector'=>'{page}, {sort}, #page-size, .yiiPager',
+    'filterSelector'=>'#search-fields',
+//    'type' => TbHtml::GRID_TYPE_STRIPED . ' ' . TbHtml::GRID_TYPE_BORDERED ,
+    'template' => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
+    'pager'  => array(
+        'class' => 'OmsPager',
+        'header' => '',
+        'maxButtonCount' => 0,
+        'firstPageLabel' => 'First',
+        'prevPageLabel' => 'Backward',
+        'nextPageLabel' => 'Forward',
+        'lastPageLabel' => 'Last',
+        'htmlOptions' => array(
+            'class' => 'yiiPager',
+        ),
+        'cssFile' => 'css/pager.css',
+    ), 
+    'pagerCssClass'=>'oms-pager',
+    'baseScriptUrl' => 'gridview',
+	'columns'=> array(
 		array(
 			'name'=>'username',
 		),
@@ -95,6 +92,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             'header'=>'Edit',
             'buttons'=>array(
                 'edit'=>array(
+                    'url' => 'Yii::app()->createUrl(\'user/edit\',array(\'id\'=>$data->id))',
                     'label'=>'edit',
                     'imageUrl'=>'images/grid_edit.png',
                 ),
@@ -106,6 +104,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             'header'=>'Remove',
             'buttons'=>array(
                 'remove'=>array(
+                    'url' => 'Yii::app()->createUrl(\'user/remove\',array(\'id\'=>$data->id))',
                     'label'=>'remove',
                     'imageUrl'=>'images/grid_remove.bmp',
                 ),
@@ -117,6 +116,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             'header'=>'Duplicate',
             'buttons'=>array(
                 'duplicate'=>array(
+                    'url' => 'Yii::app()->createUrl(\'user/duplicate\',array(\'id\'=>$data->id))',
                     'label'=>'duplicate',
                     'imageUrl'=>'images/grid_duplicate.bmp',
                 ),
@@ -124,4 +124,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             'template'=>'{duplicate}',
 		),
 	),
-)); ?>
+)); 
+
+?>
+</div>

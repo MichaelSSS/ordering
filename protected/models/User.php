@@ -10,7 +10,6 @@ class User extends CActiveRecord
 	 */
     
     public $currentPageSize = 10;
-    public $nextPageSize = array(10=>25,25=>2,2=>3,3=>10);
     public $searchCriteria = array();
 
     public $confirmPassword;
@@ -129,12 +128,10 @@ class User extends CActiveRecord
             'pagination' => array(
                 'pageSize' => $this->currentPageSize,
             ),
+            'sort' => array(
+                'multiSort' => true,
+            ),
         ));
-    }
-
-    public function validatePageSize($ps)
-    {
-        return is_numeric($ps) && array_key_exists($ps, $this->nextPageSize);
     }
 
     public function updateLastActionTime()

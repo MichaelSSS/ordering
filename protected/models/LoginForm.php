@@ -80,7 +80,7 @@ class LoginForm extends CFormModel
             $duration = 0;
             if ( $this->rememberMe ) {
                 $duration = 3600*24*30; // 30 days
-//file_put_contents('d:\\log.txt', print_r($this->rememberMe,true));
+
                 $this->_identity->setState('rememberedName',$this->username);
 
             }

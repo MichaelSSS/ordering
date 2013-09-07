@@ -24,12 +24,17 @@ class AdminController extends Controller
 		);
 	}
  
+    public function validatePageSize($ps)
+    {
+        return is_numeric($ps) && array_key_exists($ps, OmsGridView::$nextPageSize);
+    }
+
 
     public function actionIndex()
     {
         $model = new User;
 
-        if( isset($_GET['pageSize']) && $model->validatePageSize($_GET['pageSize']) )
+        if( isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
 
 

@@ -25,6 +25,10 @@ $this->pageTitle=Yii::app()->name; ?>
            <?php /** @var BootActiveForm $form */
             $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 'id'=>'login-form',
+            	'enableClientValidation'=>true,
+            	'clientOptions'=>array(
+        	    	'validateOnSubmit'=>true,
+            	),                 
                 'type'=> 'inline',
                 'htmlOptions'=>array('class'=>'well',
                   'checkbox' =>'inline'),

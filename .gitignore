@@ -1,4 +1,4 @@
 .idea
 protected/yiic.bat
-protected/runtime/
+protected/runtime/*
 assets/

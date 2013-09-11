@@ -29,6 +29,7 @@ class UserIdentity extends CUserIdentity
         $model = User::model()->find('LOWER(username)=?',array(strtolower($this->username)));
 
         Yii::app()->user->setState('role', $model->role);
+        Yii::app()->user->setState('user_id', $model->id);
     }
 
 }

@@ -1,6 +1,6 @@
 .idea
 .hg
 protected/yiic.bat
-protected/runtime/
+protected/runtime/*
 protected/config/
 assets/

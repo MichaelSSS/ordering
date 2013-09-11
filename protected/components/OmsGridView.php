@@ -8,7 +8,7 @@ class OmsGridView extends CGridView
 {
     public $selectPageSizeCssClass = 'page-size';
 
-    public static $nextPageSize = array(10=>25,25=>2,2=>3,3=>10);
+    public static $nextPageSize = array(10=>25,25=>10);
 
     public function renderSelectPageSize()
     {

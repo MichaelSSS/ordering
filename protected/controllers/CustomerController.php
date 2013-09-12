@@ -43,14 +43,13 @@ class CustomerController extends Controller
 
         if( isset($_GET['Order']) ){
             $model->unsetAttributes();
-            $model->attributes = $_GET['Order'];
-
+        //    $model->attributes = $_GET['Order'];
             $model->filterCriteria = $_GET['Order']['filterCriteria'];
             $model->filterStatus = $_GET['Order']['filterStatus'];
             $model->searchField = $_GET['Order']['searchField'];
             $model->searchValue = $_GET['Order']['searchValue'].'%';
 //            var_dump($model->filterStatus);exit;
-            
+
 
         }
 

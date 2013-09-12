@@ -23,7 +23,7 @@
             <div class="span2">Filter by</div>
             <div class="span3 offset">
             <?php
-            echo $form->dropDownlist($model, 'filterCriteria', $model->filterCriterias, array(
+            echo $form->dropDownlist($model, 'filterCriteria', array(  'status', 'assignees.role'), array(
                 'options' => array(
                     array_search('Status', $model->filterCriterias) => array('selected' => true)
                 ),

@@ -2,5 +2,5 @@
 .hg
 protected/yiic.bat
 protected/runtime/*
-protected/config/
+protected/config/*
 assets/

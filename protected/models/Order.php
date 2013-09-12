@@ -134,7 +134,10 @@ class Order extends CActiveRecord
         $criteria->with = array('assignees');
         $criteria->compare('customer', $this->customer);
         $criteria->compare('trash', self::IS_DELETED);
-        $criteria->addCondition($this->searchCriteria);
+        $criteria->compare('status', $this->filterStatuses[$this->filterStatus]);
+        $criteria->compare('assignees.role', $this->filterRoles[$this->filterRole]);
+        $criteria->compare($this->searchAttributes[$this->searchFields[$this->searchField]], $this->searchValue, true, 'AND', false);
+//        $criteria->addCondition($this->searchCriteria);
 
 //        $criteria->compare('order_name',$this->order_name,true);
 //        $criteria->compare('total_price',$this->total_price,true);

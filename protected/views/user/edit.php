@@ -1,4 +1,16 @@
 <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/gridview/styles.css" />
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('.password-group').hide();
+       // $('#User_password').val('');
+        $('.slide').click(function(){
+            $('.password-group').slideToggle();
+            return false;
+        })
+    });
+</script>
+
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'horizontalForm',
@@ -22,12 +34,19 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         <div class="row">
             <?php echo $form->textFieldRow($model, 'lastname', array('hint'=>'')); ?>
         </div>
-        <div class="row">
-            <?php echo $form->passwordFieldRow($model, 'password', array('hint'=>'','title'=>'Password should contain at least one uppercase and one lowercase Alphabetic symbol, at least one numeric and special character')); ?>
+        <div class="row offset1 change-link" >
+           <p> <a href="#" class="slide">Change password</a></p>
         </div>
-        <div class="row">
-            <?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint'=>'')); ?>
+        <div class="password-group">
+            <div class="row">
+                    <?php echo $form->passwordFieldRow($model, 'password', array('hint'=>'','title'=>'if you','placeholder'=>'enter new password')); ?>
+            </div>
+
+            <div class="row">
+                    <?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint'=>'')); ?>
+            </div>
         </div>
+
         <div class="row">
             <?php echo $form->textFieldRow($model, 'email', array('hint'=>'')); ?>
         </div>
@@ -57,7 +76,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
     <div class="row">
         <div class="form-actions">
-            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Create')); ?>
+            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Save')); ?>
 
 
             <?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -104,8 +123,4 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     </div>
     <?php $this->endWidget(); ?>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#User_password').tooltip();
-    });
-</script>
+

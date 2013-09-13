@@ -13,15 +13,16 @@ class CustomerController extends Controller
 	public function accessRules()
 	{
 		return array(
+            array('allow',
+
+                'roles'=>array('customer'),
+            ),
+/*
             array('deny',
-                'roles'=>array('*'),
+                'users'=>array('*'),
             ),
 
-//			array('allow',
-//
-//				'roles'=>array('customer'),
-//			),
-
+*/
 
 
 		);
@@ -35,18 +36,19 @@ class CustomerController extends Controller
 
     public function actionIndex()
     {
-        $model = new Order;
+        $model = new Order('search');
 
         $model->customer = Yii::app()->user->getState('user_id');
         if( isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
-
+//
         if( isset($_GET['Order']) ){
             $model->unsetAttributes();
-        //    $model->attributes = $_GET['Order'];
+//            $model->attributes = $_GET['Order'];
             $model->filterCriteria = $_GET['Order']['filterCriteria'];
             $model->filterStatus = $_GET['Order']['filterStatus'];
             $model->searchField = $_GET['Order']['searchField'];
+
             $model->searchValue = $_GET['Order']['searchValue'].'%';
 //            var_dump($model->filterStatus);exit;
 

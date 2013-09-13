@@ -160,3 +160,27 @@ a#page-size{
 	width: 100%;
 	border: 1px solid #ccc;
 }
+.role-list{
+    margin-left: 80px;
+    width: 200px;
+}
+#create-form-wrapper{
+    width: 800px;
+    margin: 0 auto;
+}
+.change-link{
+    margin-left: 150px;
+}
+#User_password::-webkit-input-placeholder { /* WebKit browsers */
+    color: #cc5260;
+}
+#User_password:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #fd73ad;
+}
+#User_password::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #5b7486;
+    font-size: 14px;
+}
+#User_password:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: #fd73ad;
+}

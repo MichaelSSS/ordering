@@ -1,8 +1,23 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.remove a').live('click',function(){
+            var link = $(this).attr('href');
+            $('.btn-primary').attr('href',link);
+        })
+
+        $('.remove').click(function(){
+            var link = $(this).find('a').attr('href');
+            $('.btn-primary').attr('href',link);
+
+        })
+    });
+</script>
+<?php $this->renderPartial('/user/_del'); ?> <!--modal-->
 <div id="wrapper">
 <h6>This page is appointed to create new and managing existing users</h6>
 
 <?php 
-    echo CHtml::link('Create New User',array('user/create'));
+    echo CHtml::link('Create New User',array('admin/create'));
 
     $dataProvider = $model->search();
 //file_put_contents('d:\\log.txt', print_r($dataProvider->getTotalItemCount(),true));
@@ -92,7 +107,7 @@
             'header'=>'Edit',
             'buttons'=>array(
                 'edit'=>array(
-                    'url' => 'Yii::app()->createUrl(\'user/edit\',array(\'id\'=>$data->id))',
+                    'url' => 'Yii::app()->createUrl(\'admin/edit\',array(\'id\'=>$data->id))',
                     'label'=>'edit',
                     'imageUrl'=>'images/grid_edit.png',
                 ),
@@ -102,9 +117,14 @@
 		array(
 			'class'=>'CButtonColumn',
             'header'=>'Remove',
+            'htmlOptions'=>array(
+                'data-toggle'=>'modal',
+                'data-target'=>'#myModal',
+                'class'=>'remove',
+            ),
             'buttons'=>array(
                 'remove'=>array(
-                    'url' => 'Yii::app()->createUrl(\'user/remove\',array(\'id\'=>$data->id))',
+                    'url' => 'Yii::app()->createUrl(\'admin/remove\',array(\'id\'=>$data->id))',
                     'label'=>'remove',
                     'imageUrl'=>'images/grid_remove.bmp',
                 ),

@@ -30,8 +30,8 @@ class Order extends CActiveRecord
     public $searchValue;
 
     public $filterCriterias = array('Status', 'Role');
-    public $filterStatuses = array('None', 'Ordered', 'Pending', 'Delivered');
-    public $filterRoles = array('None', 'Merchandiser', 'Administrator', 'Supervisor');
+    public $filterStatuses = array('None',  'Pending', 'Ordered','Delivered');
+    public $filterRoles = array('None', 'Merchandiser', 'Supervisor', 'Administrator');
     public $searchFields = array('Order Name', 'Status', 'Assignee');
 
     public $filterAttributes = array(
@@ -78,9 +78,10 @@ class Order extends CActiveRecord
 			array('order_name', 'length', 'max'=>128),
 			array('total_price', 'length', 'max'=>12),
 			array('status', 'length', 'max'=>9),
+			array('searchValue','numerical', 'integerOnly'=>true,'message'=>'only alfanumeric'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_order,  order_name, total_price, max_discount, delivery_date, status, assignees, assigneesRole, customer', 'safe', 'on'=>'search'),
+			array('id_order,  order_name, total_price, max_discount, delivery_date, status, assignees,searchValue, assigneesRole, customer', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -134,9 +135,17 @@ class Order extends CActiveRecord
         $criteria->with = array('assignees');
         $criteria->compare('customer', $this->customer);
         $criteria->compare('trash', self::IS_DELETED);
+
+if(!empty($this->filterStatus))
         $criteria->compare('status', $this->filterStatuses[$this->filterStatus]);
-        $criteria->compare('assignees.role', $this->filterRoles[$this->filterRole]);
-        $criteria->compare($this->searchAttributes[$this->searchFields[$this->searchField]], $this->searchValue, true, 'AND', false);
+
+if(!empty($this->filterStatus))
+       $criteria->compare('assignees.role', $this->filterRoles[$this->filterStatus]);
+
+if(!empty($this->searchValue))
+     $criteria->compare($this->searchAttributes[$this->searchFields[$this->searchField]], $this->searchValue, true, 'AND', false);
+
+
 //        $criteria->addCondition($this->searchCriteria);
 
 //        $criteria->compare('order_name',$this->order_name,true);

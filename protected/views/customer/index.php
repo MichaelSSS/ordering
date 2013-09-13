@@ -8,10 +8,10 @@
 
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
-    'enableClientValidation' => true,
-    'clientOptions' => array(
-        'validateOnSubmit' => true,
-    ),
+//    'enableClientValidation' => true,
+//    'clientOptions' => array(
+//        'validateOnSubmit' => true,
+//    ),
 ));
 ?>
 
@@ -32,6 +32,7 @@
                     'url' => $this->createUrl('customer/dependentselect'),
                     'update' => '#Order_filterStatus',
                 ),
+
             ));
             ?>
             </div>
@@ -41,7 +42,8 @@
                 array(
                     'options' => array(
                         array_search('None', $model->filterStatuses) => array('selected' => true
-                        ))
+                        )),
+
                 ));
             ?>
         </div>
@@ -64,12 +66,19 @@
             ?>
             </div>
             <div class="span1">
-                <?php $this->widget('bootstrap.widgets.TbButton', array(
+
+                <?php
+
+
+
+              $this->widget('bootstrap.widgets.TbButton', array(
                     'label'=>'Search',
                     'buttonType'=>'submit',
                     'type'=>'action', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'size'=>'small', // null, 'large', 'small' or 'mini'
-                )); ?>
+                ));?>
+
+                <?php echo CHtml::errorSummary($model) ?>
             </div>
         </div>
     </div>

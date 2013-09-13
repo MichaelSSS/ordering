@@ -16,11 +16,11 @@ class AdminController extends Controller
 			array('allow',
 				'roles'=>array('admin'),
 			),
-
+/*
 			array('deny',
 				'users'=>array('*'),
 			),
-
+*/
 		);
 	}
  

@@ -16,19 +16,11 @@ class AdminController extends Controller
 			array('allow',
 				'roles'=>array('admin'),
 			),
-<<<<<<< HEAD
 
 			/*array('deny',
 				'users'=>array('*'),
 			),*/
 
-=======
-/*
-			array('deny',
-				'users'=>array('*'),
-			),
-*/
->>>>>>> f2d8fd5df4b439cab482ccd9148d68f8355c8f05
 		);
 	}
  

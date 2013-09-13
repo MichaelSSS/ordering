@@ -136,7 +136,7 @@
             'header'=>'Duplicate',
             'buttons'=>array(
                 'duplicate'=>array(
-                    'url' => 'Yii::app()->createUrl(\'user/duplicate\',array(\'id\'=>$data->id))',
+                    'url' => 'Yii::app()->createUrl(\'admin/duplicate\',array(\'id\'=>$data->id))',
                     'label'=>'duplicate',
                     'imageUrl'=>'images/grid_duplicate.bmp',
                 ),

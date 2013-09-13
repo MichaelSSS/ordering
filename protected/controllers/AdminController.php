@@ -128,4 +128,26 @@ class AdminController extends Controller
         return $model;
     }
 
+    public function actionDuplicate($id){
+
+        $model=$this->loadModel($id);
+        $model->scenario = 'duplicate';
+        $model->password = false;
+        $model->username = false;
+        $duplicate = new User;
+
+        if(isset($_POST['User'])) {
+            $duplicate->attributes=$_POST['User'];
+
+                if($duplicate->save()) {
+                    $this->redirect(array('admin/index'));
+                }
+
+        }
+
+        $this->render('/user/duplicate',array(
+            'model'=>$model,
+        ));
+    }
+
 }

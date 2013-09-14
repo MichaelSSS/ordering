@@ -1,5 +1,9 @@
 {
 
-  'name':'ordering'
+  'name':'oms/ordering',	
+  "require":
+  {
+  "php": ">=5.1.0"
+  }
 
 }

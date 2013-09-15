@@ -10,6 +10,11 @@ class OmsGridView extends CGridView
 
     public static $nextPageSize = array(10=>25,25=>10);
 
+    public static function validatePageSize($ps)
+    {
+        return is_numeric($ps) && array_key_exists($ps, self::$nextPageSize);
+    }
+
     public function renderSelectPageSize()
     {
         $currentPageSize = $this->dataProvider->getPagination()->pageSize;

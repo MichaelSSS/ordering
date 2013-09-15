@@ -7,9 +7,14 @@
  */
 class LoginForm extends CFormModel
 {
+    const ERROR_USER_LOGGED = 1;
+    const ERROR_ACTIVE_LIMIT = 2;
+
     public $username;
     public $password;
     public $rememberMe;
+
+    private $_errorCode = 0;
     
     private $_identity;
 
@@ -56,13 +61,13 @@ class LoginForm extends CFormModel
                     $this->addError('username','Such user does not exist in the system - please try again');
                 } elseif ( $this->_identity->errorCode == CUserIdentity::ERROR_PASSWORD_INVALID ) {
                     $this->addError('password','Password is incorrect - please try again');
-                }
-
+                } 
             }
 
         }
         return !$this->hasErrors();
     }
+
 
     /**
      * Logs in the user using the given username and password in the model.
@@ -70,27 +75,58 @@ class LoginForm extends CFormModel
      */
     public function login()
     {
-        if( $this->_identity===null ) {
+        if ( $this->_identity===null ) {
             $this->_identity=new UserIdentity($this->username,$this->password);
             $this->_identity->authenticate();
         }
 
 
-        if($this->_identity->errorCode===UserIdentity::ERROR_NONE) {
+        if ( $this->_identity->errorCode===UserIdentity::ERROR_NONE ) {
+            $user = Yii::app()->user;
+            $userId = $this->_identity->getId();
+            
+            // determine if user logged in another browser
+            if ( $user->isActive($userId, time()) 
+                && !$user->isSameUserAgent($userId) ) {
+               
+                $this->_errorCode = self::ERROR_USER_LOGGED;
+                return false;
+                
+            // apply 50 active users limit    
+            } elseif ( $user->countActive(time()) >= 50 ) {
+                $this->_errorCode = self::ERROR_ACTIVE_LIMIT;
+                return false;
+            }
+
             $duration = 0;
+            //file_put_contents("d:/log.txt", print_r(Yii::app()->user->rememberedName,true));
             if ( $this->rememberMe ) {
+                $user->setState('Remembered Name',$this->username);
+            
                 $duration = 3600*24*30; // 30 days
 
-                $this->_identity->setState('rememberedName',$this->username);
-
+            } elseif ( $user->getRememberedName() == $this->username ) {
+                     
+                $user->setState('Remembered Name',null);
+                $user->rememberedName = '';
+                $duration = 1;
             }
-            Yii::app()->user->login($this->_identity,$duration);
+            
+            $user->login($this->_identity,$duration);
+            $user->updateLastActionTime();
+            $user->homeController = $this->_identity->getHomeController();
+            
+            return !$this->hasErrors();
 
-            $this->_identity->authorize();
-
-            return true;
         } else {
             return false;
         }
     }
+
+
+    public function getErrorCode()
+    {
+        return $this->_errorCode;
+    }
+
 }

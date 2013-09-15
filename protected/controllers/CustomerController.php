@@ -17,12 +17,12 @@ class CustomerController extends Controller
 
                 'roles'=>array('customer'),
             ),
-/*
+
             array('deny',
                 'users'=>array('*'),
             ),
 
-*/
+
 
 
 		);

@@ -1,6 +1,14 @@
-{
-
-  "name":"MichaelSSS/ordering"
-
-
-}
+"repositories": [
+    {
+        "type":"package",
+        "package": {
+          "name": "MichaelSSS/ordering",
+          "version":"master",
+          "source": {
+              "url": "https://github.com/MichaelSSS/ordering.git",
+              "type": "git",
+              "reference":"master"
+            }
+        }
+    }
+]

@@ -3,52 +3,72 @@
 class SiteController extends Controller
 {
     public $layout = 'login';
-	/**
-	 * This is the action to handle external exceptions.
-	 */
-	public function actionError()
-	{
-		if ($error=Yii::app()->errorHandler->error) {
-			if ( Yii::app()->request->isAjaxRequest ) {
-				echo $error['message'];
+    /**
+     * This is the action to handle external exceptions.
+     */
+    public function actionError()
+    {
+        if ($error=Yii::app()->errorHandler->error) {
+            if ( Yii::app()->request->isAjaxRequest ) {
+                echo $error['message'];
             } else {
-				$this->render('error', $error);
+                $this->render('error', $error);
             }
-		}
-	}
-
-
-	/**
-	 * Displays the login page
-	 */
-	public function actionLogin()
-	{
-		$model=new LoginForm;
-
-		if ( isset($_POST['LoginForm']) ) {
-			$model->attributes=$_POST['LoginForm'];
-
-            if ( $model->validate() && $model->login() ) {
-
-                $this->redirect(Yii::app()->createUrl(Yii::app()->user->getState('role') . '/index'));
-            }
-		} else {
-            $model->username = Yii::app()->user->getState('rememberedName');
         }
+    }
 
-		// display the login form
-		$this->render('login',array('model'=>$model));
-	}
 
-	/**
-	 * Logs out the current user and redirect to homepage.
-	 */
-	public function actionLogout()
-	{
-		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
-	}
+    /**
+     * Displays the login page
+     */
+    public function actionLogin()
+    {
+        if ( UserIdentity::isBlocked($_SERVER['REMOTE_ADDR']) ) {
+            $this->render('login-blocked');
+            Yii::app()->end();
+        } else {        
+            $model=new LoginForm;
+            if ( isset($_POST['LoginForm']) ) {
+                $model->attributes=$_POST['LoginForm'];
     
+                if ( $model->validate() && $model->login() ) {
+    
+                    $this->redirect(Yii::app()->createUrl(Yii::app()->user->homeController . '/index'));
+
+                } else {
+                    $errorCode = $model->getErrorCode();
+                    if ( $errorCode == LoginForm::ERROR_USER_LOGGED ) {
+                        $this->redirect(array('site/warning','view'=>'login-already'));
+                    } elseif ( $errorCode == LoginForm::ERROR_ACTIVE_LIMIT ) {
+                        $this->redirect(array('site/warning','view'=>'login-limit'));
+                    } elseif ( UserIdentity::isBlocked($_SERVER['REMOTE_ADDR']) ) {
+                        $this->redirect(array('site/warning','view'=>'login-blocked'));
+                    }
+                }
+            } 
+            
+            if ( $rememberedName = Yii::app()->user->getRememberedName()) {
+                $model->username = $rememberedName;
+                $model->rememberMe = true;
+            }
+            // display the login form
+            $this->render('login',array('model'=>$model));
+        }
+    }
+
+    /**
+     * Logs out the current user and redirect to homepage.
+     */
+    public function actionLogout()
+    {
+        parent::logout();
+    }
+    
+    public function actionWarning($view)
+    {
+        $this->render($view);        
+    }
+
     public function actionConfig()
     {
 
@@ -94,10 +114,10 @@ class SiteController extends Controller
         $auth->createRole('merchandiser');
         $auth->createRole('customer');
 
-        $auth->assign('admin','admin01');
-        $auth->assign('supervisor','supervisor01');
-        $auth->assign('merchandiser','merchandiser01');
-        $auth->assign('customer','customer01');
+        $auth->assign('admin',1);
+        $auth->assign('supervisor',2);
+        $auth->assign('merchandiser',3);
+        $auth->assign('customer',4);
         
         echo 'Roles have been created in database. Do not visit this link anymore';
     }

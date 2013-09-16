@@ -4,37 +4,29 @@ class AdminController extends Controller
 {
     public $defaultAction = 'index';
 
-	public function filters()
-	{
-		return array(
-			'accessControl',
-		);
-	}
-	public function accessRules()
-	{
-		return array(
-			array('allow',
-				'roles'=>array('admin'),
-			),
-
-			/*array('deny',
-				'users'=>array('*'),
-			),*/
-
-		);
-	}
- 
-    public function validatePageSize($ps)
+    public function filters()
     {
-        return is_numeric($ps) && array_key_exists($ps, OmsGridView::$nextPageSize);
+        return array(
+            'accessControl',
+        );
     }
-
-
+    public function accessRules()
+    {
+	    return array(
+            array('allow',
+                'roles'=>array('admin'),
+            ),
+            array('deny',
+                'users'=>array('*'),
+            ),
+	);
+    }
+ 
     public function actionIndex()
     {
         $model = new User;
 
-        if( isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']) )
+        if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
 
 
@@ -47,14 +39,16 @@ class AdminController extends Controller
                 $model->searchCriteria = $fields->getCriteria();
 
         }                
-        if ( isset($model->searchCriteria['condition']) ) {
-            $model->searchCriteria['condition'] = '(' . $model->searchCriteria['condition'] . ') AND `t`.`deleted`=0';
-        } else {
-            $model->searchCriteria['condition'] = '`t`.`deleted`=0';
 
-        }
         $this->render('index',array('model'=>$model, 'fields'=>$fields));
     }
+
+    protected function assignRole($role,$userId)
+    {
+//        $roles = array(1=>'admin',3=>'merchandiser',2=>'supervisor',4=>'customer');
+        Yii::app()->authManager->assign($role,$userId);
+    }
+
     /*=======USERS ACTIONS=========*/
 
     public function actionCreate()
@@ -66,8 +60,7 @@ class AdminController extends Controller
             $model->attributes=$_POST['User'];
             if($model->save()) {
 
-            /*    $roles = array(1=>'admin',3=>'merchandiser',2=>'supervisor',4=>'customer');            //+
-                Yii::app()->authManager->assign($roles[$model->role],$model->username);                //+*/
+                $this->assignRole($model->role,$model->id); // assign role to user
 
                 $this->redirect(array('admin/index'));
             }
@@ -106,10 +99,16 @@ class AdminController extends Controller
 
             if($_POST['User']['password'] == '*****' || strlen($_POST['User']['password']) == 0 ){
                 if($model->save(true,array('username','role','firstname','lastname','email','region'))) {
+
+                    $this->assignRole($model->role,$model->id); // assign role to user
+
                     $this->redirect(array('admin/index'));
                 }
             }else{
                 if($model->save()) {
+
+                    $this->assignRole($model->role,$model->id); // assign role to user
+
                     $this->redirect(array('admin/index'));
                 }
             }
@@ -140,6 +139,9 @@ class AdminController extends Controller
             $duplicate->attributes=$_POST['User'];
 
                 if($duplicate->save()) {
+
+                    $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
+    
                     $this->redirect(array('admin/index'));
                 }
 

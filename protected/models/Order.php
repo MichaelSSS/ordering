@@ -25,7 +25,7 @@ class Order extends CActiveRecord
 
     public $filterCriteria;
     public $filterRole;
-    public $filterStatus;
+    public $filterValue;
     public $searchField;
     public $searchValue;
 
@@ -40,7 +40,6 @@ class Order extends CActiveRecord
     );
 
     public $searchAttributes = array(
-        'None' => '',
         'Order Name' => 'order_name',
         'Status' => 'status',
         'Assignee' => 'assignees.username',
@@ -135,16 +134,16 @@ class Order extends CActiveRecord
         $criteria->with = array('assignees');
         $criteria->compare('customer', $this->customer);
         $criteria->compare('trash', self::IS_DELETED);
-
-if(!empty($this->filterStatus))
-        $criteria->compare('status', $this->filterStatuses[$this->filterStatus]);
-
-if(!empty($this->filterStatus))
-       $criteria->compare('assignees.role', $this->filterRoles[$this->filterStatus]);
+if(empty($this->filterCriteria)&&!empty($this->filterValue))
+        $criteria->compare('status', $this->filterStatuses[$this->filterValue]);
+elseif(!empty($this->filterCriteria)&&!empty($this->filterValue))
+        $criteria->compare('assignees.role', $this->filterRoles[$this->filterValue]);
 
 if(!empty($this->searchValue))
-     $criteria->compare($this->searchAttributes[$this->searchFields[$this->searchField]], $this->searchValue, true, 'AND', false);
-
+{
+    $keyword=strtr($this->searchValue,array('%'=>'\%', '_'=>'\_', '\\'=>'\\\\')).'%';
+    $criteria->compare($this->searchAttributes[$this->searchFields[$this->searchField]], $keyword, true,'AND', false);
+}
 
 //        $criteria->addCondition($this->searchCriteria);
 
@@ -162,6 +161,10 @@ if(!empty($this->searchValue))
                     'asc'=>'assignees.role',
                     'desc'=>'assignees.role DESC',
                 ),
+            'assignee'=>array(
+                'asc'=>'assignees.username',
+                'desc'=>'assignees.username DESC',
+            ),
                 '*',
         );
         return new CActiveDataProvider($this,array(

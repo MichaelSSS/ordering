@@ -35,15 +35,15 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 </div>
                 <div class="row">
                     <?php echo "<label class='control-label'>Total number of items</label>"; ?>
-                    <?php echo  "asdasdas";  ?>
+                    <?php echo  "12";  ?>
                 </div>
                 <div class="row">
                     <?php echo $form->labelEx($model,'total_price', array('class'=>'control-label')); ?>
-                    <?php echo 12; ?>
+                    <?php echo 1200; ?>
                 </div>
                 <div class="row">
                     <?php echo $form->labelEx($model,'order_date', array('class'=>'control-label')); ?>
-                    <?php echo "01/01/2013"; ?>
+                    <?php echo date('m/d/Y'); ?>
                 </div>
                 <div class="row">
                     <?php echo $form->textFieldRow($model, 'preferable_date', array('hint'=>'',)); ?>
@@ -54,7 +54,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     <?php echo "//"; ?>
                 </div>
                 <div class="row">
-                    <?php echo $form->dropDownListRow($model, 'assignee', array( 1, 2, 3, 4));  ?>
+                    <?php echo $form->dropDownListRow($model, 'assignee', $model->getMerchandisers());  ?>
                 </div>
             </fieldset>
         </div>
@@ -86,7 +86,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     <p>All data will be lost</p>
                 </div>
 
-                <?php $target = $this->createUrl('admin/index'); ?>
+                <?php $target = $this->createUrl('customer/index'); ?>
 
                 <div class="modal-footer">
                     <?php $this->widget('bootstrap.widgets.TbButton', array(

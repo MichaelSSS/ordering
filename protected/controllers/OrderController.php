@@ -63,4 +63,22 @@ class OrderController extends Controller
         if(!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
+    public function actionCreate()
+    {
+        $model=new Order;
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        if(isset($_POST['Order']))
+        {
+            $model->attributes=$_POST['Order'];
+            if($model->save())
+                $this->redirect(Yii::app()->createUrl('order' . '/index'));
+        }
+
+        $this->render('create',array(
+            'model'=>$model,
+        ));
+    }
 }

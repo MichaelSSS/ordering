@@ -13,6 +13,8 @@
  * @property string $status
  * @property integer $assignee
  * @property integer $customer
+ *  @property string $order_date
+ * @property string $preferable_date
  */
 class Order extends CActiveRecord
 {
@@ -21,6 +23,7 @@ class Order extends CActiveRecord
     public $searchCriteria = array();
     public $currentPageSize = 10;
     const IS_DELETED = 0;
+
 
 
     public $filterCriteria;
@@ -72,11 +75,21 @@ class Order extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('order_name, total_price, max_discount, delivery_date, assignee, customer', 'required'),
+            array('max_discount,  assignee, customer', 'required'),
 			array('max_discount, assignee, customer', 'numerical', 'integerOnly'=>true),
+
+        		array('order_name','match','not'=>'true','pattern'=>'|[^a-zA-Z0-9]|','message'=>'Order name can only contain numbers and letters'),
+             array('order_name','unique','message'=>'Order name name already exist'),
+             array('order_name','exist','message'=>'Order name name already exist'),
+
+
+            array('preferable_date','date','message'=>'Illegal Date'),
+
 			array('order_name', 'length', 'max'=>128),
 			array('total_price', 'length', 'max'=>12),
 			array('status', 'length', 'max'=>9),
+
+            array('order_date','default', 'value'=>new CDbExpression('NOW()'),'setOnEmpty'=>false,'on'=>'insert'),
 			array('searchValue','numerical', 'integerOnly'=>true,'message'=>'only alfanumeric'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -175,7 +188,19 @@ if(!empty($this->searchValue))
             ),
         ));
 	}
+    public function getMerchandisers(){
+        $criteria=new CDbCriteria;
 
+        $criteria->compare("role", 'merchandiser',true);
+        $models =  User::model()->findAll($criteria);
+
+
+
+        $list = CHtml::listData($models, 'id','username')  ;
+
+        $list = array(Yii::app()->user->getState('user_id')=>'-me-') + $list;
+        return $list;
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -186,6 +211,10 @@ if(!empty($this->searchValue))
 	{
 		return parent::model($className);
 	}
+    /**
+      * Creates a new model.
+    * If creation is successful, the browser will be redirected to the 'view' page.
+    */
 
 
 }

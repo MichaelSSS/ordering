@@ -1,23 +1,22 @@
-{"name":"MichaelSSS/ordering",
-    "repositories":[
+{
+    "name": "MichaelSSS/ordering",
+    "description": "OMS",
+    "type": "library",
+    "authors": [
         {
-            "type":"git",
-            "url":"http://github.com/MichaelSSS/ordering"
-        },
-        {
-            "type":"package",
-            "package":{
-                "name":"MichaelSSS/ordering",
-                "version":"1.0.0",
-                "source":{
-                    "type":"git",
-                    "url":"http://github.com/MichaelSSS/ordering",
-                    "reference":"master"
-
-                }
-            }
-
+            "name": "Qiang Xue",
+            "email": "qiang.xue@gmail.com",
+            "homepage": "http://www.yiiframework.com/",
+            "role": "Founder and project lead"
         }
-
-    ]
+    ],
+    "support": {
+        "source": "https://github.com/yiisoft/yii"
+    },
+    "bin": [
+        "framework/yiic"
+    ],
+    "require": {
+        "php": ">=5.1.0"
+    }
 }

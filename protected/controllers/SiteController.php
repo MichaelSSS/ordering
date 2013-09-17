@@ -26,14 +26,15 @@ class SiteController extends Controller
         if ( UserIdentity::isBlocked($_SERVER['REMOTE_ADDR']) ) {
             $this->render('login-blocked');
             Yii::app()->end();
-        } else {        
+        } else {
             $model=new LoginForm;
             if ( isset($_POST['LoginForm']) ) {
                 $model->attributes=$_POST['LoginForm'];
-    
-                if ( $model->validate() && $model->login() ) {
 
-                $this->redirect(Yii::app()->createUrl(Yii::app()->user->getState('role') . '/index'));
+                if ( $model->validate() && $model->login() ) {
+//                    var_dump(Yii::app()->createUrl(Yii::app()->user->homeController . '/index'));
+
+                    $this->redirect(Yii::app()->createUrl('admin' . '/index'));
                 } else {
                     $errorCode = $model->getErrorCode();
                     if ( $errorCode == LoginForm::ERROR_USER_LOGGED ) {
@@ -44,8 +45,8 @@ class SiteController extends Controller
                         $this->redirect(array('site/warning','view'=>'login-blocked'));
                     }
                 }
-            } 
-            
+            }
+
             if ( $rememberedName = Yii::app()->user->getRememberedName()) {
                 $model->username = $rememberedName;
                 $model->rememberMe = true;
@@ -62,10 +63,10 @@ class SiteController extends Controller
     {
         parent::logout();
     }
-    
+
     public function actionWarning($view)
     {
-        $this->render($view);        
+        $this->render($view);
     }
 
     public function actionConfig()
@@ -74,7 +75,7 @@ class SiteController extends Controller
         $dsn = Yii::app()->db->connectionString;
         $user = Yii::app()->db->username;
         $password = '';
-        
+
         $dbh = new PDO($dsn, $user, $password);
 
         $dbh->exec('create table `AuthItem`
@@ -105,7 +106,7 @@ class SiteController extends Controller
            primary key (`itemname`,`userid`),
            foreign key (`itemname`) references `AuthItem` (`name`) on delete cascade on update cascade
         ) engine InnoDB');
-        
+
         $auth=Yii::app()->authManager;
 
         $auth->createRole('admin');
@@ -117,7 +118,7 @@ class SiteController extends Controller
         $auth->assign('supervisor',2);
         $auth->assign('merchandiser',3);
         $auth->assign('customer',4);
-        
+
         echo 'Roles have been created in database. Do not visit this link anymore';
     }
 

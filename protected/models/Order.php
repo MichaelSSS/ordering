@@ -75,20 +75,15 @@ class Order extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-            array('max_discount,  assignee, customer', 'required'),
-			array('max_discount, assignee, customer', 'numerical', 'integerOnly'=>true),
-
-        		array('order_name','match','not'=>'true','pattern'=>'|[^a-zA-Z0-9]|','message'=>'Order name can only contain numbers and letters'),
-             array('order_name','unique','message'=>'Order name name already exist'),
-             array('order_name','exist','message'=>'Order name name already exist'),
-
-
-            array('preferable_date','date','message'=>'Illegal Date'),
-
+//            array('max_discount,  assignee, customer', 'required'),
+			array(' assignee, customer', 'numerical', 'integerOnly'=>true),
+        	array('order_name','match','not'=>'true','pattern'=>'|[^a-zA-Z0-9]|','message'=>'Order name can only contain numbers and letters'),
+            array('order_name','unique','message'=>'Order name name already exist'),
+            array('order_name','exist','message'=>'Order name name already exist'),
+//            array('preferable_date','date','message'=>'Illegal Date'),
 			array('order_name', 'length', 'max'=>128),
 			array('total_price', 'length', 'max'=>12),
 			array('status', 'length', 'max'=>9),
-
             array('order_date','default', 'value'=>new CDbExpression('NOW()'),'setOnEmpty'=>false,'on'=>'insert'),
 			array('searchValue','numerical', 'integerOnly'=>true,'message'=>'only alfanumeric'),
 			// The following rule is used by search().
@@ -107,6 +102,7 @@ class Order extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'assignees'=>array(self::BELONGS_TO, 'User', 'assignee'),
+            'ordered'=>array(self::HAS_MANY, 'User', 'assignee'),
 		);
 	}
 

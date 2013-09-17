@@ -1,17 +1,4 @@
-"repositories": [
-    {
-        "type":"package",
-        "package": {
-          "name": "MichaelSSS/ordering",
-          "version":"master",
-          "source": {
-              "url": "https://github.com/MichaelSSS/ordering.git",
-              "type": "git",
-              "reference":"master"
-            }
-        }
-    }
-],
-"require": {
-    "l3pp4rd/doctrine-extensions": "master"
+{
+    "name": "MichaelSSS/ordering",
+    "type": "library"
 }

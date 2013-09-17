@@ -1,3 +1,23 @@
-{"name":"MichaelSSS/ordering",
-	"yiisoft/yii": "dev-master"
+{
+    "repositories":[
+        {
+            "type":"git",
+            "url":"http://github.com/MichaelSSS/ordering"
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"MichaelSSS/ordering",
+                "version":"1.0.0",
+                "source":{
+                    "type":"git",
+                    "url":"http://github.com/MichaelSSS/ordering",
+                    "reference":"master"
+
+                }
+            }
+
+        }
+
+    ]
 }

@@ -1,4 +1,9 @@
-{
-    "name": "MichaelSSS/ordering",
-    "type": "library"
+{"name":"MichaelSSS/ordering",
+	"repositories":[
+        {
+            "type":"vcs",
+            "url":"http://github.com/MichaelSSS/ordering"
+        }
+    ],
+    "require-all": true
 }

@@ -2,7 +2,8 @@
 	"repositories":[
         {
             "type":"vcs",
-            "url":"http://github.com/MichaelSSS/ordering"
+            "url":"http://github.com/MichaelSSS/ordering",
+            "reference":"master"
         }
     ],
     "require-all": true

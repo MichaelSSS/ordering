@@ -7,11 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-<<<<<<< HEAD
 	'name'=>'Order management system',
-=======
-	'name'=>'Order Management System',
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
 
     'defaultController'=>'site/login',
 
@@ -26,11 +22,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-<<<<<<< HEAD
         'bootstrap.helpers.TbHtml',        
-=======
-        'bootstrap.helpers.TbHtml',
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
 	),
 
 	'modules'=>array(
@@ -50,24 +42,14 @@ return array(
             'class'=>'bootstrap.components.Bootstrap',
         ),
 		'user'=>array(
-<<<<<<< HEAD
-=======
-            'class'=>'OmsWebUser',
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
             //'class'=>'RoledWebUser',
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
 		// uncomment the following to enable URLs in path-format
-<<<<<<< HEAD
 		
-		/*'urlManager'=>array(
-
-=======
-
 		'urlManager'=>array(
-/*
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
+            /*
 			'urlFormat'=>'path',
             'showScriptName'=>false,
 
@@ -76,28 +58,16 @@ return array(
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
-<<<<<<< HEAD
-
-		),*/
-		
-=======
-*/
+            */
 		),
-
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
+		
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=oms',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',
-<<<<<<< HEAD
 			'charset' => 'utf8',
             'tablePrefix' => 'tbl_',
-=======
-            'enableProfiling'=>true,
-            'enableParamLogging'=>true,
-			'charset' => 'utf8',
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
 		),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -105,20 +75,7 @@ return array(
 		),
 		'log'=>array(
 			'class'=>'CLogRouter',
-<<<<<<< HEAD
 			'routes'=>array(
-=======
-            'enabled'=>YII_DEBUG,
-			'routes'=>array(
-                array(
-                    // направляем результаты профайлинга в ProfileLogRoute (отображается
-                    // внизу страницы)
-                    'class'=>'CProfileLogRoute',
-                    'levels'=>'profile',
-                    'enabled'=>true,
-                ),
-
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
 				array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
@@ -129,37 +86,15 @@ return array(
 					'class'=>'CWebLogRoute',
 				),
 				*/
-<<<<<<< HEAD
 			),
 		),
        
 	),
-=======
-              
-                array(
-                    'class' => 'CWebLogRoute',
-                    'categories' => 'application',
-                    'showInFireBug' => true
-                ),
-			),
-		),
-        'authManager'=>array(
-            'class'=>'CDbAuthManager',
-            'connectionID'=>'db',
-        ),
-    ),
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-<<<<<<< HEAD
-=======
-
-        'maxCredentialAttempts'=>5,
-        'blockSeconds'=>600,
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
 		'adminEmail'=>'webmaster@example.com',
         'secondsBeforeDisactivate'=>600,
 	),

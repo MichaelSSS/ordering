@@ -122,7 +122,11 @@ class User extends CActiveRecord
 
     public function search()
     {
+        $this->dbCriteria->condition = '`t`.`deleted`=0';
+        $this->dbCriteria->order='`t`.`username` ASC';
+
         return new CActiveDataProvider('User', array(
+            'model'=>$this,
             'criteria'   => $this->searchCriteria,
             'pagination' => array(
                 'pageSize' => $this->currentPageSize,
@@ -131,13 +135,5 @@ class User extends CActiveRecord
                 'multiSort' => true,
             ),
         ));
-    }
-
-    public function updateLastActionTime()
-    {
-        $currentTime = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
-        $this->lastActionTime = $currentTime;
-        $this->update(array('lastActionTime'));
-
     }
 }

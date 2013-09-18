@@ -36,14 +36,17 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 <div class="row">
                     <?php echo "<label class='control-label'>Total number of items</label>"; ?>
                     <?php echo  "12";  ?>
+
                 </div>
                 <div class="row">
                     <?php echo $form->labelEx($model,'total_price', array('class'=>'control-label')); ?>
                     <?php echo 1200; ?>
+                    <?php echo  $form->hiddenField($model,'total_price', array('value'=>1200)); ?>
                 </div>
                 <div class="row">
                     <?php echo $form->labelEx($model,'order_date', array('class'=>'control-label')); ?>
                     <?php echo date('m/d/Y'); ?>
+                    <?php echo  $form->hiddenField($model,'order_date', array('value'=>date('m/d/Y'))); ?>
                 </div>
                 <div class="row">
                     <?php echo $form->textFieldRow($model, 'preferable_date', array('hint'=>'',)); ?>
@@ -61,7 +64,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
         <div class="row">
             <div class="form-actions">
-                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Create')); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Save')); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Order')); ?>
 
 
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -103,7 +107,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     <?php $this->endWidget(); ?>
 
                 </div>
-                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Refresh')); ?>
             </div>
         </div>
         <?php $this->endWidget(); ?>

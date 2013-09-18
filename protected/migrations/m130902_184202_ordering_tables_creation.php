@@ -7,7 +7,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 	{
 
-        $this->createTable('{{order}}', array(
+        $this->createTable('order', array(
             'id_order' => 'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT',
             'order_name' => 'VARCHAR(128) NOT NULL',
             'total_price' => 'DECIMAL(12,2) NOT NULL',
@@ -21,9 +21,9 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'trash' => "tinyint(4) NOT NULL DEFAULT 0 ",
 
         ));
-        $this->addForeignKey('FK_user', '{{order}}','assignee', '{{user}}', 'id' );
+        $this->addForeignKey('FK_user', 'order','assignee', 'user', 'id' );
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'aaa 1',
             'total_price' => '152.00',
             'max_discount' => '2',
@@ -36,7 +36,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'aaa 2',
             'total_price' => '1002.2',
             'max_discount' => '20',
@@ -49,7 +49,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'rty4 2',
             'total_price' => '335.22',
             'max_discount' => '22',
@@ -62,7 +62,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'ffgtr 2',
             'total_price' => '5543.33',
             'max_discount' => '11',
@@ -75,7 +75,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'eer4 1',
             'total_price' => '12346.43',
             'max_discount' => '6',
@@ -88,7 +88,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'vbnbt 2',
             'total_price' => '55632.22',
             'max_discount' => '5',
@@ -101,7 +101,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => '2344vv 2',
             'total_price' => '22356.15',
             'max_discount' => '66',
@@ -114,7 +114,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'gvfv5r 2',
             'total_price' => '5861.33',
             'max_discount' => '5',
@@ -127,7 +127,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'ddwwd 2',
             'total_price' => '66543.23',
             'max_discount' => '12',
@@ -140,7 +140,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => '1124 2',
             'total_price' => '2345.65',
             'max_discount' => '44',
@@ -153,7 +153,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'vccd 2',
             'total_price' => '1234.2',
             'max_discount' => 'sd',
@@ -166,7 +166,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'aaa 3',
             'total_price' => '5892.1',
             'max_discount' => '40',
@@ -179,7 +179,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
-        $this->insert('{{order}}', array(
+        $this->insert('order', array(
             'order_name' => 'aaa 4',
             'total_price' => '1402.29',
             'max_discount' => 15,
@@ -196,7 +196,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 	public function down()
 	{
-		$this->dropTable('{{order}}');
+		$this->dropTable('order');
 		return true;
 	}
 

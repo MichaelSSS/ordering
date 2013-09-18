@@ -8,6 +8,7 @@
  * @property integer $trash
  * @property string $order_name
  * @property string $total_price
+ * @property integer $auto_index
  * @property integer $max_discount
  * @property string $delivery_date
  * @property string $status
@@ -22,7 +23,9 @@ class Order extends CActiveRecord
     private $assigneesRole;
     public $searchCriteria = array();
     public $currentPageSize = 10;
+    public $maxIndex;
     const IS_DELETED = 0;
+    const ORDER_FORMAT = '0000';
 
 
 
@@ -64,7 +67,7 @@ class Order extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{order}}';
+		return 'order';
 	}
 
 	/**
@@ -75,16 +78,15 @@ class Order extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-//            array('max_discount,  assignee, customer', 'required'),
+            array(' assignee, customer, preferable_date, total_price', 'required'),
 			array(' assignee, customer', 'numerical', 'integerOnly'=>true),
         	array('order_name','match','not'=>'true','pattern'=>'|[^a-zA-Z0-9]|','message'=>'Order name can only contain numbers and letters'),
             array('order_name','unique','message'=>'Order name name already exist'),
-            array('order_name','exist','message'=>'Order name name already exist'),
-//            array('preferable_date','date','message'=>'Illegal Date'),
+            array('preferable_date','date', 'format'=>'M/d/yyyy','message'=>'Illegal Date','except'=>'remove'),
 			array('order_name', 'length', 'max'=>128),
 			array('total_price', 'length', 'max'=>12),
 			array('status', 'length', 'max'=>9),
-            array('order_date','default', 'value'=>new CDbExpression('NOW()'),'setOnEmpty'=>false,'on'=>'insert'),
+            array('preferable_date','checkDate','now'=>date('m/d/Y'),'except'=>'remove','message'=>'r false' ),
 			array('searchValue','numerical', 'integerOnly'=>true,'message'=>'only alfanumeric'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -102,7 +104,7 @@ class Order extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'assignees'=>array(self::BELONGS_TO, 'User', 'assignee'),
-            'ordered'=>array(self::HAS_MANY, 'User', 'assignee'),
+            'ordered'=>array(self::HAS_MANY, 'OrderDetails', 'order_id'),
 		);
 	}
 
@@ -196,6 +198,31 @@ if(!empty($this->searchValue))
 
         $list = array(Yii::app()->user->getState('user_id')=>'-me-') + $list;
         return $list;
+    }
+
+    protected function beforeSave()
+    {
+        if($this->order_name =="")
+        {
+            $criteria=new CDbCriteria;
+            $criteria->select='MAX(auto_index) AS maxIndex';
+            $row = $this->find($criteria);
+            $maxIndex = $row['maxIndex'];
+            $this->order_name = self::ORDER_FORMAT . ++$maxIndex;
+            $this->auto_index = $maxIndex;
+        }
+
+//        $this->order_date = str_replace('/','-',$this->order_date);
+        return true;
+    }
+
+    public function checkDate($preferable_date, $params){
+
+       if(strtotime($params["now"]) >= strtotime($this->preferable_date))
+       {
+           $this->addError($preferable_date, 'The date is incorrect.');
+       }
+
     }
 	/**
 	 * Returns the static model of the specified AR class.

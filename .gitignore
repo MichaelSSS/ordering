@@ -3,6 +3,6 @@
 .hgignore
 protected/yiic.bat
 protected/runtime/*
-protected/config/*
+
 assets/
 /nbproject/

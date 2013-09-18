@@ -90,7 +90,7 @@ class Order extends CActiveRecord
 			array('searchValue','numerical', 'integerOnly'=>true,'message'=>'only alfanumeric'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_order,  order_name, total_price, max_discount, delivery_date, status, assignees,searchValue, assigneesRole, customer', 'safe', 'on'=>'search'),
+			array('id_order,  order_name, total_price, max_discount, delivery_date, status, assignees,searchValue, assigneesRole, customer,trash', 'safe', 'on'=>'search'),
 		);
 	}
 

@@ -47,6 +47,4 @@
 <?php $this->endWidget(); ?>
 </div>
    <? $this->renderPartial('grid',array('model'=>$model, 'fields'=>$fields)); ?>
-
-
 </div>

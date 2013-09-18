@@ -14,7 +14,7 @@
             $('.remove a').live('click',function(){
                 var link = $(this).attr('href');
                 $('.btn-primary').attr('href',link);
-            })
+            });
 
             $('.btn-primary').click(function() {
                 var url = $(this).attr('href');

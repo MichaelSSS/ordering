@@ -1,4 +1,3 @@
-
 <?php $dataProvider = $model->search();?>
 <?php $grid = $this->widget('OmsGridView', array(
 'id'=>'id',

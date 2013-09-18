@@ -2,14 +2,14 @@
     $(document).ready(function () {
         $('.remove a').live('click',function(){
             var link = $(this).attr('href');
-            $('.btn-primary').attr('href',link);
-        })
+            $('#myModal .btn-primary').attr('href',link);
+        });
 
         $('.remove').click(function(){
             var link = $(this).find('a').attr('href');
-            $('.btn-primary').attr('href',link);
+            $('#myModal .btn-primary').attr('href',link);
 
-        })
+        });
     });
 </script>
 <?php $this->renderPartial('/user/_del'); ?> <!--modal-->
@@ -60,7 +60,8 @@
 <?php $this->endWidget(); ?>
 </div>
 
-<?php $grid = $this->widget('OmsGridView', array(
+<?php 
+$grid = $this->widget('OmsGridView', array(
 
 	'dataProvider'=>$dataProvider,
     'ajaxUpdate'=>'search-result-count',
@@ -124,7 +125,9 @@
             ),
             'buttons'=>array(
                 'remove'=>array(
-                    'url' => 'Yii::app()->createUrl(\'admin/remove\',array(\'id\'=>$data->id))',
+                    'url' => '( !Yii::app()->user->isActive($data->id,time()) ) ?
+                            Yii::app()->createUrl("admin/remove",array("id"=>$data->id)) : "";',
+                    /*'visible' => '!Yii::app()->user->isActive($data->id,time())',*/
                     'label'=>'remove',
                     'imageUrl'=>'images/grid_remove.bmp',
                 ),

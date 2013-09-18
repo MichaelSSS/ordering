@@ -3,5 +3,6 @@
 protected/yiic.bat
 protected/runtime/*
 protected/config/*
+protected/tests/report
 assets/
 /nbproject/

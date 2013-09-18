@@ -25,7 +25,7 @@ class OmsWebUser extends CWebUser
                 list($id,$name,$duration,$states)=$data;
                 if($this->beforeLogin($id,$states,true))
                 {
-                    $this->rememberedName = $name;
+                    $this->rememberedName = htmlspecialchars($name);
                     if($this->autoRenewCookie)
                     {
                         $this->saveToCookie($duration);
@@ -155,8 +155,8 @@ class OmsWebUser extends CWebUser
                 FROM user_login 
                 WHERE user_id=?
             ');
+            
             return 0 == strcmp($command->queryScalar(array(1=>$userId)), $_SERVER['HTTP_USER_AGENT']);
-    
     }
 
     public function makeUnActive()

@@ -30,7 +30,22 @@
 			this.checked = $checks.length > 0 && $checks.length === $checks.filter(':checked').length;
 		});
 		return this;
-	};
+	},
+
+    /**
+    * Oms functions
+    */
+    
+    disableRemoveActiveUser = function() {
+
+        $('.grid-view .remove').not(':has(a[href])').removeAttr('data-target');
+        $('.grid-view a:not([href])').attr('title','active user');
+        $('.grid-view a:not([href]) img').attr({
+            src:'images/grid_remove_disabled.bmp',
+            alt:'active user'
+        });
+
+    };
 
 	methods = {
 		/**
@@ -273,6 +288,7 @@
 						yiiXHR[id] = null;
 						$grid.removeClass(settings.loadingClass);
                         $('a.sort-link').css('cursor','default');
+                        disableRemoveActiveUser();
 
 					},
 					error: function (XHR, textStatus, errorThrown) {
@@ -406,6 +422,8 @@
 			return false;
 		}
 	};
+
+    disableRemoveActiveUser();
 
 /******************************************************************************
  *** DEPRECATED METHODS

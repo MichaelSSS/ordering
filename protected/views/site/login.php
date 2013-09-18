@@ -28,6 +28,14 @@ $this->pageTitle=Yii::app()->name; ?>
             	'enableClientValidation'=>true,
             	'clientOptions'=>array(
         	    	'validateOnSubmit'=>true,
+                    'afterValidate' => new CJavaScriptExpression('function(form, data, hasError) {
+                        if ( !hasError ) {
+                            form.on("submit",function(e) {
+                                $("button",this).attr("disabled", true);
+                            });
+                        }
+                        return true;
+                    }'),
             	),                 
                 'type'=> 'inline',
                 'htmlOptions'=>array('class'=>'well',

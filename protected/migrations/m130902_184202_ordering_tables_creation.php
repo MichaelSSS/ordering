@@ -156,7 +156,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         $this->insert('order', array(
             'order_name' => 'vccd 2',
             'total_price' => '1234.2',
-            'max_discount' => 'sd',
+            'max_discount' => '54',
             'order_date' => '2002-11-09',
             'preferable_date' => '2002-11-09',
             'delivery_date' => '2012-06-08',

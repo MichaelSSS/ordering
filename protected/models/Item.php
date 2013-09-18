@@ -59,14 +59,12 @@ class Item extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-                        'id'         => 'Id',
-                        'name'         => 'Name',
-                        'description'         => 'Description',
-                        'price' => 'Price',
-			'quantity' => 'Quantity',
-                        'totalprice' => 'Totalprice',
-                        
-                        
+            		 'id' => 'Id',
+            	   'name' => 'Name',
+            'description' => 'Description',
+            	  'price' => 'Price',
+			   'quantity' => 'Quantity',
+             'totalprice' => 'Totalprice',               
 		);
 	}
         

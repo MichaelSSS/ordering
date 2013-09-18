@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Order management system',
+	'name'=>'Order Management System',
 
     'defaultController'=>'site/login',
 
@@ -97,27 +97,18 @@ return array(
 					'class'=>'CWebLogRoute',
 				),
 				*/
-                array(
-                    'class'=>'application.extensions.yii-debug-toolbar.YiiDebugToolbarRoute',
-                    'ipFilters'=>array('127.0.0.1','192.168.1.215'),
-                ),
+              
                 array(
                     'class' => 'CWebLogRoute',
                     'categories' => 'application',
                     'showInFireBug' => true
                 ),
-
-
-
-
 			),
 		),
         'authManager'=>array(
             'class'=>'CDbAuthManager',
             'connectionID'=>'db',
         ),
-
-
     ),
 
 	// application-level parameters that can be accessed
@@ -125,8 +116,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 
-
-        'secondsBeforeDisactivate'=>900,
         'maxCredentialAttempts'=>5,
         'blockSeconds'=>600,
 		'adminEmail'=>'webmaster@example.com',

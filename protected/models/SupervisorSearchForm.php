@@ -8,22 +8,22 @@
 class SupervisorSearchForm extends CFormModel
 {
     
-        public $keyField;
+    public $keyField;
 	public $criteria;
 	public $keyValue;
 
-        public $keyFields = array('All Columns', 'Id','Name', 'Description', 'Price', 'Quantity', 'Totalprice');
-        public $criterias = array('equals','not equals','starts with','contains','does not contain');
+    public $keyFields = array('All Columns', 'Id','Name', 'Description', 'Price', 'Quantity', 'Totalprice');
+    public $criterias = array('equals','not equals','starts with','contains','does not contain');
 
-        public $keyAttributes = array(
-            'All Columns'=>'*',
-            'Id'=>'id',
-            'Name'=>'name',
-            'Description'=>'description',
-            'Price'=>'price',
-            'Quantity'=>'quantity',
-            'Totalprice'=>'totalprice'
-        );
+    public $keyAttributes = array(
+        'All Columns'=>'*',
+        'Id'=>'id',
+        'Name'=>'name',
+        'Description'=>'description',
+        'Price'=>'price',
+        'Quantity'=>'quantity',
+        'Totalprice'=>'totalprice'
+    );
 
     public $operators = array(
                  'equals'  => " =?",

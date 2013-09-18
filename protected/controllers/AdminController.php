@@ -38,15 +38,15 @@ class AdminController extends Controller
             if( $fields->validate() )
                 $model->searchCriteria = $fields->getCriteria();
 
-<<<<<<< HEAD
+
         }
         if ( isset($model->searchCriteria['condition']) ) {
             $model->searchCriteria['condition'] = '(' . $model->searchCriteria['condition'] . ') AND `t`.`deleted`=0';
         } else {
             $model->searchCriteria['condition'] = '`t`.`deleted`=0';
-=======
+
         }                
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
+
 
         $this->render('index',array('model'=>$model, 'fields'=>$fields));
     }

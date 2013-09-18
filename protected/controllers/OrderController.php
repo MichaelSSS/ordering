@@ -56,11 +56,34 @@ class OrderController extends Controller
     public function actionRemove($id)
     {
         $order = $this->loadModel($id);
+        $order->scenario = 'remove';
         $order->trash=1;
+
         if($order->save())
             $this->redirect(Yii::app()->createUrl('customer/index'));
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if(!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
+    public function actionCreate()
+    {
+        $model=new Order;
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        if(isset($_POST['Order']))
+        {
+            $model->attributes=$_POST['Order'];
+            $model->status ="Created";
+            $model->customer =Yii::app()->user->getState('user_id');
+
+            if($model->save())
+                $this->redirect(Yii::app()->createUrl('customer' . '/index'));
+        }
+
+        $this->render('create',array(
+            'model'=>$model,
+        ));
     }
 }

@@ -30,7 +30,7 @@
                 'ajax' => array(
                     'type' => 'Post',
                     'url' => $this->createUrl('customer/dependentselect'),
-                    'update' => '#Order_filterStatus',
+                    'update' => '#Order_filterValue',
                 ),
 
             ));
@@ -38,7 +38,7 @@
             </div>
             <div class="span3">
             <?php
-            echo $form->dropDownlist($model, 'filterStatus', $model->filterStatuses,
+            echo $form->dropDownlist($model, 'filterValue', $model->filterStatuses,
                 array(
                     'options' => array(
                         array_search('None', $model->filterStatuses) => array('selected' => true

@@ -1,6 +1,22 @@
 {
-
-  "name":"MichaelSSS/ordering"
-
-
+    "name": "MichaelSSS/ordering",
+    "description": "OMS",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Qiang Xue",
+            "email": "qiang.xue@gmail.com",
+            "homepage": "http://www.yiiframework.com/",
+            "role": "Founder and project lead"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/yiisoft/yii"
+    },
+    "bin": [
+        "framework/yiic"
+    ],
+    "require": {
+        "php": ">=5.1.0"
+    }
 }

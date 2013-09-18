@@ -113,6 +113,7 @@ class UserIdentity extends CUserIdentity
             Yii::app()->user->setState('blocked','0');
             $this->errorCode=self::ERROR_NONE;
             $this->_userId = $model->id;
+            Yii::app()->user->setState('user_id', $model->id);
             $this->_home = $model->role;
             $this->resetAttempt($userIp);
             return true;

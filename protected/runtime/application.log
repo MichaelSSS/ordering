@@ -9864,3 +9864,14 @@ Stack trace:
 REQUEST_URI=/ordering/index.php?r=admin/
 HTTP_REFERER=http://yii.local/ordering/index.php?r=admin/
 ---
+2013/09/18 15:00:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "info".' in D:\projects\yii.local\yii\framework\web\CController.php:483
+Stack trace:
+#0 D:\projects\yii.local\yii\framework\web\CController.php(270): CController->missingAction('info')
+#1 D:\projects\yii.local\yii\framework\web\CWebApplication.php(282): CController->run('info')
+#2 D:\projects\yii.local\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('site/info')
+#3 D:\projects\yii.local\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\projects\yii.local\ordering\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ordering/index.php?r=site/info
+HTTP_REFERER=http://yii.local/ordering/index.php?r=admin/index
+---

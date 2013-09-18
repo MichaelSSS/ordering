@@ -4,6 +4,7 @@ class m130917_194729_create_price extends CDbMigration
 {
 	public function up()
 	{
+
 	$this->createTable('price', array(
             'id_price' => 'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT',
 			'id_item' => 'INTEGER NOT NULL',
@@ -14,27 +15,27 @@ class m130917_194729_create_price extends CDbMigration
 	$this->insert('price', array(
 			'id_item' => '1',
         	'price' => '10',
-        	'date' => '',
+        	//'date' => '',
     ));
 	$this->insert('price', array(
 			'id_item' => '2',
         	'price' => '20',
-        	'date' => '',
+        	//'date' => '',
      ));
 	$this->insert('price', array(
 			'id_item' => '3',
         	'price' => '30',
-        	'date' => '',
+        	//'date' => '',
     ));
 	$this->insert('price', array(
 			'id_item' => '4',
         	'price' => '40',
-        	'date' => '',
+        	//'date' => '',
     ));
 	$this->insert('price', array(
 			'id_item' => '5',
         	'price' => '50',
-        	'date' => '',
+        	//'date' => '',
     ));
 	        return true;
 	}

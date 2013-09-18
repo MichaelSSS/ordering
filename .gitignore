@@ -2,10 +2,10 @@
 .hg
 .hgignore
 protected/yiic.bat
-<<<<<<< HEAD
-=======
+
+protected/vendor/*
 protected/runtime/*
 
 assets/
 /nbproject/
->>>>>>> 00b46913b5ac4fe73b496b904354d603fa54952d
+

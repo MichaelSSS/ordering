@@ -5,7 +5,7 @@
 /* @var $form CActiveForm  */ 
 ?>
 
-<link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/login.css' />
+
 
 <a href=<?php echo Yii::app()->createUrl('site/config');?> class='span6 offset3'>Click me once</a>
 

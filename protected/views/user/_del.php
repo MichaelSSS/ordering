@@ -6,10 +6,11 @@
     </div>
 
     <div class="modal-body">
-        <p>Вы уверены что хотите удалить пользователя?</p>
+        <p>The user will be deleted from the list of Users.</p>
+        <p>Are you sure you want to proceed?</p>
     </div>
 
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
             $('.remove a').live('click',function(){
                 var link = $(this).attr('href');
@@ -34,16 +35,23 @@
     </script>
     <div class="modal-footer">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'type'=>'primary',
-            'label'=>'OK',
-            'url'=>'#',
-            'htmlOptions'=>array('data-dismiss'=>'modal'),
-        )); ?>
+                   'type' => 'primary',
+                  'label' => 'OK',
+                    'url' => '#',
+            'htmlOptions' => array(
+                'data-dismiss' => 'modal'
+                ),
+            ));
+        ?>
         <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'label'=>'Close',
-            'url'=>'#',
-            'htmlOptions'=>array('data-dismiss'=>'modal','class'=>'close-modal'),
-        )); ?>
+                  'label' => 'Close',
+                    'url' => '#',
+            'htmlOptions' => array(
+                'data-dismiss' => 'modal',
+                       'class' => 'close-modal'
+                ),
+            ));
+        ?>
     </div>
 
 <?php $this->endWidget(); ?>

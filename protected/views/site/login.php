@@ -5,8 +5,6 @@
 /* @var $form CActiveForm  */ 
 ?>
 
-
-
 <a href=<?php echo Yii::app()->createUrl('site/config');?> class='span6 offset3'>Click me once</a>
 
 <?php /** @var BootActiveForm $form */

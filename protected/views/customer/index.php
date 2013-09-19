@@ -1,7 +1,16 @@
-<h6>This page is appointed to create new and managing existing users</h6>
+<?php $this->widget('bootstrap.widgets.TbTabs', array(
+         'type' => 'tabs',
+    'placement' => 'above', // 'above', 'right', 'below' or 'left'
+         'tabs' => array(
+        array('label' => 'Ordering',
+            'content' => '<p>This page is appointed to create new and managing existing users</p>',
+             'active' => true
+             ),
+        ),
+    ));
+?>
 
-<!----------------------------------------------------------------
---- ?????? ?? ???????? ????????????------------------------------>
+
 <?php echo CHtml::link('Create New Order', array('order/create')); ?>
 <?php ?>
 
@@ -16,7 +25,7 @@
 ?>
 
 <fieldset>
-    <legend>&nbspSearch by&nbsp</legend>
+    <legend>Search by</legend>
 
     <div id="search-fields">
         <div class="row">

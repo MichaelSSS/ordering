@@ -2,10 +2,8 @@
 <?php
 /* @var $this SiteController */
 /* @var $model LoginForm */
-/* @var $form CActiveForm  */ 
+/* @var $form CActiveForm  */
 ?>
-
-<a href=<?php echo Yii::app()->createUrl('site/config');?> class='span6 offset3'>Click me once</a>
 
 <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -13,7 +11,15 @@
         'type'                   => 'horizontal',
         'enableClientValidation' => true,
         'clientOptions'          => array(
-            'validateOnSubmit'   => true
+            'validateOnSubmit'   => true,
+            'afterValidate' => new CJavaScriptExpression('function(form, data, hasError) {
+                if ( !hasError ) {
+                    form.on("submit",function(e) {
+                        $("button",this).attr("disabled", true);
+                    });
+                }
+                return true;
+            }'),
         ),            
         'htmlOptions'            => array(
             'class'              => 'inline',  
@@ -46,18 +52,3 @@
 </div>
 
 <?php $this->endWidget(); ?>
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-

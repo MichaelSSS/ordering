@@ -9,6 +9,17 @@ class SupervisorController extends Controller
 			'accessControl',
 		);
 	}
+    public function accessRules()
+    {
+	    return array(
+            array('allow',
+                'roles'=>array('supervisor'),
+            ),
+            array('deny',
+                'users'=>array('*'),
+            ),
+    	);
+    }
          
     	public function actionIndex()
 	{

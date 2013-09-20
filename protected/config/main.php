@@ -109,6 +109,9 @@ return array(
         'authManager'=>array(
             'class'=>'CDbAuthManager',
             'connectionID'=>'db',
+            'assignmentTable' => 'auth_assignment',
+            'itemTable' => 'auth_item',
+            'itemChildTable' => 'auth_item_child',
         ),
     ),
 

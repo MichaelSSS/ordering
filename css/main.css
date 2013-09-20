@@ -7,9 +7,8 @@ ul {
 	margin: 0;
 	padding: 0;
 }
-.container { 
+.container {
     margin: 1em auto; 
-   
 }
 .wrap {
 	border: 1px solid #000;
@@ -19,4 +18,26 @@ ul {
 }
 .head li {
 	display: inline-block;
+}
+.required span {
+    display: none;
+}
+.row fieldset {
+    border: 1px solid #000;
+    padding: 0 .2em;
+}
+.row legend {
+    width: auto;
+    border-bottom: none;
+    margin: 0 1em;
+    padding: 0 .5em;
+}
+legend, label, .btn {
+    text-transform: capitalize;
+}
+.controls .span3  label {
+    display: none;
+ }
+.form-horizontal .control-label {
+    text-align: left;
 }

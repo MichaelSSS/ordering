@@ -3,57 +3,55 @@
 $dataProvider = $model->search(); 
 //ArticleData::model()->with('article','article.category')->findAll();
 ?>
-<div class="form">
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'search-form',
-    'enableClientValidation'=>true,
-    'clientOptions'=>array(
-		'validateOnSubmit'=>true, 
-    ),
-));
-   
-   $emps=price::model()->with('item')->findAll();   
-?>
-    <fieldset><legend>&nbspSearch by&nbsp</legend> 
+
+    <?php $form=$this->beginWidget('CActiveForm', array(
+                            'id' => 'search-form',
+        'enableClientValidation' => true,
+                 'clientOptions' => array(
+              'validateOnSubmit' => true,
+              ),
+        ));
+
+       $emps=price::model()->with('item')->findAll();
+    ?>
+    <fieldset>
+        <legend>Search by</legend>
         <div>Field Filter</div>
         <div id="search-fields">
         <?php 
-            echo $form->dropDownlist($fields,'keyField',$fields->keyFields);
-            echo $form->dropDownlist($fields,'criteria',$fields->criterias);
-            echo $form->textField($fields,'keyValue');
+            echo $form->dropDownlist($fields, 'keyField', $fields->keyFields);
+            echo $form->dropDownlist($fields, 'criteria' ,$fields->criterias);
+            echo $form->textField($fields, 'keyValue');
         ?>
         </div>
-         <?php
-
-                echo CHtml::SubmitButton('submit', '',
-                    array(
-                        'type' => 'GET',
-                        'update' => 'search-fields',
-                    ),
-                    array(
-                        'type' => 'submit',
-                    ));
-
-
-                ?>
-        
+        <?php
+            echo CHtml::SubmitButton('submit', '', array(
+                  'type' => 'GET',
+                'update' => 'search-fields',
+                ),
+                array(
+                    'type' => 'submit',
+                )
+            );
+        ?>
     </fieldset>
 <?php $this->endWidget(); ?>
-</div>
+
 <div id="grid-extend">
-<?php echo CHtml::link('show ' . $model->nextPageSize[$model->currentPageSize] . ' items',
-    array(
-        'supervisor/index',
-        'pageSize'=>$model->nextPageSize[$model->currentPageSize],
-    ),
-    array('id'=>'page-size')
-);?>
+    <?php echo CHtml::link('show ' . $model->nextPageSize[$model->currentPageSize] . ' items',
+        array(
+            'supervisor/index',
+            'pageSize' => $model->nextPageSize[$model->currentPageSize],
+        ),
+        array('id' => 'page-size')
+        );
+    ?>
 </div>
 <?php $grid = $this->widget('zii.widgets.grid.CGridView', array(
-    'dataProvider'=>$dataProvider,
-    'ajaxUpdate'=>'grid-extend',
-    'updateSelector'=>'{page}, {sort}, {search-fields}, #page-size',
-    'filterSelector'=>'#search-fields',
+      'dataProvider' => $dataProvider,
+        'ajaxUpdate' => 'grid-extend',
+    'updateSelector' => '{page}, {sort}, {search-fields}, #page-size',
+    'filterSelector' => '#search-fields',
 
     'columns'=>array(
 		array(
@@ -75,8 +73,6 @@ $dataProvider = $model->search();
         	array(
 			'name'=>'totalprice',
                    'value'=>'$data->Totalprice',
-                    
-
 		),
 
 		array(

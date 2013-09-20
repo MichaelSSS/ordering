@@ -4,10 +4,18 @@
 <meta charset='utf-8' />
 
 <?php Yii::app()->bootstrap->register(); ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'main.css'); ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'pager.css'); ?>
 
-<link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/main.css' />
-<link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/admin.css' />
-<link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/normalize.css' />
+    <?php
+    //    $cs = Yii::app()->getClientScript();
+    //    $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui-1.10.2.js');
+    //    $cs->registerCssFile(Yii::app()->baseUrl.'/css/yourcss.css');
+    Yii::app()->clientScript->registerCoreScript('jquery.ui');
+    Yii::app()->clientScript->registerCssFile(
+        Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
+    );
+    ?>
 
 
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -16,21 +24,21 @@
     <div class='container'>
         <div class='row'>
 
-        <div id="confirm-logout" class="modal hide fade">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3 id="confirm-logout-header">Warning</h3>
+            <div id="confirm-logout" class="modal hide fade">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 id="confirm-logout-header">Warning</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to log out from the application?</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" onclick="javascript:window.location.assign('<?php echo CHtml::normalizeUrl(array('site/logout')) ?>')">Yes</a>
+                    <a class="btn" data-dismiss="modal" aria-hidden="true">No</a>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>Are you sure you want to log out from the application?</p>
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" onclick="javascript:window.location.assign('<?php echo CHtml::normalizeUrl(array('site/logout')) ?>')">Yes</a>
-                <a class="btn" data-dismiss="modal" aria-hidden="true">No</a>
-            </div>
-        </div>
 
-            <div class='span12'>
+            <div class='span10 offset1'>
                 <header class='head pull-right'>
                     <?php 
                         $userHome = $this->id;
@@ -63,11 +71,22 @@
                         ));
                     ?>  
                 </header>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span10 offset1">
                 <section>
                     <?php echo $content; ?>
                 </section>
             </div>
-        </div> 
+        </div>
+        <div class="row">
+            <div class="span10 offset1">
+                <footer>
+
+                </footer>
+            </div>
+        </div>
     </div>
 </body>
 </html>

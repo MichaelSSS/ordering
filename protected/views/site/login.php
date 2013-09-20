@@ -5,8 +5,6 @@
 /* @var $form CActiveForm  */
 ?>
 
-<link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/login.css' />
-
 <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id'                     => 'login-form',

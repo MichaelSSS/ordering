@@ -1,73 +1,82 @@
-<link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/gridview/styles.css" />
+
+<?php $this->widget('bootstrap.widgets.TbTabs', array(
+         'type' => 'tabs',
+    'placement' => 'above', // 'above', 'right', 'below' or 'left'
+         'tabs' => array(
+             array('label' => 'Administration',
+                 'content' => '<p>This page is appointed for creating new user for particular role</p>',
+                  'active' => true
+             ),
+         ),
+    ));
+?>
+
 <?php /** @var BootActiveForm $form */
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id'=>'horizontalForm',
-    'type'=>'horizontal',
-    'enableClientValidation'  =>  true,
-    'clientOptions'           =>  array(
-        'validateOnSubmit'        =>  true )
-));
-?><p>This page is appointed for creating new user for particular role</p>
-<div id="create-form-wrapper">
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        'id'                     => 'horizontalForm',
+        'type'                   => 'horizontal',
+        'enableClientValidation' => true,
+        'clientOptions'          => array(
+            'validateOnSubmit'   => true
+        )
+    ));
+?>
+
+
+<div class='row'>
 
     <fieldset>
         <legend>Create new user</legend>
-
-        <div class="row">
-            <?php echo $form->textFieldRow($model, 'username', array('hint'=>'')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->textFieldRow($model, 'firstname', array('hint'=>'')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->textFieldRow($model, 'lastname', array('hint'=>'')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->passwordFieldRow($model, 'password', array('hint'=>'','title'=>'Password should contain at least one uppercase and one lowercase Alphabetic symbol, at least one numeric and special character')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint'=>'')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->textFieldRow($model, 'email', array('hint'=>'')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->dropDownListRow($model, 'region', array(
-                'north'=>'North',
-                'south'=>'South',
-                'west'=>'West',
-                'east'=>'East'
-            )); ?>
-        </div>
+        <ul>
+            <li> <?php echo $form->textFieldRow($model, 'username', array('hint'=>'')); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'firstname', array('hint'=>'')); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'lastname', array('hint'=>'')); ?></li>
+            <li><?php echo $form->passwordFieldRow($model, 'password', array('hint'=>'','title'=>'Password should contain at least one uppercase and one lowercase Alphabetic symbol, at least one numeric and special character')); ?></li>
+            <li><?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint'=>'')); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'email', array('hint'=>'')); ?></li>
+            <li>
+                <?php echo $form->dropDownListRow($model, 'region', array(
+                    'north' => 'North',
+                    'south' => 'South',
+                    'west' => 'West',
+                    'east' => 'East'
+                ));
+                ?>
+            </li>
+        </ul>
     </fieldset>
-
 
     <fieldset>
         <legend>Role</legend>
-        <div class="row role-list">
-            <?php echo $form->radioButtonList($model, 'role', array(
-                'admin'=>'Administrator',
-                'merchandiser'=>'Merchandiser',
-                'supervisor'=>'Supervisor',
-                'customer'=>'Customer',
+
+        <?php echo $form->radioButtonList($model, 'role', array(
+                   'admin' => 'Administrator',
+            'merchandiser' => 'Merchandiser',
+              'supervisor' => 'Supervisor',
+                'customer' => 'Customer',
             ));
-            ?>
-        </div>
+        ?>
+
     </fieldset>
 
-    <div class="row">
-        <div class="form-actions">
-            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Create')); ?>
 
+        <div class="form-actions">
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                'buttonType' => 'submit',
+                      'type' => 'primary',
+                     'label' => 'Create'
+                ));
+            ?>
 
             <?php $this->widget('bootstrap.widgets.TbButton', array(
-                'label'=>'Cancel',
-                'type'=>'action',
-                'htmlOptions'=>array(
-                    'data-toggle'=>'modal',
-                    'data-target'=>'#myModal',
-                ),
-            )); ?>
+                      'label' => 'Cancel',
+                       'type' => 'action',
+                'htmlOptions' => array(
+                    'data-toggle' => 'modal',
+                    'data-target' => '#myModal',
+                    ),
+                ));
+            ?>
 
 
             <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'myModal')); ?>
@@ -101,7 +110,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             </div>
             <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Refresh')); ?>
         </div>
-    </div>
+
     <?php $this->endWidget(); ?>
 </div>
 <script type="text/javascript">

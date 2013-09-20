@@ -8,7 +8,6 @@
 <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/main.css' />
 <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/admin.css' />
 <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/normalize.css' />
-<link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/pager.css' />
 
 
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>

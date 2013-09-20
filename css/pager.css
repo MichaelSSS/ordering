@@ -62,7 +62,7 @@ ul.yiiPager .selected a
 	font-weight:bold;
 }
 
-ul.yiiPager .hidden a
+ul.yiiPager li.hidden
 {
     visibility: visible;
 	border:solid 1px #DEDEDE;

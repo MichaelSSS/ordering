@@ -2,8 +2,9 @@
 .hg
 .hgignore
 protected/yiic.bat
+
+protected/vendor/*
 protected/runtime/*
-protected/config/*
-protected/tests/report
+
 assets/
 /nbproject/

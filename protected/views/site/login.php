@@ -3,10 +3,9 @@
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
+?>
 
 <link rel='stylesheet' href='<?php echo Yii::app()->request->baseUrl; ?>/css/login.css' />
-
-<a href=<?php echo Yii::app()->createUrl('site/config');?> class='span6 offset3'>Click me once</a>
 
 <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -14,7 +13,7 @@
         'type'                   => 'horizontal',
         'enableClientValidation' => true,
         'clientOptions'          => array(
-            'validateOnSubmit'   => true
+            'validateOnSubmit'   => true,
             'afterValidate' => new CJavaScriptExpression('function(form, data, hasError) {
                 if ( !hasError ) {
                     form.on("submit",function(e) {

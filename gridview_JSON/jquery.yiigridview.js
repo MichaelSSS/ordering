@@ -114,7 +114,7 @@
 
 				if (settings.ajaxUpdate.length > 0) {
 					$(document).on('click.yiiGridView', settings.updateSelector, function (e) {
-                        if ( (e.ctrlKey || !($(e.target).is(sortSelector))) && (!$(e.target).parent().hasClass('hidden')) ) {
+                        if ( e.ctrlKey || !($(e.target).is(sortSelector)) ) {
     						// Check to see if History.js is enabled for our Browser
     						if (settings.enableHistory && window.History.enabled) {
     							// Ajaxify this link
@@ -269,15 +269,18 @@
 					settings = gridSettings[id];
 
 				options = $.extend({
+                    dataType: 'JSON',
 					type: settings.ajaxType,
 					url: $grid.yiiGridView('getUrl'),
 					success: function (data) {
-						var $data = $('<div>' + data + '</div>');
+/*						var $data = $('<div>' + data + '</div>');
 						$.each(settings.ajaxUpdate, function (i, el) {
 							var updateId = '#' + el;
 							$(updateId).replaceWith($(updateId, $data));
 						});
-
+*/
+                        $('span#search-result-count').text(data[0]);
+                        $('#'+id).replaceWith(data[1]);
 						if (settings.afterAjaxUpdate !== undefined) {
 							settings.afterAjaxUpdate(id, data);
 						}

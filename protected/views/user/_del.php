@@ -6,20 +6,21 @@
     </div>
 
     <div class="modal-body">
-        <p>Вы уверены что хотите удалить пользователя?</p>
+        <p>The user will be deleted from the list of Users.</p>
+        <p>Are you sure you want to proceed?</p>
     </div>
 
     <script type="text/javascript">
         $(document).ready(function () {
             $('.remove a').live('click',function(){
                 var link = $(this).attr('href');
-                $('.btn-primary').attr('href',link);
+                $('#myModal .btn-primary').attr('href',link);
             });
 
-            $('.btn-primary').click(function() {
+            $('#myModal .btn-primary').click(function() {
                 var url = $(this).attr('href');
                 $.get(url, function(response) {
-                    $.fn.yiiGridView.update('id');
+                    $.fn.yiiGridView.update('yw0');
                     $('.close-modal').click();
 
                 });

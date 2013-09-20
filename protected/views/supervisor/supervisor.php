@@ -47,6 +47,9 @@ $dataProvider = $model->search();
         );
     ?>
 </div>
+
+
+
 <?php $grid = $this->widget('zii.widgets.grid.CGridView', array(
       'dataProvider' => $dataProvider,
         'ajaxUpdate' => 'grid-extend',

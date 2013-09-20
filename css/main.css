@@ -11,7 +11,7 @@ ul {
     margin: 1em auto; 
 }
 .wrap {
-	border: 1px solid #000;
+	border: 1px solid #ddd;
 } 
 .head {
 	padding: 8px 4px 0;
@@ -23,7 +23,7 @@ ul {
     display: none;
 }
 .row fieldset {
-    border: 1px solid #000;
+    border: 1px solid #ddd;
     padding: 0 .2em;
 }
 .row legend {
@@ -35,9 +35,26 @@ ul {
 legend, label, .btn {
     text-transform: capitalize;
 }
+legend span {
+    text-transform: lowercase;
+}
 .controls .span3  label {
     display: none;
  }
+.span3 button.btn, input[type="submit"].btn {
+    margin: .7em 0;
+}
 .form-horizontal .control-label {
     text-align: left;
+    margin-left: 2.2em;
+}
+#horizontalForm .radio label {
+    margin-left: 3em;
+    
+}
+#horizontalForm input[type="radio"] {
+    margin-left: 1em;
+}
+.table-bordered th, .table-bordered td {
+    text-align: center;
 }

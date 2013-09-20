@@ -1,25 +1,30 @@
 <?php
 
-/**
- * This is the model class for table "item".
- *
- * The followings are the available columns in table 'item':
- * @property string $quantity
- */
 class Item extends CActiveRecord
 {
-    public $currentPageSize = 8;
-    public $nextPageSize = array(2=>4,4=>6,6=>8,8=>2);
+	/**
+	 * The followings are the available columns in table 'tbl_user':
+	 * @var integer $id
+	 * @var string $username
+	 * @var string $password
+	 */
+    
+    public $currentPageSize = 10;
+    public $nextPageSize = array(10=>25,25=>2,2=>3,3=>10);
     public $searchCriteria = array();
-    public $totalprice;
-   
-    /**
+
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return CActiveRecord the static model class
+	 */
+//	public static function model($className=__CLASS__)
+//	{
+//		return parent::model($className);
+//	}
+
+	/**
 	 * @return string the associated database table name
 	 */
-               public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
 	public function tableName()
 	{
 		return 'item';
@@ -28,87 +33,93 @@ class Item extends CActiveRecord
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	/*public function rules()
+	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('quantity', 'length', 'max'=>255),
+			array('Item_Name, ItemDescription, Price, Quantity', 'required'),
+			array('Price, Quantity', 'numerical', 'integerOnly'=>true),
+			array('Item_Name', 'length', 'max'=>30),
+			//array('Demension', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('quantity', 'safe', 'on'=>'search'),
+			array('Item_Number, Item_Name, ItemDescription, Price, Quantity', 'safe', 'on'=>'search'),
 		);
-	}*/
+	}
 
 	/**
 	 * @return array relational rules.
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
-                    'price' =>array(self::BELONGS_TO, 'price', 'id_item'),
-                    
 		);
 	}
 
-/**
+	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
 	{
 		return array(
-            		 'id' => 'Id',
-            	   'name' => 'Name',
-            'description' => 'Description',
-            	  'price' => 'Price',
-			   'quantity' => 'Quantity',
-             'totalprice' => 'Totalprice',               
+			'Item_Number' => 'Item Number',
+			'Item_Name' => 'Item Name',
+			'ItemDescription' => 'Item Description',
+			//'Demension' => 'Dimension',
+			'Price' => 'Price',
+			'Quantity' => 'Quantity',
 		);
 	}
-        
 
 	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
+	 * Checks if the given password is correct.
+	 * @param string the password to be validated
+	 * @return boolean whether the password is valid
 	 */
+//	public function validatePassword($password)
+//	{
+//		return CPasswordHelper::verifyPassword($password,$this->password);
+//	}
+
+	/**
+	 * Generates the password hash.
+	 * @param string password
+	 * @return string hash
+	 */
+//	public function hashPassword($password)
+//	{
+//		return CPasswordHelper::hashPassword($password);
+//	}
+
     public function validatePageSize($ps)
     {
         return is_numeric($ps) && array_key_exists($ps, $this->nextPageSize);
     }
 
-public function search()
+    public function search()
     {
-        return new CActiveDataProvider('Item', array(
-            'criteria'   => $this->searchCriteria,
-            'pagination' => array(
-                'pageSize' => $this->currentPageSize,
-            ),
-            'sort' => array(
-                'multiSort' => true,
+//file_put_contents('d:\\log.txt', print_r($_POST['User'],true));
+
+	
+        return new CActiveDataProvider('Item',array(
+           'criteria'=>$this->searchCriteria,
+            'pagination'=>array(
+                'pageSize'=>$this->currentPageSize,
             ),
         ));
-        
     }
-        
-        public function getTotalprice(){
-            
-            return $this->price->price * $this->quantity;
+    public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
 
-        }    /**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Item the static model class
-	 */
-	
+        //public function updateLastActionTime()
+    //{
+     //   $currentTime = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
+      //  $this->lastActionTime = $currentTime;
+      //  $this->update(array('lastActionTime'));
+
+    //}
 }
+

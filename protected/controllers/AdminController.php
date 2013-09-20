@@ -16,9 +16,9 @@ class AdminController extends Controller
             array('allow',
                 'roles'=>array('admin'),
             ),
-            array('deny',
+         /*   array('deny',
                 'users'=>array('*'),
-            ),
+            ),*/
 	);
     }
  
@@ -53,7 +53,7 @@ class AdminController extends Controller
 
     protected function assignRole($role,$userId)
     {
-//        $roles = array(1=>'admin',3=>'merchandiser',2=>'supervisor',4=>'customer');
+       $roles = array(1=>'admin',3=>'merchandiser',2=>'supervisor',4=>'customer');
         Yii::app()->authManager->assign($role,$userId);
     }
 

@@ -38,7 +38,7 @@ class m130829_101129_create_user_table extends CDbMigration
               'region' => "south",
         ));
 
-        $password = CPasswordHelper::hashPassword('merchandizer01');
+        $password = CPasswordHelper::hashPassword('merchandiser01');
         $this->insert('user', array(
             'username' => 'merchandiser01',
             'password' => $password,

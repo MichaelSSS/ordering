@@ -41,7 +41,8 @@ class AdminSearchForm extends CFormModel
         return array(
             array('keyValue', 'required', 'message'=>'please, fill the field before search'),
             array('keyValue', 'length', 'max'=>128),
-            array('keyField, criteria', 'numerical', 'message'=>'illegal filter parameters'),
+            //array('keyField, criteria', 'numerical', 'message'=>'illegal filter parameters'),
+            array('keyField, criteria', 'validateIndex', 'size'=>5, 'message'=>'illegal filter parameters'),
             array('keyField, criteria, keyValue','safe','on'=>'search'),
         );
     }
@@ -55,6 +56,10 @@ class AdminSearchForm extends CFormModel
         );
     }
 
+    public function validateIndex($index,$size)
+    {
+        return (0<=$index)&&($index<$size);
+    }
 
     public function getCriteria()
     {

@@ -1,0 +1,1 @@
+cmd /K d:\php\php d:\php\phpunit.phar --testsuite Deny

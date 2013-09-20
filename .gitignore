@@ -2,3 +2,5 @@
 protected/yiic.bat
 protected/runtime/*
 assets/
+protected/vendor/*
+*.gitignore

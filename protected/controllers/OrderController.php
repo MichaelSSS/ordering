@@ -33,4 +33,57 @@ class OrderController extends Controller
 		);
 	}
 	*/
+    /**
+     * Returns the data model based on the primary key given in the GET variable.
+     * If the data model is not found, an HTTP exception will be raised.
+     * @param integer $id the ID of the model to be loaded
+     * @return Order the loaded model
+     * @throws CHttpException
+     */
+    public function loadModel($id)
+    {
+        $model=Order::model()->findByPk($id);
+//        var_dump($model);exit;
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        return $model;
+    }
+    /**
+     * Deletes a particular model.
+     * If deletion is successful, the browser will be redirected to the 'admin' page.
+     * @param integer $id the ID of the model to be deleted
+     */
+    public function actionRemove($id)
+    {
+        $order = $this->loadModel($id);
+        $order->scenario = 'remove';
+        $order->trash=1;
+
+        if($order->save())
+            $this->redirect(Yii::app()->createUrl('customer/index'));
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if(!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
+    public function actionCreate()
+    {
+        $model=new Order;
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        if(isset($_POST['Order']))
+        {
+            $model->attributes=$_POST['Order'];
+            $model->status ="Created";
+            $model->customer =Yii::app()->user->getState('user_id');
+
+            if($model->save())
+                $this->redirect(Yii::app()->createUrl('customer' . '/index'));
+        }
+
+        $this->render('create',array(
+            'model'=>$model,
+        ));
+    }
 }

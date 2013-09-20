@@ -1,6 +1,9 @@
 .idea
+.hg
+.hgignore
 protected/yiic.bat
+
+protected/vendor/*
 protected/runtime/*
 assets/
-protected/vendor/*
-*.gitignore
+/nbproject/

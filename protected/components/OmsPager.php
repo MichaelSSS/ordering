@@ -60,6 +60,13 @@ class OmsPager extends CLinkPager
         return $links;
     }
 
+    protected function createPageButton($label,$page,$class,$hidden,$selected)
+    {
+        if($hidden || $selected)
+            $class.=' '.($hidden ? $this->hiddenPageCssClass : $this->selectedPageCssClass);
+        return '<li class="'.$class.'">'. ($hidden ? $label : CHtml::link($label,$this->createPageUrl($page))) .'</li>';
+    }
+
     protected function createPageButtons()
     {
         if ( ($pageCount=$this->getPageCount())<1 ) {

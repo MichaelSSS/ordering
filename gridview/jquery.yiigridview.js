@@ -32,6 +32,21 @@
 		return this;
 	};
 
+    /**
+    * Oms functions
+    */
+    
+    function disableRemoveActiveUser() {
+
+        $('.grid-view .remove').not(':has(a[href])').removeAttr('data-target');
+        $('.grid-view a:not([href])').attr('title','active user');
+        $('.grid-view a:not([href]) img').attr({
+            src:'images/grid_remove_disabled.bmp',
+            alt:'active user'
+        });
+
+    };
+
 	methods = {
 		/**
 		 * yiiGridView set function.
@@ -262,6 +277,7 @@
 							var updateId = '#' + el;
 							$(updateId).replaceWith($(updateId, $data));
 						});
+
 						if (settings.afterAjaxUpdate !== undefined) {
 							settings.afterAjaxUpdate(id, data);
 						}
@@ -273,6 +289,7 @@
 						yiiXHR[id] = null;
 						$grid.removeClass(settings.loadingClass);
                         $('a.sort-link').css('cursor','default');
+                        disableRemoveActiveUser();
 
 					},
 					error: function (XHR, textStatus, errorThrown) {
@@ -406,6 +423,8 @@
 			return false;
 		}
 	};
+
+    disableRemoveActiveUser();
 
 /******************************************************************************
  *** DEPRECATED METHODS

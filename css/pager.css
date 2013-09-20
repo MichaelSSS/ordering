@@ -21,7 +21,7 @@ div.summary{
 
 ul.yiiPager
 {
-//	font-size:11px;
+	/*font-size:11px;*/
     margin-right:-25%;
 	border:0;
 	padding:0;
@@ -62,7 +62,7 @@ ul.yiiPager .selected a
 	font-weight:bold;
 }
 
-ul.yiiPager .hidden a
+ul.yiiPager li.hidden
 {
     visibility: visible;
 	border:solid 1px #DEDEDE;
@@ -75,5 +75,5 @@ ul.yiiPager .hidden a
 ul.yiiPager .first,
 ul.yiiPager .last
 {
-//	display:none;
+/*display:none;*/
 }

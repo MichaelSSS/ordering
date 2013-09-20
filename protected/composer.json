@@ -1,0 +1,8 @@
+{
+    "name": "MichaelSSS/ordering",
+    "description": "OMS",
+    "type": "library",
+    "require": {
+        "yiisoft/yii": "dev-master"
+    }
+}

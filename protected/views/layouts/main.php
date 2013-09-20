@@ -1,43 +1,92 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="en" />
+<meta charset='utf-8' />
 
-	<!-- blueprint CSS framework -->
-	<!--<link rel="stylesheet" type="text/css" href="<?php /*echo Yii::app()->request->baseUrl; */?>/css/screen.css" media="screen, projection" />
-	<link rel="stylesheet" type="text/css" href="<?php /*echo Yii::app()->request->baseUrl; */?>/css/print.css" media="print" />
-	
-	<link rel="stylesheet" type="text/css" href="<?php /*echo Yii::app()->request->baseUrl; */?>/css/ie.css" media="screen, projection" />
-	<![endif]-->
-<!-- 
-	<link rel="stylesheet" type="text/css" href="<?php /*echo Yii::app()->request->baseUrl; */?>/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php /*echo Yii::app()->request->baseUrl; */?>/css/form.css" /> -->
-	<?php Yii::app()->bootstrap->register(); ?>
-	<title><?php echo CHtml::encode(Yii::app()->name); ?></title>
+<?php Yii::app()->bootstrap->register(); ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'main.css'); ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'pager.css'); ?>
+
+    <?php
+    //    $cs = Yii::app()->getClientScript();
+    //    $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui-1.10.2.js');
+    //    $cs->registerCssFile(Yii::app()->baseUrl.'/css/yourcss.css');
+    Yii::app()->clientScript->registerCoreScript('jquery.ui');
+    Yii::app()->clientScript->registerCssFile(
+        Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
+    );
+    ?>
+
+
+<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
-
 <body>
+    <div class='container'>
+        <div class='row'>
 
-<div class="container" id="page">
+            <div id="confirm-logout" class="modal hide fade">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 id="confirm-logout-header">Warning</h3>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to log out from the application?</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" onclick="javascript:window.location.assign('<?php echo CHtml::normalizeUrl(array('site/logout')) ?>')">Yes</a>
+                    <a class="btn" data-dismiss="modal" aria-hidden="true">No</a>
+                </div>
+            </div>
 
-	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'Ordering', 'url'=>array('merchandiser/index'), 'visible'=>false),
-				array('label'=>'Administration', 'url'=>array('admin/index')),
-				array('label'=>'Item management', 'url'=>array('supervisor/index'), 'visible'=>false),
-                array('label'=>'Logged user:  ' . Yii::app()->user->name),
-				array('label'=>'User Info', 'url'=>array('site/info')),
-				array('label'=>'Logout', 'url'=>array('site/logout'))
-			),
-		)); ?>
-	</div><!-- mainmenu -->
+            <div class='span10 offset1'>
+                <header class='head pull-right'>
+                    <?php 
+                        $userHome = $this->id;
+                        $this->widget('zii.widgets.CMenu', array(
+                            'items' => array(
+                				array('label'=>'Ordering', 'visible'=> $userHome == 'merchandiser'),
+                				array('label'=>'Ordering', 'visible'=> $userHome == 'customer'),
+                				array('label'=>'Administration', 'visible'=> $userHome == 'admin'),
+                				array('label'=>'Item management', 'visible'=> $userHome == 'supervisor'),
+                                array('label'=>'Logged user:  ' . Yii::app()->user->name),
+                				array(
+                                    'label'=>'User Info',
+                                    'url'=>array('site/info'),
+                                    'linkOptions'=>array(
+                                        'title'      =>"User Info",
+                                    ),
+                                
+                                ),
+                				array(
+                                    'label'=>'Logout',
+                                    'linkOptions'=>array(
+                                        'data-toggle'=>'modal',
+                                        'data-target'=>'#confirm-logout',
+                                        'title'      =>"Log out/Log in",
+                                        'style'      =>'cursor:pointer',
+                                    ),
+                                    'url'=>'',
+                                )
+                            ),
+                        ));
+                    ?>  
+                </header>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span10 offset1">
+                <section>
+                    <?php echo $content; ?>
+                </section>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span10 offset1">
+                <footer>
 
-
-	<?php echo $content; ?>
-
-</div><!-- page -->
-
+                </footer>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

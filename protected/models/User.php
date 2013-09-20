@@ -27,7 +27,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{user}}';
+		return 'user';
 	}
 
 	/**
@@ -37,26 +37,25 @@ class User extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
-			array('username, password,confirmPassword,firstname,lastname,email', 'required'),
-			
-			array('username, password,role,firstname,lastname,email,region','safe'),
-			
+        return array(
+            array('username,firstname,lastname,email', 'required','except'=>'remove'),
+            array('password,confirmPassword','required','except'=>'remove,edit'),
+            array('username, password,role,firstname,lastname,email,region','safe','except'=>'remove'),
 
-			array('username','unique','message'=>'Login name already exist'),
-			array('username','length','max'=>20,'message'=>'Login Name is too long'),
-			array('username','match','not'=>'true','pattern'=>'|([\x20]+)|s','message'=>'Login Name cannot contain spaces'),
-			array('email','email','message'=>'Incorrect format of Email Adress'),	
+            array('username','unique','message'=>'Login name already exist','except'=>'remove'),
+            array('username','length','max'=>20,'message'=>'Login Name is too long','except'=>'remove'),
+            //array('username','match','pattern'=>'[^\s]','message'=>'Login Name cannot contain spaces','except'=>'remove'),
+            array('email','email','message'=>'Incorrect format of Email Adress','except'=>'remove'),
 
-			array('password','length','min'=>4,'max'=>10),
-			// array('password','match','not'=>'true','pattern'=>'|([\x20]+)|s','message'=>'Password cannot contain spaces'),
-		  array('confirmPassword', 'compare', 'compareAttribute'=>'password','message'=>'Confirm Password is not equal to Password'),
+            array('password','length','min'=>4,'max'=>10,'except'=>'remove'),
+            array('password','match','pattern'=>'|(?=^.{1,25}$)(?=(?:.*?\d){1})(?=.*[a-z])(?=(?:.*?[A-Z]){1})(?=(?:.*?[!@#$%*()_+^&}{:;?.\[\~\`\-\=\'"\<\>\,\/\]]){1})(?!.*\s)[0-9a-zA-Z!@#$%*()_+^&\[\~\`\-\=\'"\<\>\,\/\]]*$|','message'=>'The value provided for the password does not meet required complexity','except'=>'remove'),
+            array('confirmPassword', 'compare', 'compareAttribute'=>'password','message'=>'Confirm Password is not equal to Password','except'=>'remove'),
 
-			array('firstname','length','max'=>50,'message'=>'First Name is too long'),
-			
-			array('lastname','length','max'=>50,'message'=>'Last Name is too long'),					
+            array('firstname','length','max'=>50,'message'=>'First Name is too long','except'=>'remove'),
 
-		);
+            array('lastname','length','max'=>50,'message'=>'Last Name is too long','except'=>'remove'),
+
+        );
 	}
 
 
@@ -123,7 +122,11 @@ class User extends CActiveRecord
 
     public function search()
     {
+        $this->dbCriteria->condition = '`t`.`deleted`=0';
+        $this->dbCriteria->order='`t`.`username` ASC';
+
         return new CActiveDataProvider('User', array(
+            'model'=>$this,
             'criteria'   => $this->searchCriteria,
             'pagination' => array(
                 'pageSize' => $this->currentPageSize,
@@ -132,13 +135,5 @@ class User extends CActiveRecord
                 'multiSort' => true,
             ),
         ));
-    }
-
-    public function updateLastActionTime()
-    {
-        $currentTime = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
-        $this->lastActionTime = $currentTime;
-        $this->update(array('lastActionTime'));
-
     }
 }

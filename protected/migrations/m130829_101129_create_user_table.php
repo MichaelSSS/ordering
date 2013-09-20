@@ -4,7 +4,7 @@ class m130829_101129_create_user_table extends CDbMigration
 {
 	public function up()
 	{
-        $this->createTable('{{user}}', array(
+        $this->createTable('user', array(
                   'id' => 'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT',
         	'username' => 'VARCHAR(128) NOT NULL',
         	'password' => 'VARCHAR(128) NOT NULL',
@@ -17,7 +17,7 @@ class m130829_101129_create_user_table extends CDbMigration
         ));
 
         $password = CPasswordHelper::hashPassword('admin01');
-        $this->insert('{{user}}', array(
+        $this->insert('user', array(
             'username' => 'admin01',
             'password' => $password,
                 'role' => 'admin',
@@ -28,7 +28,7 @@ class m130829_101129_create_user_table extends CDbMigration
         ));
 
         $password = CPasswordHelper::hashPassword('supervisor01');
-        $this->insert('{{user}}', array(
+        $this->insert('user', array(
             'username' => 'supervisor01',
             'password' => $password,
                 'role' => 'supervisor',
@@ -38,8 +38,8 @@ class m130829_101129_create_user_table extends CDbMigration
               'region' => "south",
         ));
 
-        $password = CPasswordHelper::hashPassword('merchandizer01');
-        $this->insert('{{user}}', array(
+        $password = CPasswordHelper::hashPassword('merchandiser01');
+        $this->insert('user', array(
             'username' => 'merchandiser01',
             'password' => $password,
                 'role' => 'merchandiser',
@@ -50,7 +50,7 @@ class m130829_101129_create_user_table extends CDbMigration
         ));
 
         $password = CPasswordHelper::hashPassword('customer01');
-        $this->insert('{{user}}', array(
+        $this->insert('user', array(
             'username' => 'customer01',
             'password' => $password,
                 'role' => 'customer',
@@ -60,13 +60,24 @@ class m130829_101129_create_user_table extends CDbMigration
               'region' => "south",
         ));
 
+        $password = CPasswordHelper::hashPassword('customer02');
+        $this->insert('user', array(
+            'username' => 'customer02',
+            'password' => $password,
+                'role' => 'customer',
+           'firstname' => "Frank",
+            'lastname' => "Smith",
+               'email' => "2sd@4rfefrd.com",
+              'region' => "south",
+        ));
+
         return true;
         
 	}
 
 	public function down()
 	{
-        $this->dropTable('{{user}}');
+        $this->dropTable('user');
 
         return true;
 	} 

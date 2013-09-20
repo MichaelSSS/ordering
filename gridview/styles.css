@@ -26,7 +26,7 @@ legend{
 }
 
 form select, form input{
-    margin-right:30px;
+    margin-top: .5em;
     width:30%;
 }
 form input[type='submit']{

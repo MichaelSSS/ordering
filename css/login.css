@@ -22,7 +22,7 @@ legend, label, .btn {
     display: none;
 }
 .row fieldset {
-    border: 1px solid #000;
+    border: 1px solid #ddd;
     padding: 0 .2em;
 }
 .row legend {

@@ -39,14 +39,19 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             <li><?php echo $form->textFieldRow($model, 'username', array('hint' => '')); ?></li>
             <li><?php echo $form->textFieldRow($model, 'firstname', array('hint' => '')); ?></li>
             <li><?php echo $form->textFieldRow($model, 'lastname', array('hint' => '')); ?></li>
-            <li>
-                <?php echo $form->passwordFieldRow($model, 'password', array(
-                           'hint' => '',
-                          'title' => 'if you',
-                    'placeholder' => 'enter new password'));
-                ?>
-            </li>
-            <li><?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint' => '')); ?></li>
+            <div class='row offset2 change-link' >
+                <p> <a href='#' class='slide'>Change password</a></p>
+            </div>
+            <div class='password-group'>
+               <li>
+                   <?php echo $form->passwordFieldRow($model, 'password', array(
+                       'hint' => '',
+                       'title' => 'if you',
+                       'placeholder' => 'enter new password'));
+                   ?>
+               </li>
+               <li><?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint' => '')); ?></li>
+            </div>
             <li><?php echo $form->textFieldRow($model, 'email', array('hint' => '')); ?></li>
             <li>
                 <?php echo $form->dropDownListRow($model, 'region', array(

@@ -77,3 +77,10 @@ ul.yiiPager .last
 {
 /*display:none;*/
 }
+ .pager .next > a {
+     float: left;
+ }
+ #grid-extend {
+     float: right;
+     margin-bottom: .5em;
+ }

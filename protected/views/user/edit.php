@@ -1,5 +1,18 @@
-<link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/gridview/styles.css" />
-<script type="text/javascript">
+<?php $this->widget('bootstrap.widgets.TbTabs', array(
+    'type' => 'tabs',
+    'placement' => 'above', // 'above', 'right', 'below' or 'left'
+    'tabs' => array(
+        array('label' => 'Editing User',
+            'content' => '<p>This page is appointed for editing user for particular role</p>',
+            'active' => true
+        ),
+    ),
+));
+?>
+
+
+
+<script type='text/javascript'>
 
     $(document).ready(function () {
         $('.password-group').hide();
@@ -13,114 +26,107 @@
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id'=>'horizontalForm',
-    'type'=>'horizontal',
+                         'id' => 'horizontalForm',
+                       'type' => 'horizontal',
     'enableClientValidation'  =>  true,
     'clientOptions'           =>  array(
-        'validateOnSubmit'        =>  true )
+        'validateOnSubmit'    =>  true )
 ));
-?><p>This page is appointed for creating new user for particular role</p>
-<div id="create-form-wrapper">
-
+?>
     <fieldset>
-        <legend>Create new user</legend>
-
-        <div class="row">
-            <?php echo $form->textFieldRow($model, 'username', array('hint'=>'')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->textFieldRow($model, 'firstname', array('hint'=>'')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->textFieldRow($model, 'lastname', array('hint'=>'')); ?>
-        </div>
-        <div class="row offset1 change-link" >
-           <p> <a href="#" class="slide">Change password</a></p>
-        </div>
-        <div class="password-group">
-            <div class="row">
-                    <?php echo $form->passwordFieldRow($model, 'password', array('hint'=>'','title'=>'if you','placeholder'=>'enter new password')); ?>
+        <legend>create new user</legend>
+        <ul>
+            <li><?php echo $form->textFieldRow($model, 'username', array('hint' => '')); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'firstname', array('hint' => '')); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'lastname', array('hint' => '')); ?></li>
+            <div class='row offset2 change-link' >
+                <p> <a href='#' class='slide'>Change password</a></p>
             </div>
-
-            <div class="row">
-                    <?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint'=>'')); ?>
+            <div class='password-group'>
+               <li>
+                   <?php echo $form->passwordFieldRow($model, 'password', array(
+                       'hint' => '',
+                       'title' => 'if you',
+                       'placeholder' => 'enter new password'));
+                   ?>
+               </li>
+               <li><?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint' => '')); ?></li>
             </div>
-        </div>
-
-        <div class="row">
-            <?php echo $form->textFieldRow($model, 'email', array('hint'=>'')); ?>
-        </div>
-        <div class="row">
-            <?php echo $form->dropDownListRow($model, 'region', array(
-                'north'=>'North',
-                'south'=>'South',
-                'west'=>'West',
-                'east'=>'East'
-            )); ?>
-        </div>
+            <li><?php echo $form->textFieldRow($model, 'email', array('hint' => '')); ?></li>
+            <li>
+                <?php echo $form->dropDownListRow($model, 'region', array(
+                    'north' => 'North',
+                    'south' => 'South',
+                     'west' => 'West',
+                     'east' => 'East'
+                )); ?>
+            </li>
+        </ul>
     </fieldset>
 
 
     <fieldset>
         <legend>Role</legend>
-        <div class="row role-list">
             <?php echo $form->radioButtonList($model, 'role', array(
-                'admin'=>'Administrator',
-                'merchandiser'=>'Merchandiser',
-                'supervisor'=>'Supervisor',
-                'customer'=>'Customer',
-            ));
+                       'admin' => 'Administrator',
+                'merchandiser' => 'Merchandiser',
+                  'supervisor' => 'Supervisor',
+                    'customer' => 'Customer',
+                ));
             ?>
-        </div>
     </fieldset>
 
-    <div class="row">
-        <div class="form-actions">
-            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Save')); ?>
 
+    <div class='form-actions'>
+        <?php $this->widget('bootstrap.widgets.TbButton', array(
+            'buttonType' => 'submit',
+                  'type' => 'primary',
+                 'label' => 'Save'
+            ));
+        ?>
 
-            <?php $this->widget('bootstrap.widgets.TbButton', array(
-                'label'=>'Cancel',
-                'type'=>'action',
-                'htmlOptions'=>array(
-                    'data-toggle'=>'modal',
-                    'data-target'=>'#myModal',
-                ),
-            )); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array(
+                  'label' => 'Cancel',
+                   'type' => 'action',
+            'htmlOptions' => array(
+                'data-toggle' => 'modal',
+                'data-target' => '#myModal',
+                 ),
+            ));
+        ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'reset', 'label' => 'Refresh')); ?>
+    </div>
+        <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'myModal')); ?>
 
-
-            <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'myModal')); ?>
-
-            <div class="modal-header">
-                <a class="close" data-dismiss="modal">&times;</a>
+            <div class='modal-header'>
+                <a class='close' data-dismiss='modal'>&times;</a>
                 <h4>Warning</h4>
             </div>
 
-            <div class="modal-body">
+            <div class='modal-body'>
                 <p>Are you sure you want to cancel operation?</p>
                 <p>All data will be lost</p>
             </div>
 
             <?php $target = $this->createUrl('admin/index'); ?>
 
-            <div class="modal-footer">
+            <div class='modal-footer'>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'type'=>'primary',
-                    'label'=>'Yes',
-                    'url'=> $target,
+                     'type' => 'primary',
+                    'label' => 'Yes',
+                      'url' => $target,
 
-                )); ?>
+                    ));
+                ?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label'=>'No',
-                    'url'=>'#',
-                    'htmlOptions'=>array('data-dismiss'=>'modal'),
-                )); ?>
+                          'label' => 'No',
+                            'url' => '#',
+                    'htmlOptions' => array('data-dismiss' => 'modal'),
+                    ));
+                ?>
+
                 <?php $this->endWidget(); ?>
-
             </div>
-            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Refresh')); ?>
-        </div>
-    </div>
-    <?php $this->endWidget(); ?>
-</div>
+<?php $this->endWidget(); ?>
+
 

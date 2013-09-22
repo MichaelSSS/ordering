@@ -120,6 +120,7 @@ class Order extends CActiveRecord
             'delivery_date' => 'Delivery Date',
             'status' => 'Status',
             'assignee' => 'Assignee',
+            'preferable_date' => 'Preferable Delivery Date',
             'assigneesRole' => 'Role',
             'customer' => 'Customer',
         );

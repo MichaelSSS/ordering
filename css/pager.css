@@ -62,7 +62,7 @@ ul.yiiPager .selected a
 	font-weight:bold;
 }
 
-ul.yiiPager .hidden a
+ul.yiiPager li.hidden
 {
     visibility: visible;
 	border:solid 1px #DEDEDE;
@@ -77,3 +77,10 @@ ul.yiiPager .last
 {
 /*display:none;*/
 }
+ .pager .next > a {
+     float: left;
+ }
+ #grid-extend {
+     float: right;
+     margin-bottom: .5em;
+ }

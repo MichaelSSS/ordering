@@ -1,9 +1,16 @@
+<?php $this->widget('bootstrap.widgets.TbTabs', array(
+         'type' => 'tabs',
+    'placement' => 'above', // 'above', 'right', 'below' or 'left'
+         'tabs' => array(
+        array('label' => 'Ordering',
+            'content' => '',
+             'active' => true
+             ),
+        ),
+    ));
+?>
 
-<!----------------------------------------------------------------
---- ?????? ?? ???????? ????????????------------------------------>
 <?php echo CHtml::link('Create New Order', array('order/create')); ?>
-<?php ?>
-
 
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
@@ -15,109 +22,97 @@
 ?>
 
 <fieldset class="order_search">
-    <legend>&nbsp;Search by&nbsp;</legend>
+    <legend>Search <span>by</span></legend>
 
     <div id="search-fields">
-        <div class="row">
-            <div class="span2">Filter by</div>
-            <div class="span3 offset">
-            <?php
-            echo $form->dropDownlist($model, 'filterCriteria', $model->filterCriterias, array(
-                'options' => array(
-                    array_search('Status', $model->filterCriterias) => array('selected' => true)
-                ),
-                'ajax' => array(
-                    'type' => 'Post',
-                    'url' => $this->createUrl('customer/dependentselect'),
-                    'update' => '#Order_filterValue',
-                ),
 
-            ));
-            ?>
+            <div class="span2"><p>Filter orders by:</p></div>
+            <div class="span3">
+                <?php echo $form->dropDownlist($model, 'filterCriteria', $model->filterCriterias, array(
+                    'class'   => 'span3',
+                    'options' => array(
+                        array_search('Status', $model->filterCriterias) => array('selected' => true)
+                    ),
+                    'ajax' => array(
+                        'type'   => 'Post',
+                        'url'    => $this->createUrl('customer/dependentselect'),
+                        'update' => '#Order_filterValue',
+                    ),
+                ));
+                ?>
             </div>
             <div class="span3">
-            <?php
-            echo $form->dropDownlist($model, 'filterValue', $model->filterStatuses,
-                array(
-                    'options' => array(
-                        array_search('None', $model->filterStatuses) => array('selected' => true
-                        )),
+                <?php echo $form->dropDownlist($model, 'filterValue', $model->filterStatuses,
+                    array('class' => 'span3',
+                        'options' => array(
+                            array_search('None', $model->filterStatuses) => array('selected' => true)
+                        ),
+                    ));
+                ?>
+            </div>
 
-                ));
-            ?>
-        </div>
-        </div>
-        <div class="row">
-            <div class="span2">Search by</div>
-            <div class="span3 offset">
-            <?php
-            echo $form->dropDownlist($model, 'searchCriteria', $model->searchCriterias,
-                array(
-                    'options' => array(
-                        array_search('Order Name', $model->searchCriterias) => array('selected' => true
-                        ))
-                ));
-            ?>
+
+            <div class="span2">Search for orders by:</div>
+            <div class="span3">
+                <?php echo $form->dropDownlist($model, 'searchCriteria', $model->searchCriterias,
+                    array('class' => 'span3',
+                        'options' => array(
+                            array_search('Order Name', $model->searchCriterias) => array('selected' => true
+                            ))
+                    ));
+                ?>
             </div>
             <div class="span3">
-            <?php
-            echo $form->textField($model, 'searchValue');
-            ?>
+                <?php echo $form->textField($model, 'searchValue', array('class' => 'span3'));  ?>
             </div>
-            <div class="span1">
-
-                <?php
-
-
-
-              $this->widget('bootstrap.widgets.TbButton', array(
-                    'label'=>'Search',
-                    'buttonType'=>'submit',
-                    'type'=>'action', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'size'=>'small', // null, 'large', 'small' or 'mini'
+            <div class="span1 pull-right">
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'label'      => 'Apply',
+                    'buttonType' => 'submit',
+                    'type'       => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                    'size'       => 'null', // null, 'large', 'small' or 'mini'
                 ));?>
 
                 <?php echo CHtml::errorSummary($model) ?>
             </div>
         </div>
-    </div>
+
 
 </fieldset>
 <?php $this->endWidget(); ?>
 
 <?php $this->renderPartial('/customer/_delete'); ?>
 
-
-
-<?php $grid = $this->widget('OmsGridView', array(
-    'dataProvider' => $model->search(),
+<?php $grid = $this->widget('TGridView', array(
+    'dataProvider'   => $model->search(),
+    'type'           => 'striped bordered condensed',
 //    'filter'=>$model,
-    'ajaxUpdate' => '',
+    'ajaxUpdate'     => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
     'filterSelector' => '{filter}',
-    'template' => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
-    'pager' => array(
-        'class' => 'OmsPager',
-        'header' => '',
+    'template'       => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
+    'pager'          => array(
+        'class'          => 'OmsPager',
+        'header'         => '',
         'maxButtonCount' => 0,
         'firstPageLabel' => 'First',
-        'prevPageLabel' => 'Backward',
-        'nextPageLabel' => 'Forward',
-        'lastPageLabel' => 'Last',
-        'htmlOptions' => array(
+        'prevPageLabel'  => 'Backward',
+        'nextPageLabel'  => 'Forward',
+        'lastPageLabel'  => 'Last',
+        'htmlOptions'    => array(
             'class' => 'yiiPager',
         ),
-        'cssFile' => 'css/pager.css',
+        'cssFile'   => 'css/pager.css',
     ),
     'pagerCssClass' => 'oms-pager',
     'baseScriptUrl' => 'gridview',
     'columns' => array(
-        'order_name',
-
+        array('name' => 'order_name', 'header'    => 'Order Name'),
         array(
             'name' => 'total_price',
             'value' => '$data->total_price.""."\$"',
         ),
+
 
         array(
             'name' => 'max_discount',
@@ -130,8 +125,6 @@
         ),
 
         'status',
-
-
         array(
             'name' => 'assignee',
             'value' => '$data->assignees->username',
@@ -142,44 +135,49 @@
 
         ),
 
-
         array(
-            'class' => 'CButtonColumn',
-            'header' => 'Edit',
-            'buttons' => array(
+            'header'      => 'Edit',
+            'class'       => 'bootstrap.widgets.TbButtonColumn',
+            'template'    => '{edit}',
+            'htmlOptions' => array(
+            ),
+            'buttons'  => array(
                 'edit' => array(
-                    'label' => 'edit',
-                    'imageUrl' => 'images/grid_edit.png',
+                    'icon' => 'pencil',
+                    //'url'  => 'Yii::app()->createUrl()',
                 ),
-            ),
-            'template' => '{edit}',
+            )
         ),
+
         array(
-            'class' => 'CButtonColumn',
-            'header' => 'Remove',
-            'buttons' => array(
-                'remove' => array(
-                    'url' => 'Yii::app()->createUrl(\'order/remove\',array(\'id\'=>$data->id_order))',
-                    'label' => 'remove',
-                    'imageUrl' => 'images/grid_remove.bmp',
-                    'options'=>array( 'data-toggle'=>'modal',
-                        'data-target'=>'#remove_order',),
-                    'click'=>'beforeRemove',
-                ),
-                'htmlOptions'=>array(
-
-                ),
-
+            'header'      => 'Remove',
+            'class'       => 'bootstrap.widgets.TbButtonColumn',
+            'template'    => '{remove}',
+            'htmlOptions' => array(
+                'id'=>'col_remove',
             ),
+            'buttons'    => array(
+                'remove' => array(
+                    'icon' => 'icon-trash',
+                    'url'  => 'Yii::app()->createUrl(\'order/remove\',array(\'id\'=>$data->id_order))',
+                    'options'=>array(
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#remove_order',
+                        'onclick'=>'beforeRemove(this)',
+                    ),
 
-            'template' => '{remove}',
+
+
+                ),
+            )
         ),
-
     ),
 ));?>
 
-<script type="text/javascript">
-    function beforeRemove(){
-        $('#modal_remove').attr('href',$(this).attr('href'));
+<script>
+    function beforeRemove(el){
+        debugger;
+        $('#modal_remove').attr('href',$(el).attr('href'));
+        debugger;
     }
 </script>

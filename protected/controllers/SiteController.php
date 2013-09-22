@@ -32,7 +32,6 @@ class SiteController extends Controller
                 $model->attributes=$_POST['LoginForm'];
 
                 if ( $model->validate() && $model->login() ) {
-
                     $this->redirect(Yii::app()->createUrl(Yii::app()->user->homeController . '/index'));
 
                 } else {
@@ -69,57 +68,5 @@ class SiteController extends Controller
         $this->render($view);
     }
 
-    public function actionConfig()
-    {
-
-        $dsn = Yii::app()->db->connectionString;
-        $user = Yii::app()->db->username;
-        $password = '';
-
-        $dbh = new PDO($dsn, $user, $password);
-
-        $dbh->exec('create table `AuthItem`
-            (
-               `name`                 varchar(64) not null,
-               `type`                 integer not null,
-               `description`          text,
-               `bizrule`              text,
-               `data`                 text,
-               primary key (`name`)
-            ) engine InnoDB');
-
-        $dbh->exec('create table `AuthItemChild`
-        (
-           `parent`               varchar(64) not null,
-           `child`                varchar(64) not null,
-           primary key (`parent`,`child`),
-           foreign key (`parent`) references `AuthItem` (`name`) on delete cascade on update cascade,
-           foreign key (`child`) references `AuthItem` (`name`) on delete cascade on update cascade
-        ) engine InnoDB');
-
-        $dbh->exec('create table `AuthAssignment`
-        (
-           `itemname`             varchar(64) not null,
-           `userid`               varchar(64) not null,
-           `bizrule`              text,
-           `data`                 text,
-           primary key (`itemname`,`userid`),
-           foreign key (`itemname`) references `AuthItem` (`name`) on delete cascade on update cascade
-        ) engine InnoDB');
-
-        $auth=Yii::app()->authManager;
-
-        $auth->createRole('admin');
-        $auth->createRole('supervisor');
-        $auth->createRole('merchandiser');
-        $auth->createRole('customer');
-
-        $auth->assign('admin',1);
-        $auth->assign('supervisor',2);
-        $auth->assign('merchandiser',3);
-        $auth->assign('customer',4);
-
-        echo 'Roles have been created in database. Do not visit this link anymore';
-    }
 
 }

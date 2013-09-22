@@ -13,14 +13,15 @@ define('TEST_BASE_URL','http://mine/ordering-master/index-test.php/');
  */
 class WebTestCase extends CWebTestCase
 {
-	/**
-	 * Sets up before each test method runs.
-	 * This mainly sets the base URL for the test application.
-	 */
-	protected function setUp()
-	{
-		parent::setUp();
-        $this->setBrowser("*firefox");
-		$this->setBrowserUrl(TEST_BASE_URL);
-	}
+    /**
+     * Sets up before each test method runs.
+     * This mainly sets the base URL for the test application.
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+        // $this->setBrowser("*firefox");
+        $this->setBrowserUrl(TEST_BASE_URL);
+    }
+
 }

@@ -85,15 +85,18 @@ class LoginForm extends CFormModel
             $user = Yii::app()->user;
             $userId = $this->_identity->getId();
             
+            $isUserActive = $user->isActive($userId, time());
+
             // determine if user logged in another browser
-            if ( $user->isActive($userId, time()) 
+            if ( $isUserActive 
                 && !$user->isSameUserAgent($userId) ) {
                
                 $this->_errorCode = self::ERROR_USER_LOGGED;
                 return false;
                 
             // apply 50 active users limit    
-            } elseif ( $user->countActive(time()) >= 50 ) {
+            } elseif ( $user->countActive(time()) >= 50 
+                       && !$isUserActive) {
                 $this->_errorCode = self::ERROR_ACTIVE_LIMIT;
                 return false;
             }
@@ -101,7 +104,7 @@ class LoginForm extends CFormModel
             $duration = 0;
             //file_put_contents("d:/log.txt", print_r(Yii::app()->user->rememberedName,true));
             if ( $this->rememberMe ) {
-                $user->setState('Remembered Name',$this->username);
+                $user->setState('Remembered Name',htmlspecialchars($this->username));
             
                 $duration = 3600*24*30; // 30 days
 

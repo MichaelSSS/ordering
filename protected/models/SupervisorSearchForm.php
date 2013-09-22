@@ -12,17 +12,15 @@ class SupervisorSearchForm extends CFormModel
 	public $criteria;
 	public $keyValue;
 
-    public $keyFields = array('All Columns', 'Id','Name', 'Description', 'Price', 'Quantity', 'Totalprice');
+    public $keyFields = array('All Columns', 'Item Number', 'Item Name', 'Price', 'Quantity');
     public $criterias = array('equals','not equals','starts with','contains','does not contain');
 
     public $keyAttributes = array(
         'All Columns'=>'*',
-        'Id'=>'id',
-        'Name'=>'name',
-        'Description'=>'description',
-        'Price'=>'price',
-        'Quantity'=>'quantity',
-        'Totalprice'=>'totalprice'
+        'Item Number'=>'Item Number',
+        'Item Name'=>'Item Name',
+        'Price'=>'Price',
+        'Quantity'=>'Quantity'
     );
 
     public $operators = array(
@@ -61,7 +59,7 @@ class SupervisorSearchForm extends CFormModel
     public function getCriteria()
     {
 
-        if( $this->keyAttributes[$this->keyFields[$this->keyField]] != '*' ) {
+        if( $this->keyAttributes[$this->keyFields[$this->keyField]] != '*' ){
 
             $condition = $this->keyAttributes[$this->keyFields[$this->keyField]]
                 . $this->operators[$this->criterias[$this->criteria]];
@@ -70,16 +68,16 @@ class SupervisorSearchForm extends CFormModel
 
             return array(
                 'condition' => $condition,
-                'params'    => array($this->keyValue)
+                'params' => array($this->keyValue)
             );
 
-        } else {
+        }else{
 
             $numKeys = count($this->keyFields);
 
             $condition = '';
 
-            for($i=1; $i < $numKeys-1; ++$i) {
+            for($i=1; $i < $numKeys-1; ++$i){
                 $condition .= '(' 
                     . $this->keyAttributes[$this->keyFields[$i]]
                     . $this->operators[$this->criterias[$this->criteria]]
@@ -92,14 +90,11 @@ class SupervisorSearchForm extends CFormModel
                 . ')';
 
             return array(
-                'condition'  => $condition,
-                'params'     => array_fill(0,$numKeys-1,$this->keyValue)
+                'condition' => $condition,
+                'params' => array_fill(0,$numKeys-1,$this->keyValue)
             );
 
         }        
     }
-
-        
-    
 
 }

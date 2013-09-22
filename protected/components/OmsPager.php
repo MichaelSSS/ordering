@@ -3,11 +3,11 @@
 *
 */
 Yii::import('CLinkPager');
+Yii::import('bootstrap.widgets.TbGridView');
+
 
 class OmsPager extends CLinkPager
 {
-
-
     /**
      * Creates the page buttons.
      * @return array a list of page buttons (in HTML code).
@@ -58,6 +58,13 @@ class OmsPager extends CLinkPager
         }
 
         return $links;
+    }
+
+    protected function createPageButton($label,$page,$class,$hidden,$selected)
+    {
+        if($hidden || $selected)
+            $class.=' '.($hidden ? $this->hiddenPageCssClass : $this->selectedPageCssClass);
+        return '<li class="'.$class.'">'. ($hidden ? $label : CHtml::link($label,$this->createPageUrl($page))) .'</li>';
     }
 
     protected function createPageButtons()

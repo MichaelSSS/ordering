@@ -14,17 +14,11 @@ class CustomerController extends Controller
 	{
 		return array(
             array('allow',
-
                 'roles'=>array('customer'),
             ),
-
             array('deny',
                 'users'=>array('*'),
             ),
-
-
-
-
 		);
 	}
 
@@ -36,41 +30,21 @@ class CustomerController extends Controller
 
     public function actionIndex()
     {
-        $model = new Order();
-
+        $model = new Order('search');
         $model->customer = Yii::app()->user->getState('user_id');
+
         if( isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
-//
-        if( isset($_GET['Order']) ){
-//            $model->unsetAttributes();
-//            $model->attributes = $_GET['Order'];
-            $model->filterCriteria = $_GET['Order']['filterCriteria'];
-            $model->filterValue = $_GET['Order']['filterValue'];
-            $model->searchField = $_GET['Order']['searchField'];
 
-            $model->searchValue = $_GET['Order']['searchValue'];
-//            var_dump($model->filterStatus);exit;
+        if( isset($_GET['Order']) )
+        {
+            $model->attributes=$_GET['Order'];
+
 
 
         }
-
-
-
-        /*
-                $fields = new CustomerSearchForm('search');
-                if( isset($_GET['CustomerSearchForm']) ){
-
-                    $fields->attributes = $_GET['CustomerSearchForm'];
-
-
-                    if( $fields->validate() )
-                        $model->searchCriteria = $fields->getCriteria();
-
-                }
-
-        */
-        $this->render('index',array('model'=>$model, /*'fields' =>$fields*/));
+        $model->delivery_date = $model->formatDate($model->delivery_date);
+        $this->render('index',array('model'=>$model, ));
     }
 
     public function actionDependentSelect()
@@ -92,7 +66,6 @@ class CustomerController extends Controller
                 echo CHtml::tag('option', array('value'=>$value),CHtml::encode($name),true);
             }
         }
-
     }
 
 

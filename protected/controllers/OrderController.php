@@ -2,37 +2,37 @@
 
 class OrderController extends Controller
 {
-	public function actionIndex()
-	{
-		$this->render('index');
-	}
+    public function actionIndex()
+    {
+        $this->render('index');
+    }
 
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
+    // Uncomment the following methods and override them if needed
+    /*
+    public function filters()
+    {
+        // return the filter configuration for this controller, e.g.:
+        return array(
+            'inlineFilterName',
+            array(
+                'class'=>'path.to.FilterClass',
+                'propertyName'=>'propertyValue',
+            ),
+        );
+    }
 
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+    public function actions()
+    {
+        // return external action classes, e.g.:
+        return array(
+            'action1'=>'path.to.ActionClass',
+            'action2'=>array(
+                'class'=>'path.to.AnotherActionClass',
+                'propertyName'=>'propertyValue',
+            ),
+        );
+    }
+    */
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
@@ -43,7 +43,6 @@ class OrderController extends Controller
     public function loadModel($id)
     {
         $model=Order::model()->findByPk($id);
-//        var_dump($model);exit;
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
         return $model;
@@ -74,10 +73,10 @@ class OrderController extends Controller
 
         if(isset($_POST['Order']))
         {
+
             $model->attributes=$_POST['Order'];
             $model->status ="Created";
             $model->customer =Yii::app()->user->getState('user_id');
-
             if($model->save())
                 $this->redirect(Yii::app()->createUrl('customer' . '/index'));
         }

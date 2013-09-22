@@ -11,10 +11,11 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'id_order' => 'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT',
             'order_name' => 'VARCHAR(128) NOT NULL',
             'total_price' => 'DECIMAL(12,2) NOT NULL',
+            'auto_index' => 'INT(4)  NULL',
             'max_discount' => "INT(4) NOT NULL",
             'delivery_date' => "DATE NOT NULL",
-            'order_date' => "DATE NOT NULL",
             'preferable_date' => "DATE NOT NULL",
+            'order_date' => "DATE NOT NULL",
             'status' => "ENUM('Created','Delivered','Ordered','Pending')",
             'assignee' => "int(11) NOT NULL ",
             'customer' => "int(11) NOT NULL ",
@@ -24,7 +25,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         $this->addForeignKey('FK_user', 'order','assignee', 'user', 'id' );
 
         $this->insert('order', array(
-            'order_name' => 'aaa 1',
+            'order_name' => 'aaa1',
             'total_price' => '152.00',
             'max_discount' => '2',
             'order_date' => '2002-11-09',
@@ -37,7 +38,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'aaa 2',
+            'order_name' => 'aaa2',
             'total_price' => '1002.2',
             'max_discount' => '20',
             'order_date' => '2002-11-09',
@@ -50,7 +51,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'rty4 2',
+            'order_name' => 'rty42',
             'total_price' => '335.22',
             'max_discount' => '22',
             'order_date' => '2002-11-09',
@@ -63,7 +64,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'ffgtr 2',
+            'order_name' => 'ffgtr2',
             'total_price' => '5543.33',
             'max_discount' => '11',
             'order_date' => '2002-11-09',
@@ -76,7 +77,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'eer4 1',
+            'order_name' => 'eer41',
             'total_price' => '12346.43',
             'max_discount' => '6',
             'order_date' => '2002-11-09',
@@ -89,7 +90,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'vbnbt 2',
+            'order_name' => 'vbnbt2',
             'total_price' => '55632.22',
             'max_discount' => '5',
             'order_date' => '2002-11-09',
@@ -102,7 +103,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => '2344vv 2',
+            'order_name' => '2344vv2',
             'total_price' => '22356.15',
             'max_discount' => '66',
             'order_date' => '2002-11-09',
@@ -115,7 +116,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'gvfv5r 2',
+            'order_name' => 'gvfv5r2',
             'total_price' => '5861.33',
             'max_discount' => '5',
             'order_date' => '2002-11-09',
@@ -128,7 +129,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'ddwwd 2',
+            'order_name' => 'ddwwd2',
             'total_price' => '66543.23',
             'max_discount' => '12',
             'order_date' => '2002-11-09',
@@ -141,7 +142,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => '1124 2',
+            'order_name' => '11242',
             'total_price' => '2345.65',
             'max_discount' => '44',
             'order_date' => '2002-11-09',
@@ -154,7 +155,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'vccd 2',
+            'order_name' => 'vccd2',
             'total_price' => '1234.2',
             'max_discount' => '54',
             'order_date' => '2002-11-09',
@@ -167,7 +168,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'aaa 3',
+            'order_name' => 'aaa3',
             'total_price' => '5892.1',
             'max_discount' => '40',
             'order_date' => '2002-11-09',
@@ -180,7 +181,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'aaa 4',
+            'order_name' => 'aaa4',
             'total_price' => '1402.29',
             'max_discount' => 15,
             'order_date' => '2002-11-09',

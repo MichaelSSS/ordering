@@ -1,4 +1,3 @@
-<h6>This page is appointed to create new and managing existing users</h6>
 
 <!----------------------------------------------------------------
 --- ?????? ?? ???????? ????????????------------------------------>
@@ -15,8 +14,8 @@
 ));
 ?>
 
-<fieldset>
-    <legend>&nbspSearch by&nbsp</legend>
+<fieldset class="order_search">
+    <legend>&nbsp;Search by&nbsp;</legend>
 
     <div id="search-fields">
         <div class="row">
@@ -52,10 +51,10 @@
             <div class="span2">Search by</div>
             <div class="span3 offset">
             <?php
-            echo $form->dropDownlist($model, 'searchField', $model->searchFields,
+            echo $form->dropDownlist($model, 'searchCriteria', $model->searchCriterias,
                 array(
                     'options' => array(
-                        array_search('Order Name', $model->searchFields) => array('selected' => true
+                        array_search('Order Name', $model->searchCriterias) => array('selected' => true
                         ))
                 ));
             ?>
@@ -83,40 +82,10 @@
         </div>
     </div>
 
-    <!--- modal window  start----->
-    <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'remove_order')); ?>
-
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">&times;</a>
-        <h4>Warning</h4>
-    </div>
-
-    <div class="modal-body">
-        <p>The order will be deleted from the list of orders!!!</p>
-        <p>Are you sure you want to proceed???</p>
-    </div>
-
-    <div class="modal-footer">
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'type'=>'primary',
-            'label'=>'Yes',
-            'url'=>'#',
-            'htmlOptions'=>array('id'=>'modal_remove'),
-        )); ?>
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'label'=>'No',
-            'url'=>'',
-            'htmlOptions'=>array('data-dismiss'=>'modal'),
-        )); ?>
-    </div>
-
-    <?php $this->endWidget(); ?>
-
-    <!--- modal window  start----->
-
 </fieldset>
 <?php $this->endWidget(); ?>
 
+<?php $this->renderPartial('/customer/_delete'); ?>
 
 
 
@@ -144,10 +113,22 @@
     'baseScriptUrl' => 'gridview',
     'columns' => array(
         'order_name',
-        'total_price',
 
-        'max_discount',
-        'delivery_date',
+        array(
+            'name' => 'total_price',
+            'value' => '$data->total_price.""."\$"',
+        ),
+
+        array(
+            'name' => 'max_discount',
+            'value' => '$data->max_discount.""."%"',
+        ),
+
+        array(
+            'name' => 'delivery_date',
+            'value' => 'Yii::app()->dateFormatter->format("MM/dd/yyyy",strtotime($data->delivery_date));',
+        ),
+
         'status',
 
 

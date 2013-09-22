@@ -32,9 +32,9 @@ class SiteController extends Controller
                 $model->attributes=$_POST['LoginForm'];
 
                 if ( $model->validate() && $model->login() ) {
-//                    var_dump(Yii::app()->createUrl(Yii::app()->user->homeController . '/index'));
 
-                    $this->redirect(Yii::app()->createUrl('admin' . '/index'));
+                    $this->redirect(Yii::app()->createUrl(Yii::app()->user->homeController . '/index'));
+
                 } else {
                     $errorCode = $model->getErrorCode();
                     if ( $errorCode == LoginForm::ERROR_USER_LOGGED ) {

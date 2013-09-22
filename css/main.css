@@ -20,3 +20,7 @@ ul {
 .head li {
 	display: inline-block;
 }
+.ui-datepicker-trigger{
+    cursor: pointer;
+    margin-left: 10px;
+}

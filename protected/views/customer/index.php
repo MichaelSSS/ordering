@@ -21,7 +21,7 @@
 ));
 ?>
 
-<fieldset>
+<fieldset class="order_search">
     <legend>Search <span>by</span></legend>
 
     <div id="search-fields">
@@ -54,10 +54,10 @@
 
             <div class="span2">Search for orders by:</div>
             <div class="span3">
-                <?php echo $form->dropDownlist($model, 'searchField', $model->searchFields,
+                <?php echo $form->dropDownlist($model, 'searchCriteria', $model->searchCriterias,
                     array('class' => 'span3',
                         'options' => array(
-                            array_search('Order Name', $model->searchFields) => array('selected' => true
+                            array_search('Order Name', $model->searchCriterias) => array('selected' => true
                             ))
                     ));
                 ?>
@@ -78,40 +78,10 @@
         </div>
 
 
-    <!--- modal window  start----->
-    <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'remove_order')); ?>
-
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">&times;</a>
-        <h4>Warning</h4>
-    </div>
-
-    <div class="modal-body">
-        <p>The order will be deleted from the list of orders!</p>
-        <p>Are you sure you want to proceed?</p>
-    </div>
-
-    <div class="modal-footer">
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'type'        => 'primary',
-            'label'       => 'Yes',
-            'url'         => '#',
-            'htmlOptions' => array('id' => 'modal_remove'),
-        )); ?>
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'label'       => 'No',
-            'url'         => '',
-            'htmlOptions' => array('data-dismiss' => 'modal'),
-        )); ?>
-    </div>
-
-    <?php $this->endWidget(); ?>
-
-    <!--- modal window  start----->
-
 </fieldset>
 <?php $this->endWidget(); ?>
 
+<?php $this->renderPartial('/customer/_delete'); ?>
 
 <?php $grid = $this->widget('TGridView', array(
     'dataProvider'   => $model->search(),
@@ -138,12 +108,33 @@
     'baseScriptUrl' => 'gridview',
     'columns' => array(
         array('name' => 'order_name', 'header'    => 'Order Name'),
-        array('name' => 'total_price', 'header'   => 'Total Price'),
-        array('name' => 'max_discount', 'header'  => 'Max Discount'),
-        array('name' => 'delivery_date', 'header' => 'Delivery Date'),
-        array('name' => 'status', 'header'        => 'Status'),
-        array('name' => 'assignee', 'value'       => '$data->assignees->username'),
-        array('name' => 'assigneesRole', 'value'  => '$data->assignees->role'),
+        array(
+            'name' => 'total_price',
+            'value' => '$data->total_price.""."\$"',
+        ),
+
+
+        array(
+            'name' => 'max_discount',
+            'value' => '$data->max_discount.""."%"',
+        ),
+
+        array(
+            'name' => 'delivery_date',
+            'value' => 'Yii::app()->dateFormatter->format("MM/dd/yyyy",strtotime($data->delivery_date));',
+        ),
+
+        'status',
+        array(
+            'name' => 'assignee',
+            'value' => '$data->assignees->username',
+        ),
+        array(
+            'name' => 'assigneesRole',
+            'value' => '$data->assignees->role',
+
+        ),
+
         array(
             'header'      => 'Edit',
             'class'       => 'bootstrap.widgets.TbButtonColumn',
@@ -157,19 +148,26 @@
                 ),
             )
         ),
+
         array(
             'header'      => 'Remove',
             'class'       => 'bootstrap.widgets.TbButtonColumn',
             'template'    => '{remove}',
             'htmlOptions' => array(
-                'data-toggle' => 'modal',
-                'data-target' => '#remove_order',
-                'click'       => 'beforeRemove'
+                'id'=>'col_remove',
             ),
             'buttons'    => array(
                 'remove' => array(
                     'icon' => 'icon-trash',
                     'url'  => 'Yii::app()->createUrl(\'order/remove\',array(\'id\'=>$data->id_order))',
+                    'options'=>array(
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#remove_order',
+                        'onclick'=>'beforeRemove(this)',
+                    ),
+
+
+
                 ),
             )
         ),
@@ -177,7 +175,9 @@
 ));?>
 
 <script>
-    function beforeRemove(){
-        $('#modal_remove').attr('href',$(this).attr('href'));
+    function beforeRemove(el){
+        debugger;
+        $('#modal_remove').attr('href',$(el).attr('href'));
+        debugger;
     }
 </script>

@@ -24,7 +24,12 @@ legend{
     margin-bottom: 0 !important;
     border-style: none !important;
 }
-
+.order_search  select{
+    width: 100%
+}
+.order_search  input{
+    width: 95%;
+}
 form select, form input{
     margin-top: .5em;
     width:30%;

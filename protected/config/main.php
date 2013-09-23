@@ -123,6 +123,6 @@ return array(
         'maxCredentialAttempts'=>5,
         'blockSeconds'=>600,
         'adminEmail'=>'webmaster@example.com',
-        'secondsBeforeDisactivate'=>600,
+        'secondsBeforeDisactivate'=>6000,
     ),
 );

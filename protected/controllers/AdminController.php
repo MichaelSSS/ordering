@@ -12,16 +12,16 @@ class AdminController extends Controller
     }
     public function accessRules()
     {
-	    return array(
+        return array(
             array('allow',
                 'roles'=>array('admin'),
             ),
             array('deny',
                 'users'=>array('*'),
             ),
-    	);
+        );
     }
- 
+
     public function actionIndex()
     {
         $model = new User;
@@ -149,12 +149,12 @@ class AdminController extends Controller
         if(isset($_POST['User'])) {
             $duplicate->attributes=$_POST['User'];
 
-                if($duplicate->save()) {
+            if($duplicate->save()) {
 
-                    $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
-    
-                    $this->redirect(array('admin/index'));
-                }
+                $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
+
+                $this->redirect(array('admin/index'));
+            }
 
         }
 

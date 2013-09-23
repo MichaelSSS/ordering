@@ -19,6 +19,10 @@ ul {
 .head li {
 	display: inline-block;
 }
+.ui-datepicker-trigger{
+    cursor: pointer;
+    margin-left: 10px;
+}
 .required span {
     display: none;
 }
@@ -57,4 +61,10 @@ legend span {
 }
 .table-bordered th, .table-bordered td {
     text-align: center;
+}
+.text-order{
+    margin: 5px 0 0 ;
+}
+.order-buttons{
+    float: right;
 }

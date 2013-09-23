@@ -9,3 +9,5 @@ protected/runtime/*
 assets/
 /nbproject/
 
+protected/tests/*.bat
+protected/tests/webtestcase.php

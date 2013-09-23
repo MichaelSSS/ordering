@@ -58,22 +58,21 @@
     'filterSelector'=>'{filter}, #search-fields',
 	'columns'=>array(
 		array(
-			'name'=>'Item_Number',
+			'name'=>'id_item',
+		),
+            array(
+                'name'=>'id_price',
+                
+            ),
+		array(
+			'name'=>'name',
 		),
 		array(
-			'name'=>'Item_Name',
+			'name'=>'description',
 		),
+	
 		array(
-			'name'=>'ItemDescription',
-		),
-		//array(
-			//'name'=>'Demension',
-		//),
-		array(
-			'name'=>'Price',
-		),
-		array(
-			'name'=>'Quantity',
+			'name'=>'quantity',
 		),
 		array(
 			'class'=>'CButtonColumn',
@@ -81,7 +80,7 @@
             'header'=>'Edit',
             'buttons'=>array(
                 'edit'=>array(
-                    'url' => 'Yii::app()->createUrl(\'supervisor/edit\',array(\'id\'=>$data->Item_Number))',
+                    'url' => 'Yii::app()->createUrl(\'supervisor/edit\',array(\'id\'=>$data->id_item))',
                     'label'=>'edit',
                     'imageUrl'=>'images/grid_edit.png',
                 ),
@@ -99,7 +98,7 @@
             'buttons'=>array(
                
                 'remove'=>array(
-                    'url' => 'Yii::app()->createUrl(\'supervisor/remove\',array(\'id\'=>$data->Item_Number))',
+                    'url' => 'Yii::app()->createUrl(\'supervisor/remove\',array(\'id\'=>$data->id_item))',
                     'label'=>'remove',
                     'imageUrl'=>'images/grid_remove.bmp',
                 ),
@@ -112,7 +111,7 @@
             'header'=>'Duplicate',
             'buttons'=>array(
                 'duplicate'=>array(
-                    'url' => 'Yii::app()->createUrl(\'supervisor/duplicate\',array(\'id\'=>$data->Item_Number))',
+                    'url' => 'Yii::app()->createUrl(\'supervisor/duplicate\',array(\'id\'=>$data->id_item))',
                     'label'=>'duplicate',
                     'imageUrl'=>'images/grid_duplicate.bmp',
                 ),

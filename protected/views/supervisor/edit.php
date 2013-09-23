@@ -21,19 +21,19 @@
                           )); 
                         ?>
                     <div class="row">
-                      <?php echo $form->textFieldRow($model, 'Item_Number', array('hint'=>'')); ?>
+                      <?php echo $form->textFieldRow($model, 'id_item', array('hint'=>'')); ?>
                     </div>
                     <div class="row">
-                        <?php echo $form->textFieldRow($model, 'Item_Name', array('hint'=>'')); ?>
+                      <?php echo $form->textFieldRow($model, 'id_price', array('hint'=>'')); ?>
+                    </div>
+                    <div class="row">
+                        <?php echo $form->textFieldRow($model, 'name', array('hint'=>'')); ?>
                     </div>
                      <div class="row">
-                        <?php echo $form->textFieldRow($model, 'ItemDescription', array('hint'=>'')); ?>
+                        <?php echo $form->textFieldRow($model, 'description', array('hint'=>'')); ?>
                     </div>
                     <div class="row">
-                        <?php echo $form->textFieldRow($model, 'Price', array('hint'=>'')); ?>
-                    </div>
-                    <div class="row">
-                        <?php echo $form->textFieldRow($model, 'Quantity',array('hint'=>'')); ?>
+                        <?php echo $form->textFieldRow($model, 'quantity',array('hint'=>'')); ?>
                     </div>
 
                     <div class="row">
@@ -42,13 +42,13 @@
                                   array('buttonType'  => 'submit', 
                                       'type'  => 'info', 
                                                 'label' => 'Edit',
-                                        'size'=> 'large',)); 
+                                        'size'=> 'normal',)); 
                                ?>
                               <?php $this->widget('bootstrap.widgets.TbButton', 
                                     array('buttonType'  => 'reset', 
                                       'type'  => 'primary', 
                                       'label' => 'Reset ',
-                                        'size'=> 'large',
+                                        'size'=> 'normal',
                                            )); 
                                  ?>
                                 <?php $this->endWidget(); ?>

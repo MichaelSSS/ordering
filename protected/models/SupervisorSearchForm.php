@@ -19,7 +19,7 @@ class SupervisorSearchForm extends CFormModel
         'All Columns'=>'*',
         'Item Number'=>'Item Number',
         'Item Name'=>'Item Name',
-        'Price'=>'Price',
+        'Description'=>'Description',
         'Quantity'=>'Quantity'
     );
 

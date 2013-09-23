@@ -67,16 +67,9 @@ ul.yiiPager li.hidden
     visibility: visible;
 	border:solid 1px #DEDEDE;
 	color:#888888;
+    cursor:default;
 }
 
-/**
- * Hide first and last buttons by default.
- */
-ul.yiiPager .first,
-ul.yiiPager .last
-{
-/*display:none;*/
-}
  .pager .next > a {
      float: left;
  }

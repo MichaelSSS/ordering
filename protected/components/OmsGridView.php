@@ -2,9 +2,10 @@
 /**
 *
 */
-Yii::import('zii.widgets.grid.CGridView');
+//Yii::import('zii.widgets.grid.CGridView');
+Yii::import('bootstrap.widgets.TbGridView');
 
-class OmsGridView extends CGridView
+class OmsGridView extends TbGridView
 {
     public $selectPageSizeCssClass = 'page-size';
 

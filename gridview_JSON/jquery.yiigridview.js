@@ -40,9 +40,8 @@
 
         $('.grid-view .remove').not(':has(a[href])').removeAttr('data-target');
         $('.grid-view a:not([href])').attr('title','active user');
-        $('.grid-view a:not([href]) img').attr({
-            src:'images/grid_remove_disabled.bmp',
-            alt:'active user'
+        $('.grid-view a:not([href]) i').attr({
+            style:'background-image: url("gridview_JSON/glyphicons-halflings-white.png")'
         });
 
     };

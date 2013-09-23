@@ -16,7 +16,7 @@ class SiteLogoutTest extends WebTestCase
         $this->waitForTextPresent('Are you sure');
         $this->clickAndWait('link=Yes');
         $this->assertText("css=button[type='submit']","login");
-
+        $this->pause(5000);
     }
 
 }

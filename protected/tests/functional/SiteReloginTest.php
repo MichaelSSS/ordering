@@ -16,5 +16,6 @@ class SiteReloginTest extends WebTestCase
         $this->type("id=LoginForm_password", "admin01");
         $this->clickAndWait("name=yt0");
         $this->assertTextPresent('Create New User');
+        $this->pause(5000);
     }
 }

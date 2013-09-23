@@ -16,5 +16,6 @@ class SiteAlreadyTest extends WebTestCase
         $this->type("id=LoginForm_password", "admin01");
         $this->clickAndWait("name=yt0");
         $this->assertTextPresent('user is already logged');
+        $this->pause(5000);
     }
 }

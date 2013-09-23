@@ -17,19 +17,20 @@ class SiteLoginTest extends WebTestCase
         $this->check("id=LoginForm_rememberMe");
         $this->clickAndWait("name=yt0");
         $this->assertTextPresent('Create New User');
+        $this->pause(5000);
     }
 
     public function testAccessControl()
     {
         $this->open('?r=customer/index');
         $this->assertTextPresent('not authorized');
-        $this->pause(3000);
+        $this->pause(5000);
     }
 
     public function testRemember()
     {
         $this->open('');
         $this->assertValue('id=LoginForm_username','admin01');       
-        $this->pause(3000);
+        $this->pause(5000);
     }
 }

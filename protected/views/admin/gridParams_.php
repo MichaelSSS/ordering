@@ -59,7 +59,7 @@
             ),
             'buttons'    => array(
                 'remove' => array(
-                    'icon' => 'icon-trash',
+                    'icon' => 'icon-remove',
                     'url'  => 'Yii::app()->createUrl(\'admin/remove\',array(\'id\'=>$data->id))',
                 ),
             )

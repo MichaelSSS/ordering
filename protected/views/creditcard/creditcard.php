@@ -1,42 +1,68 @@
-<?php  //Yii::app()->clientScript->registerCssFile('css/ccform.css'); ?>
-<?php /** @var BootActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php  Yii::app()->bootstrap->register('/css/bootstrap.css'); ?>
+<?php  Yii::app()->bootstrap->register('/css/bootstrap-responsive.css'); ?>
+<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id'=>'credit-card-form',
-        'enableAjaxValidation'=>true,
+        'enableAjaxValidation'=>false,
         'enableClientValidation'=>false,
         'clientOptions'=>array('validateOnSubmit'=> true,'validateOnChange'=>false),
-        'htmlOptions'=>array('class'=>'horizontal')
+        'htmlOptions'=>array('class'=>'form-horizontal'),
+        'action'=>'/index.php?r=creditcard/validate'
 ));
 ?>
-
+<div class="container">
     <fieldset form="credit-card-form">
     <legend>Card Info</legend>
-    <div class="row">
-        <?php echo $form->labelEx($model, 'credit_card_type', array('class'=>'span4')); ?>
-        <?php echo $form->dropDownList($model, 'credit_card_type', array(1=>'Visa',2=>'MasterCard',3=>'American Express',4=>'Maestro'),array('class'=>'span4')); ?>
+    <div class="field">
+        <?php echo $form->dropDownListRow($model, 'credit_card_type', array(1=>'Visa',2=>'MasterCard',3=>'American Express',4=>'Maestro')); ?>
     </div>
-    <div class="row">
+    <div class="row-fluid">
         <?php echo $form->error($model,'credit_card_type'); ?>
     </div>
     <div class="row">
-        <?php echo $form->labelEx($model, 'credit_card_number', array('class'=>'span4')); ?>
-        <?php echo $form->textField($model, 'credit_card_number', array('class'=>'span4','maxlength'=>16)); ?>
+        <?php echo $form->textFieldRow($model, 'credit_card_number', array('class'=>'span4','maxlength'=>16)); ?>
     </div>
+
     <!-- Modal -->
-    <div id="errorModal" class="modal hide">
-        <div class="modal-header hide">
-            <h3 id="errorModalLabel">Error</h3>
+
+        <?php /*$this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+            'id'=>'errorMessage',
+            // additional javascript options for the dialog plugin
+            'options'=>array(
+            'title'=>'Error',
+            'autoOpen'=>false,
+            ),));
+
+        echo $form->error($model,'credit_card_number') ;
+
+        $this->endWidget('zii.widgets.jui.CJuiDialog');*/?>
+
+        <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'errorModal')); ?>
+        <div id="errorModal" class="modal hide" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- Popup Header -->
+        <div class="modal-header">
+            <h4>Error</h4>
         </div>
-        <div class="modal-body hide">
-            <p><?php echo $form->error($model,'credit_card_number'); ?></p>
+        <!-- Popup Content -->
+        <div class="modal-body">
+            <p> <?php echo $form->error($model,'credit_card_number') ?> </p>
         </div>
-        <div class="modal-footer hide">
-            <button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
+        <!-- Popup Footer -->
+        <div class="modal-footer">
+
+            <!-- close button -->
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                'label'=>'OK',
+                'url'=>'#',
+                'htmlOptions'=>array('data-dismiss'=>'modal'),
+            )); ?>
+            <!-- close button ends-->
         </div>
-    </div>
+        </div>
+        <?php $this->endWidget(); ?>
+    <!-- Modal -->
+
     <div class="row">
-        <?php echo $form->labelEx($model, 'cvv2_code', array('class'=>'span4')); ?>
-        <?php echo $form->textField($model, 'cvv2_code', array('class'=>'span4','maxlength'=>3)); ?>
+        <?php echo $form->textFieldRow($model, 'cvv2_code', array('class'=>'span4','maxlength'=>3)); ?>
     </div>
     <div class="row">
         <?php echo $form->error($model,'cvv2_code'); ?>
@@ -55,16 +81,14 @@
     <div class="row">
     </div>
     <div class="row">
-        <?php echo $form->labelEx($model, 'issue_number', array('class'=>'span4')); ?>
-        <?php echo $form->textField($model, 'issue_number', array('class'=>'span4')); ?>
+        <?php echo $form->textFieldRow($model, 'issue_number', array('class'=>'span4')); ?>
     </div>
     <div class="row">
     </div>
     <div class="row">
-        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Ordering')); ?>
-        <?php //echo CHtml::submitButton('submit'); ?>
+        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'ajaxSubmit', 'label'=>'Ordering','htmlOptions'=>array('onClick'=>'js:document.location.href="index.php?r=creditcard/validate"'))); ?>
     </div>
     </fieldset>
-
+</div>
 <?php $this->endWidget(); ?>
 

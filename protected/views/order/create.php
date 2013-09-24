@@ -1,98 +1,146 @@
 
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-         'type' => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-         'tabs' => array(
-        array('label' => 'Ordering',
-            'content' => '',
-             'active' => true
-             ),
-        ),
-    ));
-?>
 
-<?php /** @var BootActiveForm $form */
+<div class="row">
+    <div class="span10"></div>
+    <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-                            'id' => 'horizontalForm',
-                          'type' => 'inline',
-        'enableClientValidation' => true,
-        'clientOptions'          => array(
-            'validateOnSubmit'   => true
-        )
+        'id'=>'horizontalForm',
+        'type'=>'horizontal',
+        'enableClientValidation'  =>  true,
+        'clientOptions'           =>  array(
+            'validateOnSubmit'        =>  true )
     ));
-?>
+    ?>
+    <?php
+    Yii::app()->clientScript->registerCoreScript('jquery.ui');
+    Yii::app()->clientScript->registerCssFile(
+        Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
+    );
+    ?>
+    <div class="row">
+        <div class="span10">This page is appionted for selecting and buying products</div>
 
-<div class="span6">
-    <fieldset>
-        <legend>Create new order</legend>
-        <ul class='nav'>
-            <li>Order Name <?php echo $form->textFieldRow($model, 'order_name', array('hint' => '')); ?></li>
-            <li><?php echo $form->labelEx($model,'status', array('class'=>'control-label')); ?> Created </li>
-            <li>Total number of items <span>12</span></li>
-            <li>
-                <?php echo  $form->hiddenField($model,'total_price', array('value' => 1200)); ?>
-                <?php echo $form->labelEx($model,'total_price', array('class' => 'control-label')); ?> 1200
-            </li>
-            <li>
-                <?php echo $form->labelEx($model,'order_date', array('class' => 'control-label')); ?>
-                <?php echo date('m/d/Y'); ?>
-                <?php echo  $form->hiddenField($model,'order_date', array('value' => date('m/d/Y'))); ?>
-            </li>
-            <li>Preferable Date<?php echo $form->textFieldRow($model, 'preferable_date', array('hint' => '',)); ?></li>
-            <li><?php echo $form->labelEx($model,'delivery_date', array('class' => 'control-label')); ?> //</li>
-            <li><?php echo $form->dropDownListRow($model, 'assignee', $model->getMerchandisers());  ?></li>
-        </ul>
-        <div class="form-actions">
-            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Save')); ?>
-            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'info', 'label' => 'Order')); ?>
+    </div>
+    <div class="row">
+        <div class="span10">
+            <fieldset >
+                <legend>Items selection</legend>
+                items table here.....
+            </fieldset >
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span5">
+
+
+
+            <fieldset >
+                <legend>Totals</legend>
+
+                <div class="row">
+                    <div class="span5">
+                    <?php echo $form->textFieldRow($model, 'order_name', array('hint'=>'')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span5">
+                    <?php echo $form->labelEx($model,'status', array('class'=>'control-label')); ?>
+                    <div class="text-order"><?php echo "Created"; ?></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span5">
+                    <?php echo "<label class='control-label'>Total number of items</label>"; ?>
+                        <div class="text-order"><?php echo  "12";  ?></div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="span5">
+                    <?php echo $form->labelEx($model,'total_price', array('class'=>'control-label')); ?>
+                        <div class="text-order"><?php echo "1200"."\$"; ?></div>
+                    <?php echo  $form->hiddenField($model,'total_price', array('value'=>1200)); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span5">
+                    <?php echo $form->labelEx($model,'order_date', array('class'=>'control-label')); ?>
+                        <div class="text-order"><?php echo date('m/d/Y'); ?></div>
+                    <?php echo  $form->hiddenField($model,'order_date', array('value'=>date('m/d/Y'))); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span5">
+                    <?php echo $form->textFieldRow($model, 'preferable_date',  array('hint'=>'',)); ?>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="span5">
+                    <?php echo $form->labelEx($model,'delivery_date', array('class'=>'control-label')); ?>
+                        <div class="text-order"><?php echo "//"; ?></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span5">
+                    <?php echo $form->dropDownListRow($model, 'assignee', $model->getMerchandisers());  ?>
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+        <div class="span5">
+            <fieldset >
+                <legend>Card Info</legend>
+
+                Credit card view goes here
+            </fieldset>
+
+        </div>
+
+
+
+
+
+
+    </div>
+    <div class="row">
+        <div class="span3 offset7">
+            <div class="order-buttons">
+            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Save')); ?>
+            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Order')); ?>
+
 
             <?php $this->widget('bootstrap.widgets.TbButton', array(
-                'label' => 'Cancel',
-                'type' => 'action',
-                'htmlOptions' => array(
-                    'data-toggle' => 'modal',
-                    'data-target' => '#myModal',
+                'label'=>'Cancel',
+                'type'=>'action',
+                'htmlOptions'=>array(
+                    'data-toggle'=>'modal',
+                    'data-target'=>'#myModal',
                 ),
             )); ?>
+
+            </div>
+
+
+
         </div>
-    </fieldset>
+    </div>
+    <?php $this->endWidget(); ?>
+</div>
 </div>
 
-<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'myModal')); ?>
 
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">&times;</a>
-        <h4>Warning</h4>
-    </div>
-
-    <div class="modal-body">
-        <p>Are you sure you want to cancel operation?</p>
-        <p>All data will be lost</p>
-    </div>
-
-    <?php $target = $this->createUrl('customer/index'); ?>
-
-    <div class="modal-footer">
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'type' => 'primary',
-            'label' => 'Yes',
-            'url' => $target,
-
-        )); ?>
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-                  'label' => 'No',
-                    'url' => '#',
-            'htmlOptions' => array('data-dismiss' => 'modal'),
-        )); ?>
-        <?php $this->endWidget(); ?>
-
-    </div>
-
-<?php $this->endWidget(); ?>
-
-<script>
+<?php $this->renderPartial('/order/_err'); ?>
+<script type="text/javascript">
     $(function(){
-        $("#Order_preferable_date").datepicker();
-
+        $("#Order_preferable_date").datepicker({
+            showOn:"button",
+            buttonImage:"/images/Calendar.png",
+            buttonImageOnly:true
+        });
+      $('#Order_preferable_date').tooltip({title:'Type date in format mm/dd/yyyy'})
     })
 </script>

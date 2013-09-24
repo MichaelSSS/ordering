@@ -12,16 +12,16 @@ class AdminController extends Controller
     }
     public function accessRules()
     {
-	    return array(
+        return array(
             array('allow',
                 'roles'=>array('admin'),
             ),
             array('deny',
                 'users'=>array('*'),
             ),
-    	);
+        );
     }
- 
+
     public function actionIndex()
     {
         $model = new User;
@@ -55,9 +55,20 @@ class AdminController extends Controller
         }
     }
 
-    protected function assignRole($role,$userId)
+    protected function assignRole($role,$userId,$isNewRecord=true)
     {
-        Yii::app()->authManager->assign($role,$userId);
+        if ($isNewRecord ) {
+            Yii::app()->authManager->assign($role,$userId);
+        } else {
+            Yii::app()->db->createCommand('
+                UPDATE auth_assignment 
+                SET itemname= :role 
+                WHERE userid= :userId
+            ')->execute(array(
+                'role'   => $role,
+                'userId' => $userId
+            ));
+        }
     }
 
     /*=======USERS ACTIONS=========*/
@@ -111,14 +122,14 @@ class AdminController extends Controller
             if($_POST['User']['password'] == '*****' || strlen($_POST['User']['password']) == 0 ){
                 if($model->save(true,array('username','role','firstname','lastname','email','region'))) {
 
-                    $this->assignRole($model->role,$model->id); // assign role to user
+                    $this->assignRole($model->role,$model->id,false); // assign role to user
 
                     $this->redirect(array('admin/index'));
                 }
             }else{
                 if($model->save()) {
 
-                    $this->assignRole($model->role,$model->id); // assign role to user
+                    $this->assignRole($model->role,$model->id,false); // assign role to user
 
                     $this->redirect(array('admin/index'));
                 }
@@ -149,12 +160,12 @@ class AdminController extends Controller
         if(isset($_POST['User'])) {
             $duplicate->attributes=$_POST['User'];
 
-                if($duplicate->save()) {
+            if($duplicate->save()) {
 
-                    $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
-    
-                    $this->redirect(array('admin/index'));
-                }
+                $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
+
+                $this->redirect(array('admin/index'));
+            }
 
         }
 

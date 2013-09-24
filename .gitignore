@@ -5,5 +5,9 @@ protected/yiic.bat
 
 protected/vendor/*
 protected/runtime/*
+
 assets/
 /nbproject/
+
+protected/tests/*.bat
+protected/tests/webtestcase.php

@@ -33,6 +33,7 @@ class SiteController extends Controller
 
                 if ( $model->validate() && $model->login() ) {
                     $this->redirect(Yii::app()->createUrl(Yii::app()->user->homeController . '/index'));
+
                 } else {
                     $errorCode = $model->getErrorCode();
                     if ( $errorCode == LoginForm::ERROR_USER_LOGGED ) {

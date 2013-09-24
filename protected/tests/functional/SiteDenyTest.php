@@ -28,7 +28,7 @@ class SiteDenyTest extends WebTestCase
         $this->type("id=LoginForm_password", "wrong");
         $this->click("name=yt0");
         $this->waitForTextPresent('Page is locked');
-
+        $this->pause(5000);
     }
 
 	public function testUnBlock()
@@ -41,7 +41,7 @@ class SiteDenyTest extends WebTestCase
         $this->type("id=LoginForm_password", "admin01");
         $this->clickAndWait("name=yt0");
         $this->assertTextPresent('Create New User');
-        
+        $this->pause(3000);
     }
 
     public function testLimit()
@@ -71,6 +71,7 @@ class SiteDenyTest extends WebTestCase
         $this->type("id=LoginForm_password", "admin01");
         $this->clickAndWait("name=yt0");
         $this->assertTextPresent('Create New User');
+        $this->pause(3000);
 
         // try to log in once more to check that login is denied
         $this->open('');
@@ -78,6 +79,7 @@ class SiteDenyTest extends WebTestCase
         $this->type("id=LoginForm_password", "customer01");
         $this->clickAndWait("name=yt0");
         $this->assertTextPresent('only 50 users');
+        $this->pause(5000);
 
         // logout 50-th user and try to login once more.
         // now we must be able to ligin

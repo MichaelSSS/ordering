@@ -1,11 +1,8 @@
 <?php
-/**
-*
-*/
-//Yii::import('zii.widgets.grid.CGridView');
+
 Yii::import('bootstrap.widgets.TbGridView');
 
-class OmsGridView extends TbGridView
+class TGridView extends TbGridView
 {
     public $selectPageSizeCssClass = 'page-size';
 
@@ -22,7 +19,7 @@ class OmsGridView extends TbGridView
 
         $url = array($this->controller->route) + $_GET;
         $url['pageSize'] = self::$nextPageSize[$currentPageSize];
-    
+
         echo '<div id="grid-extend">';
         echo CHtml::link('show ' . self::$nextPageSize[$currentPageSize] . ' items',
             $url,
@@ -35,7 +32,7 @@ class OmsGridView extends TbGridView
     {
         if (($count=$this->dataProvider->getItemCount())<=0)
             return;
-    
+
         echo '<div class="'.$this->summaryCssClass.'">';
         if ( $this->enablePagination ) {
             $pagination=$this->dataProvider->getPagination();
@@ -59,3 +56,5 @@ class OmsGridView extends TbGridView
     }
 
 }
+
+?>

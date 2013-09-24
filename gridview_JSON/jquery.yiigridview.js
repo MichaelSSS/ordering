@@ -131,7 +131,7 @@
                 }
 
                 $('#search-form').on('submit.yiiGridView', function (event) {
-                    if ( $("input",this).val() ) {
+                    if ( $("input#AdminSearchForm_keyValue",this).val() ) {
                         event.preventDefault();
                         var data = $(this).serialize();
                         if (settings.pageVar !== undefined) {

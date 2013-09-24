@@ -1,7 +1,7 @@
 <?php
 /**
  *Bootstrap GridView
- */
+*/
 ?>
 <?php $dataProvider = $model->search(); ?>
 
@@ -27,7 +27,7 @@
         'cssFile'        => 'css/pager.css',
     ),
     'pagerCssClass'  => 'oms-pager',
-    'baseScriptUrl' => 'gridview_JSON',
+    'baseScriptUrl'  => 'gridview',
     'columns'        => array(
         array('name' => 'username',  'header' => 'User Name'),
         array('name' => 'firstname', 'header' => 'First Name'),
@@ -60,8 +60,7 @@
             'buttons'    => array(
                 'remove' => array(
                     'icon' => 'icon-remove',
-                    'url'  => '( !Yii::app()->user->isActive($data->id, time()) ) ?
-                            Yii::app()->createUrl("admin/remove", array("id" => $data->id)) : "";',
+                    'url'  => 'Yii::app()->createUrl(\'admin/remove\',array(\'id\'=>$data->id))',
                 ),
             )
         ),
@@ -81,4 +80,8 @@
     ),
 ));
 ?>
+
+
+
+
 

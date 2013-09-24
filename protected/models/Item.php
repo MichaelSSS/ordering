@@ -38,13 +38,15 @@ class Item extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Item_Name, ItemDescription, Price, Quantity', 'required'),
-			array('Price, Quantity', 'numerical', 'integerOnly'=>true),
-			array('Item_Name', 'length', 'max'=>30),
-			//array('Demension', 'length', 'max'=>7),
+			array('id_item,price,quantity', 'required'),
+                        array('id_item','unique'),
+			array('quantity','numerical', 'integerOnly'=>true),
+                        array('price','numerical'),
+			array('name', 'length', 'max'=>30),
+			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('Item_Number, Item_Name, ItemDescription, Price, Quantity', 'safe', 'on'=>'search'),
+			array('id_item, price, name, description, quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +56,8 @@ class Item extends CActiveRecord
 	public function relations()
 	{
 		return array(
+                   
+                    
 		);
 	}
 
@@ -63,12 +67,11 @@ class Item extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Item_Number' => 'Item Number',
-			'Item_Name' => 'Item Name',
-			'ItemDescription' => 'Item Description',
-			//'Demension' => 'Dimension',
-			'Price' => 'Price',
-			'Quantity' => 'Quantity',
+			'id_item' => 'Item Number',
+                        'price'=>'Price',
+			'name' => 'Item Name',
+			'description' => 'Item Description',
+                        'quantity' => 'Quantity',
 		);
 	}
 
@@ -99,7 +102,7 @@ class Item extends CActiveRecord
 
     public function search()
     {
-//file_put_contents('d:\\log.txt', print_r($_POST['User'],true));
+
 
 	
         return new CActiveDataProvider('Item',array(
@@ -114,12 +117,11 @@ class Item extends CActiveRecord
 		return parent::model($className);
 	}
 
-        //public function updateLastActionTime()
-    //{
-     //   $currentTime = isset($_SERVER['REQUEST_TIME']) ? $_SERVER['REQUEST_TIME'] : time();
-      //  $this->lastActionTime = $currentTime;
-      //  $this->update(array('lastActionTime'));
+     
+          public function getTotalprice(){
+            
+            return $this->price->price * $this->quantity;
 
-    //}
+        } 
 }
 

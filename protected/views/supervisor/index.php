@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('.remove a').live('click',function(){
@@ -13,113 +12,111 @@
         })
     });
 </script>
-<div id="wrapper">
-<h6>This page is appointed to create new and managing existing items by supervisor</h6>
 
-<!----------------------------------------------------------------
---- ������ �� �������� ������������------------------------------>
+<?php $this->widget('bootstrap.widgets.TbTabs', array(
+    'type'      => 'tabs',
+    'placement' => 'above', // 'above', 'right', 'below' or 'left'
+    'tabs'      => array(
+        array('label' => 'Item Management ',
+            'content' => '<p>This page is appointed to create new and managing existing items by supervisor</p>',
+            'active'  => true
+        ),
+    ),
+));
+?>
+
 <?php echo CHtml::link('Create New Items',array('supervisor/create'));?>
 
 
-
-<div class="form">
  <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'search-form',
-    'enableClientValidation'=>true,
+	'id' => 'search-form',
+    'enableClientValidation' => true,
 ));
 ?>
-    <fieldset><legend>&nbspSearch by&nbsp</legend> 
-        <div>Field Filter</div>
-        <div id="search-fields">
-        <?php 
-            echo $form->dropDownlist($fields,'keyField',$fields->keyFields);
-            echo $form->dropDownlist($fields,'criteria',$fields->criterias);
-            echo $form->textField($fields,'keyValue');
-        ?>
+
+<fieldset>
+    <legend>Search <span>by</span></legend>
+    <div class='span9'><p>Field Filter</p></div>
+    <div class='control-group'>
+        <div class='controls'>
+            <div class='span3'>
+                <?php echo $form->dropDownlist($fields,'keyField',$fields->keyFields); ?>
+            </div>
+            <div class='span3'>
+                <?php echo $form->dropDownlist($fields,'criteria',$fields->criterias); ?>
+            </div>
+            <div class='span3'>
+                <?php echo $form->textField($fields, 'keyValue', array('class' => 'span3', 'placeholder' => 'Search')); ?>
+                <input class='btn btn-info pull-right' type='submit' value='Search'>
+            </div>
         </div>
-        <input type='submit' value='Search'>
-    </fieldset>
+    </div>
+</fieldset>
+
 <?php $this->endWidget(); ?>
-</div>
-<div id="grid-extend">
-<?php echo CHtml::link('show ' . $model->nextPageSize[$model->currentPageSize] . ' items',
-    array(
-        'supervisor/index',
-        'pageSize'=>$model->nextPageSize[$model->currentPageSize],
+
+
+
+
+<?php $this->widget('TGridView', array(
+    'id'             => 'grig-extend',
+    'type'           => 'striped bordered condensed',
+    'dataProvider'   => $model->search(),
+    'ajaxUpdate'     => 'search-result-count',
+    'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
+    'filterSelector' => '#search-fields',
+    'template'       => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
+    'pager'          => array(
+        'class'          => 'OmsPager',
+        'header'         => '',
+        'maxButtonCount' => 0,
+        'firstPageLabel' => 'First',
+        'prevPageLabel'  => 'Backward',
+        'nextPageLabel'  => 'Forward',
+        'lastPageLabel'  => 'Last',
+        'htmlOptions'    => array(
+            'class'      => 'yiiPager',
+        ),
+        'cssFile'        => 'css/pager.css',
     ),
-    array('id'=>'page-size')
-);?>
-</div>
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'dataProvider'=>$model->search(),
-//    'filter'=>$model,
-    'ajaxUpdate'=>'grid-extend,search-fields',
-    'updateSelector'=>'{page}, {sort}, #page-size',
-    'filterSelector'=>'{filter}, #search-fields',
-	'columns'=>array(
-		array(
-			'name'=>'Item_Number',
-		),
-		array(
-			'name'=>'Item_Name',
-		),
-		array(
-			'name'=>'ItemDescription',
-		),
-		//array(
-			//'name'=>'Demension',
-		//),
-		array(
-			'name'=>'Price',
-		),
-		array(
-			'name'=>'Quantity',
-		),
-		array(
-			'class'=>'CButtonColumn',
-                   
-            'header'=>'Edit',
-            'buttons'=>array(
-                'edit'=>array(
-                    'url' => 'Yii::app()->createUrl(\'supervisor/edit\',array(\'id\'=>$data->Item_Number))',
-                    'label'=>'edit',
-                    'imageUrl'=>'images/grid_edit.png',
-                ),
+    'pagerCssClass'  => 'oms-pager',
+    'baseScriptUrl'  => 'gridview',
+    'columns'        => array(
+        array('name' => 'id_item',  'header' => 'Id Item'),
+        array('name' => 'name',  'header' => 'Name'),
+        array('name' => 'description', 'header' => 'Description'),
+           array('name' => 'price', 'header' => 'Price'),
+        array('name' => 'quantity', 'header' => 'Quantity'),
+        array(
+            'header'      => 'Update',
+            'class'       => 'bootstrap.widgets.TbButtonColumn',
+            'template'    => '{edit}',
+            'htmlOptions' => array(
             ),
-            'template'=>'{edit}',
-		),
-		array(
-			'class'=>'CButtonColumn',
-            'header'=>'Remove',
-              'htmlOptions'=>array(
-                'data-toggle'=>'modal',
-                'data-target'=>'#myModal',
-                'class'=>'remove',
-            ),       
-            'buttons'=>array(
-               
-                'remove'=>array(
-                    'url' => 'Yii::app()->createUrl(\'supervisor/remove\',array(\'id\'=>$data->Item_Number))',
-                    'label'=>'remove',
-                    'imageUrl'=>'images/grid_remove.bmp',
+            'buttons'  => array(
+                'edit' => array(
+                    'icon' => 'pencil',
+                    'url'  => 'Yii::app()->createUrl(\'supervisor/edit\',array(\'id\'=>$data->id_item))',
                 ),
+            )
+        ),
+        array(
+            'header'      => 'Remove',
+            'class'       => 'bootstrap.widgets.TbButtonColumn',
+            'template'    => '{remove}',
+            'htmlOptions' => array(
+                'data-toggle' => 'modal',
+                'data-target' => '#myModal',
+                'class'       => 'remove'
             ),
-            'template'=>'{remove}',
-		),
-		array(
-			'class'=>'CButtonColumn',
-                   
-            'header'=>'Duplicate',
-            'buttons'=>array(
-                'duplicate'=>array(
-                    'url' => 'Yii::app()->createUrl(\'supervisor/duplicate\',array(\'id\'=>$data->Item_Number))',
-                    'label'=>'duplicate',
-                    'imageUrl'=>'images/grid_duplicate.bmp',
+            'buttons'    => array(
+                'remove' => array(
+                    'icon' => 'icon-remove',
+                    'url'  => 'Yii::app()->createUrl(\'supervisor/remove\',array(\'id\'=>$data->id_item))',
                 ),
-            ),
-            'template'=>'{duplicate}',
-		),
-	),
-)); ?>
-</div>
+            )
+        ),
+    ),
+));
+?>
 <?php $this->renderPartial('/supervisor/_del'); ?>

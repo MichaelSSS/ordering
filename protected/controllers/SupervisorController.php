@@ -11,7 +11,6 @@ class SupervisorController extends Controller
 		);
 	}
 
-
     public function accessRules()
     {
 	    return array(
@@ -23,10 +22,6 @@ class SupervisorController extends Controller
             ),
     	);
     }
-         
-
- 
-
 
     public function actionIndex()
     {

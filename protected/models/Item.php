@@ -41,7 +41,7 @@ class Item extends CActiveRecord
 			array('id_item,id_price,quantity', 'required'),
 			array('id_price,quantity','numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>30),
-			array('description', 'length', 'max'=>50),
+			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_item, id_price, name, description, quantity', 'safe', 'on'=>'search'),

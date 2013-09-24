@@ -261,7 +261,6 @@
 				customError = options.error;
 				delete options.error;
 			}
-
 			return this.each(function () {
 				var $form,
 					$grid = $(this),

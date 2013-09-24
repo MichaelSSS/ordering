@@ -83,12 +83,12 @@
     'baseScriptUrl'  => 'gridview',
     'columns'        => array(
         array('name' => 'id_item',  'header' => 'Id Item'),
-        array('name' => 'id_price', 'header' => 'Id Price'),
         array('name' => 'name',  'header' => 'Name'),
         array('name' => 'description', 'header' => 'Description'),
+           array('name' => 'price', 'header' => 'Price'),
         array('name' => 'quantity', 'header' => 'Quantity'),
         array(
-            'header'      => 'Edit',
+            'header'      => 'Update',
             'class'       => 'bootstrap.widgets.TbButtonColumn',
             'template'    => '{edit}',
             'htmlOptions' => array(

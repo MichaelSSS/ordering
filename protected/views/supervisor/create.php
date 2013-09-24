@@ -12,7 +12,7 @@
         <?php echo $form->textFieldRow($model, 'id_item', array('hint'=>'')); ?>
     </div>
     <div class='row'>
-        <?php echo $form->textFieldRow($model, 'id_price', array('hint'=>'')); ?>
+        <?php echo $form->textFieldRow($model, 'price', array('hint'=>'')); ?>
     </div>
     <div class='row'>
         <?php echo $form->textFieldRow($model, 'name', array('hint'=>'')); ?>

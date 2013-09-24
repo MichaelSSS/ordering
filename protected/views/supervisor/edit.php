@@ -12,7 +12,7 @@
             <?php echo $form->textFieldRow($model, 'id_item', array('hint'=>'')); ?>
         </div>
         <div class='row'>
-            <?php echo $form->textFieldRow($model, 'id_price', array('hint'=>'')); ?>
+            <?php echo $form->textFieldRow($model, 'price', array('hint'=>'')); ?>
         </div>
         <div class='row'>
             <?php echo $form->textFieldRow($model, 'name', array('hint'=>'')); ?>
@@ -29,14 +29,20 @@
             <?php $this->widget('bootstrap.widgets.TbButton', array(
                 'buttonType' => 'submit',
                 'type'       => 'info',
-                'label'      => 'Edit',
-                'size'       => 'null',));
+                'label'      => 'Update',
+                'size'       => 'normal',));
             ?>
             <?php $this->widget('bootstrap.widgets.TbButton', array(
                 'buttonType'  => 'reset',
                 'type'  => 'primary',
                 'label' => 'Reset ',
-                'size'  => 'null',));
+                'size'  => 'normal',));
+            ?>
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                'buttonType' => 'submit',
+                'type'       => 'white',
+                'label'      => 'Back',
+                'size'       => 'normal',));
             ?>
         <?php $this->endWidget(); ?>
     </div>

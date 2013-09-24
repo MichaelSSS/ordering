@@ -38,13 +38,15 @@ class Item extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_item,id_price,quantity', 'required'),
-			array('id_price,quantity','numerical', 'integerOnly'=>true),
+			array('id_item,price,quantity', 'required'),
+                        array('id_item','unique'),
+			array('quantity','numerical', 'integerOnly'=>true),
+                        array('price','numerical'),
 			array('name', 'length', 'max'=>30),
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_item, id_price, name, description, quantity', 'safe', 'on'=>'search'),
+			array('id_item, price, name, description, quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +56,7 @@ class Item extends CActiveRecord
 	public function relations()
 	{
 		return array(
-                    'price' =>array(self::BELONGS_TO, 'price', 'id_item'),
+                   
                     
 		);
 	}
@@ -66,7 +68,7 @@ class Item extends CActiveRecord
 	{
 		return array(
 			'id_item' => 'Item Number',
-                        'id_price'=>'Item Price',
+                        'price'=>'Price',
 			'name' => 'Item Name',
 			'description' => 'Item Description',
                         'quantity' => 'Quantity',

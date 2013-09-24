@@ -5,11 +5,12 @@ class m130920_222641_item extends CDbMigration
 	public function up()
 	{
 		 $this->createTable('item', array(
-            'Item_Number' => 'integer pk',
+            'Item_Number' => 'text',
             'Item_Name' => 'varchar(30)',
             'ItemDescription' => 'text',
 			'Price'=>'integer',
-			'Quantity'=>'integer'
+			'Quantity'=>'integer',
+             'Primary KEY()'
         ));
 	}
 

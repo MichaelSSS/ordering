@@ -191,13 +191,9 @@ class Order extends CActiveRecord
     public function getMerchandisers()
     {
         $criteria = new CDbCriteria;
-
         $criteria->compare("role", 'merchandiser', true);
         $models = User::model()->findAll($criteria);
-
-
         $list = CHtml::listData($models, 'id', 'username');
-
         $list = array(Yii::app()->user->getState('user_id') => '-me-') + $list;
         return $list;
     }
@@ -227,8 +223,9 @@ class Order extends CActiveRecord
     {
         if (strtotime($this->order_date) > strtotime($this->preferable_date))
         {
-            $this->addError($preferable_date, 'The date is incorrect.');
+            $this->addError($preferable_date, 'Preferable Delivery Date can not be earlier than current date.');
         }
+        return false;
     }
 
     /**

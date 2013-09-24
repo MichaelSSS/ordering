@@ -73,7 +73,9 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 </fieldset>
 
 <?php $this->endWidget(); ?>
-<?php $this->renderPartial('gridParams', array('model' => $model, 'fields' => $fields)); ?>
-
+<?php 
+$gridParams = require('gridParams.php');
+$grid = $this->widget('OmsGridView', $gridParams); 
+?>
 
 

@@ -20,7 +20,7 @@
             $('#myModal .btn-primary').click(function() {
                 var url = $(this).attr('href');
                 $.get(url, function(response) {
-                    $.fn.yiiGridView.update('yw0');
+                    $.fn.yiiGridView.update('oms-grid-view0');
                     $('.close-modal').click();
 
                 });

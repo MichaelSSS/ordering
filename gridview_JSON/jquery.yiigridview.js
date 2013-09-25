@@ -127,7 +127,7 @@
 
                 $("#toggle-deleted").on('click', function (e) {
                     //var toggleRef = ($.deparam.querystring(this.href)['showDel']=='1') ? {'showDel':'0'} : {'showDel':'1'}
-                    $('#' + id).yiiGridView('update', {data:this.href});
+                    $('#' + id).yiiGridView('update', {data:this.href, toggleShowDeletedLink:1});
                     //this.href = $.param.querystring(this.href,toggleRef);
                     //$(this).text((toggleRef.showDel=='1') ? 'show deleted users' : 'hide deleted users');
                     return false;
@@ -314,7 +314,9 @@
                         $grid.removeClass(settings.loadingClass);
                         $('a.sort-link').css('cursor','default');
                         disableRemoveActiveUser();
-                        toggleShowDeletedLink($("#toggle-deleted"));
+                        if (options.toggleShowDeletedLink) {
+                            toggleShowDeletedLink($("#toggle-deleted"));
+                        }
                     },
                     error: function (XHR, textStatus, errorThrown) {
                         var ret, err;

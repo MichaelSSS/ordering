@@ -27,6 +27,13 @@ class CreditCardController extends Controller
    public function actionIndex()
     {
         $model=new CreditCardFormModel();
+//      validation with AJAX
+       if (isset($_POST['ajax']) && $_POST['ajax']==='credit-card-form')
+       {
+           echo "TEST";
+           echo CActiveForm::validate($model);
+           Yii::app()->end();
+       }
 
 /*//      validation without AJAX
         if ( isset($_POST['CreditCardFormModel']))
@@ -41,21 +48,21 @@ class CreditCardController extends Controller
         $this->render('creditcard',array('model'=>$model));
     }
 
-    public function actionValidate()
+    public function actionValidatecc()
     {
         $model= new CreditCardFormModel();
         //$model->attributes=$_POST;
-        $model->scenario='validate';
+        $model->scenario='validatecc';
+//      validation with AJAX
+        if(isset($_POST['ajax']) && $_POST['ajax']==='credit-card-form')
+        {
+            //$validationResult=CActiveForm::validate($model);
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
 
-
-/*      //      validation with AJAX
-       if(isset($_POST['ajax']) && $_POST['ajax']==='credit-card-form')
-       {
-           CActiveForm::validate($model);
-           Yii::app()->end();
-       }*/
-
-// validation without AJAX
+        $this->render('creditcard',array('model'=>$model));
+/*// validation without AJAX
        if ( isset($_POST['CreditCardFormModel']))
        {
            $model->attributes=$_POST['CreditCardFormModel'];
@@ -63,11 +70,10 @@ class CreditCardController extends Controller
            {
                echo "Credit Card Info Correct";
            }
-       }
+       }*/
 
         $this->render('creditcard',array('model'=>$model));
 
     }
-
 
 }

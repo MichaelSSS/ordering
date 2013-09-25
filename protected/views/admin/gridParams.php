@@ -68,8 +68,8 @@ return array(
                             Yii::app()->createUrl("admin/remove",array("id"=>$data->id)) : "";',
                     'label'=>'remove',
                     //'imageUrl'=>'images/grid_remove.bmp',
-                    'icon' => 'icon-trash',
-
+                    'icon' => 'icon-remove',
+                    'visible' => '!$data->deleted',
                 ),
             ),
             'template'=>'{remove}',

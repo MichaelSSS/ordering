@@ -24,13 +24,9 @@
  */
 class Order extends CActiveRecord
 {
-
-//    public $searchCriteria = array();
     public $currentPageSize = 10;
-//    private $maxIndex;
     const IS_DELETED = 0;
     const ORDER_FORMAT = '0000';
-
 
     public $filterCriteria;
     public $filterRole;
@@ -40,7 +36,6 @@ class Order extends CActiveRecord
 
     public $filterCriterias = array('Status', 'Role');
 
-
     public $filterStatuses = array('None', 'Pending', 'Ordered', 'Delivered');
     public $filterRoles = array('None', 'Merchandiser', 'Supervisor', 'Administrator');
     public $searchCriterias = array('order_name'=>'Order Name',  'status'=>'Status', 'assignees.username'=>'Assignee');
@@ -49,14 +44,6 @@ class Order extends CActiveRecord
         'Status' => 'status',
         'Role' => 'assignees.role',
     );
-/*
-    public $searchAttributes = array(
-        'Order Name' => 'order_name',
-        'Status' => 'status',
-        'Assignee' => 'assignees.username',
-    );
-
-*/
 
 
     /**
@@ -76,7 +63,6 @@ class Order extends CActiveRecord
         // will receive user inputs.
         return array(
 
-
             array('total_price,preferable_date,order_date, status, assignee, customer, ', 'required', 'except'=>'remove'),
             array('order_name', 'length', 'max' => 128),
             array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters'),
@@ -84,8 +70,6 @@ class Order extends CActiveRecord
             array(' assignee, customer', 'numerical', 'integerOnly' => true),
             array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy', 'message' => 'Illegal Date Format', 'except' => 'remove'),
             array('preferable_date', 'checkDate', 'except' => 'remove'),
-
-
 
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -156,16 +140,6 @@ class Order extends CActiveRecord
             $criteria->compare($this->searchCriteria, $keyword, true, 'AND', false);
         }
 
-//        $criteria->addCondition($this->searchCriteria);
-
-//        $criteria->compare('order_name',$this->order_name,true);
-//        $criteria->compare('total_price',$this->total_price,true);
-//        $criteria->compare('max_discount',$this->max_discount);
-//        $criteria->compare('delivery_date',$this->delivery_date,true);
-//        $criteria->compare('status',$this->status,true);
-//        $criteria->compare('assignee',$this->assignee);
-//        $criteria->compare('customer',$this->customer);
-
         $sort = new CSort('User');
         $sort->attributes = array(
             'assigneesRole' => array(
@@ -191,13 +165,9 @@ class Order extends CActiveRecord
     public function getMerchandisers()
     {
         $criteria = new CDbCriteria;
-
         $criteria->compare("role", 'merchandiser', true);
         $models = User::model()->findAll($criteria);
-
-
         $list = CHtml::listData($models, 'id', 'username');
-
         $list = array(Yii::app()->user->getState('user_id') => '-me-') + $list;
         return $list;
     }
@@ -227,8 +197,9 @@ class Order extends CActiveRecord
     {
         if (strtotime($this->order_date) > strtotime($this->preferable_date))
         {
-            $this->addError($preferable_date, 'The date is incorrect.');
+            $this->addError($preferable_date, 'Preferable Delivery Date can not be earlier than current date.');
         }
+        return true;
     }
 
     /**

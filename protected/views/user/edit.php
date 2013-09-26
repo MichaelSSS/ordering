@@ -34,7 +34,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 ));
 ?>
     <fieldset>
-        <legend>create new user</legend>
+        <legend>Edit user</legend>
         <ul>
             <li><?php echo $form->textFieldRow($model, 'username', array('hint' => '')); ?></li>
             <li><?php echo $form->textFieldRow($model, 'firstname', array('hint' => '')); ?></li>
@@ -46,7 +46,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                <li>
                    <?php echo $form->passwordFieldRow($model, 'password', array(
                        'hint' => '',
-                       'title' => 'if you',
                        'placeholder' => 'enter new password'));
                    ?>
                </li>
@@ -61,6 +60,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                      'east' => 'East'
                 )); ?>
             </li>
+            <li>
+                <?php echo $form->dropDownListRow($model, 'deleted', array(
+                    0 =>'Active',
+                    1 =>'Deleted',
+                )); ?>
+            </li>
+
         </ul>
     </fieldset>
 

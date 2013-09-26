@@ -45,11 +45,12 @@
         });
         $('.grid-view .remove').not(':has(a)').attr({
             'title': 'deleted user',
+			
             'rel': 'tooltip',
 //            'data-original-title': 'deleted user',
 //            'data-toggle': 'tooltip'
         });
-
+			$('td[title="deleted user"]').parent('tr').find('td').css({'background':'#EED3D7','color':'#B94A48'});
     };
  
     function toggleShowDeletedLink(link){

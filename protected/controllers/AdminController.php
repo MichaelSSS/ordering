@@ -96,7 +96,7 @@ class AdminController extends Controller
         }
 
 
-        $this->render('/user/create',array(
+        $this->render('create',array(
             'model'=>$model,
         ));
 
@@ -144,7 +144,7 @@ class AdminController extends Controller
 
         }
 
-        $this->render('/user/edit',array(
+        $this->render('edit',array(
             'model'=>$model,
         ));
     }
@@ -176,7 +176,7 @@ class AdminController extends Controller
 
         }
 
-        $this->render('/user/duplicate',array(
+        $this->render('duplicate',array(
             'model'=>$model,
         ));
     }

@@ -1,4 +1,4 @@
-<?php $this->renderPartial('/user/_del'); ?> <!--modal-->
+<?php $this->renderPartial('_del'); ?> <!--modal-->
 
 <?php $this->widget('bootstrap.widgets.TbTabs', array(
     'type'      => 'tabs',
@@ -14,7 +14,6 @@
 
 <?php echo CHtml::link('Create New User', array('admin/create'));
     $dataProvider = $model->search();
-    //file_put_contents('d:\\log.txt', print_r($dataProvider->getTotalItemCount(),true));
     echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
         . $dataProvider->getTotalItemCount() . '</span></div>';
 ?>

@@ -1,6 +1,8 @@
 <?php
-class UserInfo{
-    public function info(){
+
+class UserInfo extends CAction{
+    public static function info(){
+
         $user_id =  $id=Yii::app()->user->id;
         $model=User::model()->findByPk($user_id);
 ?>

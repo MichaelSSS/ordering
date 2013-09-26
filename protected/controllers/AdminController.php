@@ -30,6 +30,13 @@ class AdminController extends Controller
             $model->currentPageSize = $_GET['pageSize'];
         }
 
+        $model->dbCriteria->order='`t`.`username` ASC';
+        //$model->dbCriteria->select = 'id,username,firstname,lastname,role,email,region';
+
+        if ( !isset($_GET['showDel']) || !$_GET['showDel'] ) {
+            $model->dbCriteria->condition = '`t`.`deleted`=0';
+        }
+
         $fields = new AdminSearchForm('search');
 
         if ( isset($_GET['AdminSearchForm']) ) {

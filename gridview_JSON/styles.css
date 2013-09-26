@@ -44,6 +44,7 @@ a#page-size{
 .grid-view-loading
 {
 	background:url(loading.gif) no-repeat;
+    visibility:hidden;
 }
 
 .grid-view

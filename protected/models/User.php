@@ -122,10 +122,6 @@ class User extends CActiveRecord
 
     public function search()
     {
-        $this->dbCriteria->condition = '`t`.`deleted`=0';
-        $this->dbCriteria->order='`t`.`username` ASC';
-        $this->dbCriteria->select = 'id,username,firstname,lastname,role,email,region';
-
         return new CActiveDataProvider('User', array(
             'model'=>$this,
             'criteria'   => $this->searchCriteria,

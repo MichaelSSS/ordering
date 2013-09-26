@@ -1,7 +1,7 @@
 legend, label, .btn {
     text-transform: capitalize;
 }
-.container { 
+.login {
     margin: 10em auto 0; 
 } 
 .control-group label.control-label.required  {

@@ -7,7 +7,7 @@ class UserInfo extends CAction{
         $model=User::model()->findByPk($user_id);
 ?>
 
-        <p>User Name: <?=$model->username?></p>
+       <p>User Name: <?=$model->username?></p>
         <p>Role:      <?=$model->role?></p>
 
 <?php

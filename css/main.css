@@ -113,9 +113,10 @@ header{
     padding: 10px;
 }
 .info-head{
-    background: linear-gradient(#dddddd,#fcfcfc);
+    background: linear-gradient(#f5f5f5,#fcfcfc);
     padding-left: 10px;
     height: 25px;
+    border-bottom: 1px dashed #ccc;
 }
 .info_footer{
    background: linear-gradient(#fcfcfc,#e8e8e8 );

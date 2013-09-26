@@ -96,33 +96,21 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-            $.fn.clicktoggle = function(a, b) {
-                return this.each(function() {
-                    var clicked = false;
-                    $(this).click(function() {
-                        if (clicked) {
-                            clicked = false;
-                            return b.apply(this, arguments);
-                        }
-                        clicked = true;
-                        return a.apply(this, arguments);
-                    });
-                });
-            };
 
             $('.info').width($('header').width())
 
-            $('.user_info').clicktoggle(
-                function(){
-                $('.info').show()},
-                function(){
-                    $('.info').hide()
+            $(document).click( function(event){
+                if($(event.target).closest(".info").length)
+                    return;
+                $(".info").delay(1000).slideUp(50);
+                event.stopPropagation();
 
-            })
-            $('.user_info').focusout(function(){
-                alert('sdc')
-            })
+            });
 
+            $('.user_info').click( function() {
+                $(".info").slideToggle(50);
+                return false;
+            });
         });
     </script>
 

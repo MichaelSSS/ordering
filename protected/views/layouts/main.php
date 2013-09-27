@@ -68,7 +68,7 @@
                             ),
                         ));
                     ?>
-                    <div class="info">
+                    <div class="info not_visible">
                         <div class="info-head">User info:</div>
                         <div class="info_body">
 
@@ -96,16 +96,21 @@
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('.info').hide();
+
             $('.info').width($('header').width())
 
-            $('.user_info').hover(
-                function(){
-               $('.info').show();
-            },
-            function(){
-                $('.info').hide();
-            })
+            $(document).click( function(event){
+                if($(event.target).closest(".info").length)
+                    return;
+                $(".info").delay(1000).slideUp(50);
+                event.stopPropagation();
+
+            });
+
+            $('.user_info').click( function() {
+                $(".info").slideToggle(50);
+                return false;
+            });
         });
     </script>
 

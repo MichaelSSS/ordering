@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
         $('.remove a').live('click',function(){
             var link = $(this).attr('href');
@@ -70,10 +70,10 @@
         'class'          => 'OmsPager',
         'header'         => '',
         'maxButtonCount' => 0,
-        'firstPageLabel' => 'First',
-        'prevPageLabel'  => 'Backward',
-        'nextPageLabel'  => 'Forward',
-        'lastPageLabel'  => 'Last',
+        'firstPageLabel' => '&lsaquo; First',
+        'prevPageLabel'  => '&larr; Backward',
+        'nextPageLabel'  => 'Forward &rarr;',
+        'lastPageLabel'  => 'Last &rsaquo;',
         'htmlOptions'    => array(
             'class'      => 'yiiPager',
         ),
@@ -82,11 +82,11 @@
     'pagerCssClass'  => 'oms-pager',
     'baseScriptUrl'  => 'gridview',
     'columns'        => array(
-        array('name' => 'id_item',  'header' => 'Id Item'),
-        array('name' => 'name',  'header' => 'Name'),
+        array('name' => 'id_item', 'header'     => 'Id Item'),
+        array('name' => 'name', 'header'        => 'Name'),
         array('name' => 'description', 'header' => 'Description'),
-           array('name' => 'price', 'header' => 'Price'),
-        array('name' => 'quantity', 'header' => 'Quantity'),
+        array('name' => 'price', 'header'       => 'Price'),
+        array('name' => 'quantity', 'header'    => 'Quantity'),
         array(
             'header'      => 'Update',
             'class'       => 'bootstrap.widgets.TbButtonColumn',

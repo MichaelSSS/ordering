@@ -1,79 +1,54 @@
-/**
- * CSS styles for CLinkPager.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @link http://www.yiiframework.com/
- * @copyright 2008-2010 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- * @since 1.0
- */
-
-.grid-footer{
-    width:50%;
-    padding-top:10px;
-
+.grid-footer {
+    width: 50%;
+    padding-top: 0.1em;
+}
+.summary {
+    display: inline;
+    float: left;
+}
+.yiiPager {
+    margin-right: -25%;
+    line-height: 100%;
+    float: right;
+}
+.yiiPager li {
+    display: inline-block;
+    margin: 0 .1em;
 }
 
-div.summary{
-	display:inline;
-	float:left;
+.first a, .last a,
+.next a, .previous a {
+    display: inline-block;
 }
-
-ul.yiiPager
-{
-	/*font-size:11px;*/
-    margin-right:-25%;
-	border:0;
-	padding:0;
-	line-height:100%;
-	display:inline;
-    float:right;
+.hidden, .first a, .last a,
+.next a, .previous a {
+    padding: .1em .4em;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 1em;
+    -moz-border-radius: 1em;
+    border-radius: 1em;
 }
-
-ul.yiiPager li
-{
-	display:inline;
+.first a:hover, .last a:hover,
+.next a:hover, .previous a:hover {
+    font: 700;
+    color: #fff;
+    background-color: #2F96B4;
 }
-
-ul.yiiPager a:link,
-ul.yiiPager a:visited
-{
-	border:solid 1px #9aafe5;
-	font-weight:bold;
-	color:#0e509e;
-	padding:1px 6px;
-	text-decoration:none;
+.yiiPager a:link,
+.yiiPager a:visited {
+    padding: .1em .4em;
+    text-decoration: none;
 }
-
-ul.yiiPager .page a
-{
-	font-weight:normal;
-}
-
-ul.yiiPager a:hover
-{
-	border:solid 1px #0e509e;
-}
-
-ul.yiiPager .selected a
-{
-	background:#2e6ab1;
-	color:#FFFFFF;
-	font-weight:bold;
-}
-
-ul.yiiPager li.hidden
-{
+.hidden {
     visibility: visible;
-	border:solid 1px #DEDEDE;
-	color:#888888;
-    cursor:default;
+    color: #aaa;
+    cursor: default;
 }
-
- .pager .next > a {
-     float: left;
- }
- #grid-extend {
-     float: right;
-     margin-bottom: .5em;
- }
+.pager .next > a {
+    float: left;
+}
+#grid-extend {
+    float: right;
+    margin-bottom: .5em;
+}

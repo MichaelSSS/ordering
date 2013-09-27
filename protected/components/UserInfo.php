@@ -1,18 +1,25 @@
 <?php
+
 class UserInfo extends CAction{
     public static function info(){
+
         $user_id =  $id=Yii::app()->user->id;
         $model=User::model()->findByPk($user_id);
+?>
 
-        echo "User name: ". $model->username;
-        echo "<br>";
-        echo "Role: ".$model->role;
-        echo "<br>";
+       <p>User Name: <?=$model->username?></p>
+        <p>Role:      <?=$model->role?></p>
 
+<?php
         if($model->role == 'customer'){
-            echo 'Customer Type:';
-            echo "<br>";
-            echo 'Account Balance:';
+            $customer = Customer::model()->findByPk($user_id);
+?>
+            <p>Customer Type: <?=$customer->customer_type?></p>
+            <p>Account Balance:      <?=$customer->account_balance?></p>
+
+
+        <?php
         }
     }
+
 }

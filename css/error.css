@@ -1,0 +1,10 @@
+ul {
+    list-style-type: none;
+   
+}
+.lamp_photo img {
+    border-radius: 50%;
+}
+.err {
+    margin-top: 2em;
+}

@@ -43,7 +43,22 @@
         $('.grid-view a:not([href]) i').attr({
             style:'background-image: url("gridview_JSON/glyphicons-halflings-white.png")'
         });
-
+        $('.grid-view .remove').not(':has(a)').attr({
+            'title': 'deleted user',
+			
+            'rel': 'tooltip',
+//            'data-original-title': 'deleted user',
+//            'data-toggle': 'tooltip'
+        });
+			$('td[title="deleted user"]').parent('tr').find('td').css({'background':'#EED3D7','color':'#B94A48'});
+    };
+ 
+    function toggleShowDeletedLink(link){
+        var currentRef = link.attr("href");
+        var currentParams = $.deparam.querystring(currentRef);
+        var toggleParams = (currentParams.showDel =='1') ? {'showDel':'0'} : {'showDel':'1'};
+        link.attr("href",$.param.querystring(currentRef,toggleParams));
+        link.text((toggleParams.showDel=='1') ? 'show deleted users' : 'hide deleted users');
     };
 
     methods = {
@@ -111,6 +126,19 @@
 
                 gridSettings[id] = settings;
 
+                $("#toggle-deleted").on('click', function (e) {
+                    //var toggleRef = ($.deparam.querystring(this.href)['showDel']=='1') ? {'showDel':'0'} : {'showDel':'1'}
+                    $('#' + id).yiiGridView('update', {data:this.href, toggleShowDeletedLink:1});
+                    //this.href = $.param.querystring(this.href,toggleRef);
+                    //$(this).text((toggleRef.showDel=='1') ? 'show deleted users' : 'hide deleted users');
+                    return false;
+                });
+
+/*                $('body').tooltip({
+                    'selector':'td[rel=tooltip],a[rel=tooltip]',
+                    'container': 'td'
+                });
+*/
                 if (settings.ajaxUpdate.length > 0) {
                     $(document).on('click.yiiGridView', settings.updateSelector, function (e) {
                         if ( e.ctrlKey || !($(e.target).is(sortSelector)) ) {
@@ -272,12 +300,7 @@
                     type: settings.ajaxType,
                     url: $grid.yiiGridView('getUrl'),
                     success: function (data) {
-/*                        var $data = $('<div>' + data + '</div>');
-                        $.each(settings.ajaxUpdate, function (i, el) {
-                            var updateId = '#' + el;
-                            $(updateId).replaceWith($(updateId, $data));
-                        });
-*/
+
                         $('span#search-result-count').text(data[0]);
                         $('#'+id).replaceWith(data[1]);
                         if (settings.afterAjaxUpdate !== undefined) {
@@ -292,7 +315,9 @@
                         $grid.removeClass(settings.loadingClass);
                         $('a.sort-link').css('cursor','default');
                         disableRemoveActiveUser();
-
+                        if (options.toggleShowDeletedLink) {
+                            toggleShowDeletedLink($("#toggle-deleted"));
+                        }
                     },
                     error: function (XHR, textStatus, errorThrown) {
                         var ret, err;

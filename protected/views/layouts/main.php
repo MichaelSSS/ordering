@@ -50,12 +50,10 @@
                 				array('label'=>'Item management', 'visible'=> $userHome == 'supervisor'),
                                 array('label'=>'Logged user:  ' . Yii::app()->user->name),
                 				array(
-                                    'label'=>'User Info',
-                                    'url'=>array('site/info'),
                                     'linkOptions'=>array(
-                                        'title'      =>"User Info",
+                                        'class'=>TbHtml::ICON_INFO_SIGN.' user_info ',
+
                                     ),
-                                
                                 ),
                 				array(
                                     'label'=>'Logout',
@@ -69,7 +67,15 @@
                                 )
                             ),
                         ));
-                    ?>  
+                    ?>
+                    <div class="info not_visible">
+                        <div class="info-head">User info:</div>
+                        <div class="info_body">
+
+                            <?php UserInfo::info()?>
+                        </div>
+                        <div class="info_footer"></div>
+                    </div>
                 </header>
             </div>
         </div>
@@ -88,5 +94,25 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.info').width($('header').width())
+
+            $(document).click( function(event){
+                if($(event.target).closest(".info").length)
+                    return;
+                $(".info").delay(1000).slideUp(50);
+                event.stopPropagation();
+
+            });
+
+            $('.user_info').click( function() {
+                $(".info").slideToggle(50);
+                return false;
+            });
+        });
+    </script>
+
 </body>
 </html>

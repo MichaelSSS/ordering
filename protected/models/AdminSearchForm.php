@@ -16,7 +16,7 @@ class AdminSearchForm extends CFormModel
     public $criterias = array('equals','not equals','starts with','contains','does not contain');
 
     public $keyAttributes = array(
-        'All Columns' => '*',
+        'All Columns' => array('username','firstname','lastname','role','email','region'),
         'User Name'   => 'username',
         'First Name'  => 'firstname',
         'Last Name'   => 'lastname',
@@ -33,8 +33,6 @@ class AdminSearchForm extends CFormModel
 
     /**
      * Declares the validation rules.
-     * The rules state that username and password are required,
-     * and password needs to be authenticated.
      */
     public function rules()
     {
@@ -42,7 +40,7 @@ class AdminSearchForm extends CFormModel
             array('keyValue', 'required', 'message'=>'please, fill the field before search'),
             array('keyValue', 'length', 'max'=>128),
             //array('keyField, criteria', 'numerical', 'message'=>'illegal filter parameters'),
-            array('keyField, criteria', 'validateIndex', 'size'=>5, 'message'=>'illegal filter parameters'),
+            array('keyField, criteria', 'validateIndex', 'size'=>4, 'message'=>'illegal filter parameters'),
             array('keyField, criteria, keyValue','safe','on'=>'search'),
         );
     }
@@ -64,12 +62,10 @@ class AdminSearchForm extends CFormModel
     public function getCriteria()
     {
 
-        if( $this->keyAttributes[$this->keyFields[$this->keyField]] != '*' ) {
+        $keyAttr = $this->keyAttributes[$this->keyFields[$this->keyField]];
+        if( !is_array($keyAttr) ) {
 
-            $condition = $this->keyAttributes[$this->keyFields[$this->keyField]]
-                . $this->operators[$this->criterias[$this->criteria]];
-
-
+            $condition = $keyAttr . $this->operators[$this->criterias[$this->criteria]];
 
             return array(
                 'condition' => $condition,
@@ -78,25 +74,21 @@ class AdminSearchForm extends CFormModel
 
         } else {
 
-            $numKeys = count($this->keyFields);
+            $numKeys = count($keyAttr);
 
             $condition = '';
 
+            $criteria = $this->operators[$this->criterias[$this->criteria]];
+
             for($i=1; $i < $numKeys-1; ++$i) {
-                $condition .= '(' 
-                    . $this->keyAttributes[$this->keyFields[$i]]
-                    . $this->operators[$this->criterias[$this->criteria]]
-                    . ') OR ';
+                $condition .= '(' . $keyAttr[$i] . $criteria . ') OR ';
             }
 
-            $condition .= '(' 
-                . $this->keyAttributes[$this->keyFields[$numKeys-1]]
-                . $this->operators[$this->criterias[$this->criteria]]
-                . ')';
+            $condition .= '(' . $keyAttr[$numKeys-1] . $criteria . ')';
 
             return array(
                 'condition'  => $condition,
-                'params'     => array_fill(0,$numKeys-1,$this->keyValue)
+                'params'     => array_fill(1,$numKeys-1,$this->keyValue)
             );
 
         }        

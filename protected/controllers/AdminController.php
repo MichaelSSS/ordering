@@ -30,6 +30,13 @@ class AdminController extends Controller
             $model->currentPageSize = $_GET['pageSize'];
         }
 
+        $model->dbCriteria->order='`t`.`username` ASC';
+        //$model->dbCriteria->select = 'id,username,firstname,lastname,role,email,region';
+
+        if ( !isset($_GET['showDel']) || !$_GET['showDel'] ) {
+            $model->dbCriteria->condition = '`t`.`deleted`=0';
+        }
+
         $fields = new AdminSearchForm('search');
 
         if ( isset($_GET['AdminSearchForm']) ) {
@@ -89,7 +96,7 @@ class AdminController extends Controller
         }
 
 
-        $this->render('/user/create',array(
+        $this->render('create',array(
             'model'=>$model,
         ));
 
@@ -119,8 +126,8 @@ class AdminController extends Controller
         if(isset($_POST['User'])) {
             $model->attributes=$_POST['User'];
 
-            if($_POST['User']['password'] == '*****' || strlen($_POST['User']['password']) == 0 ){
-                if($model->save(true,array('username','role','firstname','lastname','email','region'))) {
+            if(strlen($model->password) == 0 ){
+                if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
 
                     $this->assignRole($model->role,$model->id,false); // assign role to user
 
@@ -137,7 +144,7 @@ class AdminController extends Controller
 
         }
 
-        $this->render('/user/edit',array(
+        $this->render('edit',array(
             'model'=>$model,
         ));
     }
@@ -169,9 +176,8 @@ class AdminController extends Controller
 
         }
 
-        $this->render('/user/duplicate',array(
+        $this->render('duplicate',array(
             'model'=>$model,
         ));
     }
-
 }

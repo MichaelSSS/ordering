@@ -8,5 +8,10 @@ $this->breadcrumbs=array(
 <h2>Error <?php echo $code; ?></h2>
 
 <div class="error">
-<?php echo CHtml::encode($message); ?>
+<?php 
+echo CHtml::encode($message);
+if ( $code == 403 ) {
+    echo '<br>Please ' . CHtml::link('login',array('site/login')) . ' under appropriate User Name';
+}
+?>
 </div>

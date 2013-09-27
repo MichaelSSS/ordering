@@ -92,6 +92,9 @@ class LoginForm extends CFormModel
                 && !$user->isSameUserAgent($userId) ) {
                
                 $this->_errorCode = self::ERROR_USER_LOGGED;
+
+                $user->setState('forceLogin', $userId);
+
                 return false;
                 
             // apply 50 active users limit    
@@ -102,14 +105,11 @@ class LoginForm extends CFormModel
             }
 
             $duration = 0;
-            //file_put_contents("d:/log.txt", print_r(Yii::app()->user->rememberedName,true));
-            if ( $this->rememberMe ) {
-                $user->setState('Remembered Name',htmlspecialchars($this->username));
             
+            if ( $this->rememberMe ) {
+                $user->setState('Remembered Name',htmlspecialchars($this->username));            
                 $duration = 3600*24*30; // 30 days
-
-            } elseif ( $user->getRememberedName() == $this->username ) {
-                     
+            } elseif ( $user->getRememberedName() == $this->username ) {                     
                 $user->setState('Remembered Name',null);
                 $user->rememberedName = '';
                 $duration = 1;

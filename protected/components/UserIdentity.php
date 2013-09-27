@@ -74,7 +74,11 @@ class UserIdentity extends CUserIdentity
         $affectedRows = $command->execute(array(
             'userIp'  => $userIp,
         ));
+
+        Yii::app()->user->setState('blocked','0');
+
         return $affectedRows;
+
     }    
     
     public static function isBlocked($userIp)
@@ -110,12 +114,10 @@ class UserIdentity extends CUserIdentity
                 $this->errorCode=self::ERROR_PASSWORD_INVALID;
             }
         } else {
-            Yii::app()->user->setState('blocked','0');
+            $this->resetAttempt($userIp);
             $this->errorCode=self::ERROR_NONE;
             $this->_userId = $model->id;
-            Yii::app()->user->setState('user_id', $model->id);
             $this->_home = $model->role;
-            $this->resetAttempt($userIp);
             return true;
         }
         return false;

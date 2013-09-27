@@ -54,7 +54,16 @@ class SiteController extends Controller
             $this->render('login',array('model'=>$model));
         }
     }
-
+    public function actionForceLogin()
+    {
+        $user = Yii::app()->user;
+        $id = $user->getState('forceLogin');
+        if ( !empty($id) ) {
+            $user->id=$id;
+            $user->makeUnActive();
+        }
+        $this->redirect(array('site/login'));
+    }
     /**
      * Logs out the current user and redirect to homepage.
      */

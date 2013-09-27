@@ -45,8 +45,8 @@ legend span {
 .controls .span3  label {
     display: none;
  }
-.span3 button.btn, input[type="submit"].btn {
-    margin: .7em 0;
+.span3 button.btn, input[type="submit"].btn, input[type="reset"].btn  {
+    margin: .7em 0 .7em 3em;
 }
 .form-horizontal .control-label {
     text-align: left;

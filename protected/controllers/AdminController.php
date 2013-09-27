@@ -126,7 +126,7 @@ class AdminController extends Controller
         if(isset($_POST['User'])) {
             $model->attributes=$_POST['User'];
 
-            if(strlen($_POST['User']['password']) == 0 ){
+            if(strlen($model->password) == 0 ){
                 if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
 
                     $this->assignRole($model->role,$model->id,false); // assign role to user

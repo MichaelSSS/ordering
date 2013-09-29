@@ -18,7 +18,7 @@ class UserInfo extends CAction{
             <p>Account Balance:      <?=$customer->account_balance?></p>
 
 
-        <?php
+<?php
         }
     }
 

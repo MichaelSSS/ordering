@@ -88,6 +88,7 @@ class Order extends CActiveRecord
         return array(
             'assignees' => array(self::BELONGS_TO, 'User', 'assignee'),
             'ordered' => array(self::HAS_MANY, 'OrderDetails', 'order_id'),
+
         );
     }
 

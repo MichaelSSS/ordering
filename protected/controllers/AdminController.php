@@ -125,12 +125,12 @@ class AdminController extends Controller
 
     public function actionEdit($id){
 
-        $model=$this->loadModel($id);
+        $model = $this->loadModel($id);
         $model->scenario = 'edit';
         $model->password = false;
 
-        if(isset($_POST['User'])) {
-            $model->attributes=$_POST['User'];
+        if( !empty($_POST['User'] ) ) {
+            $model->attributes = $_POST['User'];
 
             if(strlen($model->password) == 0 ){
                 if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
@@ -176,7 +176,6 @@ class AdminController extends Controller
             if($duplicate->save()) {
 
                 $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
-
                 $this->redirect(array('admin/index'));
             }
 

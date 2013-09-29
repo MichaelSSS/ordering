@@ -1,3 +1,5 @@
+
+
 <?php $this->widget('bootstrap.widgets.TbTabs', array(
     'type' => 'tabs',
     'placement' => 'above', // 'above', 'right', 'below' or 'left'
@@ -14,6 +16,7 @@
 
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
+    /*'enableAjaxValidation'=>true*/
 ));
 ?>
 
@@ -70,9 +73,8 @@
 </fieldset>
 <?php $this->endWidget(); ?>
 
-
-
-<?php $grid = $this->widget('TGridView', array(
+<?php
+$grid = $this->widget('TGridView', array(
     'dataProvider' => $model->search(),
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
@@ -98,7 +100,7 @@
         array('name' => 'order_name', 'header' => 'Order Name'),
         array(
             'name' => 'total_price',
-            'value' => '$data->total_price.""."\$"',
+            'value' => '$data->total_price . "\$"',
         ),
         array(
             'name' => 'max_discount',
@@ -106,8 +108,7 @@
         ),
         array(
             'name' => 'delivery_date',
-//            'value' => '$model->formatDate($data->delivery_date)',
-            'value' => 'Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date);',
+            'value' => '($data->delivery_date != "0000-00-00") ? Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date) : "Delivery Date not assigned";',
         ),
         'status',
         array(
@@ -153,10 +154,21 @@
     ),
 ));?>
 <?php $this->renderPartial('/customer/_delete'); ?>
+
 <script>
     function beforeRemove(el) {
         $('#modal_remove').attr('href', $(el).attr('href'));
 
+        $('#modal_remove').click(function() {
+            debugger;
+            var url = $(this).attr('href');
+            $.get(url, function(response) {
+                $('#remove_order').modal('hide');
+                $.fn.yiiGridView.update('yw2');
 
-    }
+
+            });
+            return false;
+        });
+    };
 </script>

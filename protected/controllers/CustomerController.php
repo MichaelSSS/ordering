@@ -73,18 +73,67 @@ class CustomerController extends Controller
 
     public function actionCreate()
     {
-        $model = new Order;
+        $order = new Order;
+        $orderDetails = new OrderDetails;
 
-        if (isset($_POST['Order'])) {
-            $model->attributes = $_POST['Order'];
-            $model->status = "Created";
-            $model->customer = Yii::app()->user->getState('user_id');
-            if ($model->save())
-                $this->redirect(Yii::app()->createUrl('customer' . '/index'));
+        $orderDetails ->id_customer = Yii::app()->user->getState('user_id');
+
+
+        if (isset($_POST['ajax'])&&$_POST['ajax']==='horizontalForm')
+        {
+            echo CActiveForm::validate( array( $order));
+            Yii::app()->end();
         }
 
+
+        if (isset($_POST['Order'])) {
+
+            $order->attributes = $_POST['Order'];
+            $order->customer = Yii::app()->user->getState('user_id');
+            $order->status = "Created";
+
+            $criteria = new CDbCriteria;
+            $criteria->compare('id_customer',$order->customer );
+            $criteria->compare('id_order',0 );
+
+            $items = $orderDetails->findAll($criteria);
+            if($order->validate())
+            {
+                $order->save(false);
+                foreach ($items as $item)
+                {
+                    $item->id_order = $order->id_order;
+                    $item->save();
+                }
+                $this->redirect(Yii::app()->createUrl('customer/index'));
+            }
+
+
+
+//          $this->redirect(array('customer/error','view'=>'/order/itemsEmpty'));
+        }
         $this->render('/order/create', array(
-            'model' => $model,
+            'order' => $order,
+            'orderDetails' => $orderDetails,
         ));
+    }
+
+
+    public function actionOrder()
+    {
+
+    }
+
+    public function actionAddItem()
+    {
+        $item=new Item;
+
+        $this->render('/order/addItem',array(
+            'item'=>$item,
+        ));
+    }
+
+    public function actionError($view){
+        $this->render($view);
     }
 }

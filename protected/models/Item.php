@@ -56,8 +56,8 @@ class Item extends CActiveRecord
 	public function relations()
 	{
 		return array(
-                   
-                    
+
+            'order_items' => array(self::HAS_MANY, 'OrderItem', 'id_item'),
 		);
 	}
 

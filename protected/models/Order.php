@@ -33,6 +33,9 @@ class Order extends CActiveRecord
     public $filterValue;
     public $searchCriteria;
     public $searchValue;
+    public $totalQuantity;
+
+//    private $_errorCode;
 
     public $filterCriterias = array('Status', 'Role');
 
@@ -63,8 +66,9 @@ class Order extends CActiveRecord
         // will receive user inputs.
         return array(
 
-            array('total_price,preferable_date,order_date, status, assignee, customer, ', 'required', 'except'=>'remove'),
+            array('total_price,preferable_date,order_date, assignee,  ', 'required', 'except'=>'remove'),
             array('order_name', 'length', 'max' => 128),
+            array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=', 'message' => 'Please select items and add them to the order'),
             array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters'),
             array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank'),
             array(' assignee, customer', 'numerical', 'integerOnly' => true),
@@ -87,7 +91,8 @@ class Order extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'assignees' => array(self::BELONGS_TO, 'User', 'assignee'),
-            'ordered' => array(self::HAS_MANY, 'OrderDetails', 'order_id'),
+//            'savedItems' => array(self::HAS_MANY, 'OrderItem', 'order_id'),
+            'orderedItems' => array(self::HAS_MANY, 'OrderDetails', 'id_order'),
         );
     }
 
@@ -216,6 +221,18 @@ class Order extends CActiveRecord
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-
+//    public function setErrorCode($err)
+//    {
+//        $this->_errorCode = $err;
+//    }
+//    public function isError()
+//    {
+//       if(isset($this->_errorCode))
+//           return true;
+//       return false;
+//    }
+//    public  function getErrorCode(){
+//        return $this->_errorCode;
+//    }
 
 }

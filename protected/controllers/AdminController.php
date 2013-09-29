@@ -2,6 +2,11 @@
 
 class AdminController extends Controller
 {
+    const ADMIN = 'admin';
+    const CUSTOMER = 'customer';
+    const SUPERVISOR = 'supervisor';
+    const MERCHANDISER = 'merchandiser';
+
     public $defaultAction = 'index';
 
     public function filters()
@@ -10,6 +15,7 @@ class AdminController extends Controller
             'accessControl',
         );
     }
+
     public function accessRules()
     {
         return array(
@@ -31,7 +37,6 @@ class AdminController extends Controller
         }
 
         $model->dbCriteria->order='`t`.`username` ASC';
-        //$model->dbCriteria->select = 'id,username,firstname,lastname,role,email,region';
 
         if ( !isset($_GET['showDel']) || !$_GET['showDel'] ) {
             $model->dbCriteria->condition = '`t`.`deleted`=0';
@@ -83,15 +88,16 @@ class AdminController extends Controller
     public function actionCreate()
     {
         $model = new User;
-        $model->role = 'admin';
+        $model->role = self::CUSTOMER;
 
-        if(isset($_POST['User'])) {
-            $model->attributes=$_POST['User'];
+        if( !empty( $_POST['User']) ) {
+            $model->attributes = $_POST['User'];
+
             if($model->save()) {
 
-                $this->assignRole($model->role,$model->id); // assign role to user
+                $this->assignRole( $model->role,$model->id ); // assign role to user
 
-                $this->redirect(array('admin/index'));
+                $this->redirect( array( 'admin/index' ) );
             }
         }
 

@@ -2,22 +2,14 @@
 
 class User extends CActiveRecord
 {
-	/**
-	 * The followings are the available columns in table 'tbl_user':
-	 * @var integer $id
-	 * @var string $username
-	 * @var string $password
-	 */
-    
+
     public $currentPageSize = 10;
     public $searchCriteria = array();
 
     public $confirmPassword;
     public $status;
-	/**
-	 * Returns the static model of the specified AR class.
-	 * @return CActiveRecord the static model class
-	 */
+
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -53,7 +45,6 @@ class User extends CActiveRecord
             array('confirmPassword', 'compare', 'compareAttribute'=>'password','message'=>'Confirm Password is not equal to Password','except'=>'remove'),
 
             array('firstname','length','max'=>50,'message'=>'First Name is too long','except'=>'remove'),
-
             array('lastname','length','max'=>50,'message'=>'Last Name is too long','except'=>'remove'),
 
         );
@@ -62,19 +53,11 @@ class User extends CActiveRecord
 
 
 	protected function beforeSave()
-	    {
-	            $this->password = CPasswordHelper::hashPassword($this->password);
-	            $this->username = trim($this->username);
-	        return true;
-	    }
-	
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
 	{
-		return array(
-		);
+	    $this->password = CPasswordHelper::hashPassword($this->password);
+	    $this->username = trim($this->username);
+
+	    return true;
 	}
 
 	/**

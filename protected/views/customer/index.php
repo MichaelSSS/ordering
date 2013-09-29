@@ -160,6 +160,7 @@ $grid = $this->widget('TGridView', array(
         $('#modal_remove').attr('href', $(el).attr('href'));
 
         $('#modal_remove').click(function() {
+            debugger;
             var url = $(this).attr('href');
             $.get(url, function(response) {
                 $('#remove_order').modal('hide');

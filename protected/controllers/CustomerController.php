@@ -31,7 +31,8 @@ class CustomerController extends Controller
     public function actionIndex()
     {
         $model = new Order('search');
-        $model->customer = Yii::app()->user->getState('user_id');
+//        $model->customer = Yii::app()->user->id;
+        $model->customer = Yii::app()->user->id;
 
         if (isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']))
             $model->currentPageSize = $_GET['pageSize'];
@@ -76,7 +77,7 @@ class CustomerController extends Controller
         $order = new Order;
         $orderDetails = new OrderDetails;
 
-        $orderDetails ->id_customer = Yii::app()->user->getState('user_id');
+        $orderDetails ->id_customer = Yii::app()->user->id;
 
 
         if (isset($_POST['ajax'])&&$_POST['ajax']==='horizontalForm')
@@ -89,7 +90,7 @@ class CustomerController extends Controller
         if (isset($_POST['Order'])) {
 
             $order->attributes = $_POST['Order'];
-            $order->customer = Yii::app()->user->getState('user_id');
+            $order->customer = Yii::app()->user->id;
             $order->status = "Created";
 
             $criteria = new CDbCriteria;

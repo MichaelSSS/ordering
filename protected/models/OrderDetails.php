@@ -89,7 +89,7 @@ class OrderDetails extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-        $criteria->compare('id_customer', Yii::app()->user->getState('user_id'));
+        $criteria->compare('id_customer', Yii::app()->user->id);
         $criteria->compare('id_order',0);
 
 		return new CActiveDataProvider($this, array(

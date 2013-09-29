@@ -68,7 +68,7 @@ class Order extends CActiveRecord
 
             array('total_price,preferable_date,order_date, assignee,  ', 'required', 'except'=>'remove'),
             array('order_name', 'length', 'max' => 128),
-            array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=', 'message' => 'Please select items and add them to the order'),
+            array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=', 'message' => 'Please select items and add them to the order', 'except' => 'remove'),
             array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters'),
             array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank'),
             array(' assignee, customer', 'numerical', 'integerOnly' => true),
@@ -173,7 +173,7 @@ class Order extends CActiveRecord
         $criteria->compare("role", 'merchandiser', true);
         $models = User::model()->findAll($criteria);
         $list = CHtml::listData($models, 'id', 'username');
-        $list = array(Yii::app()->user->getState('user_id') => '-me-') + $list;
+        $list = array(Yii::app()->user->id => '-me-') + $list;
         return $list;
     }
 

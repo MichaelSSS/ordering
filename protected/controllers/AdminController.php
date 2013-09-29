@@ -2,6 +2,11 @@
 
 class AdminController extends Controller
 {
+    const ADMIN = 'admin';
+    const CUSTOMER = 'customer';
+    const SUPERVISOR = 'supervisor';
+    const MERCHANDISER = 'merchandiser';
+
     public $defaultAction = 'index';
 
     public function filters()
@@ -10,6 +15,7 @@ class AdminController extends Controller
             'accessControl',
         );
     }
+
     public function accessRules()
     {
         return array(
@@ -28,6 +34,12 @@ class AdminController extends Controller
 
         if ( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) ) {
             $model->currentPageSize = $_GET['pageSize'];
+        }
+
+        $model->dbCriteria->order='`t`.`username` ASC';
+
+        if ( !isset($_GET['showDel']) || !$_GET['showDel'] ) {
+            $model->dbCriteria->condition = '`t`.`deleted`=0';
         }
 
         $fields = new AdminSearchForm('search');
@@ -76,20 +88,21 @@ class AdminController extends Controller
     public function actionCreate()
     {
         $model = new User;
-        $model->role = 'admin';
+        $model->role = self::CUSTOMER;
 
-        if(isset($_POST['User'])) {
-            $model->attributes=$_POST['User'];
+        if( !empty( $_POST['User']) ) {
+            $model->attributes = $_POST['User'];
+
             if($model->save()) {
 
-                $this->assignRole($model->role,$model->id); // assign role to user
+                $this->assignRole( $model->role,$model->id ); // assign role to user
 
-                $this->redirect(array('admin/index'));
+                $this->redirect( array( 'admin/index' ) );
             }
         }
 
 
-        $this->render('/user/create',array(
+        $this->render('create',array(
             'model'=>$model,
         ));
 
@@ -119,8 +132,8 @@ class AdminController extends Controller
         if(isset($_POST['User'])) {
             $model->attributes=$_POST['User'];
 
-            if($_POST['User']['password'] == '*****' || strlen($_POST['User']['password']) == 0 ){
-                if($model->save(true,array('username','role','firstname','lastname','email','region'))) {
+            if(strlen($model->password) == 0 ){
+                if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
 
                     $this->assignRole($model->role,$model->id,false); // assign role to user
 
@@ -137,7 +150,7 @@ class AdminController extends Controller
 
         }
 
-        $this->render('/user/edit',array(
+        $this->render('edit',array(
             'model'=>$model,
         ));
     }
@@ -169,9 +182,8 @@ class AdminController extends Controller
 
         }
 
-        $this->render('/user/duplicate',array(
+        $this->render('duplicate',array(
             'model'=>$model,
         ));
     }
-
 }

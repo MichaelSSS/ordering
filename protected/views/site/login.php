@@ -28,27 +28,30 @@
 ?>
 
 <div class='row'>
-    <fieldset class='span5 offset3'>
-        <legend>order management system</legend>
+    <div class="login">
+        <fieldset class='span5 offset3'>
+            <legend>order management system</legend>
 
-        <?php echo $form->textFieldRow($model, 'username', array('class' => 'span4')); ?>
+            <?php echo $form->textFieldRow($model, 'username', array('class' => 'span4')); ?>
 
-        <?php echo $form->passwordFieldRow($model, 'password', array('class' => 'span4')); ?>
+            <?php echo $form->passwordFieldRow($model, 'password', array('class' => 'span4')); ?>
 
-        <div class='row'>
-            <div class='span4'>
-                <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
-            </div>
-            <div class='pull-right'>
-                <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'buttonType' => 'submit',
-                    'type'       => 'info',
-                    'label'      => 'login'
+            <div class='row'>
+                <div class='span4'>
+                    <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
+                </div>
+                <div class='pull-right'>
+                    <?php $this->widget('bootstrap.widgets.TbButton', array(
+                        'buttonType' => 'submit',
+                        'type'       => 'info',
+                        'label'      => 'login'
                     ));
-                ?>
+                    ?>
+                </div>
             </div>
-        </div>
-    </fieldset>
+        </fieldset>
+    </div>
+
 </div>
 
 <?php $this->endWidget(); ?>

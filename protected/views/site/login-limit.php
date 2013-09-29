@@ -12,13 +12,13 @@ $this->pageTitle=Yii::app()->name; ?>
         <fieldset>
             <legend>&nbsp;Warning message&nbsp;</legend>
 
-            <p>System allows only 50 users to be logged in. Please try again later. Sorry for inconvenience.</p>
+            <p>System allows only 50 users to be logged in. 
+               Please <?php CHtml::link('try again',array('sire/login'))?> later. Sorry for inconvenience.</p>
 
         </fieldset>
             
         </div>
     </div>
-<a href=<?php echo Yii::app()->createUrl('site/config');?> >Click me once</a>
 </div>
 </body>
 </html>

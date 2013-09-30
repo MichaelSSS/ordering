@@ -22,7 +22,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'trash' => "BIT(1) DEFAULT 0",
 
         ));
-        $this->addForeignKey('FK_user', 'order','assignee', 'user', 'id' );
+        //$this->addForeignKey('FK_user', 'order','assignee', 'user', 'id' );
 
         $this->insert('order', array(
             'order_name' => 'aaa1',

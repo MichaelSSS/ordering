@@ -12,11 +12,16 @@
 ));
 ?>
 
-<?php echo CHtml::link('Create New User', array('admin/create'));
-    $dataProvider = $model->search();
-    echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
-        . $dataProvider->getTotalItemCount() . '</span></div>';
-?>
+<div class="span3">
+    <?php echo CHtml::link('Create New User ', array('admin/create'),array(
+        'class'=>'btn',
+        ));
+    ?>
+    <?php   $dataProvider = $model->search(); 
+        echo '<div id="search-result" >Number of Found Users<span id="search-result-count">'
+            . $dataProvider->getTotalItemCount() . '</span></div>';
+    ?>
+</div> 
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(

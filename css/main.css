@@ -68,15 +68,6 @@ legend span {
 }
 
 /*admin start*/
-span#search-result-count{
-    color:rgb(0, 85, 128);
-    font-style:italic;
-    text-decoration:underline;
-}
-
-form{
-    margin-bottom:0;
-}
 
 tr.user-active{
     color: red;
@@ -132,4 +123,36 @@ header{
 }
 .not_visible{
     display: none;
+}
+#search-result {
+ font-weight: 700;
+  color: #fff;
+  background-color: #428bca;
+  padding: 10px 15px;
+
+}
+#search-result-count {
+
+  min-width: 10px;
+  padding: 3px 7px;
+ 
+  line-height: 1;
+  position: relative;
+  text-decoration: underline;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  color: #888;
+  background-color: #fff;
+  border-radius: 3px;
+  margin-left: 10px;
+}
+#search-result-count:before {
+    content: '';
+    border-right: 6px solid #fff;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;;
+    position: absolute;
+    top: 6px;
+    left: -6px;
 }

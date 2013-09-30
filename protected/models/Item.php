@@ -11,9 +11,13 @@ class Item extends CActiveRecord
     
     public $currentPageSize = 10;
     public $nextPageSize = array(10=>25,25=>2,2=>3,3=>10);
-    public $searchCriteria = array();
+    public $searchCriterias = array('name'=>'Item Name',  'description'=>'Description');
 
-	/**
+    public $searchValue;
+    public $searchCriteria;
+
+
+    /**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
 	 */
@@ -46,7 +50,7 @@ class Item extends CActiveRecord
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_item, price, name, description, quantity', 'safe', 'on'=>'search'),
+			array('id_item, price, searchValue, searchCriteria, name, description, quantity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -103,10 +107,16 @@ class Item extends CActiveRecord
     public function search()
     {
 
+        $criteria = new CDbCriteria;
 
+        if ($this->searchValue!="")
+        {
+            $keyword = strtr($this->searchValue, array('%' => '\%', '_' => '\_', '\\' => '\\\\')) . '%';
+            $criteria->compare($this->searchCriteria, $keyword, true, 'AND', false);
+        }
 	
-        return new CActiveDataProvider('Item',array(
-           'criteria'=>$this->searchCriteria,
+        return new CActiveDataProvider($this,array(
+            'criteria' => $criteria,
             'pagination'=>array(
                 'pageSize'=>$this->currentPageSize,
             ),

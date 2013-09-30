@@ -159,8 +159,12 @@ $grid = $this->widget('TGridView', array(
     function beforeRemove(el) {
         $('#modal_remove').attr('href', $(el).attr('href'));
 
+
+    };
+    $(function(){
+        $('#modal_remove').click(function() {
             debugger;
-            var url = $(el).attr('href');
+            var url = $(this).attr('href');
             $.get(url, function(response) {
 //                $('#remove_order').modal('hide');
                 $('.modal-header .close').click();
@@ -169,5 +173,7 @@ $grid = $this->widget('TGridView', array(
 
             });
             return false;
-    };
+        });
+    });
+
 </script>

@@ -25,6 +25,6 @@
         'htmlOptions' => array('data-dismiss' => 'modal'),
     ));
     ?>
-
+</div>
     <?php $this->endWidget(); ?>
 

@@ -2,6 +2,11 @@
 
 class AdminController extends Controller
 {
+    const ADMIN = 'admin';
+    const CUSTOMER = 'customer';
+    const SUPERVISOR = 'supervisor';
+    const MERCHANDISER = 'merchandiser';
+
     public $defaultAction = 'index';
 
     public function filters()
@@ -10,6 +15,7 @@ class AdminController extends Controller
             'accessControl',
         );
     }
+
     public function accessRules()
     {
         return array(
@@ -91,15 +97,16 @@ class AdminController extends Controller
     public function actionCreate()
     {
         $model = new User;
-        $model->role = 'admin';
+        $model->role = self::CUSTOMER;
 
-        if(isset($_POST['User'])) {
-            $model->attributes=$_POST['User'];
+        if( !empty( $_POST['User']) ) {
+            $model->attributes = $_POST['User'];
+
             if($model->save()) {
 
-                $this->assignRole($model->role,$model->id); // assign role to user
+                $this->assignRole( $model->role,$model->id ); // assign role to user
 
-                $this->redirect(array('admin/index'));
+                $this->redirect( array( 'admin/index' ) );
             }
         }
 
@@ -126,12 +133,12 @@ class AdminController extends Controller
 
     public function actionEdit($id){
 
-        $model=$this->loadModel($id);
+        $model = $this->loadModel($id);
         $model->scenario = 'edit';
         $model->password = false;
 
-        if(isset($_POST['User'])) {
-            $model->attributes=$_POST['User'];
+        if( !empty($_POST['User'] ) ) {
+            $model->attributes = $_POST['User'];
 
             if(strlen($model->password) == 0 ){
                 if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
@@ -177,7 +184,6 @@ class AdminController extends Controller
             if($duplicate->save()) {
 
                 $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
-
                 $this->redirect(array('admin/index'));
             }
 

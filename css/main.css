@@ -74,20 +74,25 @@ span#search-result-count{
     text-decoration:underline;
 }
 
-div.admin-form fieldset {
-    padding-right:.7em;    
+form{
+    margin-bottom:0;
 }
-div.admin-form input, div.admin-form select {
-    padding-rigth:0;
-    margin:0;
-    float:right;
-    width:100%;
+
+tr.user-active{
+    color: red;
 }
-div.admin-form button[type="submit"].btn {
-    margin: .7em 0;
-    clear:both;
+
+tr.user-deleted{
+    color: #bbb;
+}
+
+tr.user-deleted a{
+    color: #bbb;
+    cursor:default;
+    text-decoration:none;
 }
 /*admin end*/
+
 header{
     position: relative;
 }

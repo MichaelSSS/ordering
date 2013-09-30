@@ -4,8 +4,8 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle=Yii::app()->name; ?>
-
+$this->pageTitle=Yii::app()->name;
+echo '
 <div class="container">
     <div class="row6 offset2">
         <div class="span6">
@@ -13,16 +13,10 @@ $this->pageTitle=Yii::app()->name; ?>
             <legend>&nbsp;Warning message&nbsp;</legend>
 
             <p>System allows only 50 users to be logged in. 
-               Please <?php CHtml::link('try again',array('sire/login'))?> later. Sorry for inconvenience.</p>
+               Please ' . CHtml::link('try again',array('site/login')) . ' later. Sorry for inconvenience.</p>
 
         </fieldset>
             
         </div>
     </div>
-</div>
-</body>
-</html>
-
-
-
-
+</div>';

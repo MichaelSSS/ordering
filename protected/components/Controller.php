@@ -37,7 +37,7 @@ class Controller extends CController
         if ( !$user->isGuest ) {
             if ( $user->isActive($user->id, time()) 
                     && $user->isSameUserAgent($user->id) 
-                    && !Yii::app()->user->getState('blocked') ) {
+                    && !UserIdentity::isBlocked($_SERVER['REMOTE_ADDR']) ) {
                 $user->updateLastActionTime();
             } else {
                 // if user's session exists(not guest) but user is already not active, we destroy session

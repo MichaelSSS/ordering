@@ -71,6 +71,7 @@ return array(
             'enableProfiling'=>true,
             'enableParamLogging'=>true,
             'charset' => 'utf8',
+	    'tablePrefix' => 'tbl_',
         ),
         'errorHandler'=>array(
             // use 'site/error' action to display errors

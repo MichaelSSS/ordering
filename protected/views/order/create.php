@@ -16,7 +16,7 @@
     );
     ?>
     <div class="row">
-        <div class="span10">This page is appionted for selecting and buying products</div>
+        <div class="span10">This page is appointed for selecting and buying products</div>
     </div>
     <div class="row">
         <div class="span10">
@@ -33,7 +33,7 @@
         <div class="span5">
             <fieldset>
                 <legend>Card Info</legend>
-                Credit card view goes here
+                <?php $this->renderPartial('/order/cardInfo', array('modelCreditCard' => $modelCreditCard)); ?>
             </fieldset>
         </div>
 
@@ -41,8 +41,9 @@
     <div class="row">
         <div class="span3 offset7">
             <div class="order-buttons">
-                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Save')); ?>
-                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Order')); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Save', 'htmlOptions' => array('id' => 'save'))); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Order', 'htmlOptions' => array('id' => 'order','onClick' => 'js:$(\'#credit-card-form\').submit()'))); ?>
+                <?php //$this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'ajaxSubmitButton', 'type' => 'primary', 'label' => 'Order','ajaxOptions' => array('url' => 'creditcard/validatecc'))); ?>
 
 
                 <?php $this->widget('bootstrap.widgets.TbButton', array(

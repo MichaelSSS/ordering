@@ -6,7 +6,7 @@
         <h4>Error</h4>
     </div>
     <div id='errorMessage' class="modal-body">
-        <p> <?php echo "TEST AJAX"//echo $this->error($model,$attribute) ?> </p>
+        <p>  </p>
     </div>
     <div class="modal-footer">
         <?php $this->widget('bootstrap.widgets.TbButton', array(

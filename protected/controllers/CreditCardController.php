@@ -9,7 +9,7 @@
 
 class CreditCardController extends Controller
 {
-    public $layout='false';
+    //public $layout='false';
     /**
      * This is the action to handle external exceptions.
      */
@@ -26,12 +26,12 @@ class CreditCardController extends Controller
 
    public function actionIndex()
     {
-        $model=new CreditCardFormModel();
+        $modelCreditCard=new CreditCardFormModel();
 //      validation with AJAX
        if (isset($_POST['ajax']) && $_POST['ajax']==='credit-card-form')
        {
            echo "TEST";
-           echo CActiveForm::validate($model);
+           echo CActiveForm::validate($modelCreditCard);
            Yii::app()->end();
        }
 
@@ -45,35 +45,35 @@ class CreditCardController extends Controller
             }
         }*/
 
-        $this->render('creditcard',array('model'=>$model));
+        $this->renderPartial('creditcard',array('modelCreditCard'=>$modelCreditCard));
     }
 
     public function actionValidatecc()
     {
-        $model= new CreditCardFormModel();
+        $model = new Order;
+        $modelCreditCard = new CreditCardFormModel();
         //$model->attributes=$_POST;
-        $model->scenario='validatecc';
-//      validation with AJAX
+        $modelCreditCard->scenario = 'validatecc';
+/*//      validation with AJAX
         if(isset($_POST['ajax']) && $_POST['ajax']==='credit-card-form')
         {
             //$validationResult=CActiveForm::validate($model);
-            echo CActiveForm::validate($model);
+            echo CActiveForm::validate($modelCreditCard);
             Yii::app()->end();
-        }
+        }*/
 
-        $this->render('creditcard',array('model'=>$model));
-/*// validation without AJAX
+// validation without AJAX
        if ( isset($_POST['CreditCardFormModel']))
        {
-           $model->attributes=$_POST['CreditCardFormModel'];
-           if ($model->validate())
+           $modelCreditCard->attributes=$_POST['CreditCardFormModel'];
+           if ($modelCreditCard->validate())
            {
                echo "Credit Card Info Correct";
            }
-       }*/
-
-        $this->render('creditcard',array('model'=>$model));
-
+       }
+        //$this->render('creditcard',array('modelCreditCard'=>$modelCreditCard));
+        $this->render('/order/create', array('model' => $model, 'modelCreditCard' => $modelCreditCard,));
+        //$this->renderPartial('/order/cardInfo',array('modelCreditCard'=>$modelCreditCard));
     }
 
 }

@@ -52,40 +52,34 @@
     }
 </script>
 
-<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'id'=>'credit-card-form',
-        'action'=>'index.php?r=creditcard/validatecc',
-        'type'=>'horizontal',
-        'enableAjaxValidation'=>true,
-        'enableClientValidation'=>false,
-        'clientOptions'=>array('validateOnSubmit'=> true,'validateOnChange'=>false,
-            'afterValidate'=>'js:afterValidate'),
+<?php $formCreditCard = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    'id'=>'credit-card-form',
+    'action'=>'index.php?r=creditcard/validatecc',
+    'type'=>'horizontal',
+    'enableAjaxValidation'=>true,
+    'enableClientValidation'=>false,
+    'clientOptions'=>array('validateOnSubmit'=> true,'validateOnChange'=>false,
+        'afterValidate'=>'js:afterValidate'),
 ));
 ?>
 <?php $this->renderPartial('/creditcard/ErrorModal'); ?>
 
-    <fieldset form="credit-card-form">
-    <legend>Card Info</legend>
-        <?php echo $form->dropDownListRow($model, 'credit_card_type', array(1=>'Visa',2=>'MasterCard',3=>'American Express',4=>'Maestro'),array('labelOptions' => array('class'=>'required'),'onchange'=>'js:startDateEnable()')); ?>
-        <?php echo $form->textFieldRow($model, 'credit_card_number', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'16','errorOptions'=>array('class'=>'error'))); ?>
-        <?php echo $form->textFieldRow($model, 'cvv2_code', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'3')); ?>
-        <div class="control-group">
-            <?php echo $form->labelEx($model, 'expiry_date', array('class'=>'control-label')); ?>
-            <div class="controls">
-            <?php echo $form->dateField($model, 'expiry_date'); ?>
-            </div>
-        </div>
-        <div class="control-group">
-            <?php echo $form->labelEx($model, 'start_date', array('class'=>'control-label')); ?>
-            <div class="controls">
-            <?php echo $form->dateField($model, 'start_date', array('disabled'=>'disabled')); ?>
-            </div>
-        </div>
-        <?php echo $form->textFieldRow($model, 'issue_number', array('labelOptions'=>array('class'=>'control-label'),'disabled'=>'disabled')); ?>
-        <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'Ordering')); ?>
-        <div class="control-group">
-        <?php //echo CHtml::submitButton('Ordering'); ?>
-        </div>
-    </fieldset>
+<?php echo $formCreditCard->dropDownListRow($modelCreditCard, 'credit_card_type', array(1=>'Visa',2=>'MasterCard',3=>'American Express',4=>'Maestro'),array('labelOptions' => array('class'=>'required'),'onchange'=>'js:startDateEnable()')); ?>
+<?php echo $formCreditCard->textFieldRow($modelCreditCard, 'credit_card_number', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'16','errorOptions'=>array('class'=>'error'))); ?>
+<?php echo $formCreditCard->textFieldRow($modelCreditCard, 'cvv2_code', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'3')); ?>
+<div class="control-group">
+    <?php echo $formCreditCard->labelEx($modelCreditCard, 'expiry_date', array('class'=>'control-label')); ?>
+    <div class="controls">
+        <?php echo $formCreditCard->dateField($modelCreditCard, 'expiry_date'); ?>
+    </div>
+</div>
+<div class="control-group">
+    <?php echo $formCreditCard->labelEx($modelCreditCard, 'start_date', array('class'=>'control-label')); ?>
+    <div class="controls">
+        <?php echo $formCreditCard->dateField($modelCreditCard, 'start_date', array('disabled'=>'disabled')); ?>
+    </div>
+</div>
+<?php echo $formCreditCard->textFieldRow($modelCreditCard, 'issue_number', array('labelOptions'=>array('class'=>'control-label'),'disabled'=>'disabled')); ?>
+
 <?php $this->endWidget(); ?>
 

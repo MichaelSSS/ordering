@@ -74,6 +74,7 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $model = new Order;
+        $modelCreditCard = new CreditCardFormModel();
 
         if (isset($_POST['Order'])) {
             $model->attributes = $_POST['Order'];
@@ -84,7 +85,7 @@ class CustomerController extends Controller
         }
 
         $this->render('/order/create', array(
-            'model' => $model,
+            'model' => $model, 'modelCreditCard' => $modelCreditCard,
         ));
     }
 }

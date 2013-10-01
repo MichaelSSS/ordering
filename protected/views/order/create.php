@@ -2,7 +2,7 @@
     <div class="span10"></div>
     <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'id' => 'horizontalForm',
+        'id' => 'orderForm',
         'type' => 'horizontal',
         'enableClientValidation' => true,
 
@@ -39,7 +39,7 @@
         <div class="span5">
             <fieldset>
                 <legend>Card Info</legend>
-                <?php $this->renderPartial('/order/cardInfo', array('modelCreditCard' => $modelCreditCard)); ?>
+                <?php $this->renderPartial('/order/cardInfo', array('modelCreditCard' => $modelCreditCard, 'form'=>$form)); ?>
             </fieldset>
         </div>
 
@@ -81,14 +81,10 @@
         $('#Order_preferable_date').tooltip({
             trigger : 'hover'
         });
-
-<!--        --><?php //if($order->isError()): ?>
-<!--           $('#itemsEmpty').modal();-->
-<!--        --><?php //endif; ?>
-
     });
     function showError(form,  data, hasError)
     {
+        debugger;
         if(hasError){
             $('#error-text').html(data[Object.keys(data)[0]]);
             $('#itemsEmpty').modal();

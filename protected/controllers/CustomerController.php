@@ -75,11 +75,12 @@ class CustomerController extends Controller
     {
         $order = new Order;
         $orderDetails = new OrderDetails;
-	$modelCreditCard = new CreditCardFormModel();
-	$orderDetails ->id_customer = Yii::app()->user->id;
+        $modelCreditCard = new CreditCardFormModel;
+
+        $orderDetails->setCustomer(Yii::app()->user->id);
 
 
-        if (isset($_POST['ajax'])&&$_POST['ajax']==='horizontalForm')
+        if (isset($_POST['ajax'])&&$_POST['ajax']==='orderForm')
         {
             echo CActiveForm::validate( array( $order));
             Yii::app()->end();
@@ -89,14 +90,13 @@ class CustomerController extends Controller
         if (isset($_POST['Order'])) {
 
             $order->attributes = $_POST['Order'];
+
             $order->customer = Yii::app()->user->id;
             $order->status = "Created";
 
-            $criteria = new CDbCriteria;
-            $criteria->compare('id_customer',$order->customer );
-            $criteria->compare('id_order',0 );
 
-            $items = $orderDetails->findAll($criteria);
+            $items = $orderDetails->getOrderItems($order->customer);
+
             if($order->validate())
             {
                 $order->save(false);

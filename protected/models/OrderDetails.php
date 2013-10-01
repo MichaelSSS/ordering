@@ -105,12 +105,26 @@ class OrderDetails extends CActiveRecord
     }
 
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return OrderedOrder the static model class
-	 */
+    public function setCustomer($id)
+    {
+        $this->id_customer = $id;
+    }
+
+    public function getOrderItems($id_customer)
+    {
+
+        $criteria = new CDbCriteria;
+        $criteria->compare('id_customer',$id_customer );
+        $criteria->compare('id_order',Order::IS_ORDERED );
+
+        return  $this->findAll($criteria);
+    }
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return OrderedOrder the static model class
+     */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

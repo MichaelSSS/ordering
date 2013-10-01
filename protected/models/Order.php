@@ -27,6 +27,7 @@ class Order extends CActiveRecord
     public $currentPageSize = 10;
     const IS_DELETED = 0;
     const ORDER_FORMAT = '0000';
+    const IS_ORDERED = 0;
 
     public $filterCriteria;
     public $filterRole;
@@ -41,6 +42,7 @@ class Order extends CActiveRecord
 
     public $filterStatuses = array('None', 'Pending', 'Ordered', 'Delivered');
     public $filterRoles = array('None', 'Merchandiser', 'Supervisor', 'Administrator');
+
     public $searchCriterias = array('order_name'=>'Order Name',  'status'=>'Status', 'assignees.username'=>'Assignee');
 
     public $filterAttributes = array(
@@ -176,6 +178,8 @@ class Order extends CActiveRecord
         $list = array(Yii::app()->user->id => '-me-') + $list;
         return $list;
     }
+
+//    public function get
 
     public function formatDate($d)
     {

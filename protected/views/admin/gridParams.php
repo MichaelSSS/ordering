@@ -3,6 +3,15 @@ return array(
     'id'             => 'oms-grid-view0',
     'dataProvider'   => $dataProvider,
     'ajaxUpdate'     => 'search-result-count',
+    'ajaxUpdateError'=>'function(xhr,textStatus,et,err){
+         if (xhr.status==403) {
+            window.location.assign("' 
+                . CHtml::normalizeUrl(array('site/logout'))
+                . '");
+        } else {
+            alert(textStatus);
+        }
+    }',
     'updateSelector' => '{page}, {sort}, #page-size',
     'filterSelector' => '#search-fields',
     'type'           => TbHtml::GRID_TYPE_STRIPED . ' ' . TbHtml::GRID_TYPE_BORDERED . ' ' . TbHtml::GRID_TYPE_CONDENSED,

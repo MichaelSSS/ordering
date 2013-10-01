@@ -25,12 +25,12 @@
     <fieldset>
         <legend>Create new user</legend>
         <ul>
-            <li><?php echo $form->textFieldRow($model, 'username', array('hint' => '')); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'firstname', array('hint' => '')); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'lastname', array('hint' => '')); ?></li>
-            <li><?php echo $form->passwordFieldRow($model, 'password', array('hint' => '','title' => 'Password should contain at least one uppercase and one lowercase Alphabetic symbol, at least one numeric and special character')); ?></li>
-            <li><?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint' => '')); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'email', array('hint' => '')); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'username'); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'firstname'); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'lastname'); ?></li>
+            <li><?php echo $form->passwordFieldRow($model, 'password', array('title' => 'Password should contain at least one uppercase and one lowercase Alphabetic symbol, at least one numeric and special character')); ?></li>
+            <li><?php echo $form->passwordFieldRow($model, 'confirmPassword'); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'email') ?></li>
             <li>
                 <?php echo $form->dropDownListRow($model, 'region', array(
                     'north' => 'North',

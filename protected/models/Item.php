@@ -14,17 +14,21 @@ class Item extends CActiveRecord
   
     public $searchValue;
     public $nextPageSize = array(10=>25,25=>2,2=>3,3=>10);
+
     public $searchCriteria;
      public $searchCriterias = array('id_item'=>'Id Item','name'=>'Item Name','description'=>'Description','price'=>'Price','quantity'=>'Quantity');
-    //===========================================
-   // public $filterCriterias = array('id_item', 'name');
+   
+  
      public $filterCriteria;
       public $filterCriterias = array('Id Item', 'Item Name','Description','Price','Quantity');
     //================================================
     
 
 
-	/**
+
+
+
+    /**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
 	 */
@@ -57,7 +61,10 @@ class Item extends CActiveRecord
 			array('description', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+
 			array('id_item, searchValue, searchCriteria, searchCriterias, price, name, description, quantity', 'safe', 'on'=>'search'),
+
+			
 		);
 	}
 
@@ -67,8 +74,8 @@ class Item extends CActiveRecord
 	public function relations()
 	{
 		return array(
-                   
-                    
+
+            'order_items' => array(self::HAS_MANY, 'OrderItem', 'id_item'),
 		);
 	}
 
@@ -125,11 +132,17 @@ class Item extends CActiveRecord
        // elseif (!empty($this->filterCriteria) && !empty($this->filterValue))
        //     $criteria->compare('assignees.role', $this->filterRoles[$this->filterValue]);
 
+
+
+
+
+
         if ($this->searchValue!="")
         {
             $keyword = strtr($this->searchValue, array('%' => '\%', '_' => '\_', '\\' => '\\\\')) . '%';
             $criteria->compare($this->searchCriteria, $keyword, true, 'AND', false);
         }
+
                 
        $sort=new CSort;
         $sort->attributes=array(
@@ -147,15 +160,7 @@ return new CActiveDataProvider($this,array(
             ),
                 'sort'=>$sort,
         ));
-//=========================================================
-	
-      //  return new CActiveDataProvider('Item',array(
-        //   'criteria'=>$this->searchCriteria,
-          //  'pagination'=>array(
-            //    'pageSize'=>$this->currentPageSize,
-            //),
-        //));
-        //=======================================================
+
     }
     public static function model($className=__CLASS__)
 	{

@@ -12,11 +12,16 @@
 ));
 ?>
 
-<?php echo CHtml::link('Create New User', array('admin/create'));
-    $dataProvider = $model->search();
-    echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
-        . $dataProvider->getTotalItemCount() . '</span></div>';
-?>
+<div class="span3">
+    <?php echo CHtml::link('Create New User ', array('admin/create'),array(
+        'class'=>'btn',
+        ));
+    ?>
+    <?php   $dataProvider = $model->search(); 
+        echo '<div id="search-result" >Number of Found Users<span id="search-result-count">'
+            . $dataProvider->getTotalItemCount() . '</span></div>';
+    ?>
+</div> 
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -62,9 +67,14 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 ?>
             </div>
             <div class='span3'>
-                <?php echo $form->textField($fields, 'keyValue', array('class' => 'span3', 'placeholder' => 'Search')); ?>
+                <?php echo $form->textField($fields, 'keyValue', array(
+                    'onkeyup' => 'document.getElementById(\'btn-search\').disabled = !(this.value.length);',
+                    'class' => 'span3',
+                    'placeholder' => 'Search'
+                )); ?>
 
-                <input class='btn btn-info pull-right' type='submit' value='Search'>
+                <input class='btn pull-right' type='reset' value='Reset'>
+                <input class='btn btn-info pull-right' type='submit' disabled='true' id='btn-search' value='Search'>
 
             </div>
         </div>

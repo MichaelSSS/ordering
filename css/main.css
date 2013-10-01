@@ -7,9 +7,7 @@ ul {
 	margin: 0;
 	padding: 0;
 }
-.container {
-    margin: 1em auto; 
-}
+
 .wrap {
 	border: 1px solid #ddd;
 } 
@@ -45,8 +43,8 @@ legend span {
 .controls .span3  label {
     display: none;
  }
-.span3 button.btn, input[type="submit"].btn {
-    margin: .7em 0;
+.span3 button.btn, input[type="submit"].btn, input[type="reset"].btn  {
+    margin: .7em 0 .7em 3em;
 }
 .form-horizontal .control-label {
     text-align: left;
@@ -70,26 +68,22 @@ legend span {
 }
 
 /*admin start*/
-span#search-result-count{
-    color:rgb(0, 85, 128);
-    font-style:italic;
-    text-decoration:underline;
+
+tr.user-active{
+    color: red;
 }
 
-div.admin-form fieldset {
-    padding-right:.7em;    
+tr.user-deleted{
+    color: #bbb;
 }
-div.admin-form input, div.admin-form select {
-    padding-rigth:0;
-    margin:0;
-    float:right;
-    width:100%;
-}
-div.admin-form button[type="submit"].btn {
-    margin: .7em 0;
-    clear:both;
+
+tr.user-deleted a{
+    color: #bbb;
+    cursor:default;
+    text-decoration:none;
 }
 /*admin end*/
+
 header{
     position: relative;
 }
@@ -130,6 +124,35 @@ header{
 .not_visible{
     display: none;
 }
-.lamp_photo img {
-    border-radius: 50%;
+#search-result {
+ font-weight: 700;
+  color: #fff;
+  background-color: #428bca;
+  padding: 10px 15px;
+
+}
+#search-result-count {
+
+  min-width: 10px;
+  padding: 3px 7px;
+ 
+  line-height: 1;
+  position: relative;
+  text-decoration: underline;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  color: #888;
+  background-color: #fff;
+  border-radius: 3px;
+  margin-left: 10px;
+}
+#search-result-count:before {
+    content: '';
+    border-right: 6px solid #fff;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;;
+    position: absolute;
+    top: 6px;
+    left: -6px;
 }

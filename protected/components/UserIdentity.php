@@ -11,6 +11,10 @@ class UserIdentity extends CUserIdentity
     private $_userId = 0;
     private $_home = '';
 
+    /**
+    * increments number of times user entered incorrect credentials
+    * @return current counter
+    */
     protected function addFailedAttempt($userIp)
     {
         $curAttempts = 0;
@@ -48,6 +52,11 @@ class UserIdentity extends CUserIdentity
         }
         return $affectedRows;
     }
+
+    /**
+    * sets blocked until time for userIp
+    * @return number of affected rows
+    */
     protected function setBlock($userIp)
     {
         $affectedRows = 0;        
@@ -60,9 +69,14 @@ class UserIdentity extends CUserIdentity
             'blockedTime' => time() + Yii::app()->params['blockSeconds'],
             'userIp'  => $userIp,
         ));
-        Yii::app()->user->setState('blocked','1');
+
         return $affectedRows;
     }        
+
+    /**
+    * resets number of attempts to zero 
+    * @return number of affected rows
+    */
     protected function resetAttempt($userIp)
     {
         $affectedRows = 0;
@@ -74,9 +88,13 @@ class UserIdentity extends CUserIdentity
         $affectedRows = $command->execute(array(
             'userIp'  => $userIp,
         ));
+
         return $affectedRows;
     }    
     
+    /**
+    * @return true if useIp is blocked now, false otherwise
+    */
     public static function isBlocked($userIp)
     {
         $command = Yii::app()->db->createCommand('
@@ -110,12 +128,10 @@ class UserIdentity extends CUserIdentity
                 $this->errorCode=self::ERROR_PASSWORD_INVALID;
             }
         } else {
-            Yii::app()->user->setState('blocked','0');
+            $this->resetAttempt($userIp);
             $this->errorCode=self::ERROR_NONE;
             $this->_userId = $model->id;
-            Yii::app()->user->setState('user_id', $model->id);
             $this->_home = $model->role;
-            $this->resetAttempt($userIp);
             return true;
         }
         return false;

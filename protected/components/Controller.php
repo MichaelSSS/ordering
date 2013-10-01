@@ -37,11 +37,15 @@ class Controller extends CController
         if ( !$user->isGuest ) {
             if ( $user->isActive($user->id, time()) 
                     && $user->isSameUserAgent($user->id) 
-                    && !Yii::app()->user->getState('blocked')) {
+                    && !UserIdentity::isBlocked($_SERVER['REMOTE_ADDR']) ) {
                 $user->updateLastActionTime();
             } else {
                 // if user's session exists(not guest) but user is already not active, we destroy session
-                $this->logout();
+                if ( Yii::app()->request->isAjaxRequest ) {
+                    throw new CHttpException(403,'Repeat log in, please');
+                } else {
+                    $this->logout();
+                }
             }
         }
         return true;

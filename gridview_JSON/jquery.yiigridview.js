@@ -158,6 +158,22 @@
                     });
                 }
 
+                $('#search-form').on('reset.yiiGridView', function (event) {
+                    var url = $('#' + id).yiiGridView('getUrl'),
+                        params = $.deparam.querystring(url),
+                        controls = $(this).serializeArray();
+
+                    document.getElementById('btn-search').disabled=true;
+
+                    delete params['AdminSearchForm'];
+                    url = (url.split('?',1))[0];
+                    url = $.param.querystring(url,params);
+                    //this.children('.keys').attr('title',url);
+                    
+                    $('#' + id).yiiGridView('update', {url: url});
+                    //return false;
+                });
+
                 $('#search-form').on('submit.yiiGridView', function (event) {
                     if ( $("input#AdminSearchForm_keyValue",this).val() ) {
                         event.preventDefault();

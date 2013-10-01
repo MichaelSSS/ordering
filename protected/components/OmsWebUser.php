@@ -40,36 +40,12 @@ class OmsWebUser extends CWebUser
     public function getRememberedName()
     {
         $rememberedName = $this->rememberedName;                    //remembered name from cookie
-        if (!empty($rememberedName)) {
-            return $rememberedName;
-        } else {
+        if (empty($rememberedName)) {
             $rememberedName = $this->getState('Remembered Name');   //remembered name from session
-            if (!empty($rememberedName)) {
-                return $this->getState('Remembered Name');
-            }
         }
-        return '';
-         
-         
+        return $rememberedName;
     }
 
-/*    protected function saveToCookie($duration)
-    {
-        $app=Yii::app();
-        $cookie=$this->createIdentityCookie($this->getStateKeyPrefix());
-        $cookie->expire=time()+$duration;
-        $data=array(
-            $this->getId(),
-            $this->rememberedName,
-            $duration,
-            $this->saveIdentityStates(),
-        );
-
-
-        $cookie->value = $app->getSecurityManager()->hashData(serialize($data));
-        $app->getRequest()->getCookies()->add($cookie->name,$cookie);
-    }
-*/
 
     /**
     *@return true if last action time is fresh, false otherwise
@@ -165,11 +141,10 @@ class OmsWebUser extends CWebUser
         $command = Yii::app()->db->createCommand('
             UPDATE user_login 
             SET last_action_time= :oldTime
-            WHERE (user_id= :userId) AND (user_agent= :userAgent)
+            WHERE (user_id= :userId)
         ');
         return $command->execute(array(
             'userId'  => $this->id,
-            'userAgent'   => $_SERVER['HTTP_USER_AGENT'],
             'oldTime' => 1,
         ));
     }

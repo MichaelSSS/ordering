@@ -2,6 +2,11 @@
 
 class AdminController extends Controller
 {
+    const ADMIN = 'admin';
+    const CUSTOMER = 'customer';
+    const SUPERVISOR = 'supervisor';
+    const MERCHANDISER = 'merchandiser';
+
     public $defaultAction = 'index';
 
     public function filters()
@@ -10,6 +15,7 @@ class AdminController extends Controller
             'accessControl',
         );
     }
+
     public function accessRules()
     {
         return array(
@@ -22,16 +28,30 @@ class AdminController extends Controller
         );
     }
 
+    public function prepareAjaxData($dataProvider)
+    {
+            $data = $dataProvider->getData();
+            $user = Yii::app()->user;
+            $currentTime = time();
+            foreach($data as $i => $row) {
+                $data[$i] = $row->getAttributes(null);
+                if ( $user->isActive($row['id'], $currentTime) ) {
+                    $data[$i] += array('active'=>true);
+                }
+            }
+            $data[] = array('userCount' => $dataProvider->getTotalItemCount());
+            return CJSON::encode($data);
+    }
+
     public function actionIndex()
     {
         $model = new User;
 
-        if ( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) ) {
+        if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
-        }
 
+        $model->dbCriteria->select = 'id,username,firstname,lastname,role,email,region,deleted';
         $model->dbCriteria->order='`t`.`username` ASC';
-        //$model->dbCriteria->select = 'id,username,firstname,lastname,role,email,region';
 
         if ( !isset($_GET['showDel']) || !$_GET['showDel'] ) {
             $model->dbCriteria->condition = '`t`.`deleted`=0';
@@ -39,28 +59,22 @@ class AdminController extends Controller
 
         $fields = new AdminSearchForm('search');
 
-        if ( isset($_GET['AdminSearchForm']) ) {
+        if( isset($_GET['AdminSearchForm']) ){
             $fields->attributes = $_GET['AdminSearchForm'];
 
             if( $fields->validate() )
                 $model->searchCriteria = $fields->getCriteria();
-
         }
 
         if ( isset($_GET['ajax']) ) {
             $dataProvider = $model->search();
-            $totalItems = $dataProvider->getTotalItemCount();
-            $gridParams = require(dirname(__FILE__) . '\..\views\admin\gridParams.php');
-            $gridHtmlCode = $this->widget('OmsGridView',$gridParams,true);
-            echo CJSON::encode(array(
-                $totalItems,
-                $gridHtmlCode,
-            ));
+            echo $this->prepareAjaxData($dataProvider);
             Yii::app()->end();
         } else {
-            $this->render('index',array('model'=>$model, 'fields'=>$fields));
+            $this->render('index2',array('model'=>$model, 'fields'=>$fields));
         }
     }
+
 
     protected function assignRole($role,$userId,$isNewRecord=true)
     {
@@ -83,15 +97,16 @@ class AdminController extends Controller
     public function actionCreate()
     {
         $model = new User;
-        $model->role = 'admin';
+        $model->role = self::CUSTOMER;
 
-        if(isset($_POST['User'])) {
-            $model->attributes=$_POST['User'];
+        if( !empty( $_POST['User']) ) {
+            $model->attributes = $_POST['User'];
+
             if($model->save()) {
 
-                $this->assignRole($model->role,$model->id); // assign role to user
+                $this->assignRole( $model->role,$model->id ); // assign role to user
 
-                $this->redirect(array('admin/index'));
+                $this->redirect( array( 'admin/index' ) );
             }
         }
 
@@ -101,7 +116,6 @@ class AdminController extends Controller
         ));
 
     }
-
     public function actionRemove(){
 
         if(isset($_GET['id'])){
@@ -110,7 +124,7 @@ class AdminController extends Controller
             $model->deleted = 1;
 
             if($model->save()){
-                $this->redirect(array('admin/index'));
+                $this->actionIndex();
             } else{
                 throw new \Exception(print_r($model->getErrors(), true));
             }
@@ -119,14 +133,14 @@ class AdminController extends Controller
 
     public function actionEdit($id){
 
-        $model=$this->loadModel($id);
+        $model = $this->loadModel($id);
         $model->scenario = 'edit';
         $model->password = false;
 
-        if(isset($_POST['User'])) {
-            $model->attributes=$_POST['User'];
+        if( !empty($_POST['User'] ) ) {
+            $model->attributes = $_POST['User'];
 
-            if(strlen($_POST['User']['password']) == 0 ){
+            if(strlen($model->password) == 0 ){
                 if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
 
                     $this->assignRole($model->role,$model->id,false); // assign role to user
@@ -170,7 +184,6 @@ class AdminController extends Controller
             if($duplicate->save()) {
 
                 $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
-
                 $this->redirect(array('admin/index'));
             }
 

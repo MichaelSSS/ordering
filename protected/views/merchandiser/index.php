@@ -1,5 +1,4 @@
 
-
 <?php $this->widget('bootstrap.widgets.TbTabs', array(
     'type' => 'tabs',
     'placement' => 'above', // 'above', 'right', 'below' or 'left'
@@ -16,7 +15,6 @@
 
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
-    /*'enableAjaxValidation'=>true*/
 ));
 ?>
 
@@ -73,8 +71,9 @@
 </fieldset>
 <?php $this->endWidget(); ?>
 
-<?php
-$grid = $this->widget('TGridView', array(
+
+
+<?php $grid = $this->widget('TGridView', array(
     'dataProvider' => $model->search(),
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
@@ -99,8 +98,13 @@ $grid = $this->widget('TGridView', array(
     'columns' => array(
         array('name' => 'order_name', 'header' => 'Order Name'),
         array(
+            'name' => 'assignee',
+            'header'=>'Customer Name',
+            'value' => '$data->assignees->username',
+        ),
+        array(
             'name' => 'total_price',
-            'value' => '$data->total_price . "\$"',
+            'value' => '$data->total_price.""."\$"',
         ),
         array(
             'name' => 'max_discount',
@@ -108,17 +112,14 @@ $grid = $this->widget('TGridView', array(
         ),
         array(
             'name' => 'delivery_date',
-            'value' => '($data->delivery_date != "0000-00-00") ? Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date) : "Delivery Date not assigned";',
+//            'value' => '$model->formatDate($data->delivery_date)',
+            'value' => 'Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date);',
         ),
         'status',
         array(
             'name' => 'assignee',
+            'header'=>'Customer Name',
             'value' => '$data->assignees->username',
-        ),
-        array(
-            'name' => 'assigneesRole',
-            'value' => '$data->assignees->role',
-
         ),
         array(
             'header' => 'Edit',
@@ -154,26 +155,10 @@ $grid = $this->widget('TGridView', array(
     ),
 ));?>
 <?php $this->renderPartial('/customer/_delete'); ?>
-
 <script>
     function beforeRemove(el) {
         $('#modal_remove').attr('href', $(el).attr('href'));
 
 
-    };
-    $(function(){
-        $('#modal_remove').click(function() {
-            debugger;
-            var url = $(this).attr('href');
-            $.get(url, function(response) {
-//                $('#remove_order').modal('hide');
-                $('.modal-header .close').click();
-                $.fn.yiiGridView.update('yw2');
-
-
-            });
-            return false;
-        });
-    });
-
+    }
 </script>

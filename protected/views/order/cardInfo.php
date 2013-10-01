@@ -52,17 +52,17 @@
     }
 </script>
 
-<?php $formCreditCard = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php /*$formCreditCard = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'credit-card-form',
-    'action'=>'index.php?r=creditcard/validatecc',
+    'action'=>'index.php?r=customer/order',
     'type'=>'horizontal',
     'enableAjaxValidation'=>true,
     'enableClientValidation'=>false,
-    'clientOptions'=>array('validateOnSubmit'=> true,'validateOnChange'=>false,
+    'clientOptions'=>array('validateOnSubmit'=>true,'validateOnChange'=>false,
         'afterValidate'=>'js:afterValidate'),
 ));
-?>
-<?php $this->renderPartial('/creditcard/ErrorModal'); ?>
+*/?>
+<?php $this->renderPartial('/order/errorMessage'); ?>
 
 <?php echo $formCreditCard->dropDownListRow($modelCreditCard, 'credit_card_type', array(1=>'Visa',2=>'MasterCard',3=>'American Express',4=>'Maestro'),array('labelOptions' => array('class'=>'required'),'onchange'=>'js:startDateEnable()')); ?>
 <?php echo $formCreditCard->textFieldRow($modelCreditCard, 'credit_card_number', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'16','errorOptions'=>array('class'=>'error'))); ?>
@@ -81,5 +81,5 @@
 </div>
 <?php echo $formCreditCard->textFieldRow($modelCreditCard, 'issue_number', array('labelOptions'=>array('class'=>'control-label'),'disabled'=>'disabled')); ?>
 
-<?php $this->endWidget(); ?>
+<?php /*$this->endWidget(); */?>
 

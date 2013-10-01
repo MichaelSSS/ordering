@@ -33,11 +33,11 @@ class CreditCardFormModel extends CFormModel
     public function rules()
     {
         return array (
-            array('credit_card_type','required','message'=>'Please select Credit Card Type'),
-            array('credit_card_number','required','message'=>'Please enter Credit Card Number'),
-            array('credit_card_number','match','pattern'=>'/^[0-9]{16}$/','message'=>'Incorrect CC format','on'=>'validatecc'),
-            array('cvv2_code','required','message'=>'Please enter CVV2 Code'),
-            array('expiry_date','required','message'=>'Please enter Expiry Date')
+            array('credit_card_type','required','message'=>'Please select Credit Card Type','on'=>'validateCardInfo'),
+            array('credit_card_number','required','message'=>'Please enter Credit Card Number','on'=>'validateCardInfo'),
+            array('credit_card_number','match','pattern'=>'/^[0-9]{16}$/','message'=>'Incorrect CC format','on'=>'validateCardInfo'),
+            array('cvv2_code','required','message'=>'Please enter CVV2 Code','on'=>'validateCardInfo'),
+            array('expiry_date','required','message'=>'Please enter Expiry Date','on'=>'validateCardInfo')
         );
     }
 

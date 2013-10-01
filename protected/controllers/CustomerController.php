@@ -76,8 +76,8 @@ class CustomerController extends Controller
     {
         $order = new Order;
         $orderDetails = new OrderDetails;
-	$modelCreditCard = new CreditCardFormModel();
-	$orderDetails ->id_customer = Yii::app()->user->id;
+	    $modelCreditCard = new CreditCardFormModel();
+	    $orderDetails ->id_customer = Yii::app()->user->id;
 
 
         if (isset($_POST['ajax'])&&$_POST['ajax']==='horizontalForm')
@@ -85,7 +85,6 @@ class CustomerController extends Controller
             echo CActiveForm::validate( array( $order));
             Yii::app()->end();
         }
-
 
         if (isset($_POST['Order'])) {
 
@@ -123,6 +122,17 @@ class CustomerController extends Controller
 
     public function actionOrder()
     {
+        // validate Credit Card Info
+        $modelCreditCard = new CreditCardFormModel();
+        //$model->attributes=$_POST;
+        $modelCreditCard->scenario = 'validateCardInfo';
+//      validation with AJAX
+        if(isset($_POST['ajax']) && $_POST['ajax']==='credit-card-form')
+        {
+            //$validationResult=CActiveForm::validate($model);
+            echo CActiveForm::validate($modelCreditCard);
+            Yii::app()->end();
+        }
 
     }
 

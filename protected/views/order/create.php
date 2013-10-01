@@ -10,7 +10,7 @@
        'clientOptions' => array(
            'validateOnSubmit'=>true,
            'hideErrorMessage'=>true,
-           'afterValidate'=>'js:showError',
+           'afterValidate'=>'js:afterValidate',
        )
     )
     );
@@ -39,7 +39,7 @@
         <div class="span5">
             <fieldset>
                 <legend>Card Info</legend>
-                <?php $this->renderPartial('/order/cardInfo', array('modelCreditCard' => $modelCreditCard)); ?>
+                <?php $this->renderPartial('/order/cardInfo', array('modelCreditCard' => $modelCreditCard, 'formCreditCard'=>$form)); ?>
             </fieldset>
         </div>
 
@@ -48,7 +48,8 @@
         <div class="span3 offset7">
             <div class="order-buttons">
                 <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Save', 'htmlOptions' => array('id' => 'save'))); ?>
-                <?php $this->widget('bootstrap.widgets.TbButton', array( 'type' => 'primary', 'label' => 'Order', 'url'=>'?r=customer/order')); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Order', 'url'=>'?r=customer/order','htmlOptions' => array('id' => 'order'))); ?>
+                <?php //$this->widget('bootstrap.widgets.TbButton', array('type' => 'primary', 'label' => 'Order', 'htmlOptions' => array('id' => 'order', 'action'=>'index.php?r=customer/order'))); ?>
 
 
                 <?php $this->widget('bootstrap.widgets.TbButton', array(

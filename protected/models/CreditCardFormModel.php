@@ -35,8 +35,9 @@ class CreditCardFormModel extends CFormModel
         return array (
             array('credit_card_type','required','message'=>'Please select Credit Card Type','on'=>'validateCardInfo'),
             array('credit_card_number','required','message'=>'Please enter Credit Card Number','on'=>'validateCardInfo'),
-            array('credit_card_number','match','pattern'=>'/^[0-9]{16}$/','message'=>'Incorrect CC format','on'=>'validateCardInfo'),
+            array('credit_card_number','match','pattern'=>'/^[0-9]{16}$/','message'=>'Credit Card Number is incorrect. Please re-type it again.','on'=>'validateCardInfo'),
             array('cvv2_code','required','message'=>'Please enter CVV2 Code','on'=>'validateCardInfo'),
+            array('cvv2_code','match','pattern'=>'/^[0-9]{3}$/','message'=>'CVV2 Code is incorrect. Please re-type it again.','on'=>'validateCardInfo'),
             array('expiry_date','required','message'=>'Please enter Expiry Date','on'=>'validateCardInfo')
         );
     }

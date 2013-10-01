@@ -3,31 +3,6 @@
 <?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 <?php  //Yii::app()->bootstrap->register('/css/bootstrap-responsive.css'); ?>
 <script  type="text/javascript">
-    // After validate
-    function afterValidate (form,data,hasError)
-    {
-        if (hasError)
-        {
-            // modal window with the FIRST error
-            /*
-             $.each( data, function( key, value )
-             {
-             $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html("<p>"+ value + "</p>"); });
-             return false;
-             });
-             */
-            // modal window with ALL errors
-            var errorCC = new Array;
-            var mess = new String;
-            $.each( data, function( key, value )
-            {
-                mess="<p>" + value + "</p>";
-                errorCC.push(mess);
-            });
-            $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html(errorCC); });
-        };
-    }
-
     // Form behaviour for Credit Card type
     $(document).ready(function()
     {
@@ -64,22 +39,22 @@
 */?>
 <?php $this->renderPartial('/order/errorMessage'); ?>
 
-<?php echo $formCreditCard->dropDownListRow($modelCreditCard, 'credit_card_type', array(1=>'Visa',2=>'MasterCard',3=>'American Express',4=>'Maestro'),array('labelOptions' => array('class'=>'required'),'onchange'=>'js:startDateEnable()')); ?>
-<?php echo $formCreditCard->textFieldRow($modelCreditCard, 'credit_card_number', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'16','errorOptions'=>array('class'=>'error'))); ?>
-<?php echo $formCreditCard->textFieldRow($modelCreditCard, 'cvv2_code', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'3')); ?>
+<?php echo $formCreditCard->dropDownListRow($cardInfo, 'credit_card_type', array(1=>'Visa',2=>'MasterCard',3=>'American Express',4=>'Maestro'),array('labelOptions' => array('class'=>'required'),'onchange'=>'js:startDateEnable()')); ?>
+<?php echo $formCreditCard->textFieldRow($cardInfo, 'credit_card_number', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'16','errorOptions'=>array('class'=>'error'))); ?>
+<?php echo $formCreditCard->textFieldRow($cardInfo, 'cvv2_code', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'3')); ?>
 <div class="control-group">
-    <?php echo $formCreditCard->labelEx($modelCreditCard, 'expiry_date', array('class'=>'control-label')); ?>
+    <?php echo $formCreditCard->labelEx($cardInfo, 'expiry_date', array('class'=>'control-label')); ?>
     <div class="controls">
-        <?php echo $formCreditCard->dateField($modelCreditCard, 'expiry_date'); ?>
+        <?php echo $formCreditCard->dateField($cardInfo, 'expiry_date'); ?>
     </div>
 </div>
 <div class="control-group">
-    <?php echo $formCreditCard->labelEx($modelCreditCard, 'start_date', array('class'=>'control-label')); ?>
+    <?php echo $formCreditCard->labelEx($cardInfo, 'start_date', array('class'=>'control-label')); ?>
     <div class="controls">
-        <?php echo $formCreditCard->dateField($modelCreditCard, 'start_date', array('disabled'=>'disabled')); ?>
+        <?php echo $formCreditCard->dateField($cardInfo, 'start_date', array('disabled'=>'disabled')); ?>
     </div>
 </div>
-<?php echo $formCreditCard->textFieldRow($modelCreditCard, 'issue_number', array('labelOptions'=>array('class'=>'control-label'),'disabled'=>'disabled')); ?>
+<?php echo $formCreditCard->textFieldRow($cardInfo, 'issue_number', array('labelOptions'=>array('class'=>'control-label'),'disabled'=>'disabled')); ?>
 
 <?php /*$this->endWidget(); */?>
 

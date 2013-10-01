@@ -75,13 +75,12 @@ class CustomerController extends Controller
     {
         $order = new Order;
         $orderDetails = new OrderDetails;
-	    $modelCreditCard = new CreditCardFormModel();
+	    $cardInfo = new CreditCardFormModel();
 	    $orderDetails ->id_customer = Yii::app()->user->id;
-
 
         if (isset($_POST['ajax'])&&$_POST['ajax']==='horizontalForm')
         {
-            echo CActiveForm::validate( array( $order));
+            echo CActiveForm::validate( array($order));
             Yii::app()->end();
         }
 
@@ -106,33 +105,32 @@ class CustomerController extends Controller
                 }
                 $this->redirect(Yii::app()->createUrl('customer/index'));
             }
-
-
-
-//          $this->redirect(array('customer/error','view'=>'/order/itemsEmpty'));
         }
+//          $this->redirect(array('customer/error','view'=>'/order/itemsEmpty'));
         $this->render('/order/create', array(
             'order' => $order,
             'orderDetails' => $orderDetails,
-            'modelCreditCard' => $modelCreditCard,
+            'cardInfo' => $cardInfo,
         ));
     }
 
 
     public function actionOrder()
     {
-        // validate Credit Card Info
-        $modelCreditCard = new CreditCardFormModel();
-        //$model->attributes=$_POST;
-        $modelCreditCard->scenario = 'validateCardInfo';
-//      validation with AJAX
-        if(isset($_POST['ajax']) && $_POST['ajax']==='credit-card-form')
-        {
-            //$validationResult=CActiveForm::validate($model);
-            echo CActiveForm::validate($modelCreditCard);
-            Yii::app()->end();
-        }
-
+        $order = new Order;
+        $orderDetails = new OrderDetails;
+        $orderDetails ->id_customer = Yii::app()->user->id;
+        $cardInfo = new CreditCardFormModel();
+// validate Credit Card Info
+        $cardInfo->setScenario('validateCardInfo');
+        if ( isset($_POST['CreditCardFormModel']))
+//        if(isset($_POST['ajax']) && $_POST['ajax']==='horizontalForm')
+            {
+                foreach($_POST['CreditCardFormModel'] as $name=>$value)
+                { $cardInfo->$name=$value; }
+                echo CActiveForm::validate($cardInfo);
+                Yii::app()->end();
+            }
     }
 
     public function actionAddItem()

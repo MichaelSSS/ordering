@@ -1,0 +1,47 @@
+.grid-footer {
+    width: 50%;
+    padding-top: 0.1em;
+}
+.summary {
+    display: inline;
+    float: left;
+}
+.yiiPager {
+    margin-right: -25%;
+    line-height: 100%;
+    float: right;
+}
+.yiiPager li {
+    display: inline-block;
+    margin: 0 .1em;
+    padding: .1em .4em;
+    color: rgb(0, 85, 128);
+    background-color: #fff;
+    border: 1px solid rgb(0, 85, 128);
+    -webkit-border-radius: 1em;
+    -moz-border-radius: 1em;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+.yiiPager li.hidden  {
+    padding: .1em .4em;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 1em;
+    -moz-border-radius: 1em;
+    border-radius: 1em;
+    visibility: visible;
+    color: #aaa;
+    cursor: default;
+}
+/*.yiiPager li:hover {
+    font: 700;
+    color: #fff;
+    background-color: #2F96B4;
+}
+*/
+#grid-extend {
+    float: right;
+    margin-bottom: .5em;
+}

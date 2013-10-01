@@ -33,7 +33,7 @@ class SiteDenyTest extends WebTestCase
 
 	public function testUnBlock()
 	{
-        Yii::app()->db->createCommand('UPDATE user_attempt SET blocked_until=' . time())->execute();
+        Yii::app()->db->createCommand('UPDATE user_attempt SET blocked_until=' . (time()-1))->execute();
 
 		$this->open('');
 

@@ -31,7 +31,6 @@ class CustomerController extends Controller
     public function actionIndex()
     {
         $model = new Order('search');
-//        $model->customer = Yii::app()->user->id;
         $model->customer = Yii::app()->user->id;
 
         if (isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']))
@@ -138,10 +137,12 @@ class CustomerController extends Controller
 
     public function actionAddItem()
     {
-        $item=new Item;
+        $model = new Item('search');
+        if (isset($_GET['Item']))
+            $model->attributes = $_GET['Item'];
 
         $this->render('/order/addItem',array(
-            'item'=>$item,
+            'model'=>$model,
         ));
     }
 

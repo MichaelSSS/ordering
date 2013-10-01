@@ -161,7 +161,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             ) : (( active ) ? (
 '<a rel="tooltip" title="active user"><i class="icon-remove" style="background-image: url(gridview_JSON/glyphicons-halflings-white.png)"></i></a>'
             ) : (
-'<a rel="tooltip" title="remove" data-toggle="modal" data-target="#myModal" href="?r=admin/remove&amp;id=' 
+'<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
 + id + '"><i class="icon-remove"></i></a>'
             ))
         %>

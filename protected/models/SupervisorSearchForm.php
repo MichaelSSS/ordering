@@ -5,96 +5,96 @@
  *  is the data structure for keeping
  * 
  */
-class SupervisorSearchForm extends CFormModel
-{
+//class SupervisorSearchForm extends CFormModel
+//{
     
-    public $keyField;
-	public $criteria;
-	public $keyValue;
+  //  public $keyField;
+//	public $criteria;
+//	public $keyValue;
 
-    public $keyFields = array('All Columns', 'Item Number', 'Item Name', 'Price', 'Quantity');
-    public $criterias = array('equals','not equals','starts with','contains','does not contain');
+  //  public $keyFields = array('All Columns', 'Item Number', 'Item Name', 'Price', 'Quantity');
+   // public $criterias = array('equals','not equals','starts with','contains','does not contain');
 
-    public $keyAttributes = array(
-        'All Columns'=>'*',
-        'Item Number'=>'Item Number',
-        'Item Name'=>'Item Name',
-        'Description'=>'Description',
-        'Quantity'=>'Quantity'
-    );
+    //public $keyAttributes = array(
+      //  'All Columns'=>'*',
+        //'Item Number'=>'Item Number',
+        //'Item Name'=>'Item Name',
+        //'Description'=>'Description',
+        //'Quantity'=>'Quantity'
+    //);
 
-    public $operators = array(
-                 'equals'  => " =?",
-             'not equals'  => " <>?",
-             'starts with' => " LIKE ? '%'",
-                'contains' => " LIKE '%' ? '%'",
-        'does not contain' => " NOT LIKE '%' ? '%'"
-    );
+   // public $operators = array(
+     //            'equals'  => " =?",
+       //      'not equals'  => " <>?",
+         //    'starts with' => " LIKE ? '%'",
+           //     'contains' => " LIKE '%' ? '%'",
+        //'does not contain' => " NOT LIKE '%' ? '%'"
+    //);
 
 	/**
 	 * Declares the validation rules.
 	 * The rules state that username and password are required,
 	 * and password needs to be authenticated.
 	 */
-	public function rules()
-	{
-		return array(
-            array('keyValue', 'required', 'message'=>'please, fill the field before search'),
-            array('keyValue', 'length', 'max'=>128),
-            array('keyField,criteria', 'numerical', 'message'=>'illegal filter parameters'),
-            array('keyField,criteria,keyValue','safe','on'=>'search'),
-		);
-	}
+	//public function rules()
+	//{
+	//	return array(
+          //  array('keyValue', 'required', 'message'=>'please, fill the field before search'),
+            //array('keyValue', 'length', 'max'=>128),
+          //  array('keyField,criteria', 'numerical', 'message'=>'illegal filter parameters'),
+          //  array('keyField,criteria,keyValue','safe','on'=>'search'),
+	//	);
+	//}
 
 	/**
 	 * Declares attribute labels.
 	 */
-	public function attributeLabels()
-	{
-		return array(
-		);
-	}
+//	public function attributeLabels()
+//	{
+//		return array(
+//		);
+//	}
 
 
-    public function getCriteria()
-    {
+  //  public function getCriteria()
+    //{
 
-        if( $this->keyAttributes[$this->keyFields[$this->keyField]] != '*' ){
+      //  if( $this->keyAttributes[$this->keyFields[$this->keyField]] != '*' ){
 
-            $condition = $this->keyAttributes[$this->keyFields[$this->keyField]]
-                . $this->operators[$this->criterias[$this->criteria]];
+        //    $condition = $this->keyAttributes[$this->keyFields[$this->keyField]]
+          //      . $this->operators[$this->criterias[$this->criteria]];
 
 
 
-            return array(
-                'condition' => $condition,
-                'params' => array($this->keyValue)
-            );
+            //return array(
+              //  'condition' => $condition,
+                //'params' => array($this->keyValue)
+            //);
 
-        }else{
+        //}else{
 
-            $numKeys = count($this->keyFields);
+          //  $numKeys = count($this->keyFields);
 
-            $condition = '';
+            //$condition = '';
 
-            for($i=1; $i < $numKeys-1; ++$i){
-                $condition .= '(' 
-                    . $this->keyAttributes[$this->keyFields[$i]]
-                    . $this->operators[$this->criterias[$this->criteria]]
-                    . ') OR ';
-            }
+         //   for($i=1; $i < $numKeys-1; ++$i){
+      //          $condition .= '(' 
+      //              . $this->keyAttributes[$this->keyFields[$i]]
+      //              . $this->operators[$this->criterias[$this->criteria]]
+       //             . ') OR ';
+       //     }
 
-            $condition .= '(' 
-                . $this->keyAttributes[$this->keyFields[$numKeys-1]]
-                . $this->operators[$this->criterias[$this->criteria]]
-                . ')';
+        //    $condition .= '(' 
+        //        . $this->keyAttributes[$this->keyFields[$numKeys-1]]
+        //        . $this->operators[$this->criterias[$this->criteria]]
+        //        . ')';
 
-            return array(
-                'condition' => $condition,
-                'params' => array_fill(0,$numKeys-1,$this->keyValue)
-            );
+         //   return array(
+      //          'condition' => $condition,
+       //         'params' => array_fill(0,$numKeys-1,$this->keyValue)
+     //       );
 
-        }        
-    }
+     //   }        
+   // }
 
-}
+//}

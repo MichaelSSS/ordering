@@ -25,37 +25,50 @@ class SupervisorController extends Controller
 
     public function actionIndex()
     {
-           $model = new Item;
+          // $model = new Item;
 
-        if( isset($_GET['pageSize']) && $model->validatePageSize($_GET['pageSize']) )
-            $model->currentPageSize = $_GET['pageSize'];
+           //$model->unsetAttributes();//==================================
+        //if( isset($_GET['pageSize']) && $model->validatePageSize($_GET['pageSize']) )
+          //  $model->currentPageSize = $_GET['pageSize'];
 
+//==================================================================
 
-        $fields = new SupervisorSearchForm('search');
-
-        if( isset($_GET['SupervisorSearchForm']) ){
-            $fields->attributes = $_GET['SupervisorSearchForm'];
-
-            if( $fields->validate() )
-                $model->searchCriteria = $fields->getCriteria();
-
-        }                
+        $model= new Item('search');
+        // $model->customer = Yii::app()->user->getState('user_id');
         
-        $this->render('index',array('model'=>$model, 'fields'=>$fields));
+             if (isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']))
+            $model->currentPageSize = $_GET['pageSize'];
+        if ( isset($_GET['Item'])) 
+            $model->attributes=$_GET['Item'];
+            $this->render('index',array('model'=>$model,
+                ));
+        
+      //  $fields = new SupervisorSearchForm('search');
+        
+      //  if( isset($_GET['SupervisorSearchForm']) ){
+       //     $fields->attributes = $_GET['SupervisorSearchForm'];
+
+       //     if( $fields->validate() )
+         //       $model->searchCriteria = $fields->getCriteria();
+
+       // }       
+      
+       // $this->render('index',array('model'=>$model, 'fields'=>$fields));
+    
+                //====================================================
+        
     }
+    
     
     	public function actionCreate()
 	{
 		$model=new Item;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Item']))
 		{
 			$model->attributes=$_POST['Item'];
 			if($model->save())
-			//	$this->redirect(array('view','id'=>$model->Item_Number));
+		
                             $this->redirect(array('index'));
 		}
 

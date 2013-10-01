@@ -1,5 +1,5 @@
 $(function(){
-
+    // global object with general properties
     oms = {
         gridId: 'oms-grid-view0',
         pageVar: 'User_page',
@@ -18,6 +18,10 @@ $(function(){
             }
         },
     };
+
+    // models
+
+    // model representing all nonstatic data on the page, except row
     oms.fields = new (Backbone.Model.extend({
         nextPageSize: 25,
         pageSizes: {25: 10, 10: 25},
@@ -72,6 +76,7 @@ $(function(){
         setButtons: function() {
             // calculating total pages (userCount is set after reseting collection)
             var newTotalPages = Math.ceil(this.get("userCount")/this.pageSizes[this.nextPageSize]);
+            newTotalPages = newTotalPages || 1;
             // setting current page (because of changed page size current page may become more than max page)
             this.set({
                 "totalPages": newTotalPages,
@@ -86,8 +91,10 @@ $(function(){
         }
     }));
 
+    // model representing a row
     var User = Backbone.Model;
 
+    // collection of rows
     var Users = Backbone.Collection.extend({
 
         model: User,
@@ -102,6 +109,7 @@ $(function(){
                 });
     
                 this.models.length--;
+                this.length--;
 
                 userTable.addAll();
                 $('#'+oms.gridId).removeClass('grid-view-loading');
@@ -113,6 +121,9 @@ $(function(){
 
     oms.users = new Users;
 
+    // views
+
+    // row view
     var UserRow = Backbone.View.extend({
 
         tagName: "tr",
@@ -149,77 +160,128 @@ $(function(){
         }
     });
 
+    // table view
     var UserTable = Backbone.View.extend({
         
         el: $("#table-user"),
 
+        showDeletedClick: function() {
+            var showDeleted = oms.fields.get("showDeleted");
+            showDeleted = showDeleted==1 ? 0 : 1
+            oms.fields.set({
+                showDeleted: showDeleted
+            });
+            oms.users.url = $.param.querystring(oms.users.url, oms.showDeletedVar + "=" + showDeleted);
+            oms.users.fetch(oms.fetchOptions);
+            return false;
+        },
+
+        searchFormSubmit: function(event) {
+            if ( $("input#AdminSearchForm_keyValue",this).val() ) {
+                var data = $(this).serialize();
+                data += '&' + oms.pageVar + '=1';
+                oms.fields.set({
+                    currentPage: 1
+                });
+                oms.users.url = $.param.querystring(oms.users.url,data);
+                oms.users.fetch(oms.fetchOptions);
+            }
+            return false;
+        },
+
+        searchFormReset: function(event) {
+            var url = oms.users.url,
+                params = $.deparam.querystring(url);
+
+            document.getElementById('btn-search').disabled=true;
+
+            delete params['AdminSearchForm'];
+            params[oms.pageVar] = 1;
+            oms.fields.set({
+                currentPage: 1
+            });
+
+            url = (url.split('?',1))[0];
+            oms.users.url = $.param.querystring(url,params);
+            oms.users.fetch(oms.fetchOptions);                
+        },
+
+        pageSizeClick: function(event) {
+            // changing page size may cause changing of current page number
+            var pageNumberParam = oms.pageVar + "=" + oms.fields.get("currentPage"),
+                pageSizeParam = "pageSize=" + oms.fields.nextPageSize;
+            // request string to server
+            oms.users.url = $.param.querystring(oms.users.url, pageNumberParam+"&"+pageSizeParam);
+            // updating model
+            oms.fields.nextPageSize = oms.fields.pageSizes[oms.fields.nextPageSize];
+            
+            oms.users.fetch(oms.fetchOptions);                
+            return false;
+        },
+
+        pageButtonClick: function(event) {
+            if ( !$(this).hasClass('hidden') ) {
+                var currentPage = oms.fields.get("buttons")[$(this).text()].getPageNumber();
+                oms.fields.set({
+                    currentPage: currentPage
+                });
+
+                oms.users.url = $.param.querystring(oms.users.url, oms.pageVar + "=" + currentPage)
+                oms.users.fetch(oms.fetchOptions);
+            }
+            return false;
+        },
+
+        sortLinkClick: function(event){
+            if ( event.ctrlKey ) {
+                var sortAdd = oms.fields.attributeLabels[$(this).text()],
+                    sortNow = $.deparam.querystring(oms.users.url)[oms.sortVar];
+                if ( sortNow ) {
+                    // if we already sorted by some column
+                    var sortAttr = sortNow.split('-');
+                    var existingPos = sortAttr.indexOf(sortAdd);
+                    if ( 0 <= existingPos ) {
+                        // already sorted by given column asc
+                        sortAdd += '.desc';
+                        sortAttr.splice(existingPos,1);
+                        sortAttr.unshift(sortAdd);
+                        sortNow = sortAttr.join('-');
+                    } else {
+                        existingPos = sortAttr.indexOf(sortAdd+'.desc');
+                        if ( 0 <= existingPos ) {
+                            // already sorted desc
+                            sortAttr.splice(existingPos,1);
+                            sortAttr.unshift(sortAdd);
+                            sortNow = sortAttr.join('-');
+                        } else {
+                            // have not sorted by a given column
+                            sortNow = sortAdd + '-' + sortNow;
+                        }
+                    }    
+                } else {
+                    //have not sort by either column
+                    sortNow = sortAdd;
+                }
+                sortNow = oms.sortVar + '=' + sortNow;
+
+                oms.users.url = $.param.querystring(oms.users.url, sortNow);
+                this.href = oms.users.url;
+                oms.users.fetch(oms.fetchOptions);
+            }
+            return false;
+        },
+
         initialize: function() { 
 
-            $('#toggle-deleted').on('click', function() {
-                var showDeleted = oms.fields.get("showDeleted");
-                showDeleted = showDeleted==1 ? 0 : 1
-                oms.fields.set({
-                    showDeleted: showDeleted
-                });
-                oms.users.url = $.param.querystring(oms.users.url, oms.showDeletedVar + "=" + showDeleted);
-                oms.users.fetch(oms.fetchOptions);
-                return false;
-            });
+            $('#toggle-deleted').on('click', this.showDeletedClick);
+            $('#search-form').on('submit', this.searchFormSubmit);
+            $('#search-form').on('reset', this.searchFormReset);
+            $("#page-size").on('click', this.pageSizeClick);
+            $('ul.yiiPager li').on("click", this.pageButtonClick);
+            $(oms.sortSelector).on('click', this.sortLinkClick);
 
-            $('#search-form').on('submit', function(event) {
-                if ( $("input#AdminSearchForm_keyValue",this).val() ) {
-                    var data = $(this).serialize();
-                    data += '&' + oms.pageVar + '=1';                
-                    oms.users.url = $.param.querystring(oms.users.url,data);
-                    oms.users.fetch(oms.fetchOptions);
-                }
-                return false;
-            });
-            $('#search-form').on('reset', function(event) {
-                var url = oms.users.url,
-                    params = $.deparam.querystring(url);
-
-                document.getElementById('btn-search').disabled=true;
-
-                delete params['AdminSearchForm'];
-                url = (url.split('?',1))[0];
-                oms.users.url = $.param.querystring(url,params);
-                oms.users.fetch(oms.fetchOptions);                
-            });
-
-            $("#page-size").on('click',function(event) {
-                var pageNumberParam = oms.pageVar + "=" + oms.fields.get("currentPage"),
-                    pageSizeParam = "pageSize=" + oms.fields.nextPageSize;
-                // request string to server
-                oms.users.url = $.param.querystring(oms.users.url, pageNumberParam+"&"+pageSizeParam);
-                // updating model
-                oms.fields.nextPageSize = oms.fields.pageSizes[oms.fields.nextPageSize];
-                // setting requested page number as current (it may become more than max pages, but it will be corrected before rendering pager)
-                /*oms.fields.set({
-                    currentPage: $.deparam.querystring(oms.users.url)[oms.pageVar]
-                });*/
-                // updating anchor link, though it is not necessary, because it is not used in creating request url
-                this.href = $.param.querystring(oms.users.url, "pageSize="+oms.fields.nextPageSize);
-                
-                oms.users.fetch(oms.fetchOptions);                
-                return false;
-            });
-
-            $('ul.yiiPager li').on("click",function(event) {
-                if ( !$(this).hasClass('hidden') ) {
-                    var currentPage = oms.fields.get("buttons")[$(this).text()].getPageNumber();
-                    oms.fields.set({
-                        currentPage: currentPage
-                    });
-    
-                    oms.users.url = $.param.querystring(oms.users.url, oms.pageVar + "=" + currentPage)
-                    oms.users.fetch(oms.fetchOptions);
-                }
-                return false;
-            });
-
+            $('#' + oms.gridId + ' th:first a').addClass('asc');
             $(oms.sortSelector).css('cursor','default');
-
             $(document).on('keydown',function(e) {
                 if ( e.ctrlKey ) {
                     $(oms.sortSelector).css('cursor','pointer');
@@ -231,61 +293,13 @@ $(function(){
                 }
             });
 
-            $('#' + oms.gridId + ' th:first a').addClass('asc');
-            $(oms.sortSelector).on('click',function(event){
-                if ( event.ctrlKey ) {
-                    var sortAdd = oms.fields.attributeLabels[$(this).text()],
-                        sortNow = $.deparam.querystring(oms.users.url)[oms.sortVar],
-                        toggleClassDesc = false;                        
-                    if ( sortNow ) {
-                        // if we already sorted by some column
-                        var sortAttr = sortNow.split('-');
-                        var existingPos = sortAttr.indexOf(sortAdd);
-                        if ( 0 <= existingPos ) {
-                            // already sorted by given column asc
-                            toggleClassDesc = true;
-                            sortAdd += '.desc';
-                            sortAttr.splice(existingPos,1);
-                            sortAttr.unshift(sortAdd);
-                            sortNow = sortAttr.join('-');
-                        } else {
-                            existingPos = sortAttr.indexOf(sortAdd+'.desc');
-                            if ( 0 <= existingPos ) {
-                                // already sorted desc
-                                toggleClassDesc = true;
-                                sortAttr.splice(existingPos,1);
-                                sortAttr.unshift(sortAdd);
-                                sortNow = sortAttr.join('-');
-                            } else {
-                                // have not sorted by a given column
-                                sortNow = sortAdd + '-' + sortNow;
-                            }
-                        }    
-                    } else {
-                        //have not sort by either column
-                        sortNow = sortAdd;
-                    }
-                    sortNow = oms.sortVar + '=' + sortNow;
-
-                    oms.users.url = $.param.querystring(oms.users.url, sortNow);
-                    this.href = oms.users.url;
-                    oms.users.fetch(oms.fetchOptions);
-/*                    $(this).toggleClass('asc');
-                    if(toggleClassDesc) {
-                        $(this).toggleClass('desc');
-                    }
-*/
-                }
-                return false;
-            });
-
         },
 
         render: function() {
-            pager.render();
-            this.renderHeader();
+            oms.fields.setButtons();            
             this.renderTotal();
-            this.renderSummary();
+            this.renderHeader();
+            this.renderFooter();
             $("#page-size").text("show "+oms.fields.nextPageSize+" items");
             $('#toggle-deleted').text(oms.fields.get("showDeleted")==0 ? "show deleted" : "hide deleted");
         },
@@ -313,8 +327,14 @@ $(function(){
         renderTotal: function() {
             $("#search-result-count").text(oms.fields.get("userCount"));
         },
-        renderSummary: function() {
-            $(".summary").text("page #"+oms.fields.get("currentPage")+" of "+oms.fields.get("totalPages"));
+        renderFooter: function() {
+            if ( oms.users.length > 0 ) {
+                $(".summary").text("page #"+oms.fields.get("currentPage")+" of "+oms.fields.get("totalPages")).show();
+                pager.render();
+            } else {
+                $(".summary").hide();
+                pager.hide();
+            }
         }, 
         addOne: function(useri, i) {
             var row = new UserRow({model: useri, id: i});
@@ -323,27 +343,40 @@ $(function(){
     
         addAll: function() {
             this.$("tr").filter(function(index){return index > 0}).remove();
-            oms.users.each(this.addOne, this);
+            if ( oms.users.length > 0 ) {
+                oms.users.each(this.addOne, this);
+            } else {
+                this.addEmpty();                
+            }
             this.render();
+        },
+        addEmpty: function() {
+            this.$el.append('<tr><td class="empty" colspan="0"><span class="empty">No results found.</span></td></tr>');
         }
     });
 
+    // pager view
     var Pager = Backbone.View.extend({
         el: $('ul.yiiPager'),
 
         model: oms.fields,
 
         render: function(){
-            this.model.setButtons();
             _.each(this.model.get("buttons"),this.renderButton,this);
+            this.$el.show();
         },
 
         renderButton: function(button,key,list) {
             this.$("."+button.cssClass).toggleClass('hidden',!button.enabled);
+        },
+
+        hide: function(){
+            this.$el.hide();
         }
     });
 
     var pager = new Pager;
 
+    // instansiate table
     var userTable = new UserTable;
 });

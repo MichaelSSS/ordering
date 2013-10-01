@@ -36,18 +36,38 @@
 
 <fieldset>
     <legend>Search <span>by</span></legend>
-    <div class='span9'><p>Field Filter</p></div>
+  
     <div class='control-group'>
         <div class='controls'>
             <div class='span3'>
-                <?php echo $form->dropDownlist($fields,'keyField',$fields->keyFields); ?>
+              
+  <?php echo $form->dropDownlist($model, 'searchCriteria', $model->searchCriterias,
+                array('class' => 'span3',
+                    'options' => array(
+                        array_search('id_item', $model->searchCriterias) => array('selected' => true
+                        ))
+                ));
+            ?>
+
+                
             </div>
             <div class='span3'>
-                <?php echo $form->dropDownlist($fields,'criteria',$fields->criterias); ?>
+               
+            <?php echo $form->textField($model, 'searchValue', array('class' => 'span3')); ?>
+        
             </div>
-            <div class='span3'>
-                <?php echo $form->textField($fields, 'keyValue', array('class' => 'span3', 'placeholder' => 'Search')); ?>
-                <input class='btn btn-info pull-right' type='submit' value='Search'>
+            
+            <div class="span1 pull-right">
+            <?php $this->widget('bootstrap.widgets.TbButton', array(
+                'label' => 'Apply',
+                'buttonType' => 'submit',
+                'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                'size' => 'null', // null, 'large', 'small' or 'mini'
+            ));?>
+            
+           
+               
+                
             </div>
         </div>
     </div>
@@ -64,7 +84,8 @@
     'dataProvider'   => $model->search(),
     'ajaxUpdate'     => 'search-result-count',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
-    'filterSelector' => '#search-fields',
+    //'filterSelector' => '#search-fields',
+    'filter'=>$model,
     'template'       => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
     'pager'          => array(
         'class'          => 'OmsPager',
@@ -85,7 +106,7 @@
         array('name' => 'id_item', 'header'     => 'Id Item'),
         array('name' => 'name', 'header'        => 'Name'),
         array('name' => 'description', 'header' => 'Description'),
-        array('name' => 'price', 'header'       => 'Price'),
+        array('name' => 'price', 'header'       => 'Price','value'=>'$data->price." $"'),
         array('name' => 'quantity', 'header'    => 'Quantity'),
         array(
             'header'      => 'Update',

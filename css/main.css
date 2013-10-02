@@ -1,44 +1,113 @@
+body {
+    box-sizing: border-box;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+}
+fieldset {
+    border: 1px solid #ddd;
+}
 legend {
-	margin: 0 .5em; 
-    padding: 0 .5em; 
+    display: inline-block;
+    width: auto;
+    margin: 0 .5em;
+    padding: 0 .5em;
+    border-bottom: none;
 }
 ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
-
-.wrap {
-	border: 1px solid #ddd;
-} 
-.head {
-	padding: 8px 4px 0;
-}
-.head li {
-	display: inline-block;
-}
-.ui-datepicker-trigger{
-    cursor: pointer;
-    margin-left: 10px;
-}
-.required span {
-    display: none;
-}
-.row fieldset {
-    border: 1px solid #ddd;
-    padding: 0 .2em;
-}
-.row legend {
-    width: auto;
-    border-bottom: none;
-    margin: 0 1em;
-    padding: 0 .5em;
-}
-legend, label, .btn {
+legend, label, button {
     text-transform: capitalize;
 }
 legend span {
     text-transform: lowercase;
+}
+.required span {
+    display: none;
+}
+
+/* login-form begin */
+
+.wrp {
+    margin-top: 8em;
+}
+.bttn {
+    margin-left: .8em;
+}
+#login-form .control-label {
+    margin-left: 3em;
+    width: 7em;
+    text-align: left;
+    display: inline-block;
+}
+
+/* login-form end */
+
+/*  error begin */
+.wrp1 {
+    margin-top: 2em;
+}
+.mouse {
+    position: relative;
+
+    -webkit-moz-border-radius: 50%;
+    -moz-moz-border-radius: 50%;
+    -ms-moz-border-radius: 50%;
+    -o-moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.mouse:after {
+
+    height: 15em;
+    width: 15em;
+    background: #000;
+    position: absolute;
+    content: '';
+    right: -5em;
+    top: -1.4em;
+    opacity: .8;
+    z-index: -1;
+    
+    -webkit-moz-border-radius: 50%;
+    -moz-moz-border-radius: 50%;
+    -ms-moz-border-radius: 50%;
+    -o-moz-border-radius: 50%;
+    border-radius: 50%;   
+   
+}
+.mouse:before {
+    height: 15em;
+    width: 15em;
+    background: #000;
+    position: absolute;
+    content: '';
+    left: -5em;
+    top: -1.4em;
+    opacity: .8;
+    z-index: -1;
+    
+    -webkit-moz-border-radius: 50%;
+    -moz-moz-border-radius: 50%;
+    -ms-moz-border-radius: 50%;
+    -o-moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+/* error end */
+
+.head {
+    padding: 8px 4px 0;
+}
+.head li {
+    display: inline-block;
+}
+.ui-datepicker-trigger{
+    cursor: pointer;
+    margin-left: 10px;
 }
 .controls .span3  label {
     display: none;
@@ -46,10 +115,7 @@ legend span {
 .span3 button.btn, input[type="submit"].btn, input[type="reset"].btn  {
     margin: .7em 0 .7em 3em;
 }
-.form-horizontal .control-label {
-    text-align: left;
-    margin-left: 2.2em;
-}
+
 #horizontalForm .radio label {
     margin-left: 3em;
     

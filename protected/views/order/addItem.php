@@ -7,40 +7,38 @@
     <legend>Search <span>by</span></legend>
 
 
-                <?php $searchForm = $this->beginWidget('CActiveForm', array(
-                    'id' => 'search-form',
-                    'method' => 'GET',
-                ));
-                ?>
+    <?php $searchForm = $this->beginWidget('CActiveForm', array(
+        'id' => 'search-form',
+        'method' => 'GET',
+    ));
+    ?>
 
 
-                        <div class="span2"><p>Search for item by:</p></div>
-                        <div class="span3">
-                            <?php echo $searchForm->dropDownlist($model, 'searchCriteria', $model->searchCriterias, array(
-                                'class' => 'span3',
-                                'options' => array(
-                                    array_search('Item Name', $model->searchCriterias) => array('selected' => true)
-                                ),
-                            ));
-                            ?>
-                        </div>
-                        <div class="span3">
-                            <?php echo $searchForm->textField($model, 'searchValue', array('class' => 'span3')); ?>
-                        </div>
+    <div class="span2"><p>Search for item by:</p></div>
+    <div class="span3">
+        <?php echo $searchForm->dropDownlist($model, 'searchCriteria', $model->searchCriterias, array(
+            'class' => 'span3',
+            'options' => array(
+                array_search('Item Name', $model->searchCriterias) => array('selected' => true)
+            ),
+        ));
+        ?>
+    </div>
+    <div class="span3">
+        <?php echo $searchForm->textField($model, 'searchValue', array('class' => 'span3')); ?>
+    </div>
 
-                        <div class="span1 pull-right">
-                            <?php $this->widget('bootstrap.widgets.TbButton', array(
-                                'label' => 'Apply',
-                                'buttonType' => 'submit',
-                                'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                                'size' => 'null', // null, 'large', 'small' or 'mini'
-                            ));?>
-                            <?php echo CHtml::errorSummary($model) ?>
-                        </div>
+    <div class="span1 pull-right">
+        <?php $this->widget('bootstrap.widgets.TbButton', array(
+            'label' => 'Apply',
+            'buttonType' => 'submit',
+            'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+            'size' => 'null', // null, 'large', 'small' or 'mini'
+        ));?>
+        <?php echo CHtml::errorSummary($model) ?>
+    </div>
 
-                <?php $this->endWidget(); ?>
-
-
+    <?php $this->endWidget(); ?>
 
 </fieldset>
 <?

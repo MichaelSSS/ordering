@@ -74,9 +74,17 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $order = new Order;
-        $orderDetails = new OrderDetails;
+        $currentItems = Yii::app()->session->get("OrderItems");
+        if(!isset($currentItems))
+            $currentItems = array();
+
+          
+//        var_dump($currentItems);exit;
+//        $currentItems[] = $_POST['OrderDetails'];
+//        Yii::app()->session->add("OrderItems", $currentItems);
+        $orderDetails = new CArrayDataProvider($currentItems);
 	    $cardInfo = new CreditCardFormModel();
-	    $orderDetails ->id_customer = Yii::app()->user->id;
+//	    $orderDetails ->id_customer = Yii::app()->user->id;
 
         if (isset($_POST['ajax'])&&$_POST['ajax']==='horizontalForm')
         {
@@ -167,13 +175,25 @@ class CustomerController extends Controller
     
         public function actionSaveItem(){
 
+                $order = new Order;
+                $cardInfo = new CreditCardFormModel();
                $model = new OrderDetails();
+
+
+
                if(isset($_POST['OrderDetails'])){
-                   $model->attributes = $_POST['OrderDetails'];
+
+                   $currentItems = Yii::app()->session->get("OrderItems");
+                   $currentItems[] = $_POST['OrderDetails'];
+                   Yii::app()->session->add("OrderItems", $currentItems);
+                   /*$model->attributes = $_POST['OrderDetails'];
                    if($model->save()){
                         $this->redirect(Yii::app()->createUrl('customer/create'));
-                   }
+                   }*/
                }
+            $orderDetails = new CArrayDataProvider($currentItems);
+            $this->redirect(Yii::app()->createUrl('customer/create'));
+
               
     }
 }

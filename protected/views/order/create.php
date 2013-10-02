@@ -13,7 +13,7 @@
             )
          )
     ); ?>
-   
+
     <div class="row">
         <div class="span10">This page is appointed for selecting and buying products</div>
     </div>

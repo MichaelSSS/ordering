@@ -75,16 +75,14 @@ class CustomerController extends Controller
     {
         $order = new Order;
         $orderDetails = new OrderDetails;
-	$modelCreditCard = new CreditCardFormModel();
-	$orderDetails ->id_customer = Yii::app()->user->id;
-
+	    $cardInfo = new CreditCardFormModel();
+	    $orderDetails ->id_customer = Yii::app()->user->id;
 
         if (isset($_POST['ajax'])&&$_POST['ajax']==='horizontalForm')
         {
-            echo CActiveForm::validate( array( $order));
+            echo CActiveForm::validate( array($order));
             Yii::app()->end();
         }
-
 
         if (isset($_POST['Order'])) {
 
@@ -107,22 +105,35 @@ class CustomerController extends Controller
                 }
                 $this->redirect(Yii::app()->createUrl('customer/index'));
             }
-
-
-
-//          $this->redirect(array('customer/error','view'=>'/order/itemsEmpty'));
         }
+//          $this->redirect(array('customer/error','view'=>'/order/itemsEmpty'));
         $this->render('/order/create', array(
             'order' => $order,
             'orderDetails' => $orderDetails,
-            'modelCreditCard' => $modelCreditCard,
+            'cardInfo' => $cardInfo,
         ));
     }
 
 
     public function actionOrder()
     {
-
+        $order = new Order;
+        $orderDetails = new OrderDetails;
+        $orderDetails ->id_customer = Yii::app()->user->id;
+        $cardInfo = new CreditCardFormModel();
+// validate Credit Card Info
+        if ( isset($_POST['CreditCardFormModel']))
+//        if(isset($_POST['ajax']) && $_POST['ajax']==='horizontalForm')
+            {
+                foreach($_POST['CreditCardFormModel'] as $name=>$value)
+                { $cardInfo->$name=$value; }
+                if ($cardInfo->credit_card_type == "4")
+                { $cardInfo->setScenario('validateMaestroCardInfo'); }
+                else
+                { $cardInfo->setScenario('validateCardInfo'); }
+                echo CActiveForm::validate($cardInfo);
+                Yii::app()->end();
+            }
     }
 
     public function actionAddItem()

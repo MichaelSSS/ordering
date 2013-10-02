@@ -94,7 +94,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
 
             $('.info').width($('header').width())

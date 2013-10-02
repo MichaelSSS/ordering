@@ -39,7 +39,7 @@ class OrderDetails extends CActiveRecord
 //			array('price', 'length', 'max'=>6),
 			// The following rule is used by search().
 //			 @todo Please remove those attributes that should not be searched.
-			array('id_order, id_item, quantity, price, id_dimension', 'safe'),
+			array('id_order, id_item, id_customer, quantity, price, id_dimension', 'safe'),
 		);
 	}
 

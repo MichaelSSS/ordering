@@ -128,15 +128,41 @@ class CustomerController extends Controller
     public function actionAddItem()
     {
         $model = new Item('search');
+        $orderDetails = new OrderDetails; 
         if (isset($_GET['Item']))
             $model->attributes = $_GET['Item'];
 
         $this->render('/order/addItem',array(
             'model'=>$model,
+            'orderDetails'=>$orderDetails
         ));
     }
 
     public function actionError($view){
         $this->render($view);
+    }
+    
+    public function actionAdd(){
+
+               $item=Item::model()->findByPk($_GET['item_id']);
+               
+                // Получаем автора записи. Здесь будет выполнен реляционный запрос.
+                $item_name=$item->name;
+                $item_price=$item->price;
+                echo '{"item_name":"'.$item_name.'",
+                    "item_price":"'.$item_price.'"}';
+
+    }
+    
+        public function actionSaveItem(){
+
+               $model = new OrderDetails();
+               if(isset($_POST['OrderDetails'])){
+                   $model->attributes = $_POST['OrderDetails'];
+                   if($model->save()){
+                        $this->redirect(Yii::app()->createUrl('customer/create'));
+                   }
+               }
+              
     }
 }

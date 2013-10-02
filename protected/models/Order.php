@@ -72,7 +72,7 @@ class Order extends CActiveRecord
             array('order_name', 'length', 'max' => 128),
             array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=', 'message' => 'Please select items and add them to the order', 'except' => 'remove'),
             array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters'),
-            array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank'),
+            array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank' ,  'except'=>'update'),
             array(' assignee, customer', 'numerical', 'integerOnly' => true),
             array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy', 'message' => 'Illegal Date Format', 'except' => 'remove'),
             array('preferable_date', 'checkDate', 'except' => 'remove'),

@@ -84,13 +84,21 @@ class OrderDetails extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($id)
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
         $criteria->compare('id_customer', Yii::app()->user->id);
-        $criteria->compare('id_order',0);
+        if(isset($id))
+        {
+            $criteria->compare('id_order', $id);
+        }
+        else
+        {
+            $criteria->compare('id_order', 0);
+        }
+
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -36,7 +36,7 @@
             <?php $this->renderPartial('/order/orderInfo', array('order' => $order, 'form'=>$form)); ?>
         </div>
         <div class="span5">
-            <fieldset>
+            <fieldset id = "cardInfo">
                 <legend>Card Info</legend>
                 <?php $this->renderPartial('/order/cardInfo', array('cardInfo' => $cardInfo, 'formCreditCard'=>$form)); ?>
             </fieldset>
@@ -63,8 +63,6 @@
                                                                                     //'error'=>'js:function(xhr,status,error){alert(error)}'
                                                                         ),)
                 )); ?>
-                <?php //$this->widget('bootstrap.widgets.TbButton', array('type' => 'primary', 'label' => 'Order', 'htmlOptions' => array('name' => 'order', 'submit'=>array('?r=customer/order','id'=>'order')))); ?>
-
 
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                     'label' => 'Cancel',
@@ -91,7 +89,7 @@
         $("#Order_preferable_date").datepicker({
             showOn: "button",
             buttonImage: "/images/Calendar.png",
-            buttonImageOnly: true,
+            buttonImageOnly: true
         });
         $('#Order_preferable_date').tooltip({
             trigger : 'hover'

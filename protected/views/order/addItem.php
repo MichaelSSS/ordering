@@ -181,7 +181,7 @@ $itemForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         echo $itemForm->textFieldRow($orderDetails, 'quantity', array('hint'=>'')); ?>
                     
                         <?php echo $itemForm->hiddenField($orderDetails, 'id_item', array('type'=>'hidden')); ?>
-                        <?php echo $itemForm->hiddenField($orderDetails, 'id_order', array('value'=>'4')); ?>
+
                        <?php echo $itemForm->hiddenField($orderDetails, 'id_customer', array('value'=>Yii::app()->user->id)); ?>
                                        
                     </div>

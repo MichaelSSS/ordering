@@ -4,18 +4,18 @@
 <meta charset='utf-8' />
 
 <?php Yii::app()->bootstrap->register(); ?>
-<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'main.css'); ?>
-<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'pager.css'); ?>
-
-    <?php
-    //    $cs = Yii::app()->getClientScript();
-    //    $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui-1.10.2.js');
-    //    $cs->registerCssFile(Yii::app()->baseUrl.'/css/yourcss.css');
-    Yii::app()->clientScript->registerCoreScript('jquery.ui');
-    Yii::app()->clientScript->registerCssFile(
-        Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
-    );
-    ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/main.css'); ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/pager.css'); ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/fontAwesome.css'); ?>
+<?php
+//    $cs = Yii::app()->getClientScript();
+//    $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui-1.10.2.js');
+//    $cs->registerCssFile(Yii::app()->baseUrl.'/css/yourcss.css');
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
+Yii::app()->clientScript->registerCssFile(
+    Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
+);
+?>
 
 
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -51,7 +51,7 @@
                                 array('label'=>'Logged user:  ' . Yii::app()->user->name),
                 				array(
                                     'linkOptions'=>array(
-                                        'class'=>TbHtml::ICON_INFO_SIGN.' user_info ',
+                                        'class'=>'icon-info-sign icon-large'.' user_info ',
 
                                     ),
                                 ),

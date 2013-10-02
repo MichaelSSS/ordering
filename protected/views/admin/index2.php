@@ -152,7 +152,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <td> <%= region %> </td>
     <td class="button-column">
         <a title="edit" rel="tooltip" href= <%= '"?r=admin/edit&amp;id=' + id + '"' %> >
-            <i class="icon-pencil">
+            <i class="icon-edit icon-large">
     </i></a></td>
     <td class="remove" >
         <%= 
@@ -162,12 +162,12 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 '<a rel="tooltip" title="active user"><i class="icon-remove" style="background-image: url(gridview_JSON/glyphicons-halflings-white.png)"></i></a>'
             ) : (
 '<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
-+ id + '"><i class="icon-remove"></i></a>'
++ id + '"><i class="icon-remove icon-large"></i></a>'
             ))
         %>
     </td>
     <td class="button-column">
         <a title="duplicate" rel="tooltip" href= <%= '"?r=admin/duplicate&amp;id='+id+'"' %> >
-            <i class="icon-tags">
+            <i class="icon-copy icon-large">
     </i></a></td>
 </script>

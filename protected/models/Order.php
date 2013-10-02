@@ -93,6 +93,8 @@ class Order extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'assignees' => array(self::BELONGS_TO, 'User', 'assignee'),
+            'userNameOrder' => array(self::BELONGS_TO, 'User', 'customer'),
+            'customerType' => array(self::BELONGS_TO, 'Customer', 'customer'),
 //            'savedItems' => array(self::HAS_MANY, 'OrderItem', 'order_id'),
             'orderedItems' => array(self::HAS_MANY, 'OrderDetails', 'id_order'),
         );
@@ -168,7 +170,10 @@ class Order extends CActiveRecord
             ),
         ));
     }
-
+    public function getPricePerLine($price, $quantity)
+    {
+        return $price*$quantity;
+    }
     public function getMerchandisers()
     {
         $criteria = new CDbCriteria;

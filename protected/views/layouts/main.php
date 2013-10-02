@@ -72,7 +72,7 @@
                         <div class="info-head">User info:</div>
                         <div class="info_body">
 
-                            <?php UserInfo::info()?>
+                            <?php $this->widget('application.widgets.UserInfo')?>
                         </div>
                         <div class="info_footer"></div>
                     </div>
@@ -94,7 +94,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
 
             $('.info').width($('header').width())

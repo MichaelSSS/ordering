@@ -86,7 +86,7 @@ return array(
                     // внизу страницы)
                     'class'=>'CProfileLogRoute',
                     'levels'=>'profile',
-                    'enabled'=>false,
+                    'enabled'=>true,
                 ),
 
                 array(

@@ -39,7 +39,7 @@ class OrderDetails extends CActiveRecord
 //			array('price', 'length', 'max'=>6),
 			// The following rule is used by search().
 //			 @todo Please remove those attributes that should not be searched.
-			array('id_order, id_item, quantity, price, id_dimension', 'safe'),
+			array('id_order, id_item, id_customer, quantity, price, id_dimension', 'safe'),
 		);
 	}
 
@@ -105,7 +105,9 @@ class OrderDetails extends CActiveRecord
 		));
 	}
 
-    public function getPricePerLine(){
+
+
+    public  function getPricePerLine(){
         self::$totalItemsQuantity +=(int)$this->quantity * (int)$this->dimensionId->count_of_items;
         self::$totalPrice +=$this->itemOredered->price * $this->quantity * $this->dimensionId->count_of_items;
         return $this->itemOredered->price * $this->quantity * $this->dimensionId->count_of_items;
@@ -137,4 +139,16 @@ class OrderDetails extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function searchItem($orderId)
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria=new CDbCriteria;
+        $criteria->addCondition('id_order = ' . (int)$orderId);
+
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+    }
 }

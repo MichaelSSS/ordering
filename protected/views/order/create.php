@@ -11,16 +11,10 @@
             'validateOnSubmit'=>true,
             'hideErrorMessage'=>true,
             'afterValidate'=>'js:afterValidate',
-       )
-    )
-    );
-    ?>
-    <?php
-    Yii::app()->clientScript->registerCoreScript('jquery.ui');
-    Yii::app()->clientScript->registerCssFile(
-        Yii::app()->clientScript->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css'
-    );
-    ?>
+            )
+         )
+    ); ?>
+
     <div class="row">
         <div class="span10">This page is appointed for selecting and buying products</div>
     </div>
@@ -28,18 +22,18 @@
         <div class="span10">
             <fieldset>
                 <legend>Items selection</legend>
-                <?php $this->renderPartial('/order/orderItems',array('orderDetails' => $orderDetails, 'form'=>$form)) ?>
+                <?php $this->renderPartial('/order/orderItems', array('orderDetails' => $orderDetails, 'form' => $form)) ?>
             </fieldset>
         </div>
     </div>
     <div class="row">
         <div class="span5">
-            <?php $this->renderPartial('/order/orderInfo', array('order' => $order, 'form'=>$form)); ?>
+            <?php $this->renderPartial('/order/orderInfo', array('order' => $order, 'form' => $form)); ?>
         </div>
         <div class="span5">
-            <fieldset>
+            <fieldset id = "cardInfo">
                 <legend>Card Info</legend>
-                <?php $this->renderPartial('/order/cardInfo', array('cardInfo' => $cardInfo, 'formCreditCard'=>$form)); ?>
+                <?php $this->renderPartial('/order/cardInfo', array('cardInfo' => $cardInfo, 'formCreditCard' => $form)); ?>
             </fieldset>
         </div>
 
@@ -54,24 +48,25 @@
                         $target = $this->createUrl('customer/save');
                 ?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'link', 'type' => 'primary','url' => $target, 'label' => 'Save', 'htmlOptions' => array('name' => 'save','submit'=>'?r=customer/save'))); ?>
-                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'ajaxSubmitButton',
-                                                                        'type' => 'primary',
-                                                                        'label' => 'Order',
-                                                                        'url' => '?r=customer/order',
-                                                                        'htmlOptions' => array(
-                                                                            'name' => 'order',
-                                                                            'ajax' => array(
-                                                                                    'type'=>'POST',
-                                                                                    'async'=>true,
-                                                                                    'dataType' => 'json',
-                                                                                    'url'=>'?r=customer/order',
-                                                                                    'data' => 'js:$("#orderForm").serialize()',
-                                                                                    'success'=>'js:afterValidateCC',
-                                                                                    //'error'=>'js:function(xhr,status,error){alert(error)}'
-                                                                        ),)
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'buttonType' => 'ajaxSubmitButton',
+                    'type' => 'primary',
+                    'label' => 'Order',
+                    'url' => '?r=customer/order',
+                    'htmlOptions' => array(
+                        'name' => 'order',
+                        'ajax' => array(
+                            'type'=>'POST',
+                            'async'=>true,
+                            'dataType' => 'json',
+                            'url'=>'?r=customer/order',
+                            'data' => 'js:$("#horizontalForm").serialize()',
+                            'success'=>'js:afterValidateCC',
+                            //'error'=>'js:function(xhr,status,error){alert(error)}'
+                        ),
+                    )
                 )); ?>
-                <?php //$this->widget('bootstrap.widgets.TbButton', array('type' => 'primary', 'label' => 'Order', 'htmlOptions' => array('name' => 'order', 'submit'=>array('?r=customer/order','id'=>'order')))); ?>
-
+              
 
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                     'label' => 'Cancel',
@@ -98,7 +93,7 @@
         $("#Order_preferable_date").datepicker({
             showOn: "button",
             buttonImage: "/images/Calendar.png",
-            buttonImageOnly: true,
+            buttonImageOnly: true
         });
         $('#Order_preferable_date').tooltip({
             trigger : 'hover'

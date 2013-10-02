@@ -122,12 +122,15 @@ class CustomerController extends Controller
         $orderDetails ->id_customer = Yii::app()->user->id;
         $cardInfo = new CreditCardFormModel();
 // validate Credit Card Info
-        $cardInfo->setScenario('validateCardInfo');
         if ( isset($_POST['CreditCardFormModel']))
 //        if(isset($_POST['ajax']) && $_POST['ajax']==='horizontalForm')
             {
                 foreach($_POST['CreditCardFormModel'] as $name=>$value)
                 { $cardInfo->$name=$value; }
+                if ($cardInfo->credit_card_type == "4")
+                { $cardInfo->setScenario('validateMaestroCardInfo'); }
+                else
+                { $cardInfo->setScenario('validateCardInfo'); }
                 echo CActiveForm::validate($cardInfo);
                 Yii::app()->end();
             }

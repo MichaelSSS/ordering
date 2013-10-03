@@ -178,6 +178,9 @@ dd {
 .text-order{
     margin: 5px 0 0 ;
 }
+#orderForm div.text-order{
+    margin: 5px 0 0 180px ;
+}
 .order-buttons{
     float: right;
 }
@@ -325,5 +328,6 @@ tr.user-deleted a{
 .info_block {
     
 }
+
 
 

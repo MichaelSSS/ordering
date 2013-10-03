@@ -107,12 +107,6 @@ class OrderDetails extends CActiveRecord
 
 
 
-//    public  function getPricePerLine(){
-//        self::$totalItemsQuantity +=(int)$this->quantity * (int)$this->dimensionId->count_of_items;
-//        self::$totalPrice +=$this->itemOredered->price * $this->quantity * $this->dimensionId->count_of_items;
-//        return $this->itemOredered->price * $this->quantity * $this->dimensionId->count_of_items;
-//
-//    }
 
 
     public function setCustomer($id)
@@ -172,10 +166,11 @@ class OrderDetails extends CActiveRecord
 
     }
 
-    public function getPricePerLine($price, $quantity)
+    public  function getPricePerLine($price, $quantity)
     {
         return $price*$quantity;
     }
+
     public function getTotalQuantity(){
 
     }

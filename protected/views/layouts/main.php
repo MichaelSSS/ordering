@@ -44,7 +44,7 @@ Yii::app()->clientScript->registerCssFile(
                         'brand'    => 'Order Management System',
                         'brandUrl' => '#',
                         'collapse' => false, // requires bootstrap-responsive.css
-//                        'class' => 'barnd',
+//                        'class' => 'brand',
                         'items'    => array(
                             array(
                                 'class'=>'bootstrap.widgets.TbMenu',
@@ -57,7 +57,7 @@ Yii::app()->clientScript->registerCssFile(
                             ),
                             array(
                                 'class'=>'bootstrap.widgets.TbMenu',
-                                'htmlOptions' => array('class' => 'pull-right'),
+                                'htmlOptions' => array('class' => 'pull-right info_block'),
                                 'items' => array(
                                     array('label' => 'Logged user: ' . Yii::app()->user->name),
                                     array(

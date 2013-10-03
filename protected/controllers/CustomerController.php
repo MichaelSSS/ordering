@@ -2,6 +2,7 @@
 
 class CustomerController extends Controller
 {
+
     public $defaultAction = 'index';
 
     public function filters()
@@ -73,6 +74,7 @@ class CustomerController extends Controller
 
     public function actionCreate()
     {
+        error_reporting(0);
         $order = new Order();
         $currentItems = Yii::app()->session->get("OrderItems");
         if(!isset($currentItems))

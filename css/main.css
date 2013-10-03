@@ -29,7 +29,6 @@ legend span {
 .required span {
     display: none;
 }
-
 /* login-form begin */
 
 .wrp {
@@ -109,29 +108,23 @@ legend span {
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
-
 .panel-body {
     padding: 15px;
 }
-
 .panel-body:before,
 .panel-body:after {
     display: table;
     content: " ";
 }
-
 .panel-body:after {
     clear: both;
 }
-
-
 .panel-heading {
     padding: 10px 15px;
     border-bottom: 1px solid transparent;
     border-top-right-radius: -1px;
     border-top-left-radius: -1px;
 }
-
 .panel-title {
     margin-top: 0;
     margin-bottom: 0;
@@ -154,12 +147,14 @@ legend span {
 }
 
 /* error-messages end */
+
+/* navbar begin */
+
 .head {
-    padding: 8px 4px 0;
+    margin-top: 4em;
 }
-.head li {
-    display: inline-block;
-}
+
+/* end */
 .ui-datepicker-trigger{
     cursor: pointer;
     margin-left: 10px;
@@ -277,6 +272,7 @@ header{
     top: 6px;
     left: -6px;
 }
+
 .details_row{
     display: inline-block;
     width: 170px;
@@ -284,3 +280,12 @@ header{
     font-weight: bold;
     text-align: right;
 }
+
+#cardInfo .control-label {
+    margin-left: 1em;
+    text-align: left;
+}
+#cardInfo .required span {
+    display: inline;
+}
+

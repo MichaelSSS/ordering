@@ -1,9 +1,11 @@
 <fieldset>
-                <legend>Totals</legend>
-                <div class="row">
-                    <div class="span5">
-                    <?php echo $form->textFieldRow($order, 'order_name', array('hint' => '')); ?>
-</div>
+<legend>Totals</legend>
+<div class="row">
+    <div class="span5">
+        <?php echo $form->textFieldRow($order, 'order_name', array('hint' => '')); ?>
+                    <?php echo $form->hiddenField($order, 'id_order', array('value' =>$order->id_order)); ?>
+
+                    </div>
 </div>
 <div class="row">
     <div class="span5">

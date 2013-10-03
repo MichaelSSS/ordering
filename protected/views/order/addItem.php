@@ -1,7 +1,21 @@
 
 <div id="grid-extend">
  <script type="text/javascript">
-                    
+
+     function enableButton(){
+
+             if($('.items').find('.selected')){
+                 $('#get_name').removeAttr('disabled');
+             }
+             else{
+                 $('#get_name').attr('disabled','disabled');
+             }
+
+
+     }
+
+
+
                     $(document).ready(function () {
                         $('#get_name').attr('disabled','disabled')
                         $('.selected').on('click',function(){
@@ -12,15 +26,9 @@
                             $('#get_name').attr('disabled','disabled');
                             }
                         });
-                        $('tr').on('click',function(){
-                            if($('.items').find('.selected')){
-                            $('#get_name').removeAttr('disabled');
-                            }
-                            else{
-                                $('#get_name').attr('disabled','disabled');
-                            }
 
-                        });
+
+
 
                         $('#get_name').on('click',function(){
                             var item_id = $('.selected').attr('id');
@@ -118,7 +126,7 @@ $grid = $this->widget('TGridView', array(
     'pagerCssClass' => 'oms-pager',
     'baseScriptUrl' => 'gridview',
     
-    'rowHtmlOptionsExpression' => 'array("id"=>$data->id_item)',
+    'rowHtmlOptionsExpression' => 'array("id"=>$data->id_item, "onclick"=>"enableButton()")',
     
     'columns'=>array(
 		array(

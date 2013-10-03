@@ -21,7 +21,8 @@ class CreditCardFormModel extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'cvv2_code'=>'CVV2 Code',
+            'credit_card_type'=>'Credit Card Type',
+            'cvv2_code'=>"CVV2 Code (<a href='' id ='CreditCardFormModel_cvv2_code_tip'>What is this?</a>)",
             'start_date'=>'Start Date (Maestro only)',
             'issue_number'=>'Issue Number (Maestro only)'
         );
@@ -33,14 +34,15 @@ class CreditCardFormModel extends CFormModel
     public function rules()
     {
         return array (
-            array('credit_card_type','required','message'=>'Please select Credit Card Type','on'=>'validateCardInfo, validateMaestroCardInfo'),
-            array('credit_card_number','required','message'=>'Please enter Credit Card Number','on'=>'validateCardInfo, validateMaestroCardInfo'),
+            array('credit_card_type','required','message'=>'Please select Credit Card Type','on'=>'validateCardInfo, validateMaestroCardInfo, required'),
+            array('credit_card_number','required','message'=>'Please enter Credit Card Number','on'=>'validateCardInfo, validateMaestroCardInfo, required'),
             array('credit_card_number','match','pattern'=>'/^[0-9]{16}$/','message'=>'Credit Card Number is incorrect. Please re-type it again.','on'=>'validateCardInfo, validateMaestroCardInfo'),
-            array('cvv2_code','required','message'=>'Please enter CVV2 Code','on'=>'validateCardInfo, validateMaestroCardInfo'),
+            array('cvv2_code','required','message'=>'Please enter CVV2 Code','on'=>'validateCardInfo, validateMaestroCardInfo, required'),
             array('cvv2_code','match','pattern'=>'/^[0-9]{3}$/','message'=>'CVV2 Code is incorrect. Please re-type it again.','on'=>'validateCardInfo, validateMaestroCardInfo'),
-            array('expiry_date','required','message'=>'Please enter Expiry Date','on'=>'validateCardInfo, validateMaestroCardInfo'),
+            array('expiry_date','required','message'=>'Please enter Expiry Date','on'=>'validateCardInfo, validateMaestroCardInfo, required'),
             array('expiry_date, start_date','date', 'format'=>'MM/dd/yyyy', 'message'=>'Incorrect Date Format. Please use mm/dd/yyyy','on'=>'validateCardInfo, validateMaestroCardInfo'),
             array('expiry_date','checkDate', 'on'=>'validateCardInfo, validateMaestroCardInfo'),
+            array('start_date','required','message'=>'Please enter Start Date','on'=>'validateCardInfo, validateMaestroCardInfo, required'),
             array('start_date','compare','compareAttribute'=>'expiry_date','operator'=>'<','strict'=>true,'message'=>'Start Date for Maestro card is incorrect.Please re-type it again.', 'on'=>'validateMaestroCardInfo'),
             array('issue_number','match', 'pattern'=>'/^[0-9]{1}$/','allowEmpty'=>true, 'message'=>'Issue Number for Maestro card is incorrect.Please re-type it again.', 'on'=>'validateMaestroCardInfo'),
         );

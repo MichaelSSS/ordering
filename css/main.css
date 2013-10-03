@@ -29,7 +29,6 @@ legend span {
 .required span {
     display: none;
 }
-
 /* login-form begin */
 
 .wrp {
@@ -272,4 +271,12 @@ header{
     position: absolute;
     top: 6px;
     left: -6px;
+}
+
+#cardInfo .control-label {
+    margin-left: 1em;
+    text-align: left;
+}
+#cardInfo .required span {
+    display: inline;
 }

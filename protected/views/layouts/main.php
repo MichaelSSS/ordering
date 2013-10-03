@@ -108,7 +108,6 @@ Yii::app()->clientScript->registerCssFile(
     <script>
         $(document).ready(function () {
 
-            $('.info').width($('header').width())
 
             $(document).click( function(event){
                 if($(event.target).closest(".info").length)

@@ -10,15 +10,16 @@
                         $('button').on('click',function(){
                             if($('.items').find('.selected')){
                             $('#get_name').attr('disabled','disabled');
-                            }
+                        }
+                        
                         });
                         $('tr').on('click',function(){
-                            if($('.items').find('.selected')){
+                           // if($('.items').find('.selected')){
                             $('#get_name').removeAttr('disabled');
-                            }
-                            else{
-                                $('#get_name').attr('disabled','disabled');
-                            }
+                            //}
+                           // else{
+                           //     $('#get_name').attr('disabled','disabled');
+                           // }
 
                         });
 
@@ -48,6 +49,13 @@
             
                 });
             });
+            
+           $('#save').attr('disabled','disabled') 
+           function AllowToAdd(){
+            if($('.items').find('.selected') && $('#myform').find('input[name="OrderDetails[quantity]"]').val() != ''){
+                $('#save').removeAttr('disabled');
+            }
+           }
             
             
                      });
@@ -162,26 +170,30 @@ $itemForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         <div class="span10">
             <fieldset >
                    <div class="row">
-                    <div class="span5">
-                         <p>Name             <span id="item_result_name"></span></p> 
+                    <div class="span1">
+                         <p>Name:</p> 
                     </div>
-                   </div>
-                
-               
-                
+                    <div class="span6">
+                         <p><span id="item_result_name"></span></p> 
+                    </div>
+                   </div>    
                 <div class="row">
-                    <div class="span5">
-                         <p>Price            <span id="item_result_price"></span></p>
+                    <div class="span1">
+                         <p>Price:</p>
+                   
+                    </div>
+                    <div class="span6">
+                         <p><span id="item_result_price"></span></p>
                    
                     </div>
                 </div>
                    <div class="row">
-                    <div class="span5">
+                    <div class="span2">
                         <?php  
                         echo $itemForm->textFieldRow($orderDetails, 'quantity', array('hint'=>'')); ?>
                     
                         <?php echo $itemForm->hiddenField($orderDetails, 'id_item', array('type'=>'hidden')); ?>
-                        <?php echo $itemForm->hiddenField($orderDetails, 'id_order', array('value'=>'4')); ?>
+                        
                        <?php echo $itemForm->hiddenField($orderDetails, 'id_customer', array('value'=>Yii::app()->user->id)); ?>
                                        
                     </div>

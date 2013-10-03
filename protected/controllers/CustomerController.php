@@ -92,7 +92,7 @@ class CustomerController extends Controller
 
             $criteria = new CDbCriteria;
             $criteria->compare('id_customer',$order->customer );
-            $criteria->compare('id_order',0 );
+            $criteria->compare('id_order','' );
 
             $items = $orderDetails->findAll($criteria);
             if($order->validate())

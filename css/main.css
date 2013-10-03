@@ -273,6 +273,14 @@ header{
     left: -6px;
 }
 
+.details_row{
+    display: inline-block;
+    width: 170px;
+    padding-right: 10px;
+    font-weight: bold;
+    text-align: right;
+}
+
 #cardInfo .control-label {
     margin-left: 1em;
     text-align: left;
@@ -280,3 +288,4 @@ header{
 #cardInfo .required span {
     display: inline;
 }
+

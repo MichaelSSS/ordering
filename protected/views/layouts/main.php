@@ -8,9 +8,6 @@
 <?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/pager.css'); ?>
 <?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/fontAwesome.css'); ?>
 <?php
-//    $cs = Yii::app()->getClientScript();
-//    $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui-1.10.2.js');
-//    $cs->registerCssFile(Yii::app()->baseUrl.'/css/yourcss.css');
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
 Yii::app()->clientScript->registerCssFile(
     Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
@@ -73,7 +70,11 @@ Yii::app()->clientScript->registerCssFile(
                                             'style'       => 'cursor:pointer',
                                         ),
                                     ),
+                                    array('label' => '',
+                                        'url'=>'',
+                                        'linkOptions' => array('class' => 'icon-info-sign icon-large user_info'),                                    ),
                                 ),
+
                             ),
                         ),
                     )); ?>

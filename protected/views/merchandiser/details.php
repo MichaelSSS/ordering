@@ -59,13 +59,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 
                 </p>
-                <p>Customer type <?php echo $orderModel->customerType->customer_type; ?></p>
-                <p>Order Number <?php echo $orderModel->id_order; ?></p>
-                <p>Total price</p>
-                <p>Total number of items</p>
-                <p>Assignee</p>
-                <p>Date of ordering</p>
-                <p>Preferable Delivery Date</p>
+                <p><span class="details_row">Customer type</span> <?php echo $orderModel->customerType->customer_type; ?></p>
+                <p><span class="details_row">Order Number</span> <?php echo $orderModel->id_order; ?></p>
+                <p><span class="details_row">Total price</span></p>
+                <p><span class="details_row">Total number of items</span> </p>
+                <p><span class="details_row">Assignee </span><?php echo $orderModel->assignees->username; ?></p>
+                <p><span class="details_row">Date of ordering</span> <?php echo $orderModel->order_date; ?></p>
+                <p><span class="details_row">Preferable Delivery Date</span> <?php echo $orderModel->preferable_date; ?></p>
             </div>
             <div class="span4">
                 <p>Status</p>

@@ -33,14 +33,13 @@ class OrderDetails extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
-//			array('id_order, id_item, quantity, price, id_dimension', 'required'),
-//			array('id_order, id_item, quantity, id_dimension', 'numerical', 'integerOnly'=>true),
-//			array('price', 'length', 'max'=>6),
-			// The following rule is used by search().
-//			 @todo Please remove those attributes that should not be searched.
-			array('id_order, id_item, id_customer, quantity, price, id_dimension', 'safe'),
+            return array(
+			array('quantity', 'numerical', 'integerOnly'=>true),
+                        array('quantity', 'required'),
+                        array('quantity', 'length', 'max'=>3),
+
 		);
+
 	}
 
 	/**

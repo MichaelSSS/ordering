@@ -112,13 +112,11 @@ class CustomerController extends Controller
             if ($order->validate()) {
 
                 $order->save(false);
-
                 foreach ($currentItems as $item) {
                     $orderDetails = new OrderDetails();
                     $orderDetails->attributes = $item;
                     $orderDetails->id_order = $order->id_order;
                     $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;
-
                     $orderDetails->save(false);
 
                 }
@@ -202,8 +200,10 @@ class CustomerController extends Controller
         // Получаем автора записи. Здесь будет выполнен реляционный запрос.
         $item_name = $item->name;
         $item_price = $item->price;
+                $item_quantity=$item->quantity;
         echo '{"item_name":"' . $item_name . '",
-                    "item_price":"' . $item_price . '"}';
+                    "item_price":"'.$item_price.'", 
+                    "item_quantity":"'.$item_quantity.'" }';
 
     }
 

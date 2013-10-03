@@ -14,7 +14,6 @@
             'type'=>'primary',
             'label'=>'OK',
             'url'=>'#',
-            // 'htmlOptions'=>array('data-dismiss'=>'modal'),
         )); ?>
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'label'=>'Close',

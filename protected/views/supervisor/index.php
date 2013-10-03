@@ -85,7 +85,7 @@
     'ajaxUpdate'     => 'search-result-count',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
     //'filterSelector' => '#search-fields',
-    'filter'=>$model,
+    //'filter'=>$model,
     'template'       => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
     'pager'          => array(
         'class'          => 'OmsPager',

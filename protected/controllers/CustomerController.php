@@ -78,48 +78,15 @@ class CustomerController extends Controller
         if(!isset($currentItems))
             $currentItems = array();
 
-        $res= array();
-        foreach($currentItems as $item)
-        {
-            $iData = Yii::app()->db->createCommand()
-                ->select('i.id_item, i.price, i.name, i.description')
-                ->from('item i')
-                ->where('i.id_item =:id_item', array(':id_item'=>$item['id_item']))
-                ->queryAll();
-            $iData[0]['customer'] = $item['id_customer'];
-            $iData[0]['quantity'] = $item['quantity'];
-            $pricePerLine = $order->getPricePerLine( $iData[0]['price'], $iData[0]['quantity']);
-            $iData[0]['price_per_line'] = $pricePerLine;
+        $orderDetails = OrderDetails::getOrderedItems($currentItems);
 
-            $dData =  Yii::app()->db->createCommand()
-                ->select('*')
-                ->from('dimension d')
-                ->where('d.id_dimension =:id_dimension', array(':id_dimension'=>$item['id_dimension']))
-                ->queryAll();
-            $rData = array_merge($iData[0], $dData[0]);
-            $res[] = $rData;
-        }
-
-
-
-
-        $orderDetails = new CArrayDataProvider($res);
-
-
-
-
-//        $orderDetails = new CArrayDataProvider($currentItems);
         $cardInfo = new CreditCardFormModel();
-
-
-
 
         if (isset($_POST['ajax'])&&$_POST['ajax']==='orderForm')
         {
             echo CActiveForm::validate( array($order));
             Yii::app()->end();
         }
-
 
         $this->render('/order/create', array(
             'order' => $order,

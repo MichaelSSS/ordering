@@ -170,10 +170,7 @@ class Order extends CActiveRecord
             ),
         ));
     }
-    public function getPricePerLine($price, $quantity)
-    {
-        return $price*$quantity;
-    }
+
     public function getMerchandisers()
     {
         $criteria = new CDbCriteria;

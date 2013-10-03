@@ -13,66 +13,42 @@
     });
 </script>
 
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-    'type'      => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-    'tabs'      => array(
-        array('label' => 'Item Management ',
-            'content' => '<p>This page is appointed to create new and managing existing items by supervisor</p>',
-            'active'  => true
-        ),
-    ),
-));
-?>
 
+<p>This page is appointed to create new and managing existing items by supervisor</p>
 <?php echo CHtml::link('Create New Items',array('supervisor/create'));?>
 
 
- <?php $form=$this->beginWidget('CActiveForm', array(
-	'id' => 'search-form',
+<?php $form=$this->beginWidget('CActiveForm', array(
+	'id'                     => 'search-form',
     'enableClientValidation' => true,
-));
-?>
+)); ?>
 
-<fieldset>
-    <legend>Search <span>by</span></legend>
-  
-    <div class='control-group'>
-        <div class='controls'>
-            <div class='span3'>
-              
-  <?php echo $form->dropDownlist($model, 'searchCriteria', $model->searchCriterias,
-                array('class' => 'span3',
-                    'options' => array(
-                        array_search('id_item', $model->searchCriterias) => array('selected' => true
-                        ))
-                ));
-            ?>
-
-                
-            </div>
-            <div class='span3'>
-               
-            <?php echo $form->textField($model, 'searchValue', array('class' => 'span3')); ?>
-        
-            </div>
-            
-            <div class="span1 pull-right">
-            <?php $this->widget('bootstrap.widgets.TbButton', array(
-                'label' => 'Apply',
-                'buttonType' => 'submit',
-                'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                'size' => 'null', // null, 'large', 'small' or 'mini'
-            ));?>
-            
-           
-               
-                
+    <fieldset>
+        <legend>Search <span>by</span></legend>
+        <div class='control-group'>
+            <div class='controls'>
+                <div class='span3'>
+                    <?php echo $form->dropDownlist($model, 'searchCriteria', $model->searchCriterias,
+                        array('class' => 'span3',
+                            'options' => array(
+                                array_search('id_item', $model->searchCriterias) => array('selected' => true)
+                            )
+                    )); ?>
+                </div>
+                <div class='span3'>
+                    <?php echo $form->textField($model, 'searchValue', array('class' => 'span3')); ?>
+                </div>
+                <div class="span1 pull-right">
+                    <?php $this->widget('bootstrap.widgets.TbButton', array(
+                        'label' => 'Apply',
+                        'buttonType' => 'submit',
+                        'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                        'size' => 'null', // null, 'large', 'small' or 'mini'
+                    ));?>
+                </div>
             </div>
         </div>
-    </div>
-</fieldset>
-
+    </fieldset>
 <?php $this->endWidget(); ?>
 
 
@@ -116,7 +92,7 @@
             ),
             'buttons'  => array(
                 'edit' => array(
-                    'icon' => 'pencil',
+                    'icon' => 'icon-edit icon-large',
                     'url'  => 'Yii::app()->createUrl(\'supervisor/edit\',array(\'id\'=>$data->id_item))',
                 ),
             )
@@ -132,12 +108,12 @@
             ),
             'buttons'    => array(
                 'remove' => array(
-                    'icon' => 'icon-remove',
+                    'icon' => 'icon-remove icon-large',
                     'url'  => 'Yii::app()->createUrl(\'supervisor/remove\',array(\'id\'=>$data->id_item))',
                 ),
             )
         ),
     ),
-));
-?>
+)); ?>
+
 <?php $this->renderPartial('/supervisor/_del'); ?>

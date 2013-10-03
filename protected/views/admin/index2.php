@@ -1,17 +1,6 @@
 <?php $this->renderPartial('_del2'); ?> <!--modal-->
 
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-    'type'      => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-    'tabs'      => array(
-        array('label' => 'Administration',
-            'content' => '<p>This page is appointed for creating new and managing existing users</p>',
-            'active'  => true
-        ),
-    ),
-));
-?>
-
+<p>This page is appointed for creating new and managing existing users</p>
 <?php echo CHtml::link('Create New User', array('admin/create'));
     $dataProvider = $model->search();
     echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
@@ -152,7 +141,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <td> <%= region %> </td>
     <td class="button-column">
         <a title="edit" rel="tooltip" href= <%= '"?r=admin/edit&amp;id=' + id + '"' %> >
-            <i class="icon-pencil">
+            <i class="icon-edit icon-large">
     </i></a></td>
     <td class="remove" >
         <%= 
@@ -162,12 +151,12 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 '<a rel="tooltip" title="active user"><i class="icon-remove" style="background-image: url(gridview_JSON/glyphicons-halflings-white.png)"></i></a>'
             ) : (
 '<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
-+ id + '"><i class="icon-remove"></i></a>'
++ id + '"><i class="icon-remove icon-large"></i></a>'
             ))
         %>
     </td>
     <td class="button-column">
         <a title="duplicate" rel="tooltip" href= <%= '"?r=admin/duplicate&amp;id='+id+'"' %> >
-            <i class="icon-tags">
+            <i class="icon-copy icon-large">
     </i></a></td>
 </script>

@@ -197,8 +197,10 @@ class CustomerController extends Controller
                 // Получаем автора записи. Здесь будет выполнен реляционный запрос.
                 $item_name=$item->name;
                 $item_price=$item->price;
+                $item_quantity=$item->quantity;
                 echo '{"item_name":"'.$item_name.'",
-                    "item_price":"'.$item_price.'"}';
+                    "item_price":"'.$item_price.'", 
+                    "item_quantity":"'.$item_quantity.'" }';
 
     }
     

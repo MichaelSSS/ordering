@@ -81,6 +81,7 @@ class CustomerController extends Controller
         $orderDetails = OrderDetails::getOrderedItems($currentItems);
 
         $cardInfo = new CreditCardFormModel();
+//        $order->totalQuantity = OrderDetails::$totalItemsQuantity;
 
         if (isset($_POST['ajax'])&&$_POST['ajax']==='orderForm')
         {

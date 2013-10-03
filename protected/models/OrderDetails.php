@@ -153,6 +153,7 @@ class OrderDetails extends CActiveRecord
             $iData[0]['customer'] = $item['id_customer'];
             $iData[0]['quantity'] = $item['quantity'];
             $pricePerLine = self::getPricePerLine( $iData[0]['price'], $iData[0]['quantity']);
+
             $iData[0]['price_per_line'] = $pricePerLine;
 
             $dData =  Yii::app()->db->createCommand()
@@ -160,6 +161,10 @@ class OrderDetails extends CActiveRecord
                 ->from('dimension d')
                 ->where('d.id_dimension =:id_dimension', array(':id_dimension'=>$item['id_dimension']))
                 ->queryAll();
+
+            self::$totalItemsQuantity +=(int)$dData[0]['count_of_items'] * (int)$iData[0]['quantity'];
+            self::$totalPrice +=(int)$iData[0]['price']*(int)$dData[0]['count_of_items']*(int)$iData[0]['quantity'];
+
             $rData = array_merge($iData[0], $dData[0]);
             $res[] = $rData;
         }
@@ -170,6 +175,9 @@ class OrderDetails extends CActiveRecord
     public function getPricePerLine($price, $quantity)
     {
         return $price*$quantity;
+    }
+    public function getTotalQuantity(){
+
     }
 
     public function searchItem($orderId)

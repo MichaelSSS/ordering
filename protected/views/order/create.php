@@ -101,13 +101,11 @@
     });
     function afterValidate(form,  data, hasError)
     {
-        debugger;
         if(hasError){
             $('#error-text').html(data[Object.keys(data)[0]]);
             $('#itemsEmpty').modal();
             return false;
         }else{
-//            debugger;
 //            $.ajax({
 //                "type":"POST",
 //                "url":"?r=customer/create",

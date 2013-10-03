@@ -16,7 +16,7 @@
     <?php $this->widget('bootstrap.widgets.TbButton', array(
         'type' => 'primary',
         'label' => 'Yes',
-        'url' => $this->createUrl('customer/index'),
+        'url' => $this->createUrl('customer/cancel'),
     ));
     ?>
     <?php $this->widget('bootstrap.widgets.TbButton', array(

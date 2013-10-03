@@ -47,12 +47,11 @@ class CustomerController extends Controller
     public function actionDependentSelect()
     {
         $data = new Order;
-        if ($_POST['Order']["filterCriteria"] == '1')
-        {
+        if ($_POST['Order']["filterCriteria"] == '1') {
             $data = $data->filterRoles;
             foreach ($data as $value => $name) {
                 echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
-             }
+            }
         } else {
             $data = $data->filterStatuses;
             foreach ($data as $value => $name) {
@@ -74,22 +73,23 @@ class CustomerController extends Controller
 
     public function actionCreate()
     {
-        error_reporting(0);
+//        error_reporting(0);
         $order = new Order();
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'orderForm') {
+            echo CActiveForm::validate(array($order));
+            Yii::app()->end();
+        }
+
+
         $currentItems = Yii::app()->session->get("OrderItems");
-        if(!isset($currentItems))
+
+        if (!isset($currentItems))
             $currentItems = array();
 
         $orderDetails = OrderDetails::getOrderedItems($currentItems);
 
         $cardInfo = new CreditCardFormModel('required');
-//        $order->totalQuantity = OrderDetails::$totalItemsQuantity;
 
-        if (isset($_POST['ajax'])&&$_POST['ajax']==='orderForm')
-        {
-            echo CActiveForm::validate( array($order));
-            Yii::app()->end();
-        }
 
         $this->render('/order/create', array(
             'order' => $order,
@@ -100,131 +100,134 @@ class CustomerController extends Controller
 
     public function actionSave()
     {
-        $order = new Order();
-        $orderDetails = new OrderDetails;
+        $order = new Order;
         $cardInfo = new CreditCardFormModel();
+
         $currentItems = Yii::app()->session->get("OrderItems");
 
-//        $orderDetails->setCustomer(Yii::app()->user->id);
-
         $order->status = "Created";
-        if (isset($_POST['Order']) && $_POST['Order']['id_order']=='') {
-
+        if (isset($_POST['Order'])) {
             $order->attributes = $_POST['Order'];
-
             $order->customer = Yii::app()->user->id;
+            if ($order->validate()) {
 
-
-
-            $items = $orderDetails->getOrderItems($order->customer);
-
-            if($order->validate())
-            {
                 $order->save(false);
-                foreach ($items as $item)
-                {
-                    $item->id_order = $order->id_order;
-                    $item->save();
-                }
-                $this->redirect(Yii::app()->createUrl('customer/edit', array('id'=>$order->id_order)));
-            }
-        }else{
-//            $order->setScenario('update');
-            $order->attributes = $_POST['Order'];
-            $order->save(true,array('totalQuantity','total_price','order_date','preferable_date','assignee'));
-        }
 
+                foreach ($currentItems as $item) {
+                    $orderDetails = new OrderDetails();
+                    $orderDetails->attributes = $item;
+                    $orderDetails->id_order = $order->id_order;
+                    $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;
+
+                    $orderDetails->save(false);
+
+                }
+
+            }
+            $this->redirect(Yii::app()->createUrl('customer/index'));
+        }
     }
+
     public function actionOrder()
     {
         $order = new Order;
         $orderDetails = new OrderDetails;
-        $orderDetails ->id_customer = Yii::app()->user->id;
+        $orderDetails->id_customer = Yii::app()->user->id;
         $cardInfo = new CreditCardFormModel();
 // validate Credit Card Info
-        if ( isset($_POST['CreditCardFormModel']))
-//        if(isset($_POST['ajax']) && $_POST['ajax']==='horizontalForm')
-            {
-                foreach($_POST['CreditCardFormModel'] as $name=>$value)
-                { $cardInfo->$name=$value; }
-                if ($cardInfo->credit_card_type == "4")
-                { $cardInfo->setScenario('validateMaestroCardInfo'); }
-                else
-                { $cardInfo->setScenario('validateCardInfo'); }
-                echo CActiveForm::validate($cardInfo);
-                Yii::app()->end();
+        if (isset($_POST['CreditCardFormModel'])) //        if(isset($_POST['ajax']) && $_POST['ajax']==='horizontalForm')
+        {
+            foreach ($_POST['CreditCardFormModel'] as $name => $value) {
+                $cardInfo->$name = $value;
             }
+            if ($cardInfo->credit_card_type == "4") {
+                $cardInfo->setScenario('validateMaestroCardInfo');
+            } else {
+                $cardInfo->setScenario('validateCardInfo');
+            }
+            echo CActiveForm::validate($cardInfo);
+            Yii::app()->end();
+        }
     }
 
 
+    public function actionCancel()
+    {
+        Yii::app()->session->remove("OrderItems");
+        $this->redirect(Yii::app()->createUrl('customer/index'));
+    }
 
-    public function actionEdit($id){
+    public function actionEdit($id)
+    {
         $order = Order::model()->findByPk($id);
-        $orderDetails = new OrderDetails;//  $this->loadModel($id, "OrderDetails");
+        $orderDetails = new OrderDetails; //  $this->loadModel($id, "OrderDetails");
 //        $orderDetails = new OrderDetails;
 
         $orderDetails->id_order = $id;
         $cardInfo = new CreditCardFormModel;
         $order->scenario = 'edit';
-        $order->preferable_date = Yii::app()->dateFormatter->format("MM/dd/yyyy",$order->delivery_date);
+        $order->preferable_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->delivery_date);
 
 
-        $this->render('/order/create',array(
+        $this->render('/order/create', array(
             'order' => $order,
             'orderDetails' => $orderDetails,
             'cardInfo' => $cardInfo,
         ));
     }
+
     public function actionAddItem()
     {
         $model = new Item('search');
-        $orderDetails = new OrderDetails; 
+        $orderDetails = new OrderDetails;
         if (isset($_GET['Item']))
             $model->attributes = $_GET['Item'];
 
-        $this->render('/order/addItem',array(
-            'model'=>$model,
-            'orderDetails'=>$orderDetails
+        $this->render('/order/addItem', array(
+            'model' => $model,
+            'orderDetails' => $orderDetails
         ));
     }
 
-    public function actionError($view){
+    public function actionError($view)
+    {
         $this->render($view);
     }
-    
-    public function actionAdd(){
 
-               $item=Item::model()->findByPk($_GET['item_id']);
-               
-                // Получаем автора записи. Здесь будет выполнен реляционный запрос.
-                $item_name=$item->name;
-                $item_price=$item->price;
-                echo '{"item_name":"'.$item_name.'",
-                    "item_price":"'.$item_price.'"}';
+    public function actionAdd()
+    {
+
+        $item = Item::model()->findByPk($_GET['item_id']);
+
+        // Получаем автора записи. Здесь будет выполнен реляционный запрос.
+        $item_name = $item->name;
+        $item_price = $item->price;
+        echo '{"item_name":"' . $item_name . '",
+                    "item_price":"' . $item_price . '"}';
 
     }
-    
-        public function actionSaveItem(){
 
-               $order = new Order;
-               $cardInfo = new CreditCardFormModel();
-               $model = new OrderDetails();
+    public function actionSaveItem()
+    {
+
+        $order = new Order;
+        $cardInfo = new CreditCardFormModel();
+        $model = new OrderDetails();
 
 
+        if (isset($_POST['OrderDetails'])) {
 
-               if(isset($_POST['OrderDetails'])){
+            $currentItems = Yii::app()->session->get("OrderItems");
+            $currentItems[] = $_POST['OrderDetails'];
+            Yii::app()->session->add("OrderItems", $currentItems);
+            /*$model->attributes = $_POST['OrderDetails'];
+            if($model->save()){
+                 $this->redirect(Yii::app()->createUrl('customer/create'));
+            }*/
+        }
+        $orderDetails = new CArrayDataProvider($currentItems);
+        $this->redirect(Yii::app()->createUrl('customer/create'));
 
-                   $currentItems = Yii::app()->session->get("OrderItems");
-                   $currentItems[] = $_POST['OrderDetails'];
-                   Yii::app()->session->add("OrderItems", $currentItems);
-                   /*$model->attributes = $_POST['OrderDetails'];
-                   if($model->save()){
-                        $this->redirect(Yii::app()->createUrl('customer/create'));
-                   }*/
-               }
-            $orderDetails = new CArrayDataProvider($currentItems);
-            $this->redirect(Yii::app()->createUrl('customer/create'));
 
-              
     }
 }

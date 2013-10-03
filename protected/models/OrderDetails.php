@@ -134,45 +134,38 @@ class OrderDetails extends CActiveRecord
 		return parent::model($className);
 	}
 
-    public static function getOrderedItems($currentItems = array())
+    public static function getOrderedItems($currentItems )
     {
         $res= array();
         foreach($currentItems as $item)
         {
             $iData = Yii::app()->db->createCommand()
-                ->select('i.id_item, i.price, i.name, i.description')
+                ->select()
                 ->from('item i')
+                ->leftJoin('dimension d', 'd.id_dimension =:id_dimension', array(':id_dimension'=>$item['id_dimension']))
                 ->where('i.id_item =:id_item', array(':id_item'=>$item['id_item']))
                 ->queryAll();
             $iData[0]['customer'] = $item['id_customer'];
             $iData[0]['quantity'] = $item['quantity'];
-            $pricePerLine = self::getPricePerLine( $iData[0]['price'], $iData[0]['quantity']);
+            $iData[0]['price_per_line'] =  (int)$iData[0]['price'] * (int)$iData[0]['quantity'];
 
-            $iData[0]['price_per_line'] = $pricePerLine;
 
-            $dData =  Yii::app()->db->createCommand()
-                ->select('*')
-                ->from('dimension d')
-                ->where('d.id_dimension =:id_dimension', array(':id_dimension'=>$item['id_dimension']))
-                ->queryAll();
+            self::$totalItemsQuantity +=(int)$iData[0]['count_of_items'] * (int)$iData[0]['quantity'];
+            self::$totalPrice +=(int)$iData[0]['price']*(int)$iData[0]['count_of_items']*(int)$iData[0]['quantity'];
 
-            self::$totalItemsQuantity +=(int)$dData[0]['count_of_items'] * (int)$iData[0]['quantity'];
-            self::$totalPrice +=(int)$iData[0]['price']*(int)$dData[0]['count_of_items']*(int)$iData[0]['quantity'];
-
-            $rData = array_merge($iData[0], $dData[0]);
-            $res[] = $rData;
+            $res[] = $iData[0];
         }
         return  new CArrayDataProvider($res);
-
     }
+//
+//    public  function getPricePerLine($price, $quantity)
+//    {
+//        return $price*$quantity;
+//    }
 
-    public  function getPricePerLine($price, $quantity)
+    public function afterSave()
     {
-        return $price*$quantity;
-    }
-
-    public function getTotalQuantity(){
-
+        Yii::app()->session->remove("OrderItems");
     }
 
     public function searchItem($orderId)

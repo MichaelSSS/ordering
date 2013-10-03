@@ -120,7 +120,7 @@ class OrderDetails extends CActiveRecord
     {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
         $criteria->addCondition('id_order = ' . (int)$orderId);
 
         return new CActiveDataProvider($this, array(

@@ -9,7 +9,6 @@ $this->pageTitle=Yii::app()->name; ?>
 <div class='wrp'>
     <div class='span7 offset2'>
         <div class="panel panel-warning">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
             <div class="panel-heading">
                 <h3 class='panel-title'>Warning Message</h3>
             </div>

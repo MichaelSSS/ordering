@@ -1,17 +1,6 @@
 <?php $this->renderPartial('_del2'); ?> <!--modal-->
 
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-    'type'      => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-    'tabs'      => array(
-        array('label' => 'Administration',
-            'content' => '<p>This page is appointed for creating new and managing existing users</p>',
-            'active'  => true
-        ),
-    ),
-));
-?>
-
+<p>This page is appointed for creating new and managing existing users</p>
 <?php echo CHtml::link('Create New User', array('admin/create'));
     $dataProvider = $model->search();
     echo '<div id="search-result">Number of Found Users <span id="search-result-count">'

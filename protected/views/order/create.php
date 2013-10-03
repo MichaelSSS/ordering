@@ -2,8 +2,9 @@
     <div class="span10"></div>
     <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'id' => 'horizontalForm',
+        'id' => 'orderForm',
         'type' => 'horizontal',
+        'action' => '?r=customer/create',
         'enableClientValidation' => true,
         'enableAjaxValidation'=>true,
         'clientOptions' => array(
@@ -40,13 +41,13 @@
     <div class="row">
         <div class="span3 offset7">
             <div class="order-buttons">
-
-                <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'buttonType' => 'submit', 
-                    'type' => 'primary', 
-                    'label' => 'Save',
-                    'htmlOptions' => array('name' => 'save'))); ?>
-
+                <?php
+                    if(isset($order->id_order))
+                        $target = $this->createUrl('customer/save', array('id_order'=> $order->id_order)) ;
+                    else
+                        $target = $this->createUrl('customer/save');
+                ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'link', 'type' => 'primary','url' => $target, 'label' => 'Save', 'htmlOptions' => array('name' => 'save','submit'=>'?r=customer/save'))); ?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                     'buttonType' => 'ajaxSubmitButton',
                     'type' => 'primary',
@@ -97,45 +98,54 @@
         $('#Order_preferable_date').tooltip({
             trigger : 'hover'
         });
-
-<!--        --><?php //if($order->isError()): ?>
-<!--           $('#itemsEmpty').modal();-->
-<!--        --><?php //endif; ?>
-
     });
-    function showError(form,  data, hasError)
+    function afterValidate(form,  data, hasError)
     {
+        debugger;
         if(hasError){
             $('#error-text').html(data[Object.keys(data)[0]]);
             $('#itemsEmpty').modal();
             return false;
+        }else{
+//            debugger;
+//            $.ajax({
+//                "type":"POST",
+//                "url":"?r=customer/create",
+//                "data":form.serialize(),
+//                "success":function(data){
+//                    debugger;
+//                    $("#test").html(data);
+//                },
+//
+//        });
+
         }
         return true;
     };
     // After validate
-    function afterValidate (form,data,hasError)
-    {
-        if (hasError)
-        {
-            // modal window with the FIRST error
-            /*
-             $.each( data, function( key, value )
-             {
-             $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html("<p>"+ value + "</p>"); });
-             return false;
-             });
-             */
-            // modal window with ALL errors
-            var errorCC = new Array;
-            var mess = new String;
-            $.each( data, function( key, value )
-            {
-                mess="<p>" + value + "</p>";
-                errorCC.push(mess);
-            });
-            $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html(errorCC); });
-        };
-    }
+//    function afterValidate (form,data,hasError)
+//    {
+//        if (hasError)
+//        {
+//            // modal window with the FIRST error
+//            /*
+//             $.each( data, function( key, value )
+//             {
+//             $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html("<p>"+ value + "</p>"); });
+//             return false;
+//             });
+//             */
+//            // modal window with ALL errors
+//            var errorCC = new Array;
+//            var mess = new String;
+//            $.each( data, function( key, value )
+//            {
+//                mess="<p>" + value + "</p>";
+//                errorCC.push(mess);
+//            });
+//            $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html(errorCC); });
+//        };
+//    }
     // After validate Credit Card information
     function afterValidateCC (result,status,xhr)
     {

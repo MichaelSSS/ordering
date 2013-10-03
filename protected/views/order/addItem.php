@@ -1,6 +1,57 @@
 
 <div id="grid-extend">
+ <script type="text/javascript">
+                    
+                    $(document).ready(function () {
+                        $('#get_name').attr('disabled','disabled')
+                        $('.selected').on('click',function(){
+                                $('#get_name').attr('disabled','disabled');
+                        });
+                        $('button').on('click',function(){
+                            if($('.items').find('.selected')){
+                            $('#get_name').attr('disabled','disabled');
+                            }
+                        });
+                        $('tr').on('click',function(){
+                            if($('.items').find('.selected')){
+                            $('#get_name').removeAttr('disabled');
+                            }
+                            else{
+                                $('#get_name').attr('disabled','disabled');
+                            }
 
+                        });
+
+                        $('#get_name').on('click',function(){
+                            var item_id = $('.selected').attr('id');
+                            //alert(item_id);
+                            $.ajax({
+                            type: "GET",
+                            url: "index.php?r=customer/add",
+
+                            dataType: "JSON",
+                            data: "item_id=" +item_id,
+                            success: function(data, textStatus, xhr) {
+
+                                $('#item_result_name').html(data.item_name);
+                                $('input[name="OrderDetails[id_item]"]').val(item_id);
+                                
+                                $('#item_result_price').html(data.item_price);
+
+                            }
+        /*error: function (xhr, ajaxOptions, thrownError){
+            //если ошибка аякса, то выведем ее
+            alert(xhr.status);
+            alert(thrownError);
+        }*/
+                
+            
+                });
+            });
+            
+            
+                     });
+                </script>
 
 </div>
 <fieldset class="item_search">
@@ -66,7 +117,9 @@ $grid = $this->widget('TGridView', array(
     ),
     'pagerCssClass' => 'oms-pager',
     'baseScriptUrl' => 'gridview',
-
+    
+    'rowHtmlOptionsExpression' => 'array("id"=>$data->id_item)',
+    
     'columns'=>array(
 		array(
 			'name'=>'name',
@@ -76,43 +129,88 @@ $grid = $this->widget('TGridView', array(
 		),
 	),
 )); ?>
+    <div class="row">
+        <div class="span3 offset7">
+            <div class="order-buttons">
+                           <?php $this->widget('bootstrap.widgets.TbButton', array(
+                                'label' => 'Add',
+                                'buttonType' => 'submit',
+                                'type' => 'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                                'size' => 'null',
+                                  'htmlOptions'=>array('id'=>'get_name')
+                                //'class'=>'get_name'// null, 'large', 'small' or 'mini'
+                            ));?>
 
+            </div>
+        </div>
+    </div>
+
+                          
 <?php
 $itemForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id'=>'horizontalForm',
+    'id'=>'ItemForm',
     'type'=>'horizontal',
+    'action'=>Yii::app()->createUrl('customer/saveitem'),
     'enableClientValidation'  =>  true,
     'clientOptions'           =>  array(
         'validateOnSubmit'        =>  true )
 ));
 ?>
+
+
     <div class="row">
         <div class="span10">
             <fieldset >
                    <div class="row">
                     <div class="span5">
-                         <?php echo $itemForm->textFieldRow($model, 'name', array('hint'=>'')); ?>
+                         <p>Name             <span id="item_result_name"></span></p> 
                     </div>
-                </div>
+                   </div>
+                
+               
+                
                 <div class="row">
                     <div class="span5">
-                         <?php echo $itemForm->labelEx($model,'price', array('hint'=>'')); ?>
+                         <p>Price            <span id="item_result_price"></span></p>
                    
                     </div>
                 </div>
                    <div class="row">
                     <div class="span5">
-                         <?php echo $itemForm->labelEx($model,'quantity', array('hint'=>'')); ?>
+                        <?php  
+                        echo $itemForm->textFieldRow($orderDetails, 'quantity', array('hint'=>'')); ?>
                     
+                        <?php echo $itemForm->hiddenField($orderDetails, 'id_item', array('type'=>'hidden')); ?>
+
+                       <?php echo $itemForm->hiddenField($orderDetails, 'id_customer', array('value'=>Yii::app()->user->id)); ?>
+                                       
                     </div>
                 </div>
                   <div class="row">
                     <div class="span5">
-                         <?php echo $itemForm->labelEx($model,'dimention', array('hint'=>'')); ?>
-                    
+                        <p>Dimension   <?php echo CHtml::dropDownList('OrderDetails[id_dimension]', null, CHtml::listData(dimension::model()->findAll(), 'id_dimension', 'dimension')) ?></p>
                     </div>
                 </div>
             </fieldset >
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3 offset7">
+            <div class="order-buttons">
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Done', 'htmlOptions' => array('id' => 'save'))); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array( 'type' => 'primary', 'label' => 'Remove', 'url'=>'?r=customer/create')); ?>
+
+
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'label' => 'Cancel',
+                    'type' => 'action',
+                    'htmlOptions' => array(
+                        'data-toggle' => 'modal',
+                        'data-target' => '#cancelModal',
+                    ),
+                )); ?>
+
+            </div>
         </div>
     </div>
  <?php $this->endWidget(); ?>

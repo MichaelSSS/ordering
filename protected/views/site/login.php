@@ -24,8 +24,7 @@
             'htmlOptions' => array(
                 'class' => 'span6 offset3',
             ),
-        ));
-    ?>
+    )); ?>
 
     <fieldset>
         <legend>order management system</legend>
@@ -33,7 +32,7 @@
         <?php echo $form->textFieldRow($model, 'username', array('class' => 'span4')); ?>
 
         <?php echo $form->passwordFieldRow($model, 'password', array('class' => 'span4')); ?>
-        <div class="row">
+        <div class='row'>
             <div class="span5">
                 <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
             </div>

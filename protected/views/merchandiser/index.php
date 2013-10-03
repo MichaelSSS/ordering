@@ -11,8 +11,6 @@
 ));
 ?>
 
-<?php echo CHtml::link('Create New Order', array('customer/create')); ?>
-
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
 ));
@@ -71,8 +69,6 @@
 </fieldset>
 <?php $this->endWidget(); ?>
 
-
-
 <?php $grid = $this->widget('TGridView', array(
     'dataProvider' => $model->search(),
     'type' => 'striped bordered condensed',
@@ -82,7 +78,6 @@
     'template' => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
     'pager' => array(
         'class' => 'OmsPager',
-        'header' => '',
         'maxButtonCount' => 0,
         'firstPageLabel' => '&lsaquo; First',
         'prevPageLabel'  => '&larr; Backward',
@@ -112,7 +107,6 @@
         ),
         array(
             'name' => 'delivery_date',
-//            'value' => '$model->formatDate($data->delivery_date)',
             'value' => 'Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date);',
         ),
         'status',
@@ -129,36 +123,10 @@
             'buttons' => array(
                 'edit' => array(
                     'icon' => 'pencil',
-                    //'url'  => 'Yii::app()->createUrl()',
-                ),
-            )
-        ),
-        array(
-            'header' => 'Remove',
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{remove}',
-            'htmlOptions' => array(
-                'id' => 'col_remove',
-            ),
-            'buttons' => array(
-                'remove' => array(
-                    'icon' => 'icon-trash',
-                    'url' => 'Yii::app()->createUrl(\'customer/remove\',array(\'id\'=>$data->id_order))',
-                    'options' => array(
-                        'data-toggle' => 'modal',
-                        'data-target' => '#remove_order',
-                        'onclick' => 'beforeRemove(this)',
-                    ),
+                    'url'  => 'Yii::app()->createUrl(\'merchandiser/edit\', array(\'id\' => $data->id_order))',
                 ),
             )
         ),
     ),
 ));?>
-<?php $this->renderPartial('/customer/_delete'); ?>
-<script>
-    function beforeRemove(el) {
-        $('#modal_remove').attr('href', $(el).attr('href'));
 
-
-    }
-</script>

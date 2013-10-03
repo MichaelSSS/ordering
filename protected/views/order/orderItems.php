@@ -1,9 +1,12 @@
+
 <div id="grid-extend">
 
 </div>
-<?php echo CHtml::link('Add Item',array('customer/additem'));
+<?php
+
+echo CHtml::link('Add Item',array('customer/additem'));
 $grid = $this->widget('TGridView', array(
-    'dataProvider' => $orderDetails->search(),
+    'dataProvider' => $orderDetails,
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
@@ -30,37 +33,37 @@ $grid = $this->widget('TGridView', array(
         array(
 
             'header'    => 'Item Number',
-            'value'=>'$data->id_item',
+            'value'=>'$data["id_item"]',
         ),
 
 		array(
 
                         'header'    => 'Item Name',
-            'value'=>'$data->itemOredered->name',
+            'value'=>'$data["name"]',
 		),
 		array(
             'header'    => 'Item Description',
-			'value'=>'$data->itemOredered->description',
+			'value'=>'$data["description"]',
 
 		),
         array(
                 'header'    => 'Dimension',
-			    'value'=>'$data->dimensionId->dimension',
+			    'value'=>'$data["dimension"]',
 
 		),
 		array(
             'header'    => 'Price',
-			'value'=>'$data->itemOredered->price . "\$"',
+			'value'=>'$data["price"]',
 
 		),
 		array(
             'header'    => 'Quantity',
-			'value'=>'$data->quantity',
+			'value'=>'$data["quantity"]',
 
 		),
 		array(
             'header'    => 'Price Per Line',
-			'value'=>'$data->getPricePerLine() . "\$"',
+			'value'=>'$data["price_per_line"]',
 
 		),
 
@@ -76,28 +79,28 @@ $grid = $this->widget('TGridView', array(
                 ),
             )
         ),
-        array(
-            'header'      => 'Remove',
-            'class'       => 'bootstrap.widgets.TbButtonColumn',
-            'template'    => '{remove}',
-            'htmlOptions' => array(
-                'id'=>'col_remove',
-            ),
-            'buttons'    => array(
-                'remove' => array(
-                    'icon' => 'icon-trash',
-                    'url'  => 'Yii::app()->createUrl(\'order/remove\',array(\'id\'=>$data->id_item))',
-                    'options'=>array(
-                        'data-toggle'=>'modal',
-                        'data-target'=>'#remove_order',
-                        'onclick'=>'beforeRemove(this)',
-                    ),
-
-
-
-                ),
-            )
-        ),
+//        array(
+//            'header'      => 'Remove',
+//            'class'       => 'bootstrap.widgets.TbButtonColumn',
+//            'template'    => '{remove}',
+//            'htmlOptions' => array(
+//                'id'=>'col_remove',
+//            ),
+//            'buttons'    => array(
+//                'remove' => array(
+//                    'icon' => 'icon-trash',
+//                    'url'  => 'Yii::app()->createUrl(\'order/remove\',array(\'id\'=>$data->id_item))',
+//                    'options'=>array(
+//                        'data-toggle'=>'modal',
+//                        'data-target'=>'#remove_order',
+//                        'onclick'=>'beforeRemove(this)',
+//                    ),
+//
+//
+//
+//                ),
+//            )
+//        ),
         ),
 ));
 

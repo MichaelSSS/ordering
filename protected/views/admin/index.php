@@ -1,17 +1,7 @@
 <?php $this->renderPartial('_del'); ?> <!--modal-->
 
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-    'type'      => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-    'tabs'      => array(
-        array('label' => 'Administration',
-            'content' => '<p>This page is appointed for creating new and managing existing users</p>',
-            'active'  => true
-        ),
-    ),
-));
-?>
 
+<p>This page is appointed for creating new and managing existing users</p>
 <div class="span3">
     <?php echo CHtml::link('Create New User ', array('admin/create'),array(
         'class'=>'btn',

@@ -1,15 +1,4 @@
 
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-    'type' => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-    'tabs' => array(
-        array('label' => 'Ordering',
-            'content' => '',
-            'active' => true
-        ),
-    ),
-));
-?>
 
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
@@ -122,7 +111,7 @@
             'htmlOptions' => array(),
             'buttons' => array(
                 'edit' => array(
-                    'icon' => 'pencil',
+                    'icon' => 'icon-edit icon-large',
                     'url'  => 'Yii::app()->createUrl(\'merchandiser/edit\', array(\'id\' => $data->id_order))',
                 ),
             )

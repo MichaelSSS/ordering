@@ -80,6 +80,7 @@ class Item extends CActiveRecord
 		return array(
 
             'order_items' => array(self::HAS_MANY, 'OrderItem', 'id_item'),
+           // 'dimension' => array(self::HAS_MANY, 'OrderItem', 'id_item'),
 		);
 	}
 

@@ -1,7 +1,21 @@
 
 <div id="grid-extend">
  <script type="text/javascript">
-                    
+
+     function enableButton(){
+
+             if($('.items').find('.selected')){
+                 $('#get_name').removeAttr('disabled');
+             }
+             else{
+                 $('#get_name').attr('disabled','disabled');
+             }
+
+
+     }
+
+
+
                     $(document).ready(function () {
                         $('#get_name').attr('disabled','disabled')
                         $('.selected').on('click',function(){
@@ -13,15 +27,10 @@
                         }
                         
                         });
-                        $('tr').on('click',function(){
-                           // if($('.items').find('.selected')){
-                            $('#get_name').removeAttr('disabled');
-                            //}
-                           // else{
-                           //     $('#get_name').attr('disabled','disabled');
-                           // }
 
-                        });
+
+
+
 
                         $('#get_name').on('click',function(){
                             var item_id = $('.selected').attr('id');
@@ -126,7 +135,7 @@ $grid = $this->widget('TGridView', array(
     'pagerCssClass' => 'oms-pager',
     'baseScriptUrl' => 'gridview',
     
-    'rowHtmlOptionsExpression' => 'array("id"=>$data->id_item)',
+    'rowHtmlOptionsExpression' => 'array("id"=>$data->id_item, "onclick"=>"enableButton()")',
     
     'columns'=>array(
 		array(
@@ -193,7 +202,7 @@ $itemForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         echo $itemForm->textFieldRow($orderDetails, 'quantity', array('hint'=>'')); ?>
                     
                         <?php echo $itemForm->hiddenField($orderDetails, 'id_item', array('type'=>'hidden')); ?>
-                        
+
                        <?php echo $itemForm->hiddenField($orderDetails, 'id_customer', array('value'=>Yii::app()->user->id)); ?>
                                        
                     </div>

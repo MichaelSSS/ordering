@@ -75,7 +75,7 @@ class CustomerController extends Controller
     {
         $order = new Order;
         $orderDetails = new OrderDetails;
-	    $cardInfo = new CreditCardFormModel();
+	    $cardInfo = new CreditCardFormModel('required');
 	    $orderDetails ->id_customer = Yii::app()->user->id;
 
         if (isset($_POST['ajax'])&&$_POST['ajax']==='horizontalForm')

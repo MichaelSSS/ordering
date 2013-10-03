@@ -1,9 +1,9 @@
 <fieldset>
-                <legend>Totals</legend>
-                <div class="row">
-                    <div class="span5">
-                    <?php echo $form->textFieldRow($order, 'order_name', array('hint' => '')); ?>
-</div>
+<legend>Totals</legend>
+<div class="row">
+    <div class="span5">
+        <?php echo $form->textFieldRow($order, 'order_name', array('hint' => '')); ?>
+    </div>
 </div>
 <div class="row">
     <div class="span5">

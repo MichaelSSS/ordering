@@ -1,15 +1,9 @@
-<!--- ,'htmlOptions'=>array('style'=>array('box-sizing:content-box;') --->
-<?php  Yii::app()->bootstrap->register('/css/bootstrap.css'); ?>
-<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
+<?php  //Yii::app()->bootstrap->register('/css/bootstrap.css'); ?>
 <?php  //Yii::app()->bootstrap->register('/css/bootstrap-responsive.css'); ?>
 <script  type="text/javascript">
     // Form behaviour for Credit Card type
     $(function ()
     {
-        var defDate =new Date().toLocaleDateString();
-        $("#CreditCardFormModel_expiry_date").val(defDate);
-        $("#CreditCardFormModel_start_date").val(defDate);
-
         $("#CreditCardFormModel_expiry_date").datepicker({
             showOn: "button",
             buttonImage: "/images/Calendar.png",
@@ -25,6 +19,15 @@
             dateFormat: "mm/dd/yy",
             disabled: true
         });
+        $("#CreditCardFormModel_cvv2_code_tip").popover(
+            {
+                placement:"right",
+                title:"What is this",
+                content:"<p>CVV2 is a new authentication scheme established by credit card companies to further efforts towards reducing fraud for internet transactions. It consists of requiring a card holder to enter the CVV2 number in at transaction time to verify that the card is on hand.</p>",
+                html:true,
+                trigger:"hover"
+            }
+        );
     });
 
     function startDateEnable()
@@ -45,11 +48,10 @@
 </script>
 
 <?php $this->renderPartial('/order/errorMessage'); ?>
-
 <?php echo $formCreditCard->dropDownListRow($cardInfo, 'credit_card_type', array(1=>'Visa',2=>'MasterCard',3=>'American Express',4=>'Maestro'),array('labelOptions' => array('class'=>'required'),'onchange'=>'js:startDateEnable()')); ?>
-<?php echo $formCreditCard->textFieldRow($cardInfo, 'credit_card_number', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'16','errorOptions'=>array('class'=>'error'))); ?>
-<?php echo $formCreditCard->textFieldRow($cardInfo, 'cvv2_code', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'3')); ?>
-<?php echo $formCreditCard->textFieldRow($cardInfo, 'expiry_date', array('hint' => '', 'title'=>'Type date in format mm/dd/yyyy')); ?>
-<?php echo $formCreditCard->textFieldRow($cardInfo, 'start_date', array('hint' => '', 'title'=>'Type date in format mm/dd/yyyy','disabled'=>'disabled')); ?>
-<?php echo $formCreditCard->textFieldRow($cardInfo, 'issue_number', array('labelOptions'=>array('class'=>'control-label'),'disabled'=>'disabled')); ?>
+<?php echo $formCreditCard->textFieldRow($cardInfo, 'credit_card_number', array('labelOptions'=>array('class'=>'control-label'),'maxlength'=>'16')); ?>
+<?php echo $formCreditCard->textFieldRow($cardInfo, 'cvv2_code', array('labelOptions'=>array('class'=>'control-label', 'id'=>'CreditCardFormModel_cvv2_code_label'),'maxlength'=>'3')); ?>
+<?php echo $formCreditCard->textFieldRow($cardInfo, 'expiry_date', array('hint' => '', 'title'=>'Type date in format mm/dd/yyyy', 'value'=>date("m/d/y"))); ?>
+<?php echo $formCreditCard->textFieldRow($cardInfo, 'start_date', array('hint' => '', 'title'=>'Type date in format mm/dd/yyyy', 'disabled'=>'disabled', 'value'=>date("m/d/y"))); ?>
+<?php echo $formCreditCard->textFieldRow($cardInfo, 'issue_number', array('labelOptions'=>array('class'=>'control-label'),'disabled'=>'disabled', 'maxlength'=>'1')); ?>
 

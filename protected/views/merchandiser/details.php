@@ -1,7 +1,7 @@
 
 
 <?php $grid = $this->widget('TGridView', array(
-    'dataProvider' => $model->search(),
+    'dataProvider' => $model,
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
@@ -23,7 +23,56 @@
     'pagerCssClass' => 'oms-pager',
     'baseScriptUrl' => 'gridview',
     'columns' => array(
-        array('name' => 'item_id', 'header' => 'Item Number'),
+        array('name' => 'id_item'),
+        array('name' => 'Item Name','value'=>'$data->itemOredered->name'),
+        array('name' => 'Item Description','value'=>'$data->itemOredered->description','htmlOptions'=>array('class'=>'ss')),
+        array('name' => 'Dimension','value'=>'$data->dimensionId->dimension'),
+        array('name' => 'Price','value'=>'$data->price . " $"'),
+        array('name' => 'Price per line','value'=>'$data->price . " $"'),
+        array('name' => 'quantity'),
     ),
 ));?>
+
+<?php /** @var BootActiveForm $form */
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        'id' => 'horizontalForm',
+        'type' => 'horizontal',
+        'enableClientValidation' => true,
+
+        'enableAjaxValidation'=>true,
+        'clientOptions' => array(
+            'validateOnSubmit'=>true,
+            'hideErrorMessage'=>true,
+            'afterValidate'=>'js:showError',
+        )
+    )
+);
+?>
+
+
+<div class="row">
+    <div class="span10 ">
+        <fieldset>
+            <legend>Totals</legend>
+            <div class="span5">
+                <p>Customer name      <?php echo $orderModel->userNameOrder->username; ?>
+
+
+                </p>
+                <p><span class="details_row">Customer type</span> <?php echo $orderModel->customerType->customer_type; ?></p>
+                <p><span class="details_row">Order Number</span> <?php echo $orderModel->id_order; ?></p>
+                <p><span class="details_row">Total price</span></p>
+                <p><span class="details_row">Total number of items</span> </p>
+                <p><span class="details_row">Assignee </span><?php echo $orderModel->assignees->username; ?></p>
+                <p><span class="details_row">Date of ordering</span> <?php echo $orderModel->order_date; ?></p>
+                <p><span class="details_row">Preferable Delivery Date</span> <?php echo $orderModel->preferable_date; ?></p>
+            </div>
+            <div class="span4">
+                <p>Status</p>
+            </div>
+        </fieldset>
+    </div>
+</div>
+</div>
+<?php $this->endWidget(); ?>
 

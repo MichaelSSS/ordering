@@ -33,14 +33,15 @@ class OrderDetails extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
-//			array('id_order, id_item, quantity, price, id_dimension', 'required'),
-//			array('id_order, id_item, quantity, id_dimension', 'numerical', 'integerOnly'=>true),
-//			array('price', 'length', 'max'=>6),
-			// The following rule is used by search().
-//			 @todo Please remove those attributes that should not be searched.
-			array('id_order, id_item, quantity, price, id_dimension', 'safe'),
+            return array(
+			array('quantity', 'numerical', 'integerOnly'=>true),
+                        array('quantity', 'required'),
+                        array('quantity', 'length', 'max'=>3),
+                        array('quantity', 'length', 'max'=>3),
+                array('id_order, id_item, id_customer, quantity, price, id_dimension', 'safe','on'=>'save'),
+
 		);
+
 	}
 
 	/**
@@ -84,35 +85,99 @@ class OrderDetails extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($id)
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
         $criteria->compare('id_customer', Yii::app()->user->id);
-        $criteria->compare('id_order',0);
+        if(isset($id))
+        {
+            $criteria->compare('id_order', $id);
+        }
+        else
+        {
+            $criteria->compare('id_order', 0);
+        }
+
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
 
-    public function getPricePerLine(){
-        self::$totalItemsQuantity +=(int)$this->quantity * (int)$this->dimensionId->count_of_items;
-        self::$totalPrice +=$this->itemOredered->price * $this->quantity * $this->dimensionId->count_of_items;
-        return $this->itemOredered->price * $this->quantity * $this->dimensionId->count_of_items;
 
+
+
+
+    public function setCustomer($id)
+    {
+        $this->id_customer = $id;
     }
 
+    public function getOrderItems($id_customer)
+    {
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return OrderedOrder the static model class
-	 */
+        $criteria = new CDbCriteria;
+        $criteria->compare('id_customer',$id_customer );
+        $criteria->compare('id_order',Order::IS_ORDERED );
+
+        return  $this->findAll($criteria);
+    }
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return OrderedOrder the static model class
+     */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+
+    public static function getOrderedItems($currentItems )
+    {
+        $res= array();
+        foreach($currentItems as $item)
+        {
+            $iData = Yii::app()->db->createCommand()
+                ->select()
+                ->from('item i')
+                ->leftJoin('dimension d', 'd.id_dimension =:id_dimension', array(':id_dimension'=>$item['id_dimension']))
+                ->where('i.id_item =:id_item', array(':id_item'=>$item['id_item']))
+                ->queryAll();
+            $iData[0]['customer'] = $item['id_customer'];
+            $iData[0]['quantity'] = $item['quantity'];
+            $iData[0]['price_per_line'] =  (int)$iData[0]['price'] * (int)$iData[0]['quantity']*(int)$iData[0]['count_of_items'];
+
+
+            self::$totalItemsQuantity +=(int)$iData[0]['count_of_items'] * (int)$iData[0]['quantity'];
+            self::$totalPrice +=(int)$iData[0]['price']*(int)$iData[0]['count_of_items']*(int)$iData[0]['quantity'];
+
+            $res[] = $iData[0];
+        }
+        return  new CArrayDataProvider($res);
+    }
+//
+//    public  function getPricePerLine($price, $quantity)
+//    {
+//        return $price*$quantity;
+//    }
+
+    public function afterSave()
+    {
+        Yii::app()->session->remove("OrderItems");
+    }
+
+    public function searchItem($orderId)
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('id_order = ' . (int)$orderId);
+
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+    }
 }

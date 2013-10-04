@@ -40,19 +40,12 @@ class MerchandiserController extends Controller
         $model->delivery_date = $model->formatDate($model->delivery_date);
         $this->render('index', array('model' => $model,));
     }
-public $Item;
 
     public function actionEdit($id){
 
-        $model = OrderDetails::model()->findByAttributes(array('order_id'=>$id));
-        //$model = OrderDetails::model()->findByPk($id);
-        //$itemModel = Item::model()->findByPk(array('order_id'=>$id));
-
-        /*foreach ($model as $item) {
-            echo 'itemId :'.$Item->name." quantity: ".$item->quantity;
-            echo "<br>";
-        }*/
-        $this->render('details', array('model' => $model));
+        $model = new OrderDetails($id);
+        $orderModel = Order::model()->findByPk($id);
+        $this -> render('details', array('model' => $model->searchItem($id),'orderModel'=>$orderModel));
 
     }
 

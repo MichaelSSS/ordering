@@ -1,44 +1,162 @@
+body {
+    box-sizing: border-box;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+}
+fieldset {
+    border: 1px solid #ddd;
+}
 legend {
-	margin: 0 .5em; 
-    padding: 0 .5em; 
+    display: inline-block;
+    width: auto;
+    margin: 0 .5em;
+    padding: 0 .5em;
+    border-bottom: none;
 }
 ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
-
-.wrap {
-	border: 1px solid #ddd;
-} 
-.head {
-	padding: 8px 4px 0;
-}
-.head li {
-	display: inline-block;
-}
-.ui-datepicker-trigger{
-    cursor: pointer;
-    margin-left: 10px;
-}
-.required span {
-    display: none;
-}
-.row fieldset {
-    border: 1px solid #ddd;
-    padding: 0 .2em;
-}
-.row legend {
-    width: auto;
-    border-bottom: none;
-    margin: 0 1em;
-    padding: 0 .5em;
-}
-legend, label, .btn {
+legend, label, button {
     text-transform: capitalize;
 }
 legend span {
     text-transform: lowercase;
+}
+dd {
+    line-height: 2.15em;
+}
+.required span {
+    display: none;
+}
+/* login-form begin */
+
+.wrp {
+    margin-top: 8em;
+}
+.bttn {
+    margin-left: .8em;
+}
+#login-form .control-label {
+    margin-left: 3em;
+    width: 7em;
+    text-align: left;
+    display: inline-block;
+}
+
+/* login-form end */
+
+/*  error begin */
+.wrp1 {
+    margin-top: 2em;
+}
+.mouse {
+    position: relative;
+
+    -webkit-moz-border-radius: 50%;
+    -moz-moz-border-radius: 50%;
+    -ms-moz-border-radius: 50%;
+    -o-moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.mouse:after,
+.mouse:before {
+
+    height: 15em;
+    width: 15em;
+    background: #000;
+    position: absolute;
+    content: '';
+    opacity: .8;
+    z-index: -1;
+
+    -webkit-moz-border-radius: 50%;
+    -moz-moz-border-radius: 50%;
+    -ms-moz-border-radius: 50%;
+    -o-moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.mouse:after {
+    right: -5em;
+    top: -1.4em;
+}
+.mouse:before {
+    left: -5em;
+    top: -1.4em; 
+}
+
+/* error end */
+
+/* error-messages begin */
+
+.panel {
+    margin-bottom: 21px;
+    background-color: #ffffff;
+    border: 1px solid transparent;
+    border-radius: 0;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+.panel-body {
+    padding: 15px;
+}
+.panel-body:before,
+.panel-body:after {
+    display: table;
+    content: " ";
+}
+.panel-body:after {
+    clear: both;
+}
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-right-radius: -1px;
+    border-top-left-radius: -1px;
+}
+.panel-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 17px;
+}
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #dddddd;
+    border-bottom-right-radius: -1px;
+    border-bottom-left-radius: -1px;
+}
+.panel-warning {
+    border-color: #ff4309;
+}
+.panel-warning > .panel-heading {
+    color: #fff;
+    background-color: #ff7518;
+    border-color: #ff4309;
+}
+
+/* error-messages end */
+
+/* navbar begin */
+
+.head {
+    margin-top: 4em;
+    position: relative;
+}
+.navbar .nav > li > a {
+  float: none;
+  padding: 10px 15px 10px;
+  color: #777777;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #fff;
+}
+
+/* end */
+.ui-datepicker-trigger{
+    cursor: pointer;
 }
 .controls .span3  label {
     display: none;
@@ -46,10 +164,7 @@ legend span {
 .span3 button.btn, input[type="submit"].btn, input[type="reset"].btn  {
     margin: .7em 0 .7em 3em;
 }
-.form-horizontal .control-label {
-    text-align: left;
-    margin-left: 2.2em;
-}
+
 #horizontalForm .radio label {
     margin-left: 3em;
     
@@ -62,6 +177,9 @@ legend span {
 }
 .text-order{
     margin: 5px 0 0 ;
+}
+#orderForm div.text-order{
+    margin: 5px 0 0 180px ;
 }
 .order-buttons{
     float: right;
@@ -79,30 +197,22 @@ tr.user-deleted{
 
 tr.user-deleted a{
     color: #bbb;
-    cursor:default;
-    text-decoration:none;
+    cursor: default;
+    text-decoration: none;
 }
 /*admin end*/
 
-header{
+/* user-info begin */
+.head {
     position: relative;
 }
-.user_info{
+
+.user_info {
     cursor: pointer;
     display: inline-block;
     padding-bottom: 8px;
 }
-.info{
-    position: absolute;
-    top: 30px;
-    left: 0;
-    border:1px solid #ccc;
-    width: 300px;
-    background: #fff;
-    box-shadow:0 1px 2px rgba(0, 0, 0, 0.2);
-    cursor: default;
 
-}
 .info_body{
     padding: 10px;
 }
@@ -124,18 +234,60 @@ header{
 .not_visible{
     display: none;
 }
+.info {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    cursor: default;
+    left: -302px;
+    position: absolute;
+    top: -10px;
+    width: 300px;
+
+} 
+ .info_body{
+    padding: 10px;
+}
+.info-head{
+    background: linear-gradient(#f5f5f5,#fcfcfc);
+    padding-left: 10px;
+    height: 25px;
+    border-bottom: 1px dashed #ccc;
+}
+.info_footer{
+   background: linear-gradient(#fcfcfc,#e8e8e8 );
+    height: 20px;
+    position: relative;
+    bottom: 0;
+
+}
 #search-result {
  font-weight: 700;
   color: #fff;
   background-color: #428bca;
   padding: 10px 15px;
 
+
+}
+.visible{
+    display: block;
+}
+.not_visible{
+    display: none;
+} */
+
+/* end */
+
+
+#search-result {
+    font-weight: 700;
+    color: #fff;
+    background-color: #428bca;
+    padding: 10px 15px;
 }
 #search-result-count {
-
   min-width: 10px;
-  padding: 3px 7px;
- 
+  padding: 3px 7px; 
   line-height: 1;
   position: relative;
   text-decoration: underline;
@@ -156,3 +308,26 @@ header{
     top: 6px;
     left: -6px;
 }
+
+.details_row{
+    display: inline-block;
+    width: 170px;
+    padding-right: 10px;
+    font-weight: bold;
+    text-align: right;
+}
+
+#cardInfo .control-label {
+    margin-left: 1em;
+    text-align: left;
+}
+#cardInfo .required span {
+    display: inline;
+}
+
+.info_block {
+    
+}
+
+
+

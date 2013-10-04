@@ -4,12 +4,14 @@
 <head>
 	<meta charset='utf-8' />
 	<?php Yii::app()->bootstrap->register(); ?>
-    <?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'login.css'); ?>
+    <?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() . '/css/main.css'); ?>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
   <div class='container'>
-    <?php echo $content; ?>
+      <div class='row'>
+          <?php echo $content; ?>
+      </div>
   </div>
 </body>
 </html>

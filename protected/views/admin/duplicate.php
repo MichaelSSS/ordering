@@ -1,15 +1,5 @@
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-         'type' => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-         'tabs' => array(
-        array('label' => 'Duplicate',
-            'content' => '<p>This page is appointed for duplicating user for particular role</p>',
-             'active' => true
-             ),
-        ),
-    ));
-?>
 
+<p>This page is appointed for duplicating user for particular role</p>
 <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                             'id' => 'horizontalForm',
@@ -24,21 +14,20 @@
     <fieldset>
         <legend>user creation</legend>
 
-        <?php echo $form->textFieldRow($model, 'username', array('hint' => '')); ?>
+        <?php echo $form->textFieldRow($model, 'username'); ?>
 
-        <?php echo $form->textFieldRow($model, 'firstname', array('hint' => '')); ?>
+        <?php echo $form->textFieldRow($model, 'firstname'); ?>
 
-        <?php echo $form->textFieldRow($model, 'lastname', array('hint' => '')); ?>
+        <?php echo $form->textFieldRow($model, 'lastname'); ?>
 
         <?php echo $form->passwordFieldRow($model, 'password', array(
-                   'hint' => '',
-                  'title' => 'if you',
+            'title' => '',
             'placeholder' => 'enter new password'));
         ?>
 
-        <?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint' => '')); ?>
+        <?php echo $form->passwordFieldRow($model, 'confirmPassword'); ?>
 
-        <?php echo $form->textFieldRow($model, 'email', array('hint' => '')); ?>
+        <?php echo $form->textFieldRow($model, 'email'); ?>
 
         <?php echo $form->dropDownListRow($model, 'region', array(
             'north' => 'North',

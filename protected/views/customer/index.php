@@ -1,17 +1,5 @@
 
-
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-    'type' => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-    'tabs' => array(
-        array('label' => 'Ordering',
-            'content' => '',
-            'active' => true
-        ),
-    ),
-));
-?>
-
+<p>This page is appointed for creating new and managing existing users</p>
 <?php echo CHtml::link('Create New Order', array('customer/create')); ?>
 
 <?php $form = $this->beginWidget('CActiveForm', array(
@@ -100,7 +88,7 @@ $grid = $this->widget('TGridView', array(
         array('name' => 'order_name', 'header' => 'Order Name'),
         array(
             'name' => 'total_price',
-            'value' => '$data->total_price . "\$"',
+            'value' => '(int)$data->total_price . "\$"',
         ),
         array(
             'name' => 'max_discount',
@@ -127,7 +115,7 @@ $grid = $this->widget('TGridView', array(
             'htmlOptions' => array(),
             'buttons' => array(
                 'edit' => array(
-                    'icon' => 'pencil',
+                    'icon' => 'icon-edit icon-large',
                     //'url'  => 'Yii::app()->createUrl()',
                 ),
             )
@@ -141,7 +129,7 @@ $grid = $this->widget('TGridView', array(
             ),
             'buttons' => array(
                 'remove' => array(
-                    'icon' => 'icon-trash',
+                    'icon' => 'icon-remove icon-large',
                     'url' => 'Yii::app()->createUrl(\'customer/remove\',array(\'id\'=>$data->id_order))',
                     'options' => array(
                         'data-toggle' => 'modal',
@@ -168,7 +156,8 @@ $grid = $this->widget('TGridView', array(
             $.get(url, function(response) {
 //                $('#remove_order').modal('hide');
                 $('.modal-header .close').click();
-                $.fn.yiiGridView.update('yw2');
+                debugger;
+                $.fn.yiiGridView.update('yw0');
 
 
             });

@@ -4,18 +4,15 @@
 <meta charset='utf-8' />
 
 <?php Yii::app()->bootstrap->register(); ?>
-<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'main.css'); ?>
-<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/'.'pager.css'); ?>
-
-    <?php
-    //    $cs = Yii::app()->getClientScript();
-    //    $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui-1.10.2.js');
-    //    $cs->registerCssFile(Yii::app()->baseUrl.'/css/yourcss.css');
-    Yii::app()->clientScript->registerCoreScript('jquery.ui');
-    Yii::app()->clientScript->registerCssFile(
-        Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
-    );
-    ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/main.css'); ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/pager.css'); ?>
+<?php Yii::app()->clientScript->registerCssFile(Yii::app()->getBaseUrl() .  '/css/fontAwesome.css'); ?>
+<?php
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
+Yii::app()->clientScript->registerCssFile(
+    Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
+);
+?>
 
 
 <title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -39,80 +36,64 @@
             </div>
 
             <div class='span10 offset1'>
-                <header class='head pull-right'>
-                    <?php 
-                        $userHome = $this->id;
-                        $this->widget('zii.widgets.CMenu', array(
-                            'items' => array(
-                				array('label'=>'Ordering', 'visible'=> $userHome == 'merchandiser'),
-                				array('label'=>'Ordering', 'visible'=> $userHome == 'customer'),
-                				array('label'=>'Administration', 'visible'=> $userHome == 'admin'),
-                				array('label'=>'Item management', 'visible'=> $userHome == 'supervisor'),
-                                array('label'=>'Logged user:  ' . Yii::app()->user->name),
-                				array(
-                                    'linkOptions'=>array(
-                                        'class'=>TbHtml::ICON_INFO_SIGN.' user_info ',
+                <header class='wrp2'>
 
+                    <?php $userHome = $this->id;
+                        $this->widget('bootstrap.widgets.TbNavbar', array(
+                        'type'     => 'null', // null or 'inverse'
+                        'brand'    => 'Order Management System',
+                        'brandUrl' => '#',
+                        'collapse' => false, // requires bootstrap-responsive.css
+                        'items'    => array(
+                            array(
+                                'class'=>'bootstrap.widgets.TbMenu',
+                                'items' => array(
+                                    array('label' => 'Ordering',        'url'  => '#', 'visible' => $userHome == 'merchandiser', ),
+                                    array('label' => 'Ordering',        'url'  => '#', 'visible' => $userHome == 'customer',     ),
+                                    array('label' => 'Administration',  'url'  => '#', 'visible' => $userHome == 'admin',        ),
+                                    array('label' => 'Item management', 'url'  => '#', 'visible' => $userHome == 'supervisor',   ),
+                                ),
+                            ),
+                            '<div class="info-in"></div>',
+                            array(
+                                'class'=>'bootstrap.widgets.TbMenu',
+                                'htmlOptions' => array('class' => ' info'),
+                                'items' => array(
+                                    array('label' => 'Logged user: ' . Yii::app()->user->name,'url' => '#'),
+                                    array(
+                                        'label' => 'Logout',
+                                        'url'   => '',
+                                        'linkOptions'     => array(
+                                            'data-toggle' => 'modal',
+                                            'data-target' => '#confirm-logout',
+                                            'title'       => 'Log out/Log in',
+                                            'style'       => 'cursor:pointer',
+                                        ),
                                     ),
                                 ),
-                				array(
-                                    'label'=>'Logout',
-                                    'linkOptions'=>array(
-                                        'data-toggle'=>'modal',
-                                        'data-target'=>'#confirm-logout',
-                                        'title'      =>"Log out/Log in",
-                                        'style'      =>'cursor:pointer',
-                                    ),
-                                    'url'=>'',
-                                )
                             ),
-                        ));
-                    ?>
-                    <div class="info not_visible">
-                        <div class="info-head">User info:</div>
-                        <div class="info_body">
-
-                            <?php UserInfo::info()?>
-                        </div>
-                        <div class="info_footer"></div>
-                    </div>
+                        ),
+                    )); ?>
                 </header>
             </div>
         </div>
         <div class="row">
-            <div class="span10 offset1">
+            <div class="span10">
                 <section>
                     <?php echo $content; ?>
                 </section>
             </div>
         </div>
-        <div class="row">
-            <div class="span10 offset1">
-                <footer>
-
-                </footer>
-            </div>
-        </div>
     </div>
-    <script type="text/javascript">
+
+    <script>
         $(document).ready(function () {
-
-            $('.info').width($('header').width())
-
-            $(document).click( function(event){
-                if($(event.target).closest(".info").length)
-                    return;
-                $(".info").delay(1000).slideUp(50);
-                event.stopPropagation();
-
-            });
-
-            $('.user_info').click( function() {
-                $(".info").slideToggle(50);
-                return false;
-            });
+            $('.info-in').append($('.info'))
         });
     </script>
 
+    <div class="info">
+        <?php $this->widget('application.widgets.UserInfo')?>
+    </div>
 </body>
 </html>

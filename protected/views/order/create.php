@@ -60,7 +60,7 @@
                             'async'=>true,
                             'dataType' => 'json',
                             'url'=>'?r=customer/order',
-                            'data' => 'js:$("#horizontalForm").serialize()',
+                            'data' => 'js:$("#orderForm").serialize()',
                             'success'=>'js:afterValidateCC',
                             //'error'=>'js:function(xhr,status,error){alert(error)}'
                         ),

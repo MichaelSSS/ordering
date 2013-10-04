@@ -53,7 +53,8 @@ Yii::app()->clientScript->registerCssFile(
                                     array('label' => 'Administration',  'url'  => '#', 'visible' => $userHome == 'admin',        ),
                                     array('label' => 'Item management', 'url'  => '#', 'visible' => $userHome == 'supervisor',   ),
                                 ),
-                            ), '<div class="info-in"></div>',
+                            ),
+                            '<div class="info-in"></div>',
                             array(
                                 'class'=>'bootstrap.widgets.TbMenu',
                                 'htmlOptions' => array('class' => ' info'),

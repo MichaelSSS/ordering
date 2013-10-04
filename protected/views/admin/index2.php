@@ -1,11 +1,8 @@
 <?php $this->renderPartial('_del2'); ?> <!--modal-->
 
 <p>This page is appointed for creating new and managing existing users</p>
-<?php echo CHtml::link('Create New User', array('admin/create'));
-    $dataProvider = $model->search();
-    echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
-        . $dataProvider->getTotalItemCount() . '</span></div>';
-?>
+
+<?php echo CHtml::link('Create New User', array('admin/create')); ?>
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -29,7 +26,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             <div class='span3'>
                 <?php echo $form->dropDownListRow($fields, 'keyField',
                     array('All Columns', 'User Name', 'First Name', 'Last Name', 'Role'),
-                    array('class' => 'span3',
+                    array('class' => 'input-large',
                         'options' => array(
                             array_search('User Name', $fields->keyFields) => array(
                                 'selected' => true
@@ -41,7 +38,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             <div class='span3'>
                 <?php echo $form->dropDownListRow($fields, 'criteria',
                     array('equals', 'not equal to', 'starts with', 'contains', 'does not contain'),
-                    array('class' => 'span3',
+                    array('class' => 'input-large',
                         'options' => array(
                             array_search('starts with', $fields->criterias) => array(
                                 'selected' => true
@@ -50,24 +47,36 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     ));
                 ?>
             </div>
-            <div class='span3'>
-                <?php echo $form->textField($fields, 'keyValue', array(
-                    'onkeyup' => 'document.getElementById(\'btn-search\').disabled = !(this.value.length);',
-                    'class' => 'span3',
-                    'placeholder' => 'Search'
-                )); ?>
-
-                <input class='btn pull-right' type='reset' value='Reset'>
-                <input class='btn btn-info pull-right' type='submit' disabled='true' id='btn-search' value='Search'>
-
+            <div class='row'>
+                <div class="input-append">
+                    <?php echo $form->textField($fields, 'keyValue', array(
+                        'onkeyup' => 'document.getElementById(\'btn-search\').disabled = !(this.value.length);',
+                        'class' => 'span2',
+                        'placeholder' => 'Search'
+                    )); ?>
+                    <button class='btn btn-info' type='submit' disabled='true' id='btn-search'>Search</button>
+                    <button class="btn" type="reset">Reset</button> 
+                </div>
             </div>
         </div>
     </div>
 </fieldset>
 <div class="span10">&nbsp;</div>
 <fieldset>
-<div class="span3 offset6">
-    <a class="pull-right" id="toggle-deleted" href="<?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>">show deleted users</a>
+<div class="row">
+    <div class="span10">
+         <?php
+            $dataProvider = $model->search();
+            echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
+                . $dataProvider->getTotalItemCount() . '</span></div>';
+        ?>
+
+    <div class="row">
+        <a class="pull-right" id="toggle-deleted" href="<?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>">show deleted users</a>
+    </div>
+</div>
+   
+    
 </div>
 </fieldset>
 <?php $this->endWidget(); ?>

@@ -31,7 +31,7 @@
     </div>
     <div class='panel-footer'>
         <?php if ( $code == 403 ) {
-            echo '<p class="lead">Please ' . '<b>' . CHtml::link('login', array('site/login')) .'</b>'.
+            echo '<p class="lead">Please '  . CHtml::link('login', array('site/login')) .
             ' under appropriate User Name</p>';
             }
         ?>

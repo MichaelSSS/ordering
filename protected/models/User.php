@@ -31,13 +31,13 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
         return array(
-            array('username,firstname,lastname,email', 'required','except'=>'remove'),
-            array('password,confirmPassword','required','except'=>'remove,edit'),
-            array('username, password,role,firstname,lastname,email,region,deleted','safe','except'=>'remove'),
+            array('username, firstname, lastname, email', 'required','except' => 'remove'),
+            array('password, confirmPassword', 'required', 'except' => 'remove,edit'),
+            array('username, password, role, firstname, lastname, email, region, deleted', 'safe', 'except' => 'remove'),
 
-            array('username','unique','message'=>'Login name already exist','except'=>'remove'),
-            array('username','length','max'=>20,'message'=>'Login Name is too long','except'=>'remove'),
-            array('username','match','not'=>true,'pattern'=>'[\s]','message'=>'Login Name cannot contain spaces','except'=>'remove'),
+            array('username', 'unique', 'message' => 'Login name already exist', 'except' => 'remove'),
+            array('username', 'length', 'max' => 20, 'message' => 'Login Name is too long', 'except' => 'remove'),
+            array('username', 'match', 'not'=> true, 'pattern' => '[\s]', 'message' => 'Login Name cannot contain spaces','except'=>'remove'),
             array('email','email','message'=>'Incorrect format of Email Adress','except'=>'remove'),
 
             array('password','length','min'=>4,'max'=>10,'except'=>'remove'),
@@ -55,7 +55,9 @@ class User extends CActiveRecord
 	protected function beforeSave()
 	{
 	    $this->password = CPasswordHelper::hashPassword($this->password);
-	    $this->username = trim($this->username);
+        $this->username = trim($this->username);
+        $this->firstname = trim($this->username);
+        $this->lastname = trim($this->username);
 
 	    return true;
 	}

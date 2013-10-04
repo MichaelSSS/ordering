@@ -148,7 +148,7 @@ class OrderDetails extends CActiveRecord
                 ->queryAll();
             $iData[0]['customer'] = $item['id_customer'];
             $iData[0]['quantity'] = $item['quantity'];
-            $iData[0]['price_per_line'] =  (int)$iData[0]['price'] * (int)$iData[0]['quantity'];
+            $iData[0]['price_per_line'] =  (int)$iData[0]['price'] * (int)$iData[0]['quantity']*(int)$iData[0]['count_of_items'];
 
 
             self::$totalItemsQuantity +=(int)$iData[0]['count_of_items'] * (int)$iData[0]['quantity'];

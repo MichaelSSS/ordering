@@ -73,7 +73,7 @@ class CustomerController extends Controller
 
     public function actionCreate()
     {
-//        error_reporting(0);
+//        error_reporting(-1);
         $order = new Order();
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'orderForm') {
             echo CActiveForm::validate(array($order));

@@ -89,7 +89,7 @@ $grid = $this->widget('TGridView', array(
             'buttons'    => array(
                 'remove' => array(
                     'icon' => 'icon-trash',
-                    'url'  => 'Yii::app()->createUrl(\'order/remove\',array(\'id\'=>$data->id_item))',
+                    'url'  => 'Yii::app()->createUrl(\'order/remove\',array())',
                     'options'=>array(
                         'data-toggle'=>'modal',
                         'data-target'=>'#remove_order',

@@ -63,21 +63,18 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 </fieldset>
 <div class="span10">&nbsp;</div>
 <fieldset>
-<div class="row">
-    <div class="span10">
-         <?php
-            $dataProvider = $model->search();
-            echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
-                . $dataProvider->getTotalItemCount() . '</span></div>';
-        ?>
-
     <div class="row">
-        <a class="pull-right" id="toggle-deleted" href="<?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>">show deleted users</a>
+        <div class="span10">
+            <?php
+                $dataProvider = $model->search();
+                echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
+                    . $dataProvider->getTotalItemCount() . '</span></div>';
+            ?>
+        </div>     
+        <div class="row">
+            <a class="pull-right" id="toggle-deleted" href="<?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>">show deleted users</a>
+        </div>  
     </div>
-</div>
-   
-    
-</div>
 </fieldset>
 <?php $this->endWidget(); ?>
 

@@ -47,7 +47,7 @@
                     else
                         $target = $this->createUrl('customer/save');
                 ?>
-                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'link', 'type' => 'primary','url' => $target, 'label' => 'Save', 'htmlOptions' => array('name' => 'save','submit'=>'?r=customer/save'))); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Save', 'htmlOptions' => array('name' => 'save', 'submit' => '?r=customer/save'))); ?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                     'buttonType' => 'ajaxSubmitButton',
                     'type' => 'primary',

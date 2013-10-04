@@ -113,7 +113,7 @@ class CustomerController extends Controller
 
                 $order->save(false);
                 foreach ($currentItems as $item) {
-                    $orderDetails = new OrderDetails();
+                    $orderDetails = new OrderDetails('save');
                     $orderDetails->attributes = $item;
                     $orderDetails->id_order = $order->id_order;
                     $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;

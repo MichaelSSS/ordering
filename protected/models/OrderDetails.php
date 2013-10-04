@@ -37,6 +37,8 @@ class OrderDetails extends CActiveRecord
 			array('quantity', 'numerical', 'integerOnly'=>true),
                         array('quantity', 'required'),
                         array('quantity', 'length', 'max'=>3),
+                        array('quantity', 'length', 'max'=>3),
+                array('id_order, id_item, id_customer, quantity, price, id_dimension', 'safe','on'=>'save'),
 
 		);
 

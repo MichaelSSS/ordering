@@ -48,55 +48,88 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 ?>
     <fieldset>
         <legend>Totals</legend>
-        <div class="span5">
-            <p>Customer name <?php echo $orderModel->userNameOrder->username; ?> </p>
-            <p><span class="details_row">Customer type</span> <?php echo $orderModel->customerType->customer_type; ?></p>
-            <p><span class="details_row">Order Number</span> <?php echo $orderModel->id_order; ?></p>
-            <p><span class="details_row">Total price</span></p>
-            <p><span class="details_row">Total number of items</span> </p>
-            <p><span class="details_row">Assignee </span><?php echo $orderModel->assignees->username; ?></p>
-            <p><span class="details_row">Date of ordering</span> <?php echo $orderModel->order_date; ?></p>
-            <p><span class="details_row">Preferable Delivery Date</span> <?php echo $orderModel->preferable_date; ?></p>
-        </div>
-        <div class="span4">
-            <p>Status</p>
+        <div class="row">
+            <div class="span12">
+                <div class="span6">
+                    <ul class='inline nav'>
+                        <li>
+                            <ul class='nav'>
+                                <li><?= 'Customer name:'; ?></li>
+                                <li><?= 'Customer type:'; ?></li>
+                                <li><?= 'Order Number:' ?></li>
+                                <li><?= 'Total price:' ;?></li>
+                                <li><?= 'Total number of items:' ;?></li>
+                                <li><?= 'Assignee:' ;?></li>
+                                <li><?= 'Date of ordering:' ;?></li>
+                                <li><?= 'Preferable Delivery:' ;?></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class='nav'>
+                                <li><?php echo $orderModel->userNameOrder->username; ?></li>
+                                <li><?php echo $orderModel->customerType->customer_type; ?></li>
+                                <li><?php echo $orderModel->id_order; ?></li>
+                                <li>--</li>
+                                <li>--</li>
+                                <li><?php echo $orderModel->assignees->username; ?></li>
+                                <li><?php echo $orderModel->order_date; ?></li>
+                                <li><?php echo $orderModel->preferable_date; ?></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span6">
+                    <p>Status</p>
+                </div>
+            </div>
         </div>
     </fieldset>
 
+    <fieldset>
+        <legend>Totals</legend>
+        <div class="row">
+            <div class="span12">
+                <div class="span6">
+                    <ul class='inline nav'>
+                        <li>
+                            <ul class='nav'>
+                                <li><?='Customer name:';?></li>
+                                <li><?='Customer type:';?></li>
+                                <li><?='Order Number:'?></li>
+                                <li><?='Total price:';?></li>
+                                <li><?='Total number of items:';?></li>
+                                <li><?='Assignee:';?></li>
+                                <li><?='Date of ordering:';?></li>
+                                <li><?='Preferable Delivery:';?></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul class='nav'>
+                                <li><?php echo $orderModel->userNameOrder->username; ?></li>
+                                <li><?php echo $orderModel->customerType->customer_type; ?></li>
+                                <li><?php echo $orderModel->id_order; ?></li>
+                                <li>--</li>
+                                <li>--</li>
+                                <li><?php echo $orderModel->assignees->username; ?></li>
+                                <li><?php echo $orderModel->order_date; ?></li>
+                                <li><?php echo $orderModel->preferable_date; ?></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span6">
+                    <?php
+                    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                        'id' => 'verticalForm',
+                        'htmlOptions' => array('class' => 'well'),
+                    )); ?>
 
+                    <?php echo $form->checkBoxListInlineRow($orderModel, 'status', array('Ordered', 'Delivered')); ?>
 
-<div class="row">
-    <div class="span10 ">
-        <fieldset>
-            <legend>Totals</legend>
-            <div class="span5">
-                <p>Customer name      <?php echo $orderModel->userNameOrder->username; ?>
-
-
-                </p>
-                <p><span class="details_row">Customer type</span> <?php echo $orderModel->customerType->customer_type; ?></p>
-                <p><span class="details_row">Order Number</span> <?php echo $orderModel->id_order; ?></p>
-                <p><span class="details_row">Total price</span></p>
-                <p><span class="details_row">Total number of items</span> </p>
-                <p><span class="details_row">Assignee </span><?php echo $orderModel->assignees->username; ?></p>
-                <p><span class="details_row">Date of ordering</span> <?php echo $orderModel->order_date; ?></p>
-                <p><span class="details_row">Preferable Delivery Date</span> <?php echo $orderModel->preferable_date; ?></p>
+                    <?php $this->endWidget(); ?>
+                </div>
             </div>
-            <div class="span4">
-                <?php
-                $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-                    'id'=>'verticalForm',
-                    'htmlOptions'=>array('class'=>'well'),
-                )); ?>
-
-                <?php echo $form->checkBoxListInlineRow($orderModel, 'status', array('Ordered', 'Delivered')); ?>
-
-                <?php $this->endWidget(); ?>
-            </div>
-        </fieldset>
-    </div>
-</div>
-</div>
-
+        </div>
+    </fieldset>
 <?php $this->endWidget(); ?>
 

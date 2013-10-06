@@ -15,19 +15,14 @@ legend {
     padding: 0 .5em;
     border-bottom: none;
 }
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
 legend, label, button {
     text-transform: capitalize;
 }
 legend span {
     text-transform: lowercase;
 }
-dd {
-    line-height: 2.15em;
+small {
+  white-space: normal;
 }
 .required span {
     display: none;
@@ -36,22 +31,18 @@ dd {
     margin-top: 8em;
 }
 .wrp1 {
-    margin-top: 2em;
+    margin-top: 1em;
 }
 .wrp2 {
     margin-top: 4em;
 }
-.bttn {
-    margin-left: .8em;
-}
 /*login-form*/
-#login-form .control-label {
-    margin-left: 3em;
-    width: 7em;
-    text-align: left;
-    display: inline-block;
-}
 
+/*userInfo*/
+.navbar .nav > li > .dropdown-menu:after,
+.navbar .nav > li > .dropdown-menu:before {
+    left: 255px;
+}
 /*error-message*/
 .panel {
     margin-bottom: 21px;
@@ -86,7 +77,7 @@ dd {
 .panel-footer {
     padding: 10px 15px;
     background-color: #f5f5f5;
-    border-top: 1px solid #dddddd;
+    border-top: 1px solid #ddd;
     border-bottom-right-radius: -1px;
     border-bottom-left-radius: -1px;
 }
@@ -97,67 +88,6 @@ dd {
     color: #fff;
     background-color: #ff7518;
     border-color: #ff4309;
-}
-.mouse {
-    position: relative;
-
-    -webkit-moz-border-radius: 50%;
-    -moz-moz-border-radius: 50%;
-    -ms-moz-border-radius: 50%;
-    -o-moz-border-radius: 50%;
-    border-radius: 50%;
-}
-.mouse:after,
-.mouse:before {
-    height: 15em;
-    width: 15em;
-    background: #000;
-    position: absolute;
-    content: '';
-    opacity: .8;
-    z-index: -1;
-
-    -webkit-moz-border-radius: 50%;
-    -moz-moz-border-radius: 50%;
-    -ms-moz-border-radius: 50%;
-    -o-moz-border-radius: 50%;
-    border-radius: 50%;
-}
-.mouse:after {
-    right: -5em;
-    top: -1.4em;
-}
-.mouse:before {
-    left: -5em;
-    top: -1.4em;
-}
-.controls .span3  label {
-    display: none;
- }
-.span3 button.btn, input[type='submit'].btn, input[type='reset'].btn  {
-    margin: .7em 0 .7em 3em;
-}
-#horizontalForm .radio label {
-    margin-left: 3em;
-}
-#horizontalForm input[type='radio'] {
-    margin-left: 1em;
-}
-.table-bordered th, .table-bordered td {
-    text-align: center;
-}
-/*order*/
-.ui-datepicker-trigger{
-    cursor: pointer;
-}
-.text-order {
-    margin: 5px 0 0 ;
-}
-#orderForm div.text-order {
-    margin: 5px 0 0 180px ;
-}
-.order-buttons {
-    float: right;
 }
 /*admin*/
 tr.user-active {
@@ -200,6 +130,35 @@ tr.user-deleted a {
     top: 6px;
     left: -6px;
 }
+.controls  label {
+    display: none;
+}
+.span3 button.btn, input[type='submit'].btn, input[type='reset'].btn  {
+    margin: .7em 0 .7em 3em;
+}
+#horizontalForm .radio label {
+    margin-left: 3em;
+}
+#horizontalForm input[type='radio'] {
+    margin-left: 1em;
+}
+.table-bordered th, .table-bordered td {
+    text-align: center;
+}
+
+/*order*/
+.ui-datepicker-trigger {
+    cursor: pointer;
+}
+.text-order {
+    margin: 5px 0 0 ;
+}
+#orderForm div.text-order {
+    margin: 5px 0 0 180px ;
+}
+.order-buttons {
+    float: right;
+}
 .details_row{
     display: inline-block;
     width: 170px;
@@ -207,7 +166,6 @@ tr.user-deleted a {
     font-weight: bold;
     text-align: right;
 }
-
 #cardInfo .control-label {
     margin-left: 1em;
     text-align: left;
@@ -215,5 +173,3 @@ tr.user-deleted a {
 #cardInfo .required span {
     display: inline;
 }
-
-

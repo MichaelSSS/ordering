@@ -36,6 +36,8 @@ class Order extends CActiveRecord
     public $searchValue;
     public $totalQuantity;
 
+
+
 //    private $_errorCode;
 
     public $filterCriterias = array('Status', 'Role');

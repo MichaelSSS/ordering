@@ -5,31 +5,22 @@ class User extends CActiveRecord
 
     public $currentPageSize = 10;
     public $searchCriteria = array();
-
     public $confirmPassword;
     public $status;
-
-
+    
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 
-	/**
-	 * @return string the associated database table name
-	 */
 	public function tableName()
 	{
 		return 'user';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
+
         return array(
             array('username, firstname, lastname, email', 'required', 'except' => 'remove'),
             array('password, confirmPassword', 'required', 'except' => 'remove, edit'),
@@ -55,17 +46,14 @@ class User extends CActiveRecord
 
 	protected function beforeSave()
 	{
-	    $this->password = CPasswordHelper::hashPassword($this->password);
-        $this->username = trim($this->username);
-        $this->firstname = trim($this->username);
-        $this->lastname = trim($this->username);
-
+	    $this->password  = CPasswordHelper::hashPassword($this->password);
+	    $this->username  = trim($this->username);
+	    $this->firstname = trim($this->username);
+	    $this->lastname  = trim($this->username);
 	    return true;
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
+
 	public function attributeLabels()
 	{
 		return array(
@@ -81,21 +69,11 @@ class User extends CActiveRecord
 		);
 	}
 
-	/**
-	 * Checks if the given password is correct.
-	 * @param string the password to be validated
-	 * @return boolean whether the password is valid
-	 */
 	public function validatePassword($password)
 	{
 		return CPasswordHelper::verifyPassword($password, $this->password);
 	}
 
-	/**
-	 * Generates the password hash.
-	 * @param string password
-	 * @return string hash
-	 */
 	public function hashPassword($password)
 	{
 		return CPasswordHelper::hashPassword($password);

@@ -99,7 +99,12 @@ tr.user-deleted {
 tr.user-deleted a {
     color: #bbb;
     cursor: default;
+    left: -302px;
+    position: absolute;
+    top: 95px;
+    width: 300px;
     text-decoration: none;
+
 }
 #search-result {
     font-weight: 700;

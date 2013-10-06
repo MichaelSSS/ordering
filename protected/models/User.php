@@ -56,6 +56,8 @@ class User extends CActiveRecord
 	{
 	    $this->password = CPasswordHelper::hashPassword($this->password);
 	    $this->username = trim($this->username);
+	    $this->firstname = trim($this->username);
+	    $this->lastname = trim($this->username);
 
 	    return true;
 	}

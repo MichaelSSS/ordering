@@ -1,5 +1,3 @@
-
-
 <?php $grid = $this->widget('TGridView', array(
     'dataProvider' => $model,
     'type' => 'striped bordered condensed',
@@ -68,7 +66,15 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 <p><span class="details_row">Preferable Delivery Date</span> <?php echo $orderModel->preferable_date; ?></p>
             </div>
             <div class="span4">
-                <p>Status</p>
+                <?php
+                $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                    'id'=>'verticalForm',
+                    'htmlOptions'=>array('class'=>'well'),
+                )); ?>
+
+                <?php echo $form->checkBoxListInlineRow($orderModel, 'status', array('Ordered', 'Delivered')); ?>
+
+                <?php $this->endWidget(); ?>
             </div>
         </fieldset>
     </div>

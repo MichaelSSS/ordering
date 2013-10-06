@@ -23,40 +23,40 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     )
 )); ?>
     <fieldset>
-        <legend>Edit user</legend>
-        <ul>
-            <li><?php echo $form->textFieldRow($model, 'username'); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'firstname'); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'lastname'); ?></li>
+        <legend>edit user</legend>
+        
+            <?php echo $form->textFieldRow($model, 'username'); ?>
+            <?php echo $form->textFieldRow($model, 'firstname'); ?>
+            <?php echo $form->textFieldRow($model, 'lastname'); ?>
+
             <div class='row offset2 change-link' >
                 <p> 
                     <a href='#' class='slide'>Change password</a>
                 </p>
             </div>
+
             <div class='password-group'>
-               <li>
-                   <?php echo $form->passwordFieldRow($model, 'password', array(
-                       'placeholder' => 'enter new password'));
-                   ?>
-               </li>
-               <li><?php echo $form->passwordFieldRow($model, 'confirmPassword'); ?></li>
+               <?php echo $form->passwordFieldRow($model, 'password', array(
+                   'placeholder' => 'enter new password'));
+               ?>
+               <?php echo $form->passwordFieldRow($model, 'confirmPassword'); ?>
             </div>
-            <li><?php echo $form->textFieldRow($model, 'email'); ?></li>
-            <li>
-                <?php echo $form->dropDownListRow($model, 'region', array(
-                    'north' => 'North',
-                    'south' => 'South',
-                    'west'  => 'West',
-                    'east'  => 'East'
-                )); ?>
-            </li>
-            <li>
-                <?php echo $form->dropDownListRow($model, 'deleted', array(
-                    0 =>'Active',
-                    1 =>'Deleted',
-                )); ?>
-            </li>
-        </ul>
+
+            <?php echo $form->textFieldRow($model, 'email'); ?>
+            
+            <?php echo $form->dropDownListRow($model, 'region', array(
+                'north' => 'North',
+                'south' => 'South',
+                'west'  => 'West',
+                'east'  => 'East'
+            )); ?>
+            
+            <?php echo $form->dropDownListRow($model, 'deleted', array(
+                0 =>'Active',
+                1 =>'Deleted',
+            )); ?>
+            
+       
     </fieldset>
 
     <fieldset>
@@ -97,7 +97,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
             <div class='modal-body'>
                 <p>Are you sure you want to cancel operation?</p>
-                <p>All data will be lost</p>
+                <p>All data will be lost in this page</p>
             </div>
 
             <?php $target = $this->createUrl('admin/index'); ?>

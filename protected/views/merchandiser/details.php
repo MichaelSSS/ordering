@@ -48,31 +48,23 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     )
 );
 ?>
+    <fieldset>
+        <legend>Totals</legend>
+        <div class="span5">
+            <p>Customer name <?php echo $orderModel->userNameOrder->username; ?> </p>
+            <p><span class="details_row">Customer type</span> <?php echo $orderModel->customerType->customer_type; ?></p>
+            <p><span class="details_row">Order Number</span> <?php echo $orderModel->id_order; ?></p>
+            <p><span class="details_row">Total price</span></p>
+            <p><span class="details_row">Total number of items</span> </p>
+            <p><span class="details_row">Assignee </span><?php echo $orderModel->assignees->username; ?></p>
+            <p><span class="details_row">Date of ordering</span> <?php echo $orderModel->order_date; ?></p>
+            <p><span class="details_row">Preferable Delivery Date</span> <?php echo $orderModel->preferable_date; ?></p>
+        </div>
+        <div class="span4">
+            <p>Status</p>
+        </div>
+    </fieldset>
 
 
-<div class="row">
-    <div class="span10 ">
-        <fieldset>
-            <legend>Totals</legend>
-            <div class="span5">
-                <p>Customer name      <?php echo $orderModel->userNameOrder->username; ?>
-
-
-                </p>
-                <p><span class="details_row">Customer type</span> <?php echo $orderModel->customerType->customer_type; ?></p>
-                <p><span class="details_row">Order Number</span> <?php echo $orderModel->id_order; ?></p>
-                <p><span class="details_row">Total price</span></p>
-                <p><span class="details_row">Total number of items</span> </p>
-                <p><span class="details_row">Assignee </span><?php echo $orderModel->assignees->username; ?></p>
-                <p><span class="details_row">Date of ordering</span> <?php echo $orderModel->order_date; ?></p>
-                <p><span class="details_row">Preferable Delivery Date</span> <?php echo $orderModel->preferable_date; ?></p>
-            </div>
-            <div class="span4">
-                <p>Status</p>
-            </div>
-        </fieldset>
-    </div>
-</div>
-</div>
 <?php $this->endWidget(); ?>
 

@@ -32,20 +32,19 @@
         <?php echo $form->textFieldRow($model, 'username', array('class' => 'span4')); ?>
 
         <?php echo $form->passwordFieldRow($model, 'password', array('class' => 'span4')); ?>
-        <div class='row'>
-            <div class="span5">
-                <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
-            </div>
+       
+        <?php echo $form->checkboxRow($model, 'rememberMe'); ?>
+           
 
-            <?php $this->widget('bootstrap.widgets.TbButton', array(
+        <?php $this->widget('bootstrap.widgets.TbButton', array(
                 'buttonType'  => 'submit',
                 'type'        => 'info',
                 'label'       => 'sign in',
                 'htmlOptions' => array(
-                    'class'   => 'bttn pull-left',
+                    'class'   => '',
                 ),
-            )); ?>
-        </div>
+        )); ?>
+        
     </fieldset>
     <?php $this->endWidget(); ?>
 </div>

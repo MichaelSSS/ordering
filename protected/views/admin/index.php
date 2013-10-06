@@ -67,7 +67,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         </div>
     </div>
 </fieldset>
-<div class="span10">&nbsp;</div>
+<div class="span12">&nbsp;</div>
 <fieldset>
 <div class="span3 offset6">
     <a class="pull-right" id="toggle-deleted" href="<?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>">show deleted users</a>

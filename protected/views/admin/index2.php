@@ -20,7 +20,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <fieldset>
     <legend>Search <span>by</span></legend>
-    <div class='span9'><p>Field Filter</p></div>
+    <div class='span12'><p>Field Filter</p></div>
     <div class='control-group'>
         <div class='controls'>
             <div class='span3'>
@@ -61,21 +61,24 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         </div>
     </div>
 </fieldset>
-<div class="span10">&nbsp;</div>
-<fieldset>
+<div class="wrp1">
     <div class="row">
-        <div class="span10">
+        <div class="span3">
             <?php
-                $dataProvider = $model->search();
-                echo '<div id="search-result">Number of Found Users <span id="search-result-count">'
-                    . $dataProvider->getTotalItemCount() . '</span></div>';
+            $dataProvider = $model->search();
+            echo '<div id="search-result">Number of Found Users <i class="icon-user icon-large"></i> <span id="search-result-count">'
+                . $dataProvider->getTotalItemCount() . '</span></div>';
             ?>
-        </div>     
-        <div class="row">
-            <a class="pull-right" id="toggle-deleted" href="<?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>">show deleted users</a>
-        </div>  
+        </div>
+        <div class="span9 pull-right">
+            <a class="pull-right" id="toggle-deleted" href="
+             <?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>"> show deleted users
+            </a>
+        </div>
     </div>
-</fieldset>
+</div>
+
+
 <?php $this->endWidget(); ?>
 
 <div id="oms-grid-view0" class="grid-view">

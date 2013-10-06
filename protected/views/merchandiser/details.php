@@ -77,7 +77,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 <div> <span class="status">Status</span>
                     <?php echo $form->checkBox($orderModel,'status',array('checked'=>$orderModel->trueOrderedStatus,'id'=>'ordered_status')); ?>
                     <span>Ordered</span>
-                <?php echo $form->checkBox($orderModel,'status',array('checked'=>$orderModel->trueDeliveredStatus,'id'=>'delivered_status')); ?>
+                    <?php echo $form->checkBox($orderModel,'status',array('checked'=>$orderModel->trueDeliveredStatus,'id'=>'delivered_status')); ?>
                     <span>Delivered </span>
 
 

@@ -104,7 +104,6 @@ tr.user-deleted a {
     top: 95px;
     width: 300px;
     text-decoration: none;
-
 }
 #search-result {
     font-weight: 700;
@@ -163,13 +162,6 @@ tr.user-deleted a {
 }
 .order-buttons {
     float: right;
-}
-.details_row{
-    display: inline-block;
-    width: 170px;
-    padding-right: 10px;
-    font-weight: bold;
-    text-align: right;
 }
 #cardInfo .control-label {
     margin-left: 1em;

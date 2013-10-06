@@ -88,7 +88,7 @@ $grid = $this->widget('TGridView', array(
         array('name' => 'order_name', 'header' => 'Order Name'),
         array(
             'name' => 'total_price',
-            'value' => '$data->total_price . "\$"',
+            'value' => '(int)$data->total_price . "\$"',
         ),
         array(
             'name' => 'max_discount',
@@ -156,7 +156,8 @@ $grid = $this->widget('TGridView', array(
             $.get(url, function(response) {
 //                $('#remove_order').modal('hide');
                 $('.modal-header .close').click();
-                $.fn.yiiGridView.update('yw2');
+                debugger;
+                $.fn.yiiGridView.update('yw0');
 
 
             });

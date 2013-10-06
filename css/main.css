@@ -26,17 +26,25 @@ legend, label, button {
 legend span {
     text-transform: lowercase;
 }
+dd {
+    line-height: 2.15em;
+}
 .required span {
     display: none;
 }
-/* login-form begin */
-
 .wrp {
     margin-top: 8em;
+}
+.wrp1 {
+    margin-top: 2em;
+}
+.wrp2 {
+    margin-top: 4em;
 }
 .bttn {
     margin-left: .8em;
 }
+/*login-form*/
 #login-form .control-label {
     margin-left: 3em;
     width: 7em;
@@ -44,65 +52,10 @@ legend span {
     display: inline-block;
 }
 
-/* login-form end */
-
-/*  error begin */
-.wrp1 {
-    margin-top: 2em;
-}
-.mouse {
-    position: relative;
-
-    -webkit-moz-border-radius: 50%;
-    -moz-moz-border-radius: 50%;
-    -ms-moz-border-radius: 50%;
-    -o-moz-border-radius: 50%;
-    border-radius: 50%;
-}
-.mouse:after {
-
-    height: 15em;
-    width: 15em;
-    background: #000;
-    position: absolute;
-    content: '';
-    right: -5em;
-    top: -1.4em;
-    opacity: .8;
-    z-index: -1;
-    
-    -webkit-moz-border-radius: 50%;
-    -moz-moz-border-radius: 50%;
-    -ms-moz-border-radius: 50%;
-    -o-moz-border-radius: 50%;
-    border-radius: 50%;   
-   
-}
-.mouse:before {
-    height: 15em;
-    width: 15em;
-    background: #000;
-    position: absolute;
-    content: '';
-    left: -5em;
-    top: -1.4em;
-    opacity: .8;
-    z-index: -1;
-    
-    -webkit-moz-border-radius: 50%;
-    -moz-moz-border-radius: 50%;
-    -ms-moz-border-radius: 50%;
-    -o-moz-border-radius: 50%;
-    border-radius: 50%;
-}
-
-/* error end */
-
-/* error-messages begin */
-
+/*error-message*/
 .panel {
     margin-bottom: 21px;
-    background-color: #ffffff;
+    background-color: #fff;
     border: 1px solid transparent;
     border-radius: 0;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -114,7 +67,7 @@ legend span {
 .panel-body:before,
 .panel-body:after {
     display: table;
-    content: " ";
+    content: ' ';
 }
 .panel-body:after {
     clear: both;
@@ -145,114 +98,95 @@ legend span {
     background-color: #ff7518;
     border-color: #ff4309;
 }
+.mouse {
+    position: relative;
 
-/* error-messages end */
-
-/* navbar begin */
-
-.head {
-    margin-top: 4em;
+    -webkit-moz-border-radius: 50%;
+    -moz-moz-border-radius: 50%;
+    -ms-moz-border-radius: 50%;
+    -o-moz-border-radius: 50%;
+    border-radius: 50%;
 }
+.mouse:after,
+.mouse:before {
+    height: 15em;
+    width: 15em;
+    background: #000;
+    position: absolute;
+    content: '';
+    opacity: .8;
+    z-index: -1;
 
-/* end */
-.ui-datepicker-trigger{
-    cursor: pointer;
-    margin-left: 10px;
+    -webkit-moz-border-radius: 50%;
+    -moz-moz-border-radius: 50%;
+    -ms-moz-border-radius: 50%;
+    -o-moz-border-radius: 50%;
+    border-radius: 50%;
+}
+.mouse:after {
+    right: -5em;
+    top: -1.4em;
+}
+.mouse:before {
+    left: -5em;
+    top: -1.4em;
 }
 .controls .span3  label {
     display: none;
  }
-.span3 button.btn, input[type="submit"].btn, input[type="reset"].btn  {
+.span3 button.btn, input[type='submit'].btn, input[type='reset'].btn  {
     margin: .7em 0 .7em 3em;
 }
-
 #horizontalForm .radio label {
     margin-left: 3em;
-    
 }
-#horizontalForm input[type="radio"] {
+#horizontalForm input[type='radio'] {
     margin-left: 1em;
 }
 .table-bordered th, .table-bordered td {
     text-align: center;
 }
-.text-order{
+/*order*/
+.ui-datepicker-trigger{
+    cursor: pointer;
+}
+.text-order {
     margin: 5px 0 0 ;
 }
-.order-buttons{
+#orderForm div.text-order {
+    margin: 5px 0 0 180px ;
+}
+.order-buttons {
     float: right;
 }
-
-/*admin start*/
-
-tr.user-active{
+/*admin*/
+tr.user-active {
     color: red;
 }
-
-tr.user-deleted{
+tr.user-deleted {
     color: #bbb;
 }
-
-tr.user-deleted a{
+tr.user-deleted a {
     color: #bbb;
-    cursor:default;
-    text-decoration:none;
-}
-/*admin end*/
-
-header{
-    position: relative;
-}
-.user_info{
-    cursor: pointer;
-    display: inline-block;
-    padding-bottom: 8px;
-}
-
-.info_body{
-    padding: 10px;
-}
-.info-head{
-    background: linear-gradient(#f5f5f5,#fcfcfc);
-    padding-left: 10px;
-    height: 25px;
-    border-bottom: 1px dashed #ccc;
-}
-.info_footer{
-   background: linear-gradient(#fcfcfc,#e8e8e8 );
-    height: 20px;
-    position: relative;
-    bottom: 0;
-}
-.visible{
-    display: block;
-}
-.not_visible{
-    display: none;
-}
-.info {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #CCCCCC;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     cursor: default;
+<<<<<<< HEAD
     left: -302px;
     position: absolute;
     top: 95px;
     width: 300px;
+=======
+    text-decoration: none;
+>>>>>>> b392075a0d7aa0476613abc13da94bdbfeec8ded
 }
 #search-result {
- font-weight: 700;
-  color: #fff;
-  background-color: #428bca;
-  padding: 10px 15px;
-
+    font-weight: 700;
+    color: #fff;
+    background-color: #428bca;
+    padding: 10px 15px;
 }
-
 #search-result-count {
-
   min-width: 10px;
-  padding: 3px 7px;
- 
+  padding: 3px 7px; 
   line-height: 1;
   position: relative;
   text-decoration: underline;
@@ -273,7 +207,6 @@ header{
     top: 6px;
     left: -6px;
 }
-
 .details_row{
     display: inline-block;
     width: 170px;
@@ -288,10 +221,6 @@ header{
 }
 #cardInfo .required span {
     display: inline;
-}
-
-.info_block {
-    padding-right:120px !important;
 }
 
 

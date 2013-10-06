@@ -1,18 +1,7 @@
-<?php $this->widget('bootstrap.widgets.TbTabs', array(
-    'type' => 'tabs',
-    'placement' => 'above', // 'above', 'right', 'below' or 'left'
-    'tabs' => array(
-        array('label' => 'Editing User',
-            'content' => '<p>This page is appointed for editing user for particular role</p>',
-            'active' => true
-        ),
-    ),
-));
-?>
 
 
-
-<script type='text/javascript'>
+<p>This page is appointed for editing user for particular role</p>
+<script>
 
     $(document).ready(function () {
         $('.password-group').hide();
@@ -26,38 +15,39 @@
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-                         'id' => 'horizontalForm',
-                       'type' => 'horizontal',
+    'id'                      => 'horizontalForm',
+    'type'                    => 'horizontal',
     'enableClientValidation'  =>  true,
     'clientOptions'           =>  array(
-        'validateOnSubmit'    =>  true )
-));
-?>
+        'validateOnSubmit'    =>  true
+    )
+)); ?>
     <fieldset>
         <legend>Edit user</legend>
         <ul>
-            <li><?php echo $form->textFieldRow($model, 'username', array('hint' => '')); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'firstname', array('hint' => '')); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'lastname', array('hint' => '')); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'username'); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'firstname'); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'lastname'); ?></li>
             <div class='row offset2 change-link' >
-                <p> <a href='#' class='slide'>Change password</a></p>
+                <p> 
+                    <a href='#' class='slide'>Change password</a>
+                </p>
             </div>
             <div class='password-group'>
                <li>
                    <?php echo $form->passwordFieldRow($model, 'password', array(
-                       'hint' => '',
                        'placeholder' => 'enter new password'));
                    ?>
                </li>
-               <li><?php echo $form->passwordFieldRow($model, 'confirmPassword', array('hint' => '')); ?></li>
+               <li><?php echo $form->passwordFieldRow($model, 'confirmPassword'); ?></li>
             </div>
-            <li><?php echo $form->textFieldRow($model, 'email', array('hint' => '')); ?></li>
+            <li><?php echo $form->textFieldRow($model, 'email'); ?></li>
             <li>
                 <?php echo $form->dropDownListRow($model, 'region', array(
                     'north' => 'North',
                     'south' => 'South',
-                     'west' => 'West',
-                     'east' => 'East'
+                    'west'  => 'West',
+                    'east'  => 'East'
                 )); ?>
             </li>
             <li>
@@ -66,22 +56,18 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     1 =>'Deleted',
                 )); ?>
             </li>
-
         </ul>
     </fieldset>
-
 
     <fieldset>
         <legend>Role</legend>
             <?php echo $form->radioButtonList($model, 'role', array(
-                       'admin' => 'Administrator',
+                'admin'        => 'Administrator',
                 'merchandiser' => 'Merchandiser',
-                  'supervisor' => 'Supervisor',
-                    'customer' => 'Customer',
-                ));
-            ?>
+                'supervisor'   => 'Supervisor',
+                'customer'     => 'Customer',
+            )); ?>
     </fieldset>
-
 
     <div class='form-actions'>
         <?php $this->widget('bootstrap.widgets.TbButton', array(

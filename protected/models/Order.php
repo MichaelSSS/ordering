@@ -152,7 +152,9 @@ class Order extends CActiveRecord
         }
 
         $sort = new CSort('User');
+        $sort->defaultOrder =  'id_order DESC';
         $sort->attributes = array(
+
             'assigneesRole' => array(
                 'asc' => 'assignees.role',
                 'desc' => 'assignees.role DESC',

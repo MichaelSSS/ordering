@@ -36,7 +36,27 @@ class MerchandiserController extends Controller
     {
         $model = new OrderDetails($id);
         $orderModel = Order::model()->findByPk($id);
-        $this -> render('details', array('model' => $model->searchItem($id),'orderModel'=>$orderModel));
+
+        if($orderModel->status == 'Ordered' )
+        {
+            $orderModel->trueOrderedStatus = 'checked';
+
+        }
+
+        if($orderModel->status == 'Delivered' )
+        {
+            $orderModel->trueDeliveredStatus = 'checked';
+            $orderModel->trueOrderedStatus = 'checked';
+
+        }
+
+
+
+        $this -> render('details', array(
+                'model' => $model->searchItem($id),
+                'orderModel'=>$orderModel,
+            )
+        );
 
     }
 

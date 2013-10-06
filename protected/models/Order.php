@@ -35,6 +35,8 @@ class Order extends CActiveRecord
     public $searchCriteria;
     public $searchValue;
     public $totalQuantity;
+    public $trueOrderedStatus;
+    public $trueDeliveredStatus;
 
 
 

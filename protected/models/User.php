@@ -7,7 +7,7 @@ class User extends CActiveRecord
     public $searchCriteria = array();
     public $confirmPassword;
     public $status;
-    
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

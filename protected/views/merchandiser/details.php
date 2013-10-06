@@ -46,22 +46,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     )
 );
 ?>
-    <fieldset>
-        <legend>Totals</legend>
-        <div class="span5">
-            <p>Customer name <?php echo $orderModel->userNameOrder->username; ?> </p>
-            <p><span class="details_row">Customer type</span> <?php echo $orderModel->customerType->customer_type; ?></p>
-            <p><span class="details_row">Order Number</span> <?php echo $orderModel->id_order; ?></p>
-            <p><span class="details_row">Total price</span></p>
-            <p><span class="details_row">Total number of items</span> </p>
-            <p><span class="details_row">Assignee </span><?php echo $orderModel->assignees->username; ?></p>
-            <p><span class="details_row">Date of ordering</span> <?php echo $orderModel->order_date; ?></p>
-            <p><span class="details_row">Preferable Delivery Date</span> <?php echo $orderModel->preferable_date; ?></p>
-        </div>
-        <div class="span4">
-            <p>Status</p>
-        </div>
-    </fieldset>
+
 
 
 
@@ -75,8 +60,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
                 </p>
                 <p><span class="details_row">Customer type</span> <?php echo $orderModel->customerType->customer_type; ?></p>
-                <p><span class="details_row">Order Number</span> <?php echo $orderModel->id_order; ?></p>
-                <p><span class="details_row">Total price</span></p>
+                <p><span class="details_row">Order Number</span> <?php echo $orderModel->order_name; ?></p>
+                <p><span class="details_row">Total price</span><?php echo $orderModel->total_price; ?> $</p>
                 <p><span class="details_row">Total number of items</span> </p>
                 <p><span class="details_row">Assignee </span><?php echo $orderModel->assignees->username; ?></p>
                 <p><span class="details_row">Date of ordering</span> <?php echo $orderModel->order_date; ?></p>
@@ -89,14 +74,58 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     'htmlOptions'=>array('class'=>'well'),
                 )); ?>
 
-                <?php echo $form->checkBoxListInlineRow($orderModel, 'status', array('Ordered', 'Delivered')); ?>
+                <div> <span class="status">Status</span>
+                    <?php echo $form->checkBox($orderModel,'status',array('checked'=>$orderModel->trueOrderedStatus,'id'=>'ordered_status')); ?>
+                    <span>Ordered</span>
+                <?php echo $form->checkBox($orderModel,'status',array('checked'=>$orderModel->trueDeliveredStatus,'id'=>'delivered_status')); ?>
+                    <span>Delivered </span>
+
+
+                    <?php echo $form->textFieldRow($orderModel, 'delivery_date'); ?>
+                </div>
+
+
 
                 <?php $this->endWidget(); ?>
             </div>
         </fieldset>
+        <div class="form-actions">
+            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Save')); ?>
+            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Order')); ?>
+            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Cancel')); ?>
+        </div>
     </div>
 </div>
 </div>
 
 <?php $this->endWidget(); ?>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if($('#ordered_status').prop("checked"))
+        {
+            $('#ordered_status').prop("disabled", true);
+        }
+        if(!$('#ordered_status').prop("checked"))
+        {
+            $('#delivered_status').prop("disabled", true);
+        }
+        if($('#delivered_status').prop("checked"))
+        {
+            $('#delivered_status').prop("disabled", true);
+        }
+
+        $('#ordered_status').change(function(){
+            if($(this).attr('checked')){
+                $('#delivered_status').prop("disabled", false);
+            }
+            if(!$(this).attr('checked')){
+
+                $('#delivered_status').prop("disabled", true);
+            }
+        })
+
+
+
+    });
+</script>
 

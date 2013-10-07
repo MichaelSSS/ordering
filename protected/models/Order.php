@@ -35,6 +35,7 @@ class Order extends CActiveRecord
     public $searchCriteria;
     public $searchValue;
     public $totalQuantity;
+    public $currentName;
     public $trueOrderedStatus;
     public $trueDeliveredStatus;
 
@@ -75,11 +76,13 @@ class Order extends CActiveRecord
             array('total_price,preferable_date,order_date, assignee,  ', 'required', 'except'=>'remove'),
             array('order_name', 'length', 'max' => 128),
             array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=', 'message' => 'Please select items and add them to the order', 'except' => 'remove'),
-            array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters'),
-            array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank' ,  'except'=>'update'),
+            array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters', 'except' => 'edit'),
+            array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank' , 'except' => 'edit'),
+            array('order_name', 'checkEdit', 'on' => 'edit'),
             array(' assignee, customer', 'numerical', 'integerOnly' => true),
             array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy', 'message' => 'Illegal Date Format', 'except' => 'remove'),
             array('preferable_date', 'checkDate', 'except' => 'remove'),
+
 
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -210,6 +213,24 @@ class Order extends CActiveRecord
     }
 
 
+    public function checkEdit($order_name){
+        $oldName = $this->findByPk(Yii::app()->session->get("orderId"))->order_name;
+        if($this->order_name == $oldName)
+        {
+            return true;
+        }
+        else
+        {
+            $criteria = new CDbCriteria();
+            $criteria->compare($order_name, $this->order_name);
+            $row = $this->find($criteria);
+            if(isset($row))
+            {
+                $this->addError($order_name, 'Order name name already exists in the System. Please re-type it or just leave it blank');
+            }
+        }
+        return true;
+    }
     public function checkDate($preferable_date)
     {
         if (strtotime($this->order_date) > strtotime($this->preferable_date))

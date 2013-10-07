@@ -18,8 +18,11 @@
 <?php
 
 echo CHtml::link('Add Item',array('customer/additem'));
-$grid = $this->widget('TGridView', array(
+  $grid = $this->widget('TGridView', array(
+
+
     'dataProvider' => $orderDetails,
+
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',

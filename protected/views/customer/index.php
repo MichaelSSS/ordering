@@ -116,7 +116,7 @@ $grid = $this->widget('TGridView', array(
             'buttons' => array(
                 'edit' => array(
                     'icon' => 'icon-edit icon-large',
-                    //'url'  => 'Yii::app()->createUrl()',
+                    'url'  => 'Yii::app()->createUrl(\'customer/edit\',array(\'id\'=>$data->id_order))',
                 ),
             )
         ),

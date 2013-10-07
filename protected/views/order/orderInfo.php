@@ -11,6 +11,7 @@
         <div class="span5">
             <?php echo $form->labelEx($order, 'status', array('class' => 'control-label')); ?>
             <div class="text-order"><?php echo "Created"; ?></div>
+            <?php echo $form->hiddenField($order, 'status', array('value' => $order->status)); ?>
         </div>
     </div>
     <div class="row">

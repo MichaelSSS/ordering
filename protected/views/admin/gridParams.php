@@ -1,9 +1,9 @@
 <?php
 return array(
-    'id'             => 'oms-grid-view0',
-    'dataProvider'   => $dataProvider,
-    'ajaxUpdate'     => 'search-result-count',
-    'ajaxUpdateError'=>'function(xhr,textStatus,et,err){
+    'id'              => 'oms-grid-view0',
+    'dataProvider'    => $dataProvider,
+    'ajaxUpdate'      => 'search-result-count',
+    'ajaxUpdateError' => 'function(xhr,textStatus,et,err){
          if (xhr.status==403) {
             window.location.assign("' 
                 . CHtml::normalizeUrl(array('site/logout'))
@@ -46,7 +46,7 @@ return array(
                 'edit'      => array(
                     'url'   => 'Yii::app()->createUrl(\'admin/edit\',array(\'id\' => $data->id))',
                     'label' => 'edit',
-                    'icon'  => 'pencil',
+                    'icon'  => 'icon-edit icon-large',
                 ),
             ),
         ),
@@ -64,7 +64,7 @@ return array(
                     'url'     => '( !Yii::app()->user->isActive($data->id, time()) ) ?
                             Yii::app()->createUrl("admin/remove", array("id" => $data->id)) : "";',
                     'label'   => 'remove',
-                    'icon'    => 'icon-remove',
+                    'icon'    => 'icon-remove icon-large',
                     'visible' => '!$data->deleted',
                 ),
             ),
@@ -77,7 +77,7 @@ return array(
                 'duplicate' => array(
                     'url'   => 'Yii::app()->createUrl(\'admin/duplicate\', array(\'id\' => $data->id))',
                     'label' =>'duplicate',
-                    'icon'  => 'icon-tags'
+                    'icon'  => 'icon-copy icon-large'
                 ),
             ),
         ),

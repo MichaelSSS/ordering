@@ -99,13 +99,11 @@ class AdminController extends Controller
         $model = new User;
         $model->role = self::CUSTOMER;
 
-        if( !empty( $_POST['User']) ) {
+        if( !empty( $_POST['User']) )
+        {
             $model->attributes = $_POST['User'];
-
             if($model->save()) {
-
                 $this->assignRole( $model->role,$model->id ); // assign role to user
-
                 $this->redirect( array( 'admin/index' ) );
             }
         }
@@ -124,14 +122,17 @@ class AdminController extends Controller
             $model->deleted = 1;
 
             if($model->save()){
+
                 $this->actionIndex();
-            } else{
+            }
+            else{
                 throw new \Exception(print_r($model->getErrors(), true));
             }
         }
     }
 
-    public function actionEdit($id){
+    public function actionEdit($id)
+    {
 
         $model = $this->loadModel($id);
         $model->scenario = 'edit';

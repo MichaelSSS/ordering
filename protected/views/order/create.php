@@ -47,7 +47,7 @@
                     else
                         $target = $this->createUrl('customer/save');
                 ?>
-                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'link', 'type' => 'primary','url' => $target, 'label' => 'Save', 'htmlOptions' => array('name' => 'save','submit'=>'?r=customer/save'))); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Save', 'htmlOptions' => array('name' => 'save', 'submit' => '?r=customer/save'))); ?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                     'buttonType' => 'ajaxSubmitButton',
                     'type' => 'primary',
@@ -60,7 +60,7 @@
                             'async'=>true,
                             'dataType' => 'json',
                             'url'=>'?r=customer/order',
-                            'data' => 'js:$("#horizontalForm").serialize()',
+                            'data' => 'js:$("#orderForm").serialize()',
                             'success'=>'js:afterValidateCC',
                             //'error'=>'js:function(xhr,status,error){alert(error)}'
                         ),
@@ -101,13 +101,11 @@
     });
     function afterValidate(form,  data, hasError)
     {
-        debugger;
         if(hasError){
             $('#error-text').html(data[Object.keys(data)[0]]);
             $('#itemsEmpty').modal();
             return false;
         }else{
-//            debugger;
 //            $.ajax({
 //                "type":"POST",
 //                "url":"?r=customer/create",

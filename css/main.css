@@ -15,86 +15,38 @@ legend {
     padding: 0 .5em;
     border-bottom: none;
 }
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
 legend, label, button {
     text-transform: capitalize;
 }
 legend span {
     text-transform: lowercase;
 }
-dd {
-    line-height: 2.15em;
+small {
+  white-space: normal;
 }
 .required span {
     display: none;
 }
-/* login-form begin */
-
 .wrp {
     margin-top: 8em;
 }
-.bttn {
-    margin-left: .8em;
-}
-#login-form .control-label {
-    margin-left: 3em;
-    width: 7em;
-    text-align: left;
-    display: inline-block;
-}
-
-/* login-form end */
-
-/*  error begin */
 .wrp1 {
-    margin-top: 2em;
+    margin-top: 1em;
 }
-.mouse {
-    position: relative;
-
-    -webkit-moz-border-radius: 50%;
-    -moz-moz-border-radius: 50%;
-    -ms-moz-border-radius: 50%;
-    -o-moz-border-radius: 50%;
-    border-radius: 50%;
+.wrp2 {
+    margin-top: 4em;
 }
-.mouse:after,
-.mouse:before {
+/*login-form*/
 
-    height: 15em;
-    width: 15em;
-    background: #000;
-    position: absolute;
-    content: '';
-    opacity: .8;
-    z-index: -1;
-
-    -webkit-moz-border-radius: 50%;
-    -moz-moz-border-radius: 50%;
-    -ms-moz-border-radius: 50%;
-    -o-moz-border-radius: 50%;
-    border-radius: 50%;
+/*userInfo*/
+.navbar .nav > li > .dropdown-menu:after,
+.navbar .nav > li > .dropdown-menu:before {
+    left: 255px;
 }
-.mouse:after {
-    right: -5em;
-    top: -1.4em;
-}
-.mouse:before {
-    left: -5em;
-    top: -1.4em; 
-}
-
-/* error end */
-
-/* error-messages begin */
-
+/*error-message*/
 .panel {
     margin-bottom: 21px;
-    background-color: #ffffff;
+    background-color: #fff;
     border: 1px solid transparent;
     border-radius: 0;
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -106,7 +58,7 @@ dd {
 .panel-body:before,
 .panel-body:after {
     display: table;
-    content: " ";
+    content: ' ';
 }
 .panel-body:after {
     clear: both;
@@ -125,7 +77,7 @@ dd {
 .panel-footer {
     padding: 10px 15px;
     background-color: #f5f5f5;
-    border-top: 1px solid #dddddd;
+    border-top: 1px solid #ddd;
     border-bottom-right-radius: -1px;
     border-bottom-left-radius: -1px;
 }
@@ -137,145 +89,22 @@ dd {
     background-color: #ff7518;
     border-color: #ff4309;
 }
-
-/* error-messages end */
-
-/* navbar begin */
-
-.head {
-    margin-top: 4em;
-    position: relative;
-}
-.navbar .nav > li > a {
-  float: none;
-  padding: 10px 15px 10px;
-  color: #777777;
-  text-decoration: none;
-  text-shadow: 0 1px 0 #fff;
-}
-
-/* end */
-.ui-datepicker-trigger{
-    cursor: pointer;
-}
-.controls .span3  label {
-    display: none;
- }
-.span3 button.btn, input[type="submit"].btn, input[type="reset"].btn  {
-    margin: .7em 0 .7em 3em;
-}
-
-#horizontalForm .radio label {
-    margin-left: 3em;
-    
-}
-#horizontalForm input[type="radio"] {
-    margin-left: 1em;
-}
-.table-bordered th, .table-bordered td {
-    text-align: center;
-}
-.text-order{
-    margin: 5px 0 0 ;
-}
-.order-buttons{
-    float: right;
-}
-
-/*admin start*/
-
-tr.user-active{
+/*admin*/
+tr.user-active {
     color: red;
 }
-
-tr.user-deleted{
+tr.user-deleted {
     color: #bbb;
 }
-
-tr.user-deleted a{
+tr.user-deleted a {
     color: #bbb;
-    cursor: default;
-    text-decoration: none;
-}
-/*admin end*/
-
-/* user-info begin */
-.head {
-    position: relative;
-}
-
-.user_info {
-    cursor: pointer;
-    display: inline-block;
-    padding-bottom: 8px;
-}
-
-.info_body{
-    padding: 10px;
-}
-.info-head{
-    background: linear-gradient(#f5f5f5,#fcfcfc);
-    padding-left: 10px;
-    height: 25px;
-    border-bottom: 1px dashed #ccc;
-}
-.info_footer{
-   background: linear-gradient(#fcfcfc,#e8e8e8 );
-    height: 20px;
-    position: relative;
-    bottom: 0;
-}
-.visible{
-    display: block;
-}
-.not_visible{
-    display: none;
-}
-.info {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #CCCCCC;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     cursor: default;
     left: -302px;
     position: absolute;
-    top: -10px;
+    top: 95px;
     width: 300px;
-
-} 
- .info_body{
-    padding: 10px;
+    text-decoration: none;
 }
-.info-head{
-    background: linear-gradient(#f5f5f5,#fcfcfc);
-    padding-left: 10px;
-    height: 25px;
-    border-bottom: 1px dashed #ccc;
-}
-.info_footer{
-   background: linear-gradient(#fcfcfc,#e8e8e8 );
-    height: 20px;
-    position: relative;
-    bottom: 0;
-
-}
-#search-result {
- font-weight: 700;
-  color: #fff;
-  background-color: #428bca;
-  padding: 10px 15px;
-
-
-}
-.visible{
-    display: block;
-}
-.not_visible{
-    display: none;
-} */
-
-/* end */
-
-
 #search-result {
     font-weight: 700;
     color: #fff;
@@ -305,15 +134,35 @@ tr.user-deleted a{
     top: 6px;
     left: -6px;
 }
-
-.details_row{
-    display: inline-block;
-    width: 170px;
-    padding-right: 10px;
-    font-weight: bold;
-    text-align: right;
+.controls  label {
+    display: none;
+}
+.span3 button.btn, input[type='submit'].btn, input[type='reset'].btn  {
+    margin: .7em 0 .7em 3em;
+}
+#horizontalForm .radio label {
+    margin-left: 3em;
+}
+#horizontalForm input[type='radio'] {
+    margin-left: 1em;
+}
+.table-bordered th, .table-bordered td {
+    text-align: center;
 }
 
+/*order*/
+.ui-datepicker-trigger {
+    cursor: pointer;
+}
+.text-order {
+    margin: 5px 0 0 ;
+}
+#orderForm div.text-order {
+    margin: 5px 0 0 180px ;
+}
+.order-buttons {
+    float: right;
+}
 #cardInfo .control-label {
     margin-left: 1em;
     text-align: left;
@@ -321,9 +170,7 @@ tr.user-deleted a{
 #cardInfo .required span {
     display: inline;
 }
-
-.info_block {
-    
+.status{
+    display: inline-block;
+    margin-right: 20px;
 }
-
-

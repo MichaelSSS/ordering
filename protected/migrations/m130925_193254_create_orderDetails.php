@@ -5,13 +5,14 @@ class m130925_193254_create_orderDetails extends CDbMigration
 	public function up()
 	{
 		$this->createTable('order_details', array(
+            'id_order_details' => 'INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT',
             'id_order' => 'INTEGER NOT NULL',
             'id_item' => 'INTEGER NOT NULL ',
             'id_dimension' => 'INTEGER NOT NULL ',
             'id_customer' => 'INTEGER NOT NULL ',
             'quantity' => "INTEGER NOT NULL",
             'price' => 'DECIMAL(6,2) NOT NULL',
-            'PRIMARY KEY (id_order,id_item,id_dimension,id_customer)'
+
 
         ));
 	
@@ -27,15 +28,15 @@ class m130925_193254_create_orderDetails extends CDbMigration
             'id_order' => '2',
             'id_item' => '2',
             'id_dimension' => '2',
-        'id_customer' => 4,
+            'id_customer' => 4,
             'quantity' => "20",
-        'price' => 2200.22,
+            'price' => 2200.22,
     ));
 	$this->insert('order_details', array(
             'id_order' => '3',
             'id_item' => '3',
             'id_dimension' => '3',
-        'id_customer' => 4,
+            'id_customer' => 4,
             'quantity' => "30",
             'price' => 265.22,
     ));

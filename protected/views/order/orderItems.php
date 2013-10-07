@@ -51,7 +51,7 @@ $grid = $this->widget('TGridView', array(
 
 		array(
 
-                        'header'    => 'Item Name',
+            'header'    => 'Item Name',
             'value'=>'$data["name"]',
 		),
 		array(
@@ -66,7 +66,7 @@ $grid = $this->widget('TGridView', array(
 		),
 		array(
             'header'    => 'Price',
-			'value'=>'$data["price"]',
+			'value'=>'(int)$data["price"] . "\$"',
 
 		),
 		array(
@@ -76,7 +76,7 @@ $grid = $this->widget('TGridView', array(
 		),
 		array(
             'header'    => 'Price Per Line',
-			'value'=>'$data["price_per_line"]',
+			'value'=>'$data["price_per_line"] . "\$"',
 
 		),
 
@@ -92,26 +92,28 @@ $grid = $this->widget('TGridView', array(
                 ),
             )
         ),
-        /*array(
-            'header' => 'Remove',
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{remove}',
-            'htmlOptions' => array(
-                'id' => 'col_remove',
-            )),*/
+
         array(
             'header'      => 'Remove',
             'class'       => 'bootstrap.widgets.TbButtonColumn',
             'template'    => '{remove}',
             'htmlOptions' => array(
-                'data-toggle' => 'modal',
-                'data-target' => '#myModal',
-                'class'       => 'remove'
+
+                'id'=>'col_remove',
             ),
             'buttons'    => array(
                 'remove' => array(
-                    'icon' => 'icon-remove icon-large',
+                    'icon' => 'icon-trash',
                     'url'  => 'Yii::app()->createUrl(\'customer/remove\',array(\'id\'=>$data->id_item))',
+                    'options'=>array(
+                        'data-toggle'=>'modal',
+                        'data-target'=>'#remove_order',
+                        'onclick'=>'beforeRemove(this)',
+                    ),
+
+
+//Yii::app()->createUrl(\'customer/remove\',array(\'id\'=>$data->id_item))
+
                 ),
             )
         ),

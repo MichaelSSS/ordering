@@ -1,4 +1,17 @@
+<script>
+    $(document).ready(function () {
+        $('.remove a').live('click',function(){
+            var link = $(this).attr('href');
+            $('.btn-primary').attr('href',link);
+        })
 
+        $('.remove').click(function(){
+            var link = $(this).find('a').attr('href');
+            $('.btn-primary').attr('href',link);
+
+        })
+    });
+</script>
 <div id="grid-extend">
 
 </div>
@@ -79,28 +92,29 @@ $grid = $this->widget('TGridView', array(
                 ),
             )
         ),
-//        array(
-//            'header'      => 'Remove',
-//            'class'       => 'bootstrap.widgets.TbButtonColumn',
-//            'template'    => '{remove}',
-//            'htmlOptions' => array(
-//                'id'=>'col_remove',
-//            ),
-//            'buttons'    => array(
-//                'remove' => array(
-//                    'icon' => 'icon-trash',
-//                    'url'  => 'Yii::app()->createUrl(\'order/remove\',array(\'id\'=>$data->id_item))',
-//                    'options'=>array(
-//                        'data-toggle'=>'modal',
-//                        'data-target'=>'#remove_order',
-//                        'onclick'=>'beforeRemove(this)',
-//                    ),
-//
-//
-//
-//                ),
-//            )
-//        ),
+        /*array(
+            'header' => 'Remove',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{remove}',
+            'htmlOptions' => array(
+                'id' => 'col_remove',
+            )),*/
+        array(
+            'header'      => 'Remove',
+            'class'       => 'bootstrap.widgets.TbButtonColumn',
+            'template'    => '{remove}',
+            'htmlOptions' => array(
+                'data-toggle' => 'modal',
+                'data-target' => '#myModal',
+                'class'       => 'remove'
+            ),
+            'buttons'    => array(
+                'remove' => array(
+                    'icon' => 'icon-remove icon-large',
+                    'url'  => 'Yii::app()->createUrl(\'customer/remove\',array(\'id\'=>$data->id_item))',
+                ),
+            )
+        ),
         ),
 ));
 

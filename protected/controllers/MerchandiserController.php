@@ -36,6 +36,7 @@ class MerchandiserController extends Controller
     {
         $model = new OrderDetails($id);
         $orderModel = Order::model()->findByPk($id);
+        $orderModel->scenario = 'merchandiserEdit';
 
         if($orderModel->status == 'Ordered' )
         {
@@ -50,7 +51,27 @@ class MerchandiserController extends Controller
 
         }
 
+        if(isset($_POST['Order'])){
 
+            if($_POST['Order']['uncheckOrderedStatus'] == 'ordered'){
+                $orderModel->status = 'ordered';
+            }
+            if($_POST['Order']['uncheckDeliveredStatus'] == 'delivered'){
+                $orderModel->status = 'delivered';
+            }
+
+            $orderModel->attributes = $_POST['Order'];
+
+            if($orderModel->save()) {
+               $this->redirect( array( 'merchandiser/index' ) );
+
+            }
+        }
+
+        if(isset($_POST['Order']['ordered'])){
+            $this->redirect( array( 'merchandiser/inderfrfx' ) );
+
+        }
 
         $this -> render('details', array(
                 'model' => $model->searchItem($id),

@@ -8,21 +8,16 @@
             'type' => 'horizontal',
         ));
     ?>
-    <div class='row'>
-        <?php echo $form->textFieldRow($model, 'id_item', array('hint'=>'')); ?>
-    </div>
-    <div class='row'>
-        <?php echo $form->textFieldRow($model, 'price', array('hint'=>'')); ?>
-    </div>
-    <div class='row'>
-        <?php echo $form->textFieldRow($model, 'name', array('hint'=>'')); ?>
-    </div>
-    <div class='row'>
-        <?php echo $form->textFieldRow($model, 'description', array('hint'=>'')); ?>
-    </div>
-    <div class='row'>
-        <?php echo $form->textFieldRow($model, 'quantity',array('hint'=>'')); ?>
-    </div>
+
+    <?php echo $form->textFieldRow($model, 'id_item',array('class' => 'span3',)); ?>
+
+    <?php echo $form->textFieldRow($model, 'price',array('class' => 'span3',)); ?>
+
+    <?php echo $form->textFieldRow($model, 'name',array('class' => 'span3',)); ?>
+
+    <?php echo $form->textAreaRow($model, 'description', array('class' => 'span3', 'rows' => 5)); ?>
+
+    <?php echo $form->textFieldRow($model, 'quantity',array('class' => 'span3',)); ?>
 
     <div class='form-actions'>
 
@@ -30,15 +25,12 @@
             'buttonType' => 'submit',
             'type'       => 'info',
             'label'      => 'Create',
-            'size'       => 'null',));
-        ?>
+        )); ?>
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType' => 'reset',
             'type'       => 'primary',
             'label'      => 'Reset ',
-            'size'       => 'null',
-            ));
-         ?>
+        )); ?>
         <?php $this->endWidget(); ?>
     </div>
 </fieldset>

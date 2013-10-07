@@ -13,7 +13,9 @@ $this->pageTitle=Yii::app()->name; ?>
                 <h3 class='panel-title'>Warning Message</h3>
             </div>
             <div class="panel-body">
-                <p class='lead text-center'>User credentials were entered incorrectly. Page is locked for 10 minutes. Please try again later.</p>
+                <p class='lead text-center'>User credentials were entered incorrectly.
+                    Page is locked for 10 minutes. Please try again later.
+                </p>
             </div>
 <!--            <div class="panel-footer"></div>-->
         </div>

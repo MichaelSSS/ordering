@@ -8,11 +8,11 @@
 ));
 ?>
 
-<fieldset class="order_search">
+<fieldset class='order_search'>
     <legend>Search <span>by</span></legend>
-    <div id="search-fields">
-        <div class="span2"><p>Filter orders by:</p></div>
-        <div class="span3">
+    <div id='search-fields'>
+        <div class='span2'><p>Filter orders by:</p></div>
+        <div class='span3'>
             <?php echo $form->dropDownlist($model, 'filterCriteria', $model->filterCriterias, array(
                 'class' => 'span3',
                 'options' => array(
@@ -26,7 +26,7 @@
             ));
             ?>
         </div>
-        <div class="span3">
+        <div class='span3'>
             <?php echo $form->dropDownlist($model, 'filterValue', $model->filterStatuses,
                 array('class' => 'span3',
                     'options' => array(
@@ -35,8 +35,8 @@
                 ));
             ?>
         </div>
-        <div class="span2">Search for orders by:</div>
-        <div class="span3">
+        <div class='span2'>Search for orders by:</div>
+        <div class='span3'>
             <?php echo $form->dropDownlist($model, 'searchCriteria', $model->searchCriterias,
                 array('class' => 'span3',
                     'options' => array(
@@ -45,15 +45,15 @@
                 ));
             ?>
         </div>
-        <div class="span3">
+        <div class='span3'>
             <?php echo $form->textField($model, 'searchValue', array('class' => 'span3')); ?>
         </div>
-        <div class="span1 pull-right">
+        <div class='span1 pull-right'>
             <?php $this->widget('bootstrap.widgets.TbButton', array(
-                'label' => 'Apply',
+                'label'      => 'Apply',
                 'buttonType' => 'submit',
-                'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                'size' => 'null', // null, 'large', 'small' or 'mini'
+                'type'       => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                'size'       => 'null', // null, 'large', 'small' or 'mini'
             ));?>
             <?php echo CHtml::errorSummary($model) ?>
         </div>
@@ -96,7 +96,8 @@ $grid = $this->widget('TGridView', array(
         ),
         array(
             'name' => 'delivery_date',
-            'value' => '($data->delivery_date != "0000-00-00") ? Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date) : "Delivery Date not assigned";',
+            'value' => '($data->delivery_date != "0000-00-00") ?
+                Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date) : "Delivery Date not assigned";',
         ),
         'status',
         array(

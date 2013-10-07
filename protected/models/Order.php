@@ -36,6 +36,10 @@ class Order extends CActiveRecord
     public $searchValue;
     public $totalQuantity;
     public $currentName;
+    public $trueOrderedStatus;
+    public $trueDeliveredStatus;
+
+
 
 //    private $_errorCode;
 

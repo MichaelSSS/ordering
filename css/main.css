@@ -9,7 +9,7 @@ fieldset {
     border: 1px solid #ddd;
 }
 legend {
-    display: inline-block;
+    
     width: auto;
     margin: 0 .5em;
     padding: 0 .5em;
@@ -37,7 +37,9 @@ small {
     margin-top: 4em;
 }
 /*login-form*/
-
+.wrp3 {
+    margin-left: -2em;
+}
 /*userInfo*/
 .navbar .nav > li > .dropdown-menu:after,
 .navbar .nav > li > .dropdown-menu:before {
@@ -134,9 +136,7 @@ tr.user-deleted a {
     top: 6px;
     left: -6px;
 }
-.controls  label {
-    display: none;
-}
+
 .span3 button.btn, input[type='submit'].btn, input[type='reset'].btn  {
     margin: .7em 0 .7em 3em;
 }

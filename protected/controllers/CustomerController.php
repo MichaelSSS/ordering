@@ -230,4 +230,15 @@ class CustomerController extends Controller
 
 
     }
+
+    public function actionRemoveItem()
+    {
+        if (isset($_GET['id'])) {
+            $order = Order::model()->findByPk($_GET['id']);
+            $order->scenario = 'remove';
+            $order->trash = 1;
+            if ($order->save())
+                $this->redirect(Yii::app()->createUrl('customer/index'));
+        }
+    }
 }

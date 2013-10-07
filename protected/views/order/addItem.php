@@ -44,7 +44,8 @@
             });
            // if($('#ItemForm').find('input[name="OrderDetails[quantity]"]').val() !== ''){
                  $('input[name="OrderDetails[quantity]"]').removeAttr('disabled');
-           // }
+                 $('#save').removeAttr('disabled');
+            //}
             });
 
            $('#save').attr('disabled','disabled'); 
@@ -74,7 +75,7 @@
                 var quantity = $('input[id="OrderDetails_quantity"]').val()*1*dimention;
                 var quantity_max = $('input[id="max_quantity"]').val()*1;
 
-                   if($('input[id="id_item"]').val() != '' && quantity_max>=quantity){
+                   if($('input[id="id_item"]').val()!=='' && quantity_max>=quantity){
                        $('#save').removeAttr('disabled');
                        $('.item_error').html('');
                    }
@@ -85,7 +86,6 @@
                    else{
                        $('#save').attr('disabled','disabled'); 
                    }
-
                }
                $('#remove').on('click',function(){
                     $('#item_result_name').html('----//----');

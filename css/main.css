@@ -9,7 +9,7 @@ fieldset {
     border: 1px solid #ddd;
 }
 legend {
-    
+    display: inline-block;
     width: auto;
     margin: 0 .5em;
     padding: 0 .5em;
@@ -37,14 +37,7 @@ small {
     margin-top: 4em;
 }
 /*login-form*/
-.wrp3 {
-    margin-left: -2em;
-}
-/*userInfo*/
-.navbar .nav > li > .dropdown-menu:after,
-.navbar .nav > li > .dropdown-menu:before {
-    left: 255px;
-}
+
 /*error-message*/
 .panel {
     margin-bottom: 21px;
@@ -75,6 +68,7 @@ small {
     margin-top: 0;
     margin-bottom: 0;
     font-size: 17px;
+    text-transform: capitalize;
 }
 .panel-footer {
     padding: 10px 15px;
@@ -83,6 +77,15 @@ small {
     border-bottom-right-radius: -1px;
     border-bottom-left-radius: -1px;
 }
+.panel-default {
+    border-color: #ddd;
+}
+
+.panel-default > .panel-heading {
+    color: #333333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
+}
 .panel-warning {
     border-color: #ff4309;
 }
@@ -90,6 +93,38 @@ small {
     color: #fff;
     background-color: #ff7518;
     border-color: #ff4309;
+}
+.panel-primary {
+    border-color: #007fff;
+}
+.panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #007fff;
+    border-color: #007fff;
+}
+.panel-success {
+    border-color: #3fb618;
+}
+.panel-success > .panel-heading {
+    color: #fff;
+    background-color: #3fb618;
+    border-color: #4e9f15;
+}
+.panel-danger {
+    border-color: #f0005e;
+}
+.panel-danger > .panel-heading {
+    color: #ffffff;
+    background-color: #ff0039;
+    border-color: #f0005e;
+}
+.panel-info {
+    border-color: #7643a8;
+}
+.panel-info > .panel-heading {
+    color: #ffffff;
+    background-color: #9954bb;
+    border-color: #7643a8;
 }
 /*admin*/
 tr.user-active {

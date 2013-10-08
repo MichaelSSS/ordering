@@ -138,7 +138,7 @@ class OrderDetails extends CActiveRecord
     public static function getOrderedItems($currentItems )
     {
         $res= array();
-        foreach($currentItems as $item)
+        foreach($currentItems as $key=>$item)
         {
             $iData = Yii::app()->db->createCommand()
                 ->select()
@@ -148,6 +148,7 @@ class OrderDetails extends CActiveRecord
                 ->queryAll();
             $iData[0]['customer'] = $item['id_customer'];
             $iData[0]['quantity'] = $item['quantity'];
+            $iData[0]['key'] = $key;
             $iData[0]['price_per_line'] =  (int)$iData[0]['price'] * (int)$iData[0]['quantity']*(int)$iData[0]['count_of_items'];
 
 

@@ -111,18 +111,18 @@ small {
     border-color: #4e9f15;
 }
 .panel-danger {
-    border-color: #f0005e;
+    border-color: #b94a48;
 }
 .panel-danger > .panel-heading {
-    color: #ffffff;
-    background-color: #ff0039;
-    border-color: #f0005e;
+    color: #fff;
+    background-color: #f2dede;
+    border-color: #b94a48;
 }
 .panel-info {
     border-color: #7643a8;
 }
 .panel-info > .panel-heading {
-    color: #ffffff;
+    color: #fff;
     background-color: #9954bb;
     border-color: #7643a8;
 }

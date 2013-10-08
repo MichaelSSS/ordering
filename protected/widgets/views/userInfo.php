@@ -3,8 +3,9 @@
 	<li class='dropdown'>
 		<a href='#' class='dropdown-toggle' data-toggle='dropdown'>
 			<i class='icon-info-sign icon-large'></i>
+            <b class='caret'></b>
 		</a>
-		<ul class='dropdown-menu' style='left: -240px; width: 285px'>
+		<ul class='dropdown-menu pull-right' style='width: 285px'>
 			<li>
 				<a href='#'>
 					<i class='i'></i> User Info:

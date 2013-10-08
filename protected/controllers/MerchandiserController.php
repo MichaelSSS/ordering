@@ -41,17 +41,19 @@ class MerchandiserController extends Controller
         if($orderModel->status == 'Ordered' )
         {
             $orderModel->trueOrderedStatus = 'checked';
-
         }
-
         if($orderModel->status == 'Delivered' )
         {
             $orderModel->trueDeliveredStatus = 'checked';
             $orderModel->trueOrderedStatus = 'checked';
-
+        }
+        if($orderModel->gift == 1){
+            $orderModel->giftChecked = 'checked';
         }
 
-        if(isset($_POST['Order'])){
+        if(isset($_POST['sub'])){
+
+            $orderModel->gift = (int)$_POST['Order']['gift'];
 
             if($_POST['Order']['uncheckOrderedStatus'] == 'ordered'){
                 $orderModel->status = 'ordered';
@@ -68,9 +70,15 @@ class MerchandiserController extends Controller
             }
         }
 
-        if(isset($_POST['Order']['ordered'])){
-            $this->redirect( array( 'merchandiser/inderfrfx' ) );
+        if(isset($_POST['ordered'])){
 
+            $orderModel->status = 'ordered';
+            $orderModel->attributes = $_POST['Order'];
+
+            if($orderModel->save()) {
+                $this->redirect( array( 'merchandiser/index' ) );
+
+            }
         }
 
         $this -> render('details', array(

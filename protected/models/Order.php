@@ -39,6 +39,7 @@ class Order extends CActiveRecord
     public $trueDeliveredStatus;
     public $uncheckDeliveredStatus;
     public $uncheckOrderedStatus;
+    public $giftChecked;
 
 
 
@@ -85,7 +86,7 @@ class Order extends CActiveRecord
 
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id_order,  order_name, total_price, searchCriteria,  max_discount, filterValue, filterRole, delivery_date, preferable_date ,filterCriteria, status, assignees, searchValue, assigneesRole, customer,trash,uncheckOrderedStatus', 'safe','on'=>'search'),
+            array('id_order,  order_name, total_price, searchCriteria,  max_discount, filterValue, filterRole, delivery_date, preferable_date ,filterCriteria, status, assignees, searchValue, assigneesRole, customer,trash,uncheckOrderedStatus,gift', 'safe','on'=>'search'),
         );
     }
 
@@ -123,7 +124,8 @@ class Order extends CActiveRecord
             'assigneesRole' => 'Role',
             'customer' => 'Customer',
             'uncheckDeliveredStatus'=>'uncheckDeliveredStatus',
-            'uncheckOrderedStatus'=>'uncheckOrderedStatus'
+            'uncheckOrderedStatus'=>'uncheckOrderedStatus',
+            'gift'=>'gift'
         );
     }
 

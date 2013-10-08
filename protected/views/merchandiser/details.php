@@ -86,19 +86,39 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     ?>
                     <span>Delivered </span>
                 </div>
-               <div> <?php echo $form->textFieldRow($orderModel, 'delivery_date'); ?></div>
+               <div>Delivery date <?php echo $form->textField($orderModel, 'delivery_date'); ?></div>
+               <div> Gift <?php echo $form->checkBox($orderModel,'gift',
+                    array(
+                        'checked'=>$orderModel->giftChecked,
+                        'id'=>'gift',
+                        'value'=>'1',
+                    )
+                );
+                ?>
+               </div>
+    </div>
 
-
-
-
-            </div>
         </fieldset>
         <div class="form-actions">
-            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'type'=>'primary', 'label'=>'Save')); ?>
-            <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit','label'=>'Order',
-            'htmlOptions'=>array(
-                'name'=>'ordered',
-            ))); ?>
+            <?php $this->widget('bootstrap.widgets.TbButton',
+                array('buttonType'=>'submit',
+                    'type'=>'primary',
+                    'label'=>'Save',
+                     'htmlOptions'=>array(
+                         'name'=>'sub',
+                     )
+                 )
+            );
+            ?>
+            <?php $this->widget('bootstrap.widgets.TbButton',
+                array('buttonType'=>'submit',
+                      'label'=>'Order',
+                      'htmlOptions'=>array(
+                          'name'=>'ordered',
+                     )
+                )
+            );
+            ?>
             <?php $this->widget('bootstrap.widgets.TbButton',
                 array('buttonType'=>'reset',
                     'label'=>'Cancel',
@@ -161,7 +181,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         {
             $('#delivered_status').prop("disabled", true);
         }
-
+        if($('#delivered_status').prop("checked"))
+        {
+            $('#gift').prop("disabled", true);
+        }
         $('#ordered_status').change(function(){
             if($(this).attr('checked')){
                 $('#delivered_status').prop("disabled", false);

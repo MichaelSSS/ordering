@@ -72,7 +72,9 @@ class MerchandiserController extends Controller
 
         if(isset($_POST['ordered'])){
 
-            $orderModel->status = 'ordered';
+            if($orderModel->status != 'Delivered'){
+                $orderModel->status = 'ordered';
+            }
             $orderModel->attributes = $_POST['Order'];
 
             if($orderModel->save()) {

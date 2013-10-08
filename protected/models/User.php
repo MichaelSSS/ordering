@@ -32,7 +32,7 @@ class User extends CActiveRecord
             array('email', 'email', 'message' => 'Incorrect format of Email Adress', 'except' => 'remove'),
 
             array('password', 'length', 'min' => 4, 'max' => 10, 'except' => 'remove'),
-            array('password', 'match', 'pattern' => '|(?=^.{1,25}$)(?=(?:.*?\d){1})(?=.*[a-z])(?=(?:.*?[A-Z]){1})(?=(?:.*?[!@#$%*()_+^&}{:;?.\[\~\`\-\=\'"\<\>\,\/\]]){1})(?!.*\s)[0-9a-zA-Z!@#$%*()_+^&\[\~\`\-\=\'"\<\>\,\/\]]*$|',
+            array('password', 'match', 'pattern' => '|(?=^.{1,25}$)(?=(?:.*?\d){1})(?=.*[a-z])(?=(?:.*?[A-Z]){1})(?=(?:.*?[!@#$\%*()_+^&}{\:\;\??.\[\~\`\-\=\'"\<\>\,\/\]\*]){1})(?!.*\s)[0-9a-zA-Z!@#$\%*()_+^&}{\:\;\??.\[\~\`\-\=\'"\<\>\,\/\]\*]*$|',
                   'message' => 'The value provided for the password does not meet required complexity', 'except' => 'remove'),
             array('confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => 'Confirm Password is not equal to Password','except'=>'remove'),
 

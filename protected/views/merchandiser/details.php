@@ -86,7 +86,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     ?>
                     <span>Delivered </span>
                 </div>
-               <div>Delivery date <?php echo $form->textField($orderModel, 'delivery_date'); ?></div>
+               <div>Delivery date <?php echo $form->textField($orderModel, 'delivery_date',array('id'=>'preferable_date')); ?></div>
                <div> Gift <?php echo $form->checkBox($orderModel,'gift',
                     array(
                         'checked'=>$orderModel->giftChecked,
@@ -199,6 +199,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             }
         })
 
+        $("#preferable_date").datepicker({
+            showOn: "button",
+            buttonImage: "/images/Calendar.png",
+            buttonImageOnly: true
+        });
 
 
     });

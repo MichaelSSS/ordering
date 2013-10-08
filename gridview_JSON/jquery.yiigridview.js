@@ -61,6 +61,7 @@
         link.text((toggleParams.showDel=='1') ? 'show deleted users' : 'hide deleted users');
     };
 
+
     methods = {
         /**
          * yiiGridView set function.

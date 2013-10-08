@@ -9,6 +9,7 @@
         $cs->registerCssFile(Yii::app()->getBaseUrl() .  '/css/main.css');
         $cs->registerCssFile(Yii::app()->getBaseUrl() .  '/css/pager.css');
         $cs->registerCssFile(Yii::app()->getBaseUrl() .  '/css/fontAwesome.css');
+        $cs->registerCssFile(Yii::app()->getBaseUrl() .  '/css/switch.css');
 
         Yii::app()->clientScript->registerCoreScript('jquery.ui');
             Yii::app()->clientScript->registerCssFile(
@@ -42,8 +43,8 @@
                             <a class='brand' href='#'>
                                <?/*= Yii::app()->name; */?>
                             </a>
-                            <ul class='nav' >
-                                <li class='active'>
+                            <ul class='nav'>
+                                <li>
                                     <?php $userHome = $this->id;
                                         $this->widget('bootstrap.widgets.TbMenu', array(
                                             'items' => array(

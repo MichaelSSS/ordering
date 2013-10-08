@@ -156,7 +156,24 @@ class OrderDetails extends CActiveRecord
 
             $res[] = $iData[0];
         }
-        return  new CArrayDataProvider($res);
+        return  new CArrayDataProvider($res, array('keyField' => false));
+    }
+
+    public static function findOrderDetails($id)
+    {
+        $iData = Yii::app()->db->createCommand()
+            ->select()
+            ->from('order_details o, item i, dimension d')
+            ->where('o.id_order =:id_order and o.id_dimension =d.id_dimension AND o.id_item = i.id_item', array(':id_order'=>$id))
+            ->queryAll();
+        foreach ($iData as $key=>$value){
+            $iData[$key]['price_per_line']= (int)$iData[$key]['price'] * (int)$iData[$key]['quantity']*(int)$iData[$key]['count_of_items'];
+
+
+            self::$totalItemsQuantity +=(int)$iData[$key]['count_of_items'] * (int)$iData[$key]['quantity'];
+            self::$totalPrice +=(int)$iData[$key]['price']*(int)$iData[$key]['count_of_items']*(int)$iData[$key]['quantity'];
+        }
+        return  $iData;
     }
 //
 //    public  function getPricePerLine($price, $quantity)

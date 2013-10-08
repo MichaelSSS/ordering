@@ -19,26 +19,30 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 ?>
 
 <fieldset>
-    <legend>Search <span>by</span></legend>
-    <div class='span12'><p>Field Filter</p></div>
+    <legend>Search 
+        <span>by</span>
+    </legend>
+    <div class='span12'>
+        <p>Field Filter</p>
+    </div>
     <div class='control-group'>
         <div class='controls'>
-            <div class='span3'>
+            <div class='span4'>
                 <?php echo $form->dropDownListRow($fields, 'keyField',
                     array('All Columns', 'User Name', 'First Name', 'Last Name', 'Role'),
-                    array('class' => 'input-large',
+                    array('class' => 'input-xlarge',
                         'options' => array(
                             array_search('User Name', $fields->keyFields) => array(
-                                'selected' => true
+                                'selected' => true,
                             )
-                        )
+                        ),
                     ));
                 ?>
             </div>
-            <div class='span3'>
+            <div class='span4'>
                 <?php echo $form->dropDownListRow($fields, 'criteria',
                     array('equals', 'not equal to', 'starts with', 'contains', 'does not contain'),
-                    array('class' => 'input-large',
+                    array('class' => 'input-xlarge',
                         'options' => array(
                             array_search('starts with', $fields->criterias) => array(
                                 'selected' => true
@@ -48,38 +52,50 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 ?>
             </div>
             <div class='row'>
-                <div class="input-append">
-                    <?php echo $form->textField($fields, 'keyValue', array(
-                        'onkeyup' => 'document.getElementById(\'btn-search\').disabled = !(this.value.length);',
-                        'class' => 'span2',
-                        'placeholder' => 'Search'
-                    )); ?>
-                    <button class='btn btn-info' type='submit' disabled='true' id='btn-search'>Search</button>
-                    <button class="btn" type="reset">Reset</button> 
+                <div class='span4'>
+                    <div class="input-append">
+                        <?php echo $form->textField($fields, 'keyValue', array(
+                            'onkeyup' => 'document.getElementById(\'btn-search\').disabled = !(this.value.length);',
+                            'class' => 'span2',
+                            'placeholder' => 'Search'
+                        )); ?>
+                        <button class='btn btn-info' type='submit' disabled='true' id='btn-search'>Search</button>
+                        <button class="btn" type="reset">Reset</button> 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </fieldset>
-<div class="wrp1">
-    <div class="row">
-        <div class="span3">
+<?php $this->endWidget(); ?>
+<div class='wrp1'>
+    <div class='row'>
+        <div class='span3'>
             <?php
             $dataProvider = $model->search();
             echo '<div id="search-result">Number of Found Users <i class="icon-user icon-large"></i> <span id="search-result-count">'
                 . $dataProvider->getTotalItemCount() . '</span></div>';
             ?>
         </div>
-        <div class="span9 pull-right">
-            <a class="pull-right" id="toggle-deleted" href="
-             <?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>"> show deleted users
-            </a>
+
+        <div class='span9'>
+             <div class='metrouicss pull-right'>
+                <form>
+                    <label class='input-control switch' onclick=''>hide
+                        <input type='checkbox'  id='check_toggle'>
+                        <span class='helper'>show</span>
+                    </label> 
+                </form>
+                 <a class='pull-right' id='toggle-deleted' href="
+                    <?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>"> show deleted users
+                 </a>
+            </div>
         </div>
     </div>
 </div>
 
 
-<?php $this->endWidget(); ?>
+
 
 <div id="oms-grid-view0" class="grid-view">
     <div id="grid-extend"><a id="page-size" href="/ordering/index.php?r=admin/index&amp;ajax=yw0&amp;pageSize=25">show 25 items</a></div>
@@ -109,7 +125,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     </tr></thead>
     </table>
     <div class="grid-footer">
-        <div class="summary">Page #: </div>
+        <div class="summary">Page # : </div>
         <div class="oms-pager">
             <ul class="yiiPager" id="yw1">
                 <li class="first hidden">First</li>
@@ -168,4 +184,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         <a title="duplicate" rel="tooltip" href= <%= '"?r=admin/duplicate&amp;id='+id+'"' %> >
             <i class="icon-copy icon-large">
     </i></a></td>
+
+</script>
+<script>
+    $('#check_toggle').change(function(){
+        $('#toggle-deleted').click()
+    })
 </script>

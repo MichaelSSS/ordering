@@ -4,12 +4,13 @@
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id' => 'orderForm',
         'type' => 'horizontal',
-        'action' => '?r=customer/create',
+//        'action' => '?r=customer/create',
         'enableClientValidation' => true,
         'enableAjaxValidation'=>true,
         'clientOptions' => array(
             'validateOnSubmit'=>true,
             'hideErrorMessage'=>true,
+            'validationUrl'=> Yii::app()->createUrl("customer/validateorder" ),
             'afterValidate'=>'js:afterValidate',
             )
          )
@@ -41,29 +42,46 @@
     <div class="row">
         <div class="span3 offset7">
             <div class="order-buttons">
-                <?php
-                    if(isset($order->id_order))
-                        $target = $this->createUrl('customer/save', array('id_order'=> $order->id_order)) ;
-                    else
-                        $target = $this->createUrl('customer/save');
-                ?>
-                <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType' => 'submit', 'type' => 'primary', 'label' => 'Save', 'htmlOptions' => array('name' => 'save', 'submit' => '?r=customer/save'))); ?>
+<!--                --><?php
+//                echo CHtml::ajaxSubmitButton('Submit', '?r=customer/save', array(
+//                        'type' => 'POST',
+//                        'update' => '#needForm',
+//                    ),
+//                    array(
+//                        'type' => 'submit',
+//                        'name' => 'save'
+//                    ));
+//                ?>
+
+
+
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'buttonType' => 'ajaxSubmitButton',
-                    'type' => 'primary',
+                    'label'=>'Save',
+                    'buttonType'=>'submit',
+//                    'url'=>Yii::app()->createUrl('customer/save'),
+                    'htmlOptions' => array(
+                        'name' => 'save',
+                        'submit' => Yii::app()->createUrl('customer/save'),
+                    ),
+
+
+
+                )); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'buttonType' => 'submitLink',
                     'label' => 'Order',
                     'url' => '?r=customer/order',
                     'htmlOptions' => array(
                         'name' => 'order',
-                        'ajax' => array(
-                            'type'=>'POST',
-                            'async'=>true,
-                            'dataType' => 'json',
-                            'url'=>'?r=customer/order',
-                            'data' => 'js:$("#orderForm").serialize()',
-                            'success'=>'js:afterValidateCC',
-                            //'error'=>'js:function(xhr,status,error){alert(error)}'
-                        ),
+//                        'ajax' => array(
+//                            'type'=>'POST',
+//                            'async'=>true,
+//                            'dataType' => 'json',
+//                            'url'=>'?r=customer/order',
+//                            'data' => 'js:$("#orderForm").serialize()',
+//                            'success'=>'js:afterValidateCC',
+//                            //'error'=>'js:function(xhr,status,error){alert(error)}'
+//                        ),
                     )
                 )); ?>
               
@@ -98,25 +116,21 @@
         $('#Order_preferable_date').tooltip({
             trigger : 'hover'
         });
+        debugger;
+        if(!$('#Order_status').val()){
+            $('#order').attr('disabled','disabled' )
+
+        }
+
+
     });
+
     function afterValidate(form,  data, hasError)
     {
         if(hasError){
             $('#error-text').html(data[Object.keys(data)[0]]);
             $('#itemsEmpty').modal();
             return false;
-        }else{
-//            $.ajax({
-//                "type":"POST",
-//                "url":"?r=customer/create",
-//                "data":form.serialize(),
-//                "success":function(data){
-//                    debugger;
-//                    $("#test").html(data);
-//                },
-//
-//        });
-
         }
         return true;
     };
@@ -168,5 +182,6 @@
             $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html(errorCC); });
         };
     }
+
 
 </script>

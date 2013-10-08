@@ -107,6 +107,12 @@ tr.user-deleted a {
     width: 300px;
     text-decoration: none;
 }
+#toggle-deleted {
+    display: none;
+}
+#search-form label {
+    display: none;
+}
 #search-result {
     font-weight: 700;
     color: #fff;

@@ -33,9 +33,9 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     array('class' => 'input-xlarge',
                         'options' => array(
                             array_search('User Name', $fields->keyFields) => array(
-                                'selected' => true
+                                'selected' => true,
                             )
-                        )
+                        ),
                     ));
                 ?>
             </div>
@@ -67,7 +67,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         </div>
     </div>
 </fieldset>
-
+<?php $this->endWidget(); ?>
 <div class='wrp1'>
     <div class='row'>
         <div class='span3'>
@@ -80,24 +80,22 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
         <div class='span9'>
              <div class='metrouicss pull-right'>
-                <form> 
+                <form>
                     <label class='input-control switch' onclick=''>hide
-                        <input type='checkbox'  id=''>
+                        <input type='checkbox'  id='check_toggle'>
                         <span class='helper'>show</span>
                     </label> 
                 </form>
+                 <a class='pull-right' id='toggle-deleted' href="
+                    <?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>"> show deleted users
+                 </a>
             </div>
-        </div>
-        <div class="row">
-            <a class='pull-right' id='toggle-deleted' href="
-                <?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>"> show deleted users
-            </a>
         </div>
     </div>
 </div>
 
 
-<?php $this->endWidget(); ?>
+
 
 <div id="oms-grid-view0" class="grid-view">
     <div id="grid-extend"><a id="page-size" href="/ordering/index.php?r=admin/index&amp;ajax=yw0&amp;pageSize=25">show 25 items</a></div>
@@ -127,7 +125,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     </tr></thead>
     </table>
     <div class="grid-footer">
-        <div class="summary">Page #: </div>
+        <div class="summary">Page # : </div>
         <div class="oms-pager">
             <ul class="yiiPager" id="yw1">
                 <li class="first hidden">First</li>
@@ -186,4 +184,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         <a title="duplicate" rel="tooltip" href= <%= '"?r=admin/duplicate&amp;id='+id+'"' %> >
             <i class="icon-copy icon-large">
     </i></a></td>
+
+</script>
+<script>
+    $('#check_toggle').change(function(){
+        $('#toggle-deleted').click()
+    })
 </script>

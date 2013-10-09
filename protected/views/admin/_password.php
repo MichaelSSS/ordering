@@ -1,10 +1,6 @@
 <script>
 $(document).ready(function () {
-    $('#User_password2').tooltip();
-    $('#User_password2').on('hidden.bs.tooltip', function (e) {
-        e.preventDefault();
-        return false;
-    })
+    $('#User_password').tooltip();
     $('.show_pass').click(function(){
         element =  $('#User_password');
         element.replaceWith(element.clone().attr('type',(element.attr('type') == 'password') ? 'text' : 'password'))

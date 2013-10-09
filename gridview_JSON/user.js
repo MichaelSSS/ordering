@@ -634,7 +634,13 @@ $(function(){
 
             var element = $('#form-passwords-duplicate').find('#User_password2');
             element.attr('id','User_password');
-            element.replaceWith(element.clone().attr('type','password'));
+            var element2 = element.clone().attr('type','password');
+            element.replaceWith(element2);
+            element2.tooltip();
+            element2.on('hidden.bs.tooltip', function (e) {
+                e.preventDefault();
+                return false;
+            });
 
             element = $('#form-passwords-duplicate').find('#User_confirmPassword2');
             element.attr('id','User_confirmPassword');
@@ -676,7 +682,13 @@ $(function(){
 
             var element = $('#form-passwords-duplicate').find('#User_password2');
             element.attr('id','User_password');
-            element.replaceWith(element.clone().attr('type','password'));
+            var element2 = element.clone().attr('type','password');
+            element.replaceWith(element2);
+            element2.tooltip();
+            element2.on('hidden.bs.tooltip', function (e) {
+                e.preventDefault();
+                return false;
+            });
 
             element = $('#form-passwords-duplicate').find('#User_confirmPassword2');
             element.attr('id','User_confirmPassword');

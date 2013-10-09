@@ -187,6 +187,29 @@ dd {
 
 /*admin start*/
 
+#modal-editing{
+    width:90%;
+    min-height:400px;
+    margin:0;
+    left:5%;
+    top:0;
+}
+
+#modal-editing .edit-shade{
+    display: none;
+}
+#modal-editing .edit-shade.loading{
+//    background:url(../gridview_JSON/loading.gif) no-repeat 50% 50%;
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    opacity: 0.7;
+    background-color: white;
+    display: block;
+}
+
 tr.user-active{
     color: red;
 }
@@ -195,7 +218,7 @@ tr.user-deleted{
     color: #bbb;
 }
 
-tr.user-deleted a{
+tr.user-deleted td.remove a{
     color: #bbb;
     cursor: default;
     text-decoration: none;

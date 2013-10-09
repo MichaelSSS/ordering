@@ -8,15 +8,14 @@
 
 <div class="modal-body">
     <p>The order will be deleted from the list of orders!</p>
-
     <p>Are you sure you want to proceed?</p>
 </div>
 
 <div class="modal-footer">
     <?php $this->widget('bootstrap.widgets.TbButton', array(
-        'type' => 'primary',
+        'type'  => 'primary',
         'label' => 'Yes',
-        'url' => '#',
+        'url'   => '#',
         'htmlOptions' => array('id' => 'modal_remove'),
     )); ?>
     <?php $this->widget('bootstrap.widgets.TbButton', array(

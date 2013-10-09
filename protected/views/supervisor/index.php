@@ -15,6 +15,7 @@
 
 
 <p>This page is appointed to create new and managing existing items by supervisor</p>
+
 <?php echo CHtml::link('Create New Items',array('supervisor/create'));?>
 
 
@@ -24,7 +25,9 @@
 )); ?>
 
     <fieldset>
-        <legend>Search <span>by</span></legend>
+        <legend>Search 
+            <span>by</span>
+        </legend>
         <div class='control-group'>
             <div class='controls'>
                 <div class='span3'>
@@ -38,7 +41,7 @@
                 <div class='span3'>
                     <?php echo $form->textField($model, 'searchValue', array('class' => 'span3')); ?>
                 </div>
-                <div class="span1 pull-right">
+                <div class="span2 offset1 pull-right">
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
                         'label' => 'Apply',
                         'buttonType' => 'submit',
@@ -51,17 +54,12 @@
     </fieldset>
 <?php $this->endWidget(); ?>
 
-
-
-
 <?php $this->widget('TGridView', array(
     'id'             => 'grig-extend',
     'type'           => 'striped bordered condensed',
     'dataProvider'   => $model->search(),
     'ajaxUpdate'     => 'search-result-count',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
-    //'filterSelector' => '#search-fields',
-    //'filter'=>$model,
     'template'       => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
     'pager'          => array(
         'class'          => 'OmsPager',

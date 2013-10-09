@@ -5,31 +5,22 @@ class User extends CActiveRecord
 
     public $currentPageSize = 10;
     public $searchCriteria = array();
-
     public $confirmPassword;
     public $status;
-
 
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 
-	/**
-	 * @return string the associated database table name
-	 */
 	public function tableName()
 	{
 		return 'user';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
+
         return array(
             array('username, firstname, lastname, email', 'required', 'except' => 'remove'),
             array('password, confirmPassword', 'required', 'except' => 'remove, edit'),
@@ -41,7 +32,7 @@ class User extends CActiveRecord
             array('email', 'email', 'message' => 'Incorrect format of Email Adress', 'except' => 'remove'),
 
             array('password', 'length', 'min' => 4, 'max' => 10, 'except' => 'remove'),
-            array('password', 'match', 'pattern' => '|(?=^.{1,25}$)(?=(?:.*?\d){1})(?=.*[a-z])(?=(?:.*?[A-Z]){1})(?=(?:.*?[!@#$%*()_+^&}{:;?.\[\~\`\-\=\'"\<\>\,\/\]]){1})(?!.*\s)[0-9a-zA-Z!@#$%*()_+^&\[\~\`\-\=\'"\<\>\,\/\]]*$|',
+            array('password', 'match', 'pattern' => '|(?=^.{1,25}$)(?=(?:.*?\d){1})(?=.*[a-z])(?=(?:.*?[A-Z]){1})(?=(?:.*?[!@#$\%*()_+^&}{\:\;\??.\[\~\`\-\=\'"\<\>\,\/\]\*]){1})(?!.*\s)[0-9a-zA-Z!@#$\%*()_+^&}{\:\;\??.\[\~\`\-\=\'"\<\>\,\/\]\*]*$|',
                   'message' => 'The value provided for the password does not meet required complexity', 'except' => 'remove'),
             array('confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => 'Confirm Password is not equal to Password','except'=>'remove'),
 
@@ -63,9 +54,7 @@ class User extends CActiveRecord
 	    return true;
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
+
 	public function attributeLabels()
 	{
 		return array(
@@ -81,21 +70,11 @@ class User extends CActiveRecord
 		);
 	}
 
-	/**
-	 * Checks if the given password is correct.
-	 * @param string the password to be validated
-	 * @return boolean whether the password is valid
-	 */
 	public function validatePassword($password)
 	{
 		return CPasswordHelper::verifyPassword($password, $this->password);
 	}
 
-	/**
-	 * Generates the password hash.
-	 * @param string password
-	 * @return string hash
-	 */
 	public function hashPassword($password)
 	{
 		return CPasswordHelper::hashPassword($password);

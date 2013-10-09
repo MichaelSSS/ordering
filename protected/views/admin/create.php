@@ -14,22 +14,31 @@
 
     <fieldset>
         <legend>Create new user</legend>
-        <ul>
-            <li><?php echo $form->textFieldRow($model, 'username'); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'firstname'); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'lastname'); ?></li>
-            <li><?php echo $form->passwordFieldRow($model, 'password', array('title' => 'Password should contain at least one uppercase and one lowercase Alphabetic symbol, at least one numeric and special character')); ?></li>
-            <li><?php echo $form->passwordFieldRow($model, 'confirmPassword'); ?></li>
-            <li><?php echo $form->textFieldRow($model, 'email') ?></li>
-            <li>
-                <?php echo $form->dropDownListRow($model, 'region', array(
-                    'north' => 'North',
-                    'south' => 'South',
-                    'west'  => 'West',
-                    'east'  => 'East'
-                )); ?>
-            </li>
-        </ul>
+        
+        <?php echo $form->textFieldRow($model, 'username'); ?>
+        <?php echo $form->textFieldRow($model, 'firstname'); ?>
+        <?php echo $form->textFieldRow($model, 'lastname'); ?>
+        
+        <?php echo $form->passwordFieldRow($model, 'password', array(
+            'title' => 'Password should contain at least one uppercase and one lowercase Alphabetic symbol, 
+                        at least one numeric and special character',
+            'class'=>'showpass')); ?>
+
+        <?php echo $form->passwordFieldRow($model, 'confirmPassword'); ?>
+
+       <div class="controls password_buttons">
+           <input type="button" class="show_pass btn-info btn-mini" value="Show/Hide password"/>
+           <input type="button" class="generate_pass btn-info btn-mini" value="Generate "/>
+       </div>
+        <?php echo $form->textFieldRow($model, 'email') ?>
+        
+        <?php echo $form->dropDownListRow($model, 'region', array(
+            'north' => 'North',
+            'south' => 'South',
+            'west'  => 'West',
+            'east'  => 'East'
+        )); ?>
+    
     </fieldset>
 
     <fieldset>
@@ -68,7 +77,7 @@
 
                 <div class='modal-body'>
                     <p>Are you sure you want to cancel operation?</p>
-                    <p>All data will be lost</p>
+                    <p>All data will be lost in this page</p>
                 </div>
 
                 <?php $target = $this->createUrl('admin/index'); ?>
@@ -91,9 +100,4 @@
             <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Refresh')); ?>
         </div>
 <?php $this->endWidget(); ?>
-
-<script>
-    $(document).ready(function () {
-        $('#User_password').tooltip();
-    });
-</script>
+<?php $this->renderPartial('_password');?>

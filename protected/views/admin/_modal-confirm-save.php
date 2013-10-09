@@ -1,4 +1,4 @@
-        <div id="cofirm-edit-cancel" class="modal hide fade" data-backdrop="static">
+        <div id="cofirm-edit-cancel" class="modal hide " data-backdrop="static">
 
             <div class='modal-header'>
                 <a class='close edit-cancel-not'>&times;</a>

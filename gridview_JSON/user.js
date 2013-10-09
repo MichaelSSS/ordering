@@ -137,6 +137,7 @@ $(function(){
             this.fetch({         
                 success: function() {
                     that.trigger('user:fetched');
+                    userEditWindow.render();
                     that.row.render();
 
                 },
@@ -362,7 +363,7 @@ $(function(){
             userEditWindow.url = url;
             userEditWindow.action = event.data.action;
             userEditWindow.model = model;
-            userEditWindow.listenTo(model,'user:fetched',userEditWindow.render);
+            userEditWindow.listenTo(userEditWindow.model,'user:fetched',userEditWindow.render);
             model.row = event.data.row;
             model.fetchUser();
             userEditWindow.modalShow();
@@ -529,7 +530,8 @@ $(function(){
             return false;
         },
         refreshClick: function() {
-            this.action.refresh();
+            userEditWindow.$('.edit-shade').addClass('loading');
+            userEditWindow.action.refresh();
         },
         loadForm: function() {
             var that = this;
@@ -570,11 +572,18 @@ $(function(){
                     $('#cofirm-edit-cancel').on('shown',function(){
                         $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
                     });
+                    $('#cofirm-edit-cancel').on('hidden',function(){
+                        $('.modal-backdrop').remove();
+                    });
                     this.$('.edit-cancel-yes').click(function() {
                         $('#cofirm-edit-cancel').prev('.modal-backdrop').remove();
                     });
                     this.$('.edit-cancel-not').click(function() {
+                        var shadow = $('.modal-backdrop:last').clone();
                         $('#cofirm-edit-cancel').modal('hide');
+                        if ( !$('.modal-backdrop').length ) {
+                            $('body').append(shadow);
+                        }
                         return false;
                     });
 
@@ -617,8 +626,19 @@ $(function(){
         render: function() {
             $('#form-passwords-edit').css('display','none');
             $('#form-passwords-edit').insertAfter(userEditWindow.$el);
+            $('#form-passwords-edit').find('#User_password').attr('id','User_password2');
+            $('#form-passwords-edit').find('#User_confirmPassword').attr('id','User_confirmPassword2');
+
             $('#form-passwords-duplicate').css('display','block');
             $('#form-passwords-duplicate').insertAfter('#form-start');
+
+            var element = $('#form-passwords-duplicate').find('#User_password2');
+            element.attr('id','User_password');
+            element.replaceWith(element.clone().attr('type','password'));
+
+            element = $('#form-passwords-duplicate').find('#User_confirmPassword2');
+            element.attr('id','User_confirmPassword');
+            element.replaceWith(element.clone().attr('type','password'));
 
             document.getElementById('User_username').value = '';
             document.getElementById('User_firstname').value = '';
@@ -648,8 +668,20 @@ $(function(){
             var attributes = userEditWindow.model.attributes;
             $('#form-passwords-edit').css('display','none');
             $('#form-passwords-edit').insertAfter(userEditWindow.$el);
+            $('#form-passwords-edit').find('#User_password').attr('id','User_password2');
+            $('#form-passwords-edit').find('#User_confirmPassword').attr('id','User_confirmPassword2');
+
             $('#form-passwords-duplicate').css('display','block');
             $('#form-passwords-duplicate').insertAfter('#form-start');
+
+            var element = $('#form-passwords-duplicate').find('#User_password2');
+            element.attr('id','User_password');
+            element.replaceWith(element.clone().attr('type','password'));
+
+            element = $('#form-passwords-duplicate').find('#User_confirmPassword2');
+            element.attr('id','User_confirmPassword');
+            element.replaceWith(element.clone().attr('type','password'));
+
 
             document.getElementById('User_username').value = '';
             document.getElementById('User_firstname').value = attributes.firstname;
@@ -677,15 +709,26 @@ $(function(){
         },
         name: 'Edit User',
         appointment: "This page is appointed for editing user for particular role",
-        buttonName: 'Edit',
+        buttonName: 'Save',
         render: function() {
             var attributes = userEditWindow.model.attributes;
 
             $('#form-passwords-duplicate').css('display','none');
             $('#form-passwords-duplicate').insertAfter(userEditWindow.$el);
+            $('#form-passwords-duplicate').find('#User_password').attr('id','User_password2');
+            $('#form-passwords-duplicate').find('#User_confirmPassword').attr('id','User_confirmPassword2');
+
             $('#form-passwords-edit').css('display','block');
             $('#form-passwords-edit').insertAfter('#form-start');
             $('#form-passwords-edit .password-group').hide();
+
+            var element = $('#form-passwords-edit').find('#User_password2');
+            element.attr('id','User_password');
+            element.replaceWith(element.clone().attr('type','password'));
+
+            element = $('#form-passwords-edit').find('#User_confirmPassword2');
+            element.attr('id','User_confirmPassword')
+            element.replaceWith(element.clone().attr('type','password'));
 
             document.getElementById('User_username').value = attributes.username;
             document.getElementById('User_firstname').value = attributes.firstname;

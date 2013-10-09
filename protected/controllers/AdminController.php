@@ -108,13 +108,11 @@ class AdminController extends Controller
         $model = new User;
         $model->role = self::CUSTOMER;
 
-        if( !empty( $_POST['User']) ) {
+        if( !empty( $_POST['User']) )
+        {
             $model->attributes = $_POST['User'];
-
             if($model->save()) {
-
                 $this->assignRole( $model->role,$model->id );
-
                 $this->actionIndex();
             }
         }
@@ -133,14 +131,18 @@ class AdminController extends Controller
             $model->deleted = 1;
 
             if($model->save()){
+
                 $this->actionIndex();
-            } else{
+            }
+            else{
                 throw new \Exception(print_r($model->getErrors(), true));
             }
         }
     }
 
-    public function actionEdit($id){
+    public function actionEdit($id)
+    {
+
         $model = $this->loadModel($id);
         $model->scenario = 'edit';
         $model->password = false;
@@ -160,12 +162,9 @@ class AdminController extends Controller
                 }
             }
         } else {
-            $layoutOld = $this->layout;
-            $this->layout = 'ajax';
-            $this->render('edit2',array(
+            $this->render('edit',array(
                 'model'=>$model,
             ));
-            $this->layout = $layoutOld;
         }
     }
     public function loadModel($id)
@@ -193,12 +192,9 @@ class AdminController extends Controller
                 $this->actionIndex();
             }
         } else {
-            $layoutOld = $this->layout;
-            $this->layout = 'ajax';
-            $this->render('duplicate2',array(
+            $this->render('duplicate',array(
                 'model'=>$model,
             ));
-            $this->layout = $layoutOld;
         }
     }
 }

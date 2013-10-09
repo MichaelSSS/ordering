@@ -40,6 +40,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                    'placeholder' => 'enter new password'));
                ?>
                <?php echo $form->passwordFieldRow($model, 'confirmPassword'); ?>
+                <div class="controls password_buttons">
+                    <input type="button" class="show_pass btn-info btn-mini" value="Show/Hide password"/>
+                    <input type="button" class="generate_pass btn-info btn-mini" value="Generate "/>
+                </div>
             </div>
 
             <?php echo $form->textFieldRow($model, 'email'); ?>
@@ -120,5 +124,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 <?php $this->endWidget(); ?>
             </div>
 <?php $this->endWidget(); ?>
+<?php $this->renderPartial('_password');?>
 
 

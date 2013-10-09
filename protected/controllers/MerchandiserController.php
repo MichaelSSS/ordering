@@ -28,8 +28,16 @@ class MerchandiserController extends Controller
 
     public function actionIndex()
     {
-        $model = new Order;
-        $this->render('index', array('model' => $model,));
+        $model = new Order('search');
+
+        if (isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']))
+            $model->currentPageSize = $_GET['pageSize'];
+
+        if (isset($_GET['Order']))
+            $model->attributes = $_GET['Order'];
+
+        $model->delivery_date = $model->formatDate($model->delivery_date);
+        $this->render('index', array('model' => $model));
     }
 
     public function actionEdit($id)
@@ -89,6 +97,10 @@ class MerchandiserController extends Controller
             )
         );
 
+    }
+    public function validatePageSize($ps)
+    {
+        return is_numeric($ps) && array_key_exists($ps, OmsGridView::$nextPageSize);
     }
 
 }

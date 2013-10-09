@@ -44,7 +44,7 @@ $(document).ready(function () {
 
             return this;
         };
-        
+
         shuffle(pass);
         pass = pass.join('');
 

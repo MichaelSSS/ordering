@@ -24,10 +24,7 @@ class CustomerController extends Controller
         );
     }
 
-    public function validatePageSize($ps)
-    {
-        return is_numeric($ps) && array_key_exists($ps, OmsGridView::$nextPageSize);
-    }
+
 
     public function actionIndex()
     {

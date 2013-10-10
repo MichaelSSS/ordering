@@ -33,11 +33,6 @@ small {
 .wrp1 {
     margin-top: 1em;
 }
-.wrp2 {
-    margin-top: 4em;
-}
-/*login-form*/
-
 /*error-message*/
 .panel {
     margin-bottom: 21px;
@@ -141,7 +136,7 @@ small {
     display: none;
 }
 #modal-editing .edit-shade.loading{
-//    background:url(../gridview_JSON/loading.gif) no-repeat 50% 50%;
+//  background:url(../gridview_JSON/loading.gif) no-repeat 50% 50%;
     position:absolute;
     width: 100%;
     height: 100%;
@@ -248,7 +243,7 @@ tr.user-deleted td.remove a{
 .generate_pass{
     width:94px !important;
 }
-<<<<<<< HEAD
+
 /*merchandiser*/
 a.clndr, a:hover.clndr,
 a:visited.clndr
@@ -256,5 +251,3 @@ a:visited.clndr
     color: #000;
     display: inline-block;
 }
-=======
->>>>>>> 02535e29b82a0390457bfb709105cdc361af84c2

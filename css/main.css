@@ -222,3 +222,10 @@ tr.user-deleted a {
 .generate_pass{
     width:94px !important;
 }
+/*merchandiser*/
+a.clndr, a:hover.clndr,
+a:visited.clndr
+ {
+    color: #000;
+    display: inline-block;
+}

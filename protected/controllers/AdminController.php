@@ -92,6 +92,15 @@ class AdminController extends Controller
         }
     }
 
+    public function actionUser($id)
+    {
+        $response = CJSON::encode($this->loadModel($id)->getAttributes(array(
+            'username', 'firstname', 'lastname', 'role', 'email', 'region', 'deleted'
+        )));
+        echo $response;
+        Yii::app()->end();
+    }
+
     /*=======USERS ACTIONS=========*/
 
     public function actionCreate()
@@ -103,12 +112,12 @@ class AdminController extends Controller
         {
             $model->attributes = $_POST['User'];
             if($model->save()) {
-                $this->assignRole( $model->role,$model->id ); // assign role to user
-                $this->redirect( array( 'admin/index' ) );
+                $this->assignRole( $model->role,$model->id );
+                $this->actionIndex();
             }
         }
 
-
+        $this->layout='ajax';
         $this->render('create',array(
             'model'=>$model,
         ));
@@ -138,30 +147,26 @@ class AdminController extends Controller
         $model->scenario = 'edit';
         $model->password = false;
 
-        if( !empty($_POST['User'] ) ) {
+        if ( !empty($_POST['User'] ) ) {
             $model->attributes = $_POST['User'];
 
-            if(strlen($model->password) == 0 ){
+            if (strlen($model->password) == 0 ){
                 if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
-
-                    $this->assignRole($model->role,$model->id,false); // assign role to user
-
-                    $this->redirect(array('admin/index'));
+                    $this->assignRole($model->role,$model->id,false);
+                    $this->actionUser($id);
                 }
-            }else{
+            } else {
                 if($model->save()) {
-
-                    $this->assignRole($model->role,$model->id,false); // assign role to user
-
-                    $this->redirect(array('admin/index'));
+                    $this->assignRole($model->role,$model->id,false);
+                    $this->actionUser($id);
                 }
             }
-
+        } else {
+            $this->layout='ajax';
+            $this->render('edit',array(
+                'model'=>$model,
+            ));
         }
-
-        $this->render('edit',array(
-            'model'=>$model,
-        ));
     }
     public function loadModel($id)
     {
@@ -184,14 +189,14 @@ class AdminController extends Controller
 
             if($duplicate->save()) {
 
-                $this->assignRole($duplicate->role, $duplicate->id); // assign role to user
-                $this->redirect(array('admin/index'));
+                $this->assignRole($duplicate->role, $duplicate->id);
+                $this->actionIndex();
             }
-
+        } else {
+            $this->layout='ajax';
+            $this->render('duplicate',array(
+                'model'=>$model,
+            ));
         }
-
-        $this->render('duplicate',array(
-            'model'=>$model,
-        ));
     }
 }

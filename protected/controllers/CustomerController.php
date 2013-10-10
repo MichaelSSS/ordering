@@ -24,10 +24,7 @@ class CustomerController extends Controller
         );
     }
 
-    public function validatePageSize($ps)
-    {
-        return is_numeric($ps) && array_key_exists($ps, OmsGridView::$nextPageSize);
-    }
+
 
     public function loadModel($id)
     {
@@ -123,6 +120,7 @@ class CustomerController extends Controller
             'order' => $order,
             'orderDetails' => $orderDetails,
             'cardInfo' => $cardInfo,
+            'currentItems' => $currentItems,
         ));
     }
 
@@ -306,18 +304,54 @@ class CustomerController extends Controller
 
         if (isset($_POST['OrderDetails'])) {
             $currentItems = Yii::app()->session->get("OrderItems");
-            $currentItems[] = $_POST['OrderDetails'];
+            if(isset($_POST['OrderDetails']['key'])){
+                $currentItems[$_POST['OrderDetails']['key']] = $_POST['OrderDetails'];
+            }
+            else{
+                $currentItems[] = $_POST['OrderDetails'];
+            }
+            
             Yii::app()->session->add("OrderItems", $currentItems);
 
         }
-
-
-
         if(Yii::app()->session->get("orderId"))
         {
             $this->redirect(Yii::app()->createUrl('customer/edit', array('id' => Yii::app()->session->get("orderId"))));
         }
         $this->redirect(Yii::app()->createUrl('customer/create'));
-
     }
+
+    public function actionRemoveItem()
+    {
+        if (isset($_GET['key'])) {
+            $currentItems = Yii::app()->session->get("OrderItems");
+            foreach ($currentItems as $key=>$value){
+                if($key == $_GET['key']){
+                    unset($currentItems[$key]);
+                }
+            }
+            Yii::app()->session->add("OrderItems", $currentItems);
+        //    $currentItems
+            $this->redirect(Yii::app()->createUrl('customer/create'));
+        }
+    }
+    
+    public function actionEditItem()
+    {
+        if (isset($_GET['id'] ) && isset($_GET['key'])) {
+        $model = Item::model()->findByPk($_GET['id']);;
+        $orderDetails = new OrderDetails;
+
+            $currentItems = Yii::app()->session->get("OrderItems");
+           // Yii::app()->session->add("OrderItems", $currentItems);
+        //    $currentItems
+            $this->render('/order/editItem', array(
+                'model' => $model,
+                'key' => $_GET['key'],
+                'currentItems'=>$currentItems,
+                'orderDetails' => $orderDetails
+        ));
+        }
+    }
+    
 }

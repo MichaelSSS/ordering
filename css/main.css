@@ -33,16 +33,6 @@ small {
 .wrp1 {
     margin-top: 1em;
 }
-.wrp2 {
-    margin-top: 4em;
-}
-/*login-form*/
-
-/*userInfo*/
-.navbar .nav > li > .dropdown-menu:after,
-.navbar .nav > li > .dropdown-menu:before {
-    left: 255px;
-}
 /*error-message*/
 .panel {
     margin-bottom: 21px;
@@ -73,6 +63,7 @@ small {
     margin-top: 0;
     margin-bottom: 0;
     font-size: 17px;
+    text-transform: capitalize;
 }
 .panel-footer {
     padding: 10px 15px;
@@ -80,6 +71,15 @@ small {
     border-top: 1px solid #ddd;
     border-bottom-right-radius: -1px;
     border-bottom-left-radius: -1px;
+}
+.panel-default {
+    border-color: #ddd;
+}
+
+.panel-default > .panel-heading {
+    color: #333333;
+    background-color: #f5f5f5;
+    border-color: #ddd;
 }
 .panel-warning {
     border-color: #ff4309;
@@ -89,14 +89,72 @@ small {
     background-color: #ff7518;
     border-color: #ff4309;
 }
-/*admin*/
+.panel-primary {
+    border-color: #007fff;
+}
+.panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #007fff;
+    border-color: #007fff;
+}
+.panel-success {
+    border-color: #3fb618;
+}
+.panel-success > .panel-heading {
+    color: #fff;
+    background-color: #3fb618;
+    border-color: #4e9f15;
+}
+.panel-danger {
+    border-color: #b94a48;
+}
+.panel-danger > .panel-heading {
+    color: #fff;
+    background-color: #f2dede;
+    border-color: #b94a48;
+}
+.panel-info {
+    border-color: #7643a8;
+}
+.panel-info > .panel-heading {
+    color: #fff;
+    background-color: #9954bb;
+    border-color: #7643a8;
+}
+
+/*admin start*/
+
+#modal-editing{
+    width:90%;
+    min-height:400px;
+    margin:0;
+    left:5%;
+    top:0;
+}
+
+#modal-editing .edit-shade{
+    display: none;
+}
+#modal-editing .edit-shade.loading{
+//  background:url(../gridview_JSON/loading.gif) no-repeat 50% 50%;
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    opacity: 0.7;
+    background-color: white;
+    display: block;
+}
+
 tr.user-active {
     color: red;
 }
 tr.user-deleted {
     color: #bbb;
 }
-tr.user-deleted a {
+
+tr.user-deleted td.remove a{
     color: #bbb;
     cursor: default;
     left: -302px;
@@ -104,6 +162,12 @@ tr.user-deleted a {
     top: 95px;
     width: 300px;
     text-decoration: none;
+}
+#toggle-deleted {
+    display: none;
+}
+#search-form label {
+    display: none;
 }
 #search-result {
     font-weight: 700;
@@ -134,9 +198,7 @@ tr.user-deleted a {
     top: 6px;
     left: -6px;
 }
-.controls  label {
-    display: none;
-}
+
 .span3 button.btn, input[type='submit'].btn, input[type='reset'].btn  {
     margin: .7em 0 .7em 3em;
 }
@@ -173,4 +235,19 @@ tr.user-deleted a {
 .status{
     display: inline-block;
     margin-right: 20px;
+}
+.password_buttons{
+    margin-top: -20px;
+    margin-bottom: 8px;
+}
+.generate_pass{
+    width:94px !important;
+}
+
+/*merchandiser*/
+a.clndr, a:hover.clndr,
+a:visited.clndr
+ {
+    color: #000;
+    display: inline-block;
 }

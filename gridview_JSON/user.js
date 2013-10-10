@@ -1,4 +1,7 @@
 $(function(){
+
+    Backbone.emulateHTTP = Backbone.emulateJSON = true;
+
     // global object with general properties
     oms = {
         gridId: 'oms-grid-view0',
@@ -12,11 +15,11 @@ $(function(){
                 if ( response.status == 403 ) {
                     window.location.href = "";
                 } else {
-                    alert("Error: " + response.status + "\n" + response.responseText);
+                    alert("Error: " + response.status + " " + response.responseText);
                     $('#'+oms.gridId).removeClass('grid-view-loading');
                 }
             }
-        },
+        }
     };
 
     // models
@@ -92,7 +95,32 @@ $(function(){
     }));
 
     // model representing a row
-    var User = Backbone.Model;
+    var User = Backbone.Model.extend({
+        url: 'index.php?r=admin/user',
+
+        fetchUser: function() {
+            var that = this;
+            this.url = 'index.php?r=admin/user&id=' + this.get("id");
+            this.fetch({         
+                success: function() {
+                    //that.trigger('user:fetched');
+                    userEditWindow.render();
+                    that.row.render();
+
+                },
+                error: function(model, response, options) {
+                    if ( response.status == 403 ) {
+                        window.location.href = "";
+                    } else {
+                        alert("Error: " + response.status + " " + response.responseText);
+                    }
+                }
+            }).always(function(){
+                $('#'+oms.gridId).removeClass('grid-view-loading');
+            });            
+        }
+
+    });
 
     // collection of rows
     var Users = Backbone.Collection.extend({
@@ -100,7 +128,7 @@ $(function(){
         model: User,
 
         initialize: function() { 
-            this.on('request',function() {
+            this.on('request',function(model, xhr, options) {
                 $('#'+oms.gridId).addClass('grid-view-loading');
             });
             this.on('reset',function() {
@@ -108,8 +136,7 @@ $(function(){
                     userCount: this.models[this.models.length-1].get("userCount")
                 });
     
-                this.models.length--;
-                this.length--;
+                this.length = --(this.models.length);
 
                 userTable.addAll();
                 $('#'+oms.gridId).removeClass('grid-view-loading');
@@ -139,21 +166,31 @@ $(function(){
             } else {
                 this.$el.toggleClass('odd',true);
             }
-            if ( row.deleted==1 ) {
-                this.$el.addClass('user-deleted');
-            } else if ( row.active ) {
-                this.$el.addClass('user-active');
-            }
 
-            this.$el.find('a[title="remove"]').on('click',function(){
-                var url = this.href;
-                $('#confirm-deleting .btn-primary').click(function() {
-                    oms.users.url = $.param.querystring(oms.users.url,url);
-                    oms.users.fetch(oms.fetchOptions);
-                });
-                $('#confirm-deleting').modal();
-                return false;
-            });
+            this.$el
+                .toggleClass('user-deleted',(row.deleted==1))
+                .toggleClass('user-active', row.active);
+
+            this.$el.find('a[title="remove"]').on(
+                'click',
+                userTable.removeClick
+            );
+            this.$el.find('a[title="edit"]').on(
+                'click', 
+                {
+                    action: actionEdit, 
+                    row: this
+                },
+                userTable.editClick
+            );
+            this.$el.find('a[title="duplicate"]').on(
+                'click', 
+                {
+                    action: actionDuplicate, 
+                    row: this
+                },
+                userTable.editClick
+            );
 
             return this;
 
@@ -166,12 +203,15 @@ $(function(){
         el: $("#table-user"),
 
         showDeletedClick: function() {
-            var showDeleted = oms.fields.get("showDeleted");
-            showDeleted = showDeleted==1 ? 0 : 1
+            var showDeleted = oms.fields.get("showDeleted"),
+                showDeletedParam,
+                pageNumberParam = oms.pageVar + "=" + oms.fields.get("currentPage");
+            showDeleted = showDeleted==1 ? 0 : 1;
             oms.fields.set({
                 showDeleted: showDeleted
             });
-            oms.users.url = $.param.querystring(oms.users.url, oms.showDeletedVar + "=" + showDeleted);
+            showDeletedParam = oms.showDeletedVar + "=" + showDeleted;
+            oms.users.url = $.param.querystring(oms.users.url, showDeletedParam + "&" + pageNumberParam);
             oms.users.fetch(oms.fetchOptions);
             return false;
         },
@@ -221,12 +261,14 @@ $(function(){
 
         pageButtonClick: function(event) {
             if ( !$(this).hasClass('hidden') ) {
-                var currentPage = oms.fields.get("buttons")[$(this).text()].getPageNumber();
+                var currentPage 
+                    = oms.fields.get("buttons")[$(this).text()].getPageNumber();
                 oms.fields.set({
                     currentPage: currentPage
                 });
 
-                oms.users.url = $.param.querystring(oms.users.url, oms.pageVar + "=" + currentPage)
+                oms.users.url = $.param.querystring(
+                    oms.users.url, oms.pageVar + "=" + currentPage);
                 oms.users.fetch(oms.fetchOptions);
             }
             return false;
@@ -234,7 +276,8 @@ $(function(){
 
         sortLinkClick: function(event){
             if ( event.ctrlKey ) {
-                var sortAdd = oms.fields.attributeLabels[$(this).text()],
+                var pageNumberParam = oms.pageVar + "=" + oms.fields.get("currentPage"),
+                    sortAdd = oms.fields.attributeLabels[$(this).text()],
                     sortNow = $.deparam.querystring(oms.users.url)[oms.sortVar];
                 if ( sortNow ) {
                     // if we already sorted by some column
@@ -264,16 +307,51 @@ $(function(){
                 }
                 sortNow = oms.sortVar + '=' + sortNow;
 
-                oms.users.url = $.param.querystring(oms.users.url, sortNow);
+                oms.users.url = $.param.querystring(oms.users.url, sortNow + "&" + pageNumberParam);
                 this.href = oms.users.url;
                 oms.users.fetch(oms.fetchOptions);
             }
             return false;
         },
 
-        initialize: function() { 
+        removeClick: function(){
+            var url = this.href;
+            $('#confirm-deleting .btn-primary').click(function() {
+                oms.users.url = $.param.querystring(oms.users.url,url);
+                oms.users.fetch(oms.fetchOptions);
+            });
+            $('#confirm-deleting').modal();
+            return false;
+        },
 
-            $('#toggle-deleted').on('click', this.showDeletedClick);
+        editClick: function(event) {
+            var url = this.href,
+                model = oms.users.get($.deparam.querystring(url)['id']);
+            userEditWindow.url = url;
+            userEditWindow.action = event.data.action;
+            userEditWindow.model = model;
+            //userEditWindow.listenTo(userEditWindow.model,'user:fetched',userEditWindow.render);
+            model.row = event.data.row;
+            //model.fetchUser();
+            userEditWindow.modalShow();
+            userEditWindow.$('.edit-shade').addClass('loading');
+            userEditWindow.loadForm();
+            return false;
+        },
+
+        createUserClick: function(){
+            var url = this.href;
+            userEditWindow.url = url;
+            userEditWindow.action = actionCreate;
+            userEditWindow.modalShow();
+            userEditWindow.$('.edit-shade').addClass('loading');
+            userEditWindow.loadForm(); //userEditWindow.render();
+            return false;
+        },
+    
+        initialize: function() { 
+            $('#create-user').on('click', this.createUserClick);
+            $('#check_toggle').on('change', this.showDeletedClick);
             $('#search-form').on('submit', this.searchFormSubmit);
             $('#search-form').on('reset', this.searchFormReset);
             $("#page-size").on('click', this.pageSizeClick);
@@ -329,7 +407,8 @@ $(function(){
         },
         renderFooter: function() {
             if ( oms.users.length > 0 ) {
-                $(".summary").text("page #"+oms.fields.get("currentPage")+" of "+oms.fields.get("totalPages")).show();
+                $(".summary").text("page #"+oms.fields.get("currentPage")
+                        +" of "+oms.fields.get("totalPages")).show();
                 pager.render();
             } else {
                 $(".summary").hide();
@@ -342,18 +421,314 @@ $(function(){
         },
     
         addAll: function() {
-            this.$("tr").filter(function(index){return index > 0}).remove();
+            this.$("tr").filter(function(index){return index > 0;}).remove();
             if ( oms.users.length > 0 ) {
                 oms.users.each(this.addOne, this);
+
             } else {
                 this.addEmpty();                
             }
             this.render();
         },
+
         addEmpty: function() {
             this.$el.append('<tr><td class="empty" colspan="0"><span class="empty">No results found.</span></td></tr>');
         }
     });
+
+    var UserEditWindow = Backbone.View.extend({
+        el: $('#modal-editing'),
+        model: new Backbone.Model,
+        url: '',
+        action: {},
+        validatedForms: 0,
+        modalShow: function() {
+            var data = this.$el.data('modal');
+            if ( data && data.isShown ) {
+                data.isShown = false;
+                this.$el.data('modal',data);
+            }
+            this.$el.modal('show');
+        },
+        modalHide: function() {
+            var data = this.$el.data('modal');
+            this.$el.data('modal',$.extend(data,{isShown: true}));
+            this.$el.modal('hide');
+        },
+        saveClick: function() {
+            var $form = userEditWindow.$('.modal-body form')
+                ,data = ''
+                ,validated = 0;
+
+            $form.each(function() {
+                if ( $(this).triggerHandler('submit') ) {
+                    validated++;
+                };
+            });
+
+            setTimeout(function(){
+                if ( (userEditWindow.validatedForms + validated)==1 ) {
+                    $form.each(function() {
+                        data += (data=='' ? '' : '&') + $(this).serialize();
+                    });
+                    $.post(userEditWindow.url, data)
+                        .done(userEditWindow.action.saveDone)
+                        .fail(function(jqXHR, textStatus, errorThrown) {
+                            alert( "Error: " + jqXHR.status + " " + jqXHR.statusText );
+                        });
+                    userEditWindow.modalHide();
+                    $('#'+oms.gridId).addClass('grid-view-loading');
+                }
+                userEditWindow.validatedForms = 0;
+            },600);
+
+            return false;
+        },
+        cancelClick: function() {
+            $('#cofirm-edit-cancel').modal('show');
+            return false;
+        },
+        refreshClick: function() {
+            userEditWindow.$('.edit-shade').addClass('loading');
+            userEditWindow.action.refresh();
+        },
+        loadForm: function() {
+            var that = this;
+            //this.$('.edit-shade').addClass('loading');
+
+            $.ajax({
+                url: this.url,
+                dataType: 'html',
+                success: function(data, textStatus, jqXHR){
+                    that.$('#modal-editing-body').html(data);
+
+                    that.$('.submit-handler').click(function(e) {
+                        that.validatedForms++;
+                        e.preventDefault();
+                        return false;
+                    });
+        
+                    $('#cofirm-edit-cancel').on('shown',function(){
+                        $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
+                    });
+                    $('#cofirm-edit-cancel').on('hidden',function(){
+                        $('.modal-backdrop').remove();
+                    });
+                    
+                    that.$('#modal-editing-body').scrollTop(0);
+
+                },
+                error: function(xhr){
+                    alert( "Error: " + xhr.status + " " + xhr.statusText );
+                }
+            }).always(function(){
+                that.$('.edit-shade').removeClass('loading');
+            });
+        },
+
+        initialize: function() { 
+            var $modalWindow = this.$el,
+                that = this;
+            $modalWindow.on('hidden',function(){
+                $modalWindow.find('#modal-editing-body').scrollTop(0);
+                //that.stopListening();
+                $('.modal-backdrop').remove();
+            });
+            $modalWindow.on('shown',function(){
+                $modalWindow.find('#modal-editing-body').scrollTop(0);
+            });
+
+                    $('#cofirm-edit-cancel').on('shown',function(){
+                        $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
+                    });
+                    $('#cofirm-edit-cancel').on('hidden',function(){
+                        $('.modal-backdrop').remove();
+                    });
+                    this.$('.edit-cancel-yes').click(function() {
+                        $('#cofirm-edit-cancel').prev('.modal-backdrop').remove();
+                    });
+                    this.$('.edit-cancel-not').click(function() {
+                        var shadow = $('.modal-backdrop:last').clone();
+                        $('#cofirm-edit-cancel').modal('hide');
+                        if ( !$('.modal-backdrop').length ) {
+                            $('body').append(shadow);
+                        }
+                        return false;
+                    });
+
+            this.$('#edit-save').click(this.saveClick);
+            this.$('#edit-refresh').click(this.refreshClick);
+            this.$('#edit-cancel').click(this.cancelClick);
+            this.$('form').submit(false);
+
+            this.$('.submit-handler').click(function() {
+                that.validatedForms++;
+                return false;
+            });
+
+        },        
+        render: function() {
+            this.$('#modal-edit-header').text(this.action.name);
+            this.$('#page-appointment').text(this.action.appointment);
+            this.$('#edit-save').text(this.action.buttonName);
+
+            //this.$('div.control-group').removeClass('error');
+            //this.$('span.help-inline').html('').hide();
+            this.action.render();
+            var $form = this.$('.modal-body form');
+            $form.each(function() {
+                $(this).triggerHandler('reset');
+            });
+            this.$('#modal-editing-body').scrollTop(0);
+            this.$('.edit-shade').removeClass('loading');
+        }
+
+    });
+
+    var actionCreate = {
+        saveDone: function(resp, textStatus, jqXHR) {
+            oms.users.fetch(oms.fetchOptions);
+        },
+        name: "Create New User",
+        appointment: "This page is appointed for creating new user for particular role",
+        buttonName: 'Create',
+        render: function() {
+            $('#form-passwords-edit').css('display','none');
+            $('#form-passwords-edit').insertAfter(userEditWindow.$el);
+            $('#form-passwords-edit').find('#User_password').attr('id','User_password2');
+            $('#form-passwords-edit').find('#User_confirmPassword').attr('id','User_confirmPassword2');
+
+            $('#form-passwords-duplicate').css('display','block');
+            $('#form-passwords-duplicate').insertAfter('#form-start');
+
+            var element = $('#form-passwords-duplicate').find('#User_password2');
+            element.attr('id','User_password');
+            var element2 = element.clone().attr('type','password');
+            element.replaceWith(element2);
+            element2.tooltip();
+            element2.on('hidden.bs.tooltip', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            element = $('#form-passwords-duplicate').find('#User_confirmPassword2');
+            element.attr('id','User_confirmPassword');
+            element.replaceWith(element.clone().attr('type','password'));
+
+            document.getElementById('User_username').value = '';
+            document.getElementById('User_firstname').value = '';
+            document.getElementById('User_lastname').value = '';
+            document.getElementById('User_email').value = '';
+            document.getElementById('User_password').value='';
+            document.getElementById('User_confirmPassword').value='';
+            userEditWindow.$('#User_region option[selected]').removeAttr('selected');
+            userEditWindow.$('#User_region option[value="north"]').attr('selected','true');
+            userEditWindow.$('#User_deleted').parents('.control-group').hide();
+            userEditWindow.$('input[name="User[role]"]').filter('[checked]').removeAttr('checked');
+            userEditWindow.$('input[name="User[role]"]').filter('[value="customer"]').attr('checked','true');
+        },
+        refresh: function() {
+            userEditWindow.render();
+        }
+    };
+
+    var actionDuplicate = {
+        saveDone: function(resp, textStatus, jqXHR) {
+            oms.users.fetch(oms.fetchOptions);
+        },
+        name: 'Duplicate User',
+        appointment: "This page is appointed for duplicating user for particular role",
+        buttonName: 'Duplicate',
+        render: function() {
+            var attributes = userEditWindow.model.attributes;
+            $('#form-passwords-edit').css('display','none');
+            $('#form-passwords-edit').insertAfter(userEditWindow.$el);
+            $('#form-passwords-edit').find('#User_password').attr('id','User_password2');
+            $('#form-passwords-edit').find('#User_confirmPassword').attr('id','User_confirmPassword2');
+
+            $('#form-passwords-duplicate').css('display','block');
+            $('#form-passwords-duplicate').insertAfter('#form-start');
+
+            var element = $('#form-passwords-duplicate').find('#User_password2');
+            element.attr('id','User_password');
+            var element2 = element.clone().attr('type','password');
+            element.replaceWith(element2);
+            element2.tooltip();
+            element2.on('hidden.bs.tooltip', function (e) {
+                e.preventDefault();
+                return false;
+            });
+
+            element = $('#form-passwords-duplicate').find('#User_confirmPassword2');
+            element.attr('id','User_confirmPassword');
+            element.replaceWith(element.clone().attr('type','password'));
+
+
+            document.getElementById('User_username').value = '';
+            document.getElementById('User_firstname').value = attributes.firstname;
+            document.getElementById('User_lastname').value = attributes.lastname;
+            document.getElementById('User_email').value = attributes.email;
+            document.getElementById('User_password').value='';
+            document.getElementById('User_confirmPassword').value='';
+            userEditWindow.$('#User_region option').prop('selected',false);
+            userEditWindow.$('#User_region option[value="' + attributes.region + '"]').prop('selected','true');
+            userEditWindow.$('#User_deleted').parents('.control-group').hide();
+            userEditWindow.$('input[name="User[role]"]').prop('checked',false);
+            userEditWindow.$('input[name="User[role]"]').filter('[value="' + attributes.role + '"]').prop('checked','true');
+        },
+        refresh: function() {
+            userEditWindow.model.fetchUser();
+        }
+    };
+
+    var actionEdit = {
+        saveDone: function(resp, textStatus, jqXHR) {
+            userEditWindow.model.set($.parseJSON(resp));
+            userEditWindow.model.row.render();
+            $('#'+oms.gridId).removeClass('grid-view-loading');
+
+        },
+        name: 'Edit User',
+        appointment: "This page is appointed for editing user for particular role",
+        buttonName: 'Save',
+        render: function() {
+            var attributes = userEditWindow.model.attributes;
+
+            $('#form-passwords-duplicate').css('display','none');
+            $('#form-passwords-duplicate').insertAfter(userEditWindow.$el);
+            $('#form-passwords-duplicate').find('#User_password').attr('id','User_password2');
+            $('#form-passwords-duplicate').find('#User_confirmPassword').attr('id','User_confirmPassword2');
+
+            $('#form-passwords-edit').css('display','block');
+            $('#form-passwords-edit').insertAfter('#form-start');
+            $('#form-passwords-edit .password-group').hide();
+
+            var element = $('#form-passwords-edit').find('#User_password2');
+            element.attr('id','User_password');
+            element.replaceWith(element.clone().attr('type','password'));
+
+            element = $('#form-passwords-edit').find('#User_confirmPassword2');
+            element.attr('id','User_confirmPassword')
+            element.replaceWith(element.clone().attr('type','password'));
+
+            document.getElementById('User_username').value = attributes.username;
+            document.getElementById('User_firstname').value = attributes.firstname;
+            document.getElementById('User_lastname').value = attributes.lastname;
+            document.getElementById('User_email').value = attributes.email;
+            document.getElementById('User_password').value='';
+            document.getElementById('User_confirmPassword').value='';
+            userEditWindow.$('#User_region option[selected]').removeAttr('selected');
+            userEditWindow.$('#User_region option[value="' + attributes.region + '"]').attr('selected','true');
+            userEditWindow.$('#User_deleted').parents('.control-group').show();
+            userEditWindow.$('#User_deleted option[selected]').removeAttr('selected');
+            userEditWindow.$('#User_deleted option[value=' + attributes.deleted + ']').attr('selected','true');
+            userEditWindow.$('input[name="User[role]"]').filter('[checked]').removeAttr('checked');
+            userEditWindow.$('input[name="User[role]"]').filter('[value="' + attributes.role + '"]').attr('checked','true');
+        },
+        refresh: function() {
+            userEditWindow.model.fetchUser();
+        }
+    };
 
     // pager view
     var Pager = Backbone.View.extend({
@@ -377,6 +752,8 @@ $(function(){
 
     var pager = new Pager;
 
-    // instansiate table
+    // instanciate table
     var userTable = new UserTable;
+    
+    var userEditWindow = new UserEditWindow;    
 });

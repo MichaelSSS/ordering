@@ -20,6 +20,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'assignee' => "int(11) NOT NULL ",
             'customer' => "int(11) NOT NULL ",
             'trash' => "BIT(1) DEFAULT 0",
+            'gift' => "BIT(1) DEFAULT 0",
 
         ));
         //$this->addForeignKey('FK_user', 'order','assignee', 'user', 'id' );

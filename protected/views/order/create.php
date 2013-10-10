@@ -23,7 +23,7 @@
         <div class="span10">
             <fieldset>
                 <legend>Items selection</legend>
-                <?php $this->renderPartial('/order/orderItems', array('orderDetails' => $orderDetails, 'form' => $form)) ?>
+                <?php $this->renderPartial('/order/orderItems', array('orderDetails' => $orderDetails, 'form' => $form, 'currentItems' => $currentItems,)) ?>
             </fieldset>
         </div>
     </div>

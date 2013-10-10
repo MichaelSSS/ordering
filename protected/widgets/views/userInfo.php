@@ -44,10 +44,10 @@
 					<small>Need to spend 1000$ more to become a Gold type of customer.</small>
 				</a>
 			</li>
+    		<?php endif ?>
 		</ul>
 	</li>
-</ul>		<?php endif ?>
-
+</ul>
 
 
 

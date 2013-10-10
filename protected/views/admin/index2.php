@@ -1,8 +1,12 @@
-<?php $this->renderPartial('_del2'); ?> <!--modal-->
+<?php
+    $this->renderPartial('_modal-confirm-delete');
+    $this->renderPartial('_modal-edit');
+    $this->renderPartial('_password');
+?>
 
 <p>This page is appointed for creating new and managing existing users</p>
 
-<?php echo CHtml::link('Create New User', array('admin/create')); ?>
+<?php echo CHtml::link('Create New User', array('admin/create'), array('id'=>'create-user')); ?>
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -141,8 +145,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
     $cs->registerCssFile('gridview_JSON/pager.css');
 
-    //$cs->registerCssFile('gridview/styles.css');
-
     $cs->registerCoreScript('jquery');
     $cs->registerCoreScript('bbq');
 
@@ -152,8 +154,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
     $cs->registerScript('1','
         oms.users.reset(' . $this->prepareAjaxData($dataProvider) . ');
-        //oms.fields.set({userCount:'. $dataProvider->getTotalItemCount() . ',nextPageSize:25,currentPage:1,totalPage:' . $dataProvider->getPagination()->getPageCount() . '});
-
     ');
 
 ?>
@@ -170,14 +170,14 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     </i></a></td>
     <td class="remove" >
         <%= 
-            ( deleted==1 ) ? (
-                '<a rel="tooltip" title="deleted user">&times;</a>'
-            ) : (( active ) ? (
-'<a rel="tooltip" title="active user"><i class="icon-remove" style="background-image: url(gridview_JSON/glyphicons-halflings-white.png)"></i></a>'
-            ) : (
-'<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
-+ id + '"><i class="icon-remove icon-large"></i></a>'
-            ))
+            ( deleted==1 ) ? 
+            ('<a rel="tooltip" title="deleted user">&times;</a>') : 
+            (
+                ( active ) ? 
+                ('<a rel="tooltip" title="active user"><i class="icon-remove"></i></a>') : 
+                ('<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
+                    + id + '"><i class="icon-remove icon-large"></i></a>' )
+            )
         %>
     </td>
     <td class="button-column">
@@ -185,9 +185,4 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             <i class="icon-copy icon-large">
     </i></a></td>
 
-</script>
-<script>
-    $('#check_toggle').change(function(){
-        $('#toggle-deleted').click()
-    })
 </script>

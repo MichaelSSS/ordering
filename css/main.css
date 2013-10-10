@@ -126,14 +126,40 @@ small {
     background-color: #9954bb;
     border-color: #7643a8;
 }
-/*admin*/
+
+/*admin start*/
+
+#modal-editing{
+    width:90%;
+    min-height:400px;
+    margin:0;
+    left:5%;
+    top:0;
+}
+
+#modal-editing .edit-shade{
+    display: none;
+}
+#modal-editing .edit-shade.loading{
+//    background:url(../gridview_JSON/loading.gif) no-repeat 50% 50%;
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    opacity: 0.7;
+    background-color: white;
+    display: block;
+}
+
 tr.user-active {
     color: red;
 }
 tr.user-deleted {
     color: #bbb;
 }
-tr.user-deleted a {
+
+tr.user-deleted td.remove a{
     color: #bbb;
     cursor: default;
     left: -302px;
@@ -222,6 +248,7 @@ tr.user-deleted a {
 .generate_pass{
     width:94px !important;
 }
+<<<<<<< HEAD
 /*merchandiser*/
 a.clndr, a:hover.clndr,
 a:visited.clndr
@@ -229,3 +256,5 @@ a:visited.clndr
     color: #000;
     display: inline-block;
 }
+=======
+>>>>>>> 02535e29b82a0390457bfb709105cdc361af84c2

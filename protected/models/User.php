@@ -46,10 +46,11 @@ class User extends CActiveRecord
 
 	protected function beforeSave()
 	{
-	    $this->password  = CPasswordHelper::hashPassword($this->password);
-	    $this->username  = trim($this->username);
-	    $this->firstname = trim($this->username);
-	    $this->lastname  = trim($this->username);
+	    $this->password = CPasswordHelper::hashPassword($this->password);
+        $this->username = trim($this->username);
+        $this->firstname = trim($this->firstname);
+        $this->lastname = trim($this->lastname);
+
 	    return true;
 	}
 

@@ -68,21 +68,13 @@
 
                 )); ?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'buttonType' => 'submitLink',
-                    'label' => 'Order',
-                    'url' => '?r=customer/order',
+                    'label'=>'Order',
+                    'buttonType'=>'submit',
+//                    'url'=>Yii::app()->createUrl('customer/save'),
                     'htmlOptions' => array(
                         'name' => 'order',
-//                        'ajax' => array(
-//                            'type'=>'POST',
-//                            'async'=>true,
-//                            'dataType' => 'json',
-//                            'url'=>'?r=customer/order',
-//                            'data' => 'js:$("#orderForm").serialize()',
-//                            'success'=>'js:afterValidateCC',
-//                            //'error'=>'js:function(xhr,status,error){alert(error)}'
-//                        ),
-                    )
+                        'submit' => Yii::app()->createUrl('customer/order'),
+                    ),
                 )); ?>
               
 
@@ -92,6 +84,7 @@
                     'htmlOptions' => array(
                         'data-toggle' => 'modal',
                         'data-target' => '#cancelModal',
+                        'id' => 'cancel_return'
                     ),
                 )); ?>
 
@@ -116,14 +109,29 @@
         $('#Order_preferable_date').tooltip({
             trigger : 'hover'
         });
-        debugger;
+
         if(!$('#Order_status').val()){
-            $('#order').attr('disabled','disabled' )
-
+            $('#order').attr('disabled','disabled').on('click',function(){return false;});
         }
+        $('#cancel_return').removeAttr('data-toggle').attr('href','?r=customer/cancel').text('Return');
 
 
+        $('#orderInfo').on('change', 'input, select', disableOrder);
+
+        $.get('?r=customer/checkChanges', function(response) {
+
+          if (!(response === "null")){
+              disableOrder();
+          }
+
+        });
     });
+
+    function disableOrder(){
+        $('#order').attr('disabled','disabled').on('click',function(){return false;});
+        $('#cancel_return').removeAttr('href').attr('data-toggle','modal').text('Cancel');
+    }
+
 
     function afterValidate(form,  data, hasError)
     {

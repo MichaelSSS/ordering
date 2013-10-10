@@ -152,12 +152,9 @@ $grid = $this->widget('TGridView', array(
     };
     $(function(){
         $('#modal_remove').click(function() {
-            debugger;
             var url = $(this).attr('href');
             $.get(url, function(response) {
-//                $('#remove_order').modal('hide');
                 $('.modal-header .close').click();
-                debugger;
                 $.fn.yiiGridView.update('yw0');
 
 

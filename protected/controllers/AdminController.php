@@ -117,7 +117,7 @@ class AdminController extends Controller
             }
         }
 
-
+        $this->layout='ajax';
         $this->render('create',array(
             'model'=>$model,
         ));
@@ -162,6 +162,7 @@ class AdminController extends Controller
                 }
             }
         } else {
+            $this->layout='ajax';
             $this->render('edit',array(
                 'model'=>$model,
             ));
@@ -192,6 +193,7 @@ class AdminController extends Controller
                 $this->actionIndex();
             }
         } else {
+            $this->layout='ajax';
             $this->render('duplicate',array(
                 'model'=>$model,
             ));

@@ -98,45 +98,12 @@ $(function(){
     var User = Backbone.Model.extend({
         url: 'index.php?r=admin/user',
 
-        initialize: function() {
-            this.on("user:fetched", function(row) {
-                // on change update row in table
-/*
-                var pos=0;
-                oms.users.each(function(element, index, list) {
-                    if ( element.attributes.id == model.attributes.id ) {
-                        pos = index+1;
-                        return false;
-                    }
-                });
-
-                var el = oms.users.$('tbody tr:nth-child(' + rowId + ')'),
-                    // create view for existing tr
-                    row = new UserRow({el: el, model: model, id: pos-1});
-
-                row.render();
-
-                el.find('a[title="remove"]').on('click', this.removeClick);
-                el.find('a[title="edit"]').on(
-                    'click', 
-                    actionEdit, 
-                    this.editClick
-                );
-                el.find('a[title="duplicate"]').on(
-                    'click',
-                    actionDuplicate, 
-                    this.editClick
-                );
-*/
-            });
-        },        
-
         fetchUser: function() {
             var that = this;
             this.url = 'index.php?r=admin/user&id=' + this.get("id");
             this.fetch({         
                 success: function() {
-                    that.trigger('user:fetched');
+                    //that.trigger('user:fetched');
                     userEditWindow.render();
                     that.row.render();
 
@@ -363,11 +330,12 @@ $(function(){
             userEditWindow.url = url;
             userEditWindow.action = event.data.action;
             userEditWindow.model = model;
-            userEditWindow.listenTo(userEditWindow.model,'user:fetched',userEditWindow.render);
+            //userEditWindow.listenTo(userEditWindow.model,'user:fetched',userEditWindow.render);
             model.row = event.data.row;
-            model.fetchUser();
+            //model.fetchUser();
             userEditWindow.modalShow();
             userEditWindow.$('.edit-shade').addClass('loading');
+            userEditWindow.loadForm();
             return false;
         },
 
@@ -377,13 +345,13 @@ $(function(){
             userEditWindow.action = actionCreate;
             userEditWindow.modalShow();
             userEditWindow.$('.edit-shade').addClass('loading');
-            userEditWindow.render();
+            userEditWindow.loadForm(); //userEditWindow.render();
             return false;
         },
     
         initialize: function() { 
             $('#create-user').on('click', this.createUserClick);
-            $('#toggle-deleted').on('click', this.showDeletedClick);
+            $('#check_toggle').on('change', this.showDeletedClick);
             $('#search-form').on('submit', this.searchFormSubmit);
             $('#search-form').on('reset', this.searchFormReset);
             $("#page-size").on('click', this.pageSizeClick);
@@ -487,15 +455,6 @@ $(function(){
             this.$el.data('modal',$.extend(data,{isShown: true}));
             this.$el.modal('hide');
         },
-        saveDone: function(){},
-        saveCreateDone: function(){},
-        saveEditDone: function(resp, textStatus, jqXHR) {
-            userEditWindow.model.set($.parseJSON(resp));
-            userTable.trigger('row:changed', userEditWindow.model);
-        },
-        saveDuplicateDone: function(resp, textStatus, jqXHR) {
-            oms.users.fetch(oms.fetchOptions);
-        },
         saveClick: function() {
             var $form = userEditWindow.$('.modal-body form')
                 ,data = ''
@@ -508,7 +467,7 @@ $(function(){
             });
 
             setTimeout(function(){
-                if ( (userEditWindow.validatedForms + validated)==3 ) {
+                if ( (userEditWindow.validatedForms + validated)==1 ) {
                     $form.each(function() {
                         data += (data=='' ? '' : '&') + $(this).serialize();
                     });
@@ -541,11 +500,21 @@ $(function(){
                 url: this.url,
                 dataType: 'html',
                 success: function(data, textStatus, jqXHR){
-                    that.$('.modal-body').html(data);
+                    that.$('#modal-editing-body').html(data);
 
+                    that.$('.submit-handler').click(function(e) {
+                        that.validatedForms++;
+                        e.preventDefault();
+                        return false;
+                    });
+        
+                    $('#cofirm-edit-cancel').on('shown',function(){
+                        $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
+                    });
+                    $('#cofirm-edit-cancel').on('hidden',function(){
+                        $('.modal-backdrop').remove();
+                    });
                     
-                    //that.render();
-                    that.$('#modal-edit-header').text(that.action.name);
                     that.$('#modal-editing-body').scrollTop(0);
 
                 },
@@ -562,7 +531,7 @@ $(function(){
                 that = this;
             $modalWindow.on('hidden',function(){
                 $modalWindow.find('#modal-editing-body').scrollTop(0);
-                that.stopListening();
+                //that.stopListening();
                 $('.modal-backdrop').remove();
             });
             $modalWindow.on('shown',function(){

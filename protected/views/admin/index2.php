@@ -170,14 +170,14 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     </i></a></td>
     <td class="remove" >
         <%= 
-            ( deleted==1 ) ? (
-                '<a rel="tooltip" title="deleted user">&times;</a>'
-            ) : (( active ) ? (
-'<a rel="tooltip" title="active user"><i class="icon-remove"></i></a>'
-            ) : (
-'<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
-+ id + '"><i class="icon-remove icon-large"></i></a>'
-            ))
+            ( deleted==1 ) ? 
+            ('<a rel="tooltip" title="deleted user">&times;</a>') : 
+            (
+                ( active ) ? 
+                ('<a rel="tooltip" title="active user"><i class="icon-remove"></i></a>') : 
+                ('<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
+                    + id + '"><i class="icon-remove icon-large"></i></a>' )
+            )
         %>
     </td>
     <td class="button-column">
@@ -185,9 +185,4 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             <i class="icon-copy icon-large">
     </i></a></td>
 
-</script>
-<script>
-    $('#check_toggle').change(function(){
-        $('#toggle-deleted').click()
-    })
 </script>

@@ -5,7 +5,7 @@
     $cs->registerCssFile(Yii::app()->getBaseUrl() . '/css/fontAwesome.css');
     $cs->registerCssFile(Yii::app()->getBaseUrl() . '/css/main.css');
     $cs->registerCssFile(Yii::app()->getBaseUrl() . '/css/pager.css');
-    $cs->registerCoreScript('jquery.ui');
+//    $cs->registerCoreScript('jquery.ui');
     $cs->registerCoreScript('bbq');
     $cs->registerCoreScript('yiiactiveform');
 ?>

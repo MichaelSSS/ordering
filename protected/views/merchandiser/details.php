@@ -146,7 +146,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                                         'name' => 'ordered',
                                     )
                                 )); ?>
-                                
+
                                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                                     'buttonType'     => 'reset',
                                     'label'      => 'Cancel',
@@ -158,12 +158,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                             </div>
                         </div>
                         
-                    </div>
-
-                    
-                    
+                    </div>   
                 </fieldset>
-                
             </div>
         </div>
     </div>

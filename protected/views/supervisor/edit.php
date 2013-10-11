@@ -39,12 +39,16 @@
                 'size'  => 'normal',));
             ?>
             <?php $this->widget('bootstrap.widgets.TbButton', array(
-                'buttonType' => 'submit',
-                'type'       => 'white',
-                'label'      => 'Back',
-                'size'       => 'normal',));
-            ?>
+                    'label' => 'Cancel',
+                    'type' => 'action',
+                    'htmlOptions' => array(
+                        'data-toggle' => 'modal',
+                        'data-target' => '#cancelModal',
+                    ),
+                )); ?>
+            
         <?php $this->endWidget(); ?>
+        <?php $this->renderPartial('/supervisor/_cancel'); ?>
     </div>
 </fieldset>
 

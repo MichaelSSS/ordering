@@ -2,6 +2,7 @@
 
 return array(
     'item1' => array(
+      //  'id'=>1,
         'name' => 'item01',
         'description' => 'bla-bla-bla',
         'price' => 12.45,
@@ -9,6 +10,8 @@ return array(
         
     ),
      'item2' => array(
+      //   'id'=>2,
+   //      'id_item'=>1,
         'name' => 'item02',
         'description' => 'bla-bla-bla',
         'price' => 123.45,

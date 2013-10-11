@@ -170,7 +170,6 @@ tr.user-deleted td.remove a{
     top: 6px;
     left: -6px;
 }
-
 #horizontalForm .radio label {
     margin-left: 3em;
 }
@@ -180,7 +179,13 @@ tr.user-deleted td.remove a{
 .table-bordered th, .table-bordered td {
     text-align: center;
 }
-
+.password_buttons{
+    margin-top: -20px;
+    margin-bottom: 8px;
+}
+.generate_pass{
+    width: 94px !important;
+}
 /*order*/
 .ui-datepicker-trigger {
     cursor: pointer;
@@ -192,20 +197,22 @@ tr.user-deleted td.remove a{
     margin: 5px 0 0 180px ;
 }
 
-#cardInfo .control-label {
-    margin-left: 1em;
+#cardInfo .control-label,
+#ItemForm .control-label {
     text-align: left;
+    margin-left: 30px;
+    width: 200px;
 }
-#cardInfo .required span {
-    display: inline;
+#item_result_name,
+#item_result_price,
+.quantity_of_item {
+    line-height: 30px;
 }
+#ItemForm .control-label {   
+    cursor: default;
+}
+.item_error {
 
-.password_buttons{
-    margin-top: -20px;
-    margin-bottom: 8px;
-}
-.generate_pass{
-    width: 94px !important;
 }
 
 /*merchandiser*/
@@ -218,19 +225,5 @@ a:visited.clndr
     height: 20px;
 }
 a.clndr .control-label {
-    text-align: center;
-    
-}
-#item_result_name,
-#item_result_price,
-.quantity_of_item {
-    line-height: 30px;
-}
-#ItemForm .control-label {
-    text-align: left;
-    margin-left: 30px;
-    width: 180px;
-}
-.item_error {
-
+    text-align: center;   
 }

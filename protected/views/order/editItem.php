@@ -210,7 +210,7 @@
                     <div class="control-group">
                         <label class="control-label">Price:</label>
                         <div class="controls">
-                            <span id="item_result_price"><?php echo $model->price; ?>$</span>
+                            <span id="item_result_price"><?php echo $model->price; ?></span>$
                         </div>
                     </div>      
                      
@@ -237,7 +237,7 @@
                     </div>
                 </div>   
             </div>
-            <div class="form-actions ">
+            <div class="form-actions">
                 <div class="span3 pull-right">
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
                         'buttonType' => 'submit',

@@ -1,29 +1,28 @@
-
-    <?php /** @var BootActiveForm $form */
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'id' => 'orderForm',
-        'type' => 'horizontal',
-//        'action' => '?r=customer/create',
-        'enableClientValidation' => true,
-        'enableAjaxValidation'=>true,
-        'clientOptions' => array(
-            'validateOnSubmit'=>true,
-            'hideErrorMessage'=>true,
-            'validationUrl'=> Yii::app()->createUrl("customer/validateorder" ),
-            'afterValidate'=>'js:afterValidate',
-            )
-         )
-    ); ?>
-
-   
-    <p>This page is appointed for selecting and buying products</p>
-           
-    <fieldset>
-        <legend>Items selection</legend>
-        <?php $this->renderPartial('/order/orderItems', array('orderDetails' => $orderDetails, 'form' => $form, 'currentItems' => $currentItems,)) ?>
-    </fieldset>
- 
+<div class="sapn12">
     <div class="row">
+        <?php /** @var BootActiveForm $form */
+        $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+            'id' => 'orderForm',
+            'type' => 'horizontal',
+            // 'action' => '?r=customer/create',
+            'enableClientValidation' => true,
+            'enableAjaxValidation'=>true,
+            'clientOptions' => array(
+                'validateOnSubmit'=>true,
+                'hideErrorMessage'=>true,
+                'validationUrl'=> Yii::app()->createUrl("customer/validateorder"),
+                'afterValidate'=>'js:afterValidate',
+            )
+        )); ?>
+        <p>This page is appointed for selecting and buying products</p>
+        <fieldset>
+            <legend>Items selection</legend>
+            <?php $this->renderPartial('/order/orderItems', array(
+                'orderDetails' => $orderDetails,
+                'form' => $form, 
+                'currentItems' => $currentItems,
+            )); ?>
+        </fieldset>
         <div class="span6">
             <?php $this->renderPartial('/order/orderInfo', array('order' => $order, 'form' => $form)); ?>
         </div>
@@ -35,7 +34,9 @@
         </div>
     </div>
     
-    <div class="pull-right">
+</div>
+<div class="form-actions">
+    <div class="span3 pull-right">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'label'=>'Save',
             'buttonType'=>'submit',
@@ -67,6 +68,16 @@
             ),
         )); ?>
     </div>
+</div>
+
+   
+
+       
+
+
+
+
+
     
 <?php $this->endWidget(); ?>
 
@@ -166,6 +177,4 @@
             $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html(errorCC); });
         };
     }
-
-
 </script>

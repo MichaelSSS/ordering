@@ -1,6 +1,3 @@
-
-<p>This page is appointed for creating new user for particular role</p>
-
 <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id'                     => 'horizontalForm',
@@ -12,9 +9,6 @@
     ));
 ?>
 
-    <fieldset>
-        <legend>Create new user</legend>
-        
         <?php echo $form->textFieldRow($model, 'username'); ?>
         <?php echo $form->textFieldRow($model, 'firstname'); ?>
         <?php echo $form->textFieldRow($model, 'lastname'); ?>
@@ -39,8 +33,6 @@
             'east'  => 'East'
         )); ?>
     
-    </fieldset>
-
     <fieldset>
         <legend>Role</legend>
 

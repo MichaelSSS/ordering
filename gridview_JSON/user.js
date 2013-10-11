@@ -103,10 +103,8 @@ $(function(){
             this.url = 'index.php?r=admin/user&id=' + this.get("id");
             this.fetch({         
                 success: function() {
-                    //that.trigger('user:fetched');
-                    userEditWindow.render();
+                    that.trigger('user:fetched');
                     that.row.render();
-
                 },
                 error: function(model, response, options) {
                     if ( response.status == 403 ) {
@@ -128,6 +126,9 @@ $(function(){
         model: User,
 
         initialize: function() { 
+            this.url = window.location.href.split('?',1)[0]
+                + '?r=admin/index&ajax=' + oms.gridId 
+                + '&'+oms.sortVar+'=username';
             this.on('request',function(model, xhr, options) {
                 $('#'+oms.gridId).addClass('grid-view-loading');
             });
@@ -142,8 +143,6 @@ $(function(){
                 $('#'+oms.gridId).removeClass('grid-view-loading');
             });
         },
-
-        url: 'index.php?r=admin/index&ajax='+oms.gridId+'&'+oms.sortVar+'=username'
     });
 
     oms.users = new Users;
@@ -178,6 +177,7 @@ $(function(){
             this.$el.find('a[title="edit"]').on(
                 'click', 
                 {
+                    modelId: row.id,
                     action: actionEdit, 
                     row: this
                 },
@@ -186,6 +186,7 @@ $(function(){
             this.$el.find('a[title="duplicate"]').on(
                 'click', 
                 {
+                    modelId: row.id,
                     action: actionDuplicate, 
                     row: this
                 },
@@ -326,26 +327,37 @@ $(function(){
 
         editClick: function(event) {
             var url = this.href,
-                model = oms.users.get($.deparam.querystring(url)['id']);
+                model = oms.users.get(event.data.modelId),
+                prevAction = userEditWindow.action;
             userEditWindow.url = url;
             userEditWindow.action = event.data.action;
             userEditWindow.model = model;
-            //userEditWindow.listenTo(userEditWindow.model,'user:fetched',userEditWindow.render);
+            userEditWindow.listenTo(userEditWindow.model,'user:fetched',userEditWindow.render);
             model.row = event.data.row;
-            //model.fetchUser();
-            userEditWindow.modalShow();
             userEditWindow.$('.edit-shade').addClass('loading');
-            userEditWindow.loadForm();
+            userEditWindow.modalShow();
+            if ( prevAction == userEditWindow.action ) {
+                model.fetchUser();
+            } else {
+                userEditWindow.loadForm();
+            }
+
             return false;
         },
 
         createUserClick: function(){
-            var url = this.href;
+            var url = this.href,
+                prevAction = userEditWindow.action;
             userEditWindow.url = url;
             userEditWindow.action = actionCreate;
-            userEditWindow.modalShow();
             userEditWindow.$('.edit-shade').addClass('loading');
-            userEditWindow.loadForm(); //userEditWindow.render();
+            userEditWindow.modalShow();
+            if ( prevAction == actionCreate ) {
+                userEditWindow.render();
+            } else {
+                userEditWindow.loadForm();
+            }
+
             return false;
         },
     
@@ -514,12 +526,18 @@ $(function(){
                     $('#cofirm-edit-cancel').on('hidden',function(){
                         $('.modal-backdrop').remove();
                     });
+
+                    that.renderBrace();
                     
                     that.$('#modal-editing-body').scrollTop(0);
 
                 },
                 error: function(xhr){
-                    alert( "Error: " + xhr.status + " " + xhr.statusText );
+                    if ( response.status == 403 ) {
+                        window.location.href = "";
+                    } else {
+                        alert( "Error: " + xhr.status + " " + xhr.statusText );
+                    }
                 }
             }).always(function(){
                 that.$('.edit-shade').removeClass('loading');
@@ -531,7 +549,7 @@ $(function(){
                 that = this;
             $modalWindow.on('hidden',function(){
                 $modalWindow.find('#modal-editing-body').scrollTop(0);
-                //that.stopListening();
+                that.stopListening();
                 $('.modal-backdrop').remove();
             });
             $modalWindow.on('shown',function(){
@@ -566,19 +584,18 @@ $(function(){
                 return false;
             });
 
-        },        
-        render: function() {
-            this.$('#modal-edit-header').text(this.action.name);
-            this.$('#page-appointment').text(this.action.appointment);
+        },
+        renderBrace: function() {
+            this.$('.modal-title').text(this.action.name);
+            this.$('.page-appointment').text(this.action.appointment);
             this.$('#edit-save').text(this.action.buttonName);
-
-            //this.$('div.control-group').removeClass('error');
-            //this.$('span.help-inline').html('').hide();
-            this.action.render();
+        },
+        render: function() {
             var $form = this.$('.modal-body form');
             $form.each(function() {
                 $(this).triggerHandler('reset');
             });
+            this.action.render();
             this.$('#modal-editing-body').scrollTop(0);
             this.$('.edit-shade').removeClass('loading');
         }
@@ -593,28 +610,6 @@ $(function(){
         appointment: "This page is appointed for creating new user for particular role",
         buttonName: 'Create',
         render: function() {
-            $('#form-passwords-edit').css('display','none');
-            $('#form-passwords-edit').insertAfter(userEditWindow.$el);
-            $('#form-passwords-edit').find('#User_password').attr('id','User_password2');
-            $('#form-passwords-edit').find('#User_confirmPassword').attr('id','User_confirmPassword2');
-
-            $('#form-passwords-duplicate').css('display','block');
-            $('#form-passwords-duplicate').insertAfter('#form-start');
-
-            var element = $('#form-passwords-duplicate').find('#User_password2');
-            element.attr('id','User_password');
-            var element2 = element.clone().attr('type','password');
-            element.replaceWith(element2);
-            element2.tooltip();
-            element2.on('hidden.bs.tooltip', function (e) {
-                e.preventDefault();
-                return false;
-            });
-
-            element = $('#form-passwords-duplicate').find('#User_confirmPassword2');
-            element.attr('id','User_confirmPassword');
-            element.replaceWith(element.clone().attr('type','password'));
-
             document.getElementById('User_username').value = '';
             document.getElementById('User_firstname').value = '';
             document.getElementById('User_lastname').value = '';
@@ -641,28 +636,6 @@ $(function(){
         buttonName: 'Duplicate',
         render: function() {
             var attributes = userEditWindow.model.attributes;
-            $('#form-passwords-edit').css('display','none');
-            $('#form-passwords-edit').insertAfter(userEditWindow.$el);
-            $('#form-passwords-edit').find('#User_password').attr('id','User_password2');
-            $('#form-passwords-edit').find('#User_confirmPassword').attr('id','User_confirmPassword2');
-
-            $('#form-passwords-duplicate').css('display','block');
-            $('#form-passwords-duplicate').insertAfter('#form-start');
-
-            var element = $('#form-passwords-duplicate').find('#User_password2');
-            element.attr('id','User_password');
-            var element2 = element.clone().attr('type','password');
-            element.replaceWith(element2);
-            element2.tooltip();
-            element2.on('hidden.bs.tooltip', function (e) {
-                e.preventDefault();
-                return false;
-            });
-
-            element = $('#form-passwords-duplicate').find('#User_confirmPassword2');
-            element.attr('id','User_confirmPassword');
-            element.replaceWith(element.clone().attr('type','password'));
-
 
             document.getElementById('User_username').value = '';
             document.getElementById('User_firstname').value = attributes.firstname;
@@ -693,23 +666,6 @@ $(function(){
         buttonName: 'Save',
         render: function() {
             var attributes = userEditWindow.model.attributes;
-
-            $('#form-passwords-duplicate').css('display','none');
-            $('#form-passwords-duplicate').insertAfter(userEditWindow.$el);
-            $('#form-passwords-duplicate').find('#User_password').attr('id','User_password2');
-            $('#form-passwords-duplicate').find('#User_confirmPassword').attr('id','User_confirmPassword2');
-
-            $('#form-passwords-edit').css('display','block');
-            $('#form-passwords-edit').insertAfter('#form-start');
-            $('#form-passwords-edit .password-group').hide();
-
-            var element = $('#form-passwords-edit').find('#User_password2');
-            element.attr('id','User_password');
-            element.replaceWith(element.clone().attr('type','password'));
-
-            element = $('#form-passwords-edit').find('#User_confirmPassword2');
-            element.attr('id','User_confirmPassword')
-            element.replaceWith(element.clone().attr('type','password'));
 
             document.getElementById('User_username').value = attributes.username;
             document.getElementById('User_firstname').value = attributes.firstname;

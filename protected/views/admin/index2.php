@@ -102,7 +102,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 
 <div id="oms-grid-view0" class="grid-view">
-    <div id="grid-extend"><a id="page-size" href="/ordering/index.php?r=admin/index&amp;ajax=yw0&amp;pageSize=25">show 25 items</a></div>
+    <div id="grid-extend"><a id="page-size" href="">show 25 items</a></div>
     <table class="items table table-striped table-bordered table-condensed" id="table-user">
     <thead><tr>
         <th id="oms-grid-view0_c0">

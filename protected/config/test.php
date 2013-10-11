@@ -9,7 +9,7 @@ return CMap::mergeArray(
 			),
 
 			'db'=>array(
-				'connectionString'=>'mysql:host=localhost;dbname=oms',
+				'connectionString'=>'mysql:host=localhost;dbname=oms_test',
 			),
 
 		),

@@ -48,7 +48,7 @@ small {
 .panel-body:before,
 .panel-body:after {
     display: table;
-    content: ' ';
+    content: '';
 }
 .panel-body:after {
     clear: both;
@@ -205,7 +205,7 @@ tr.user-deleted td.remove a{
     margin-bottom: 8px;
 }
 .generate_pass{
-    width:94px !important;
+    width: 94px !important;
 }
 
 /*merchandiser*/
@@ -218,6 +218,19 @@ a:visited.clndr
     height: 20px;
 }
 a.clndr .control-label {
+    text-align: center;
+    
+}
+#item_result_name,
+#item_result_price,
+.quantity_of_item {
+    line-height: 30px;
+}
+#ItemForm .control-label {
     text-align: left;
-    margin-left: 1.4em;
+    margin-left: 30px;
+    width: 180px;
+}
+.item_error {
+
 }

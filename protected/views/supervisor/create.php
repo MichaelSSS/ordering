@@ -43,7 +43,7 @@
                     ),
                 )); ?>
 
-        )); ?>
+    
 
         <?php $this->endWidget(); ?>
         <?php $this->renderPartial('/supervisor/_cancel'); ?>

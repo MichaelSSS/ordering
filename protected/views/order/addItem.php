@@ -1,6 +1,6 @@
 
 <div id="grid-extend">
- <script type="text/javascript">
+ <script>
 
      function enableButton(){
 
@@ -103,7 +103,7 @@
 </script>
 
 </div>
-<fieldset class="item_search">
+<fieldset>
     <legend>Search <span>by</span></legend>
 
 
@@ -128,18 +128,17 @@
         <?php echo $searchForm->textField($model, 'searchValue', array('class' => 'span3')); ?>
     </div>
 
-    <div class="span1 pull-right">
+    <div class="span2 pull-right">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
             'label' => 'Apply',
             'buttonType' => 'submit',
-            'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-            'size' => 'null', // null, 'large', 'small' or 'mini'
+            'type' => 'info', 
+            'size' => 'null', 
         ));?>
         <?php echo CHtml::errorSummary($model) ?>
     </div>
 
     <?php $this->endWidget(); ?>
-
 </fieldset>
 <?
 
@@ -175,24 +174,24 @@ $grid = $this->widget('TGridView', array(
 		),
 		array(
 			'name'=>'description',
-		),
+		),   
 	),
 )); ?>
-    <div class="row">
-        <div class="span3 offset7">
-            <div class="order-buttons">
-                           <?php $this->widget('bootstrap.widgets.TbButton', array(
-                                'label' => 'Add',
-                                'buttonType' => 'submit',
-                                'type' => 'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                                'size' => 'null',
-                                  'htmlOptions'=>array('id'=>'get_name')
-                                //'class'=>'get_name'// null, 'large', 'small' or 'mini'
-                            ));?>
+   
+    <div class="span3">
+        <div class="pull-right">
+           <?php $this->widget('bootstrap.widgets.TbButton', array(
+                'label' => 'Add',
+                'buttonType' => 'submit',
+                'type' => 'success',
+                'size' => 'null',
+                  'htmlOptions'=>array('id'=>'get_name')
+                //'class'=>'get_name'
+            ));?>
 
-            </div>
         </div>
     </div>
+   
 
                           
 <?php
@@ -202,53 +201,50 @@ $itemForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'action'=>Yii::app()->createUrl('customer/saveitem'),
     'enableClientValidation'  =>  true,
     'clientOptions'           =>  array(
-        'validateOnSubmit'        =>  true )
-));
-?>
+        'validateOnSubmit' => true 
+        )
+)); ?>
 
 
-    <div class="row">
-        <div class="span10">
-            <fieldset >
-                   <div class="row">
-                    <div class="span1">
-                         <p>Name:</p> 
-                    </div>
-                    <div class="span6">
-                         <p><span id="item_result_name">----//----</span></p> 
-                    </div>
-                   </div>    
-                <div class="row">
-                    <div class="span1">
-                         <p>Price:</p>
-                   
-                    </div>
-                    <div class="span6">
-                         <p><span id="item_result_price">0</span>$</p>
-                   
-                    </div>
-                </div>
-                   <div class="row">
-                    <div class="span6">
-                        <?php  
-                        echo $itemForm->textFieldRow($orderDetails, 'quantity', array(''=>'')); ?>
-                        <p><span class="item_error" style="color: red;"></span></p>
-                    <p>Maximum quantity of item: <span class="quantity_of_item">----//----</span></p>
-                    
-                        <?php echo $itemForm->hiddenField($orderDetails, 'id_item', array('id'=>'id_item')); ?>
-                        <?php echo $itemForm->hiddenField($model, 'quantity', array('id'=>'max_quantity')); ?>
-                       <?php echo $itemForm->hiddenField($orderDetails, 'id_customer', array('value'=>Yii::app()->user->id)); ?>
-                                       
-                    </div>
-                </div>
-                  <div class="row">
-                    <div class="span5">
-                        <p>Dimension   <?php echo CHtml::dropDownList('OrderDetails[id_dimension]', null, CHtml::listData(dimension::model()->findAll(), 'id_dimension', 'dimension')) ?></p>
-                    </div>
-                </div>
-            </fieldset >
+    <fieldset >
+       <div class="row">
+        <div class="span1">
+             <p>Name:</p> 
         </div>
-    </div>
+        <div class="span6">
+             <p><span id="item_result_name">----//----</span></p> 
+        </div>
+       </div>    
+        <div class="row">
+            <div class="span1">
+                 <p>Price:</p>
+           
+            </div>
+            <div class="span6">
+                 <p><span id="item_result_price">0</span>$</p>
+           
+            </div>
+        </div>
+       <div class="row">
+        <div class="span6">
+            <?php  
+            echo $itemForm->textFieldRow($orderDetails, 'quantity', array(''=>'')); ?>
+            <p><span class="item_error" style="color: red;"></span></p>
+        <p>Maximum quantity of item: <span class="quantity_of_item">----//----</span></p>
+        
+            <?php echo $itemForm->hiddenField($orderDetails, 'id_item', array('id'=>'id_item')); ?>
+            <?php echo $itemForm->hiddenField($model, 'quantity', array('id'=>'max_quantity')); ?>
+           <?php echo $itemForm->hiddenField($orderDetails, 'id_customer', array('value'=>Yii::app()->user->id)); ?>
+                           
+            </div>
+        </div>
+          <div class="row">
+            <div class="span5">
+                <p>Dimension   <?php echo CHtml::dropDownList('OrderDetails[id_dimension]', null, CHtml::listData(dimension::model()->findAll(), 'id_dimension', 'dimension')) ?></p>
+            </div>
+        </div>
+    </fieldset >
+
     <div class="row">
         <div class="span3 offset7">
             <div class="order-buttons">

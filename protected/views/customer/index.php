@@ -76,7 +76,7 @@
                         'success'=>'js:function(response){debugger;$.fn.yiiGridView.update("yw0");}',
                     ),
 
-                ));?>
+                )); ?>
                 <?php echo CHtml::errorSummary($model) ?>
             </div>
         </div>
@@ -139,7 +139,7 @@ $grid = $this->widget('TGridView', array(
             'htmlOptions' => array(),
             'buttons' => array(
                 'edit' => array(
-                    'icon' => 'icon-edit icon-large',
+                    'icon' => 'edit large',
                     'url'  => 'Yii::app()->createUrl(\'customer/edit\',array(\'id\'=>$data->id_order))',
                 ),
             )
@@ -153,7 +153,7 @@ $grid = $this->widget('TGridView', array(
             ),
             'buttons' => array(
                 'remove' => array(
-                    'icon' => 'icon-remove icon-large',
+                    'icon' => 'remove large',
                     'url' => 'Yii::app()->createUrl(\'customer/remove\',array(\'id\'=>$data->id_order))',
                     'options' => array(
                         'data-toggle' => 'modal',
@@ -170,7 +170,6 @@ $grid = $this->widget('TGridView', array(
 <script>
     function beforeRemove(el) {
         $('#modal_remove').attr('href', $(el).attr('href'));
-
 
     };
     $(function(){

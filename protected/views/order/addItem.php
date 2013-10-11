@@ -264,5 +264,5 @@
             </div>
         </fieldset>
     </div>
-   <?php $this->endWidget(); ?> 
+    <?php $this->endWidget(); ?> 
 </div>                          

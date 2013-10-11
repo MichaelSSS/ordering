@@ -137,6 +137,10 @@ small {
     top:0;
 }
 
+#modal-editing .modal-body{
+    overflow-x:hidden;
+}
+
 #modal-editing .edit-shade{
     display: none;
 }

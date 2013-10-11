@@ -135,7 +135,7 @@ class OrderDetails extends CActiveRecord
 		return parent::model($className);
 	}
 
-    public static function getOrderedItems($currentItems )
+    public static function getOrderedItems($currentItems)
     {
         $res= array();
         foreach($currentItems as $key=>$item)
@@ -163,7 +163,7 @@ class OrderDetails extends CActiveRecord
     public static function findOrderDetails($id)
     {
         $iData = Yii::app()->db->createCommand()
-            ->select()
+            ->select('*, o.quantity as quantity, i.quantity as items_quantity')
             ->from('order_details o, item i, dimension d')
             ->where('o.id_order =:id_order and o.id_dimension =d.id_dimension AND o.id_item = i.id_item', array(':id_order'=>$id))
             ->queryAll();

@@ -34,11 +34,13 @@ class Order extends CActiveRecord
     public $filterValue;
     public $searchCriteria;
     public $searchValue;
+    public $currentName;
     public $totalQuantity;
     public $trueOrderedStatus;
     public $trueDeliveredStatus;
     public $uncheckDeliveredStatus;
     public $uncheckOrderedStatus;
+    public $gift;
     public $giftChecked;
 
 
@@ -79,8 +81,12 @@ class Order extends CActiveRecord
             array('order_name', 'length', 'max' => 128),
             array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=', 'message' => 'Please select items and add them to the order', 'except' => 'remove,merchandiserEdit'),
             array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters'),
-            array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank' ,  'except'=>'update,merchandiserEdit'),
+            array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank' , 'except' => 'edit, order,update,merchandiserEdit'),
+
             array(' assignee, customer', 'numerical', 'integerOnly' => true),
+            array(' assignee', 'checkAssignee', 'on' => 'order'),
+
+            array('order_name', 'checkEdit', 'on' => 'edit'),
             array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy', 'message' => 'Illegal Date Format', 'except' => 'remove,merchandiserEdit'),
             array('preferable_date', 'checkDate', 'except' => 'remove,merchandiserEdit'),
 
@@ -102,7 +108,6 @@ class Order extends CActiveRecord
             'assignees' => array(self::BELONGS_TO, 'User', 'assignee'),
             'userNameOrder' => array(self::BELONGS_TO, 'User', 'customer'),
             'customerType' => array(self::BELONGS_TO, 'Customer', 'customer'),
-//            'savedItems' => array(self::HAS_MANY, 'OrderItem', 'order_id'),
             'orderedItems' => array(self::HAS_MANY, 'OrderDetails', 'id_order'),
         );
     }
@@ -207,8 +212,16 @@ class Order extends CActiveRecord
             $criteria = new CDbCriteria;
             $criteria->select = 'MAX(auto_index) AS auto_index';
             $row = $this->find($criteria);
-            $this->order_name = self::ORDER_FORMAT . ++$row->auto_index;
-            $this->auto_index = $row->auto_index;
+            $index = $row->auto_index;
+            do
+            {
+                $this->order_name = self::ORDER_FORMAT . ++$index;
+                $criteria = new CDbCriteria;
+                $criteria->compare('order_name' , $this->order_name);
+                $row = $this->find($criteria);
+            }
+            while ( $row );
+            $this->auto_index = $index;
         }
         $this->order_date = $this->formatDate($this->order_date);
         $this->preferable_date = $this->formatDate($this->preferable_date);
@@ -216,6 +229,29 @@ class Order extends CActiveRecord
     }
 
 
+    public function checkEdit($order_name){
+        if($this->order_name == "")
+            return true;
+
+        $oldName = $this->findByPk(Yii::app()->session->get("orderId"))->order_name;
+
+
+        if($this->order_name == $oldName)
+        {
+            return true;
+        }
+        else
+        {
+            $criteria = new CDbCriteria();
+            $criteria->compare($order_name, $this->order_name);
+            $row = $this->find($criteria);
+            if(isset($row))
+            {
+                $this->addError($order_name, 'Order name name already exists in the System. Please re-type it or just leave it blank');
+            }
+        }
+        return true;
+    }
     public function checkDate($preferable_date)
     {
         if (strtotime($this->order_date) > strtotime($this->preferable_date))
@@ -225,6 +261,13 @@ class Order extends CActiveRecord
         return true;
     }
 
+    public function checkAssignee($assignee){
+        if($this->assignee == Yii::app()->user->id)
+        {
+            $this->addError($assignee, 'Please re-assigne the Order to the appropriate merchandiser.');
+        }
+        return true;
+    }
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!

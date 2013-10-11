@@ -61,6 +61,22 @@
                     'type'       => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
                     'size'       => 'null', // null, 'large', 'small' or 'mini'
                 ));?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'label'      => 'Reset',
+                    'buttonType' => 'ajaxLink',
+                    'buttonType' => 'ajaxLink',
+                    'type'       => 'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+                    'htmlOptions'       => array(
+                        'name'=>'reset',
+
+                    ),
+                    'ajaxOptions' => array(
+                        'data'=>'reset',
+                        'url'=>'Yii::app()->createUrl(\'customer/resetFilter\')',
+                        'success'=>'js:function(response){debugger;$.fn.yiiGridView.update("yw0");}',
+                    ),
+
+                ));?>
                 <?php echo CHtml::errorSummary($model) ?>
             </div>
         </div>
@@ -159,12 +175,9 @@ $grid = $this->widget('TGridView', array(
     };
     $(function(){
         $('#modal_remove').click(function() {
-            debugger;
             var url = $(this).attr('href');
             $.get(url, function(response) {
-//                $('#remove_order').modal('hide');
                 $('.modal-header .close').click();
-                debugger;
                 $.fn.yiiGridView.update('yw0');
 
 

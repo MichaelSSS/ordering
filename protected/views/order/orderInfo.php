@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset id="orderInfo">
     <legend>Totals</legend>
     <div class="row">
         <div class="span5">
@@ -33,8 +33,8 @@
     <div class="row">
         <div class="span5">
             <?php echo $form->labelEx($order, 'order_date', array('class' => 'control-label')); ?>
-            <div class="text-order"><?php echo date('m/d/Y'); ?></div>
-            <?php echo $form->hiddenField($order, 'order_date', array('value' => date('m/d/Y'))); ?>
+            <div class="text-order"><?php echo $order->order_date; ?></div>
+            <?php echo $form->hiddenField($order, 'order_date', array('value' => $order->order_date)); ?>
         </div>
     </div>
     <div class="row">

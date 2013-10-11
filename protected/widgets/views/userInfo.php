@@ -33,7 +33,7 @@
 			</li>
 			<li>
 				<a href='#'>
-					<i class='icon-large icon-money'></i><?= ' Account balance: ' . $customer->account_balance ?>
+					<i class='icon-large icon-money'></i><?= ' Account balance: ' . $customer->account_balance . '$'?>
 				</a>
 			</li>
 			<li class='divider'></li>

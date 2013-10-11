@@ -41,7 +41,9 @@ class CustomerController extends Controller
         $model = new Order('search');
         $model->customer = Yii::app()->user->id;
 
-        if (isset($_GET['pageSize']) && $this->validatePageSize($_GET['pageSize']))
+
+
+        if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
 
         if (isset($_GET['Order']))
@@ -49,6 +51,16 @@ class CustomerController extends Controller
 
         $model->delivery_date = $model->formatDate($model->delivery_date);
         $this->render('index', array('model' => $model,));
+    }
+
+    public  function resetFilter(){
+        if( isset($_GET['reset']))
+        {
+            $model = new Order('search');
+            $model->unsetAttributes(array('filterCriteria', 'searchValue'));
+            $this->render('index', array('model' => $model,));
+            Yii::app()->end();
+        }
     }
 
     public function actionDependentSelect()
@@ -194,7 +206,7 @@ class CustomerController extends Controller
         $order->status = "Pending";
 
         $order->max_discount = $customerInfo->getDiscount($order->customer);
-        $order->save(true, array('status'));
+        $order->save(true, array('status','max_discount'));
 
 //        if (isset($_POST['CreditCardFormModel']))
 //        {
@@ -212,7 +224,6 @@ class CustomerController extends Controller
 
 
         $customerInfo->updateBalance($order->total_price, $order->customer);
-        $order->max_discount = $customerInfo->getDiscount($order->customer);
 
 
 

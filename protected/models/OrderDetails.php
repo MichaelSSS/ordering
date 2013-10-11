@@ -135,7 +135,7 @@ class OrderDetails extends CActiveRecord
 		return parent::model($className);
 	}
 
-    public static function getOrderedItems($currentItems )
+    public static function getOrderedItems($currentItems)
     {
         $res= array();
         foreach($currentItems as $key=>$item)

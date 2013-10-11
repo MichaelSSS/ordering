@@ -1,65 +1,56 @@
-<?php /** @var BootActiveForm $form */
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id'   => '',
-    'type' => 'horizontal',
-)); ?>
+<fieldset id="orderInfo">
+    <legend>Totals</legend>
+    <div class="row">
+        <div class="span5">
+            <?php echo $form->textFieldRow($order, 'order_name', array('hint' => '')); ?>
+            <?php echo $form->hiddenField($order, 'id_order', array('value' => $order->id_order)); ?>
 
-    <fieldset>
-        <legend>totals</legend>
-        <div class="row">
-            <div class="span5">
-                <?php echo $form->textFieldRow($order, 'order_name'); ?>
-            </div>
-        </div>    
-        <div class="row">
-            <div class="span5">
-                <dl class="dl-horizontal">
-                    <dt>
-                        <?php echo $form->labelEx($order, 'status', array('class' => 'control-label')); ?>
-                    </dt>
-                    <dd class='block'>
-                        <?php echo "Created"; ?>
-                    </dd>
-                    <dt>
-                        <?php echo "<label class='control-label'>Total number of items</label>"; ?>
-                    </dt>
-                    <dd class='block'>
-                        <?php echo OrderDetails::$totalItemsQuantity; ?>
-                        <?php echo $form->hiddenField($order, 'totalQuantity', array('value' => OrderDetails::$totalItemsQuantity)); ?>
-                    </dd>
-                    <dt>
-                        <?php echo $form->labelEx($order, 'total_price', array('class' => 'control-label')); ?>
-                    </dt>
-                    <dd class='block'>
-                        <?php echo OrderDetails::$totalPrice . "\$"; ?>
-                        <?php echo $form->hiddenField($order, 'total_price', array('value' => OrderDetails::$totalPrice)); ?>
-                    </dd>
-                    <dt>
-                        <?php echo $form->labelEx($order, 'order_date', array('class' => 'control-label')); ?>
-                    </dt>
-                    <dd class='block'>
-                        <?php echo date('m/d/Y'); ?>
-                    </dd>
-                </dl>
-            </div>
-        </div>    
-        <div class="row">
-            <div class="span5">
-                <?php echo $form->hiddenField($order, 'order_date', array('value' => date('m/d/Y'))); ?>
-
-                <?php echo $form->textFieldRow($order, 'preferable_date', array(
-                    'title'  => 'Type date in format mm/dd/yyyy',
-                    'append' => "<i class='icon-calendar icon-large'></i>",
-                )); ?>
-
-                <?php echo $form->textFieldRow($order, 'delivery_date', array(
-                    'disabled'    => true,
-                    'append'      => "<i class='icon-calendar-empty icon-large'></i>",
-                    'placeholder' => '//',
-                 )); ?>
-
-                <?php echo $form->dropDownListRow($order, 'assignee', $order->getMerchandisers()); ?>
-            </div>
         </div>
-    </fieldset>
-<?php $this->endWidget(); ?>
+    </div>
+    <div class="row">
+        <div class="span5">
+            <?php echo $form->labelEx($order, 'status', array('class' => 'control-label')); ?>
+            <div class="text-order"><?php echo "Created"; ?></div>
+            <?php echo $form->hiddenField($order, 'status', array('value' => $order->status)); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span5">
+            <?php echo "<label class='control-label'>Total number of items</label>"; ?>
+            <div class="text-order"><?php echo OrderDetails::$totalItemsQuantity; ?></div>
+            <?php echo $form->hiddenField($order, 'totalQuantity', array('value' => OrderDetails::$totalItemsQuantity)); ?>
+            <?php echo $form->error($order, 'totalQuantity'); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span5">
+            <?php echo $form->labelEx($order, 'total_price', array('class' => 'control-label')); ?>
+            <div class="text-order"><?php echo OrderDetails::$totalPrice . "\$"; ?></div>
+            <?php echo $form->hiddenField($order, 'total_price', array('value' => OrderDetails::$totalPrice)); ?>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="span5">
+            <?php echo $form->labelEx($order, 'order_date', array('class' => 'control-label')); ?>
+            <div class="text-order"><?php echo $order->order_date; ?></div>
+            <?php echo $form->hiddenField($order, 'order_date', array('value' => $order->order_date)); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span5">
+            <?php echo $form->textFieldRow($order, 'preferable_date', array('hint' => '', 'title' => 'Type date in format mm/dd/yyyy')); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span5">
+            <?php echo $form->labelEx($order, 'delivery_date', array('class' => 'control-label')); ?>
+            <div class="text-order"><?php echo "//"; ?></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span5">
+            <?php echo $form->dropDownListRow($order, 'assignee', $order->getMerchandisers()); ?>
+        </div>
+    </div>
+</fieldset>

@@ -1,12 +1,14 @@
 
-<div id="grid-extend">
 
-</div>
+
 <?php
 
 echo CHtml::link('Add Item',array('customer/additem'));
-$grid = $this->widget('TGridView', array(
+  $grid = $this->widget('TGridView', array(
+
+
     'dataProvider' => $orderDetails,
+
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
@@ -27,6 +29,7 @@ $grid = $this->widget('TGridView', array(
     ),
     'pagerCssClass' => 'oms-pager',
     'baseScriptUrl' => 'gridview',
+    'rowHtmlOptionsExpression' => 'array("id"=>$data["key"])',
     'emptyText' => 'No Items added yet',
 
     'columns'=>array(
@@ -38,7 +41,7 @@ $grid = $this->widget('TGridView', array(
 
 		array(
 
-                        'header'    => 'Item Name',
+            'header'    => 'Item Name',
             'value'=>'$data["name"]',
 		),
 		array(
@@ -53,7 +56,7 @@ $grid = $this->widget('TGridView', array(
 		),
 		array(
             'header'    => 'Price',
-			'value'=>'$data["price"]',
+			'value'=>'(int)$data["price"] . "\$"',
 
 		),
 		array(
@@ -63,7 +66,7 @@ $grid = $this->widget('TGridView', array(
 		),
 		array(
             'header'    => 'Price Per Line',
-			'value'=>'$data["price_per_line"]',
+			'value'=>'$data["price_per_line"] . "\$"',
 
 		),
 
@@ -76,32 +79,52 @@ $grid = $this->widget('TGridView', array(
             'buttons'  => array(
                 'edit' => array(
                     'icon' => 'pencil',
+                    'url'  => 'Yii::app()->createUrl(\'customer/edititem\',array(\'id\'=>$data["id_item"], \'key\'=>$data["key"]))',
                 ),
             )
         ),
-//        array(
-//            'header'      => 'Remove',
-//            'class'       => 'bootstrap.widgets.TbButtonColumn',
-//            'template'    => '{remove}',
-//            'htmlOptions' => array(
-//                'id'=>'col_remove',
-//            ),
-//            'buttons'    => array(
-//                'remove' => array(
-//                    'icon' => 'icon-trash',
-//                    'url'  => 'Yii::app()->createUrl(\'order/remove\',array(\'id\'=>$data->id_item))',
-//                    'options'=>array(
-//                        'data-toggle'=>'modal',
-//                        'data-target'=>'#remove_order',
-//                        'onclick'=>'beforeRemove(this)',
-//                    ),
-//
-//
-//
-//                ),
-//            )
-//        ),
+        
+                array(
+            'header' => 'Remove',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{remove}',
+            'htmlOptions' => array(
+                'id' => 'col_remove',
+            ),
+            'buttons' => array(
+                'remove' => array(
+                    'icon' => 'icon-remove icon-large',
+                    'url' => 'Yii::app()->createUrl(\'customer/removeitem\',array(\'key\'=>$data["key"]))',
+                    'options' => array(
+                        'data-toggle' => 'modal',
+                        'data-target' => '#removeitem',
+                        'onclick' => 'beforeRemove(this)',
+                    ),
+                ),
+            )
+        ),
         ),
 ));
 
 ?>
+<?php $this->renderPartial('/order/_del'); ?>
+<script>
+ function beforeRemove(el) {
+        $('#modal_remove').attr('href', $(el).attr('href'));
+
+
+    };
+    $(function(){
+        $('#modal_remove').click(function() {
+            var url = $(this).attr('href');
+            $.get(url, function(response) {
+                $('.modal-header .close').click();
+
+                $.fn.yiiGridView.update('yw0');
+
+
+            });
+            return false;
+        });
+    });
+</script>

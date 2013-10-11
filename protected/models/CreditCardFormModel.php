@@ -42,7 +42,7 @@ class CreditCardFormModel extends CFormModel
             array('expiry_date','required','message'=>'Please enter Expiry Date','on'=>'validateCardInfo, validateMaestroCardInfo, required'),
             array('expiry_date, start_date','date', 'format'=>'MM/dd/yyyy', 'message'=>'Incorrect Date Format. Please use mm/dd/yyyy','on'=>'validateCardInfo, validateMaestroCardInfo'),
             array('expiry_date','checkDate', 'on'=>'validateCardInfo, validateMaestroCardInfo'),
-            array('start_date','required','message'=>'Please enter Start Date','on'=>'validateCardInfo, validateMaestroCardInfo, required'),
+            array('start_date','required','message'=>'Please enter Start Date','on'=>'validateMaestroCardInfo'),
             array('start_date','compare','compareAttribute'=>'expiry_date','operator'=>'<','strict'=>true,'message'=>'Start Date for Maestro card is incorrect.Please re-type it again.', 'on'=>'validateMaestroCardInfo'),
             array('issue_number','match', 'pattern'=>'/^[0-9]{1}$/','allowEmpty'=>true, 'message'=>'Issue Number for Maestro card is incorrect.Please re-type it again.', 'on'=>'validateMaestroCardInfo'),
         );

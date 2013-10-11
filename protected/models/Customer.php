@@ -10,6 +10,19 @@
  */
 class Customer extends CActiveRecord
 {
+
+    const CUSTOMER_STANDART = 0;
+    const CUSTOMER_SILVER = 1000;
+    const CUSTOMER_GOLD = 3000;
+    const CUSTOMER_PLATINUM = 10000;
+
+
+    const STANDART_DISCOUNT = 0;
+    const SILVER_DISCOUNT = 3;
+    const GOLD_DISCOUNT = 5;
+    const PLATINUM_DISCOUNT = 10;
+
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -85,6 +98,56 @@ class Customer extends CActiveRecord
 		));
 	}
 
+    public function updateBalance($sum, $id_customer)
+    {
+        $customer_info = $this->findByPk($id_customer);
+        $customer_info->account_balance += $sum;
+        $this->checkType($customer_info);
+        $customer_info->save();
+    }
+
+    public  function checkType($customer_info)
+    {
+        if($customer_info->account_balance > self::CUSTOMER_STANDART && $customer_info->account_balance < self::CUSTOMER_SILVER)
+        {
+            $customer_info->customer_type = "Standart";
+        }
+        elseif($customer_info->account_balance >= self::CUSTOMER_SILVER && $customer_info->account_balance < self::CUSTOMER_GOLD)
+        {
+            $customer_info->customer_type = "Silver";
+        }
+        elseif($customer_info->account_balance >= self::CUSTOMER_GOLD && $customer_info->account_balance < self::CUSTOMER_PLATINUM)
+        {
+            $customer_info->customer_type = "Gold";
+        }
+        elseif($customer_info->account_balance >= self::CUSTOMER_PLATINUM)
+        {
+            $customer_info->customer_type = "Platinum";
+        }
+    }
+
+    public function getDiscount($id_customer)
+    {
+        $customer_info = $this->findByPk($id_customer);
+        switch($customer_info->customer_type)
+        {
+            case "Standart":
+                return self::STANDART_DISCOUNT;
+                break;
+            case "Silver":
+                return self::SILVER_DISCOUNT;
+                break;
+            case "Gold":
+                return self::GOLD_DISCOUNT;
+                break;
+            case "Platinum":
+                return self::PLATINUM_DISCOUNT;
+                break;
+        }
+
+
+
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

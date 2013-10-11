@@ -12,14 +12,15 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'order_name' => 'VARCHAR(128) NOT NULL',
             'total_price' => 'DECIMAL(12,2) NOT NULL',
             'auto_index' => 'INT(4)  NULL',
-            'max_discount' => "INT(4) NOT NULL",
-            'delivery_date' => "DATE NOT NULL",
-            'preferable_date' => "DATE NOT NULL",
+            'max_discount' => "INT(4) NOT NULL DEFAULT 0",
+            'delivery_date' => "DATE NOT NULL DEFAULT '0000-00-00'",
+            'preferable_date' => "DATE NOT NULL ",
             'order_date' => "DATE NOT NULL",
             'status' => "ENUM('Created','Delivered','Ordered','Pending')",
             'assignee' => "int(11) NOT NULL ",
             'customer' => "int(11) NOT NULL ",
             'trash' => "BIT(1) DEFAULT 0",
+            'gift' => "BIT(1) DEFAULT 0",
 
         ));
         //$this->addForeignKey('FK_user', 'order','assignee', 'user', 'id' );

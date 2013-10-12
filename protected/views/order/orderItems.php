@@ -1,8 +1,4 @@
-
-
-
 <?php
-
 echo CHtml::link('Add Item',array('customer/additem'));
   $grid = $this->widget('TGridView', array(
 
@@ -109,20 +105,16 @@ echo CHtml::link('Add Item',array('customer/additem'));
 ?>
 <?php $this->renderPartial('/order/_del'); ?>
 <script>
- function beforeRemove(el) {
+    function beforeRemove(el) {
         $('#modal_remove').attr('href', $(el).attr('href'));
-
-
     };
+
     $(function(){
         $('#modal_remove').click(function() {
             var url = $(this).attr('href');
             $.get(url, function(response) {
                 $('.modal-header .close').click();
-
                 $.fn.yiiGridView.update('yw0');
-
-
             });
             return false;
         });

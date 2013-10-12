@@ -10,7 +10,7 @@
     <div class="row">
         <div class="span5">
             <?php echo $form->labelEx($order, 'status', array('class' => 'control-label')); ?>
-            <div class="text-order"><?php echo "Created"; ?></div>
+            <div class="text-order"><?php echo (empty($order->status))?"Created":$order->status; ?></div>
             <?php echo $form->hiddenField($order, 'status', array('value' => $order->status)); ?>
         </div>
     </div>
@@ -33,13 +33,13 @@
     <div class="row">
         <div class="span5">
             <?php echo $form->labelEx($order, 'order_date', array('class' => 'control-label')); ?>
-            <div class="text-order"><?php echo $order->order_date; ?></div>
-            <?php echo $form->hiddenField($order, 'order_date', array('value' => $order->order_date)); ?>
+            <div class="text-order"><?php echo Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->order_date); ?></div>
+            <?php echo $form->hiddenField($order, 'order_date', array('value' => Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->order_date))); ?>
         </div>
     </div>
     <div class="row">
         <div class="span5">
-            <?php echo $form->textFieldRow($order, 'preferable_date', array('hint' => '', 'title' => 'Type date in format mm/dd/yyyy')); ?>
+            <?php echo $form->textFieldRow($order, 'preferable_date', array('hint' => '', 'title' => 'Type date in format mm/dd/yyyy', 'value'=>Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->preferable_date))); ?>
         </div>
     </div>
     <div class="row">

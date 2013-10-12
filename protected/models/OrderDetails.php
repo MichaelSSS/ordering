@@ -55,7 +55,6 @@ class OrderDetails extends CActiveRecord
             'itemOredered' =>array(self::BELONGS_TO, 'Item', 'id_item'),
             'orderId' =>array(self::BELONGS_TO, 'Order', 'id_order'),
             'dimensionId' =>array(self::BELONGS_TO, 'Dimension', 'id_dimension'),
-
 		);
 	}
 
@@ -100,15 +99,10 @@ class OrderDetails extends CActiveRecord
             $criteria->compare('id_order', 0);
         }
 
-
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
-
-
-
-
 
     public function setCustomer($id)
     {
@@ -117,11 +111,9 @@ class OrderDetails extends CActiveRecord
 
     public function getOrderItems($id_customer)
     {
-
         $criteria = new CDbCriteria;
         $criteria->compare('id_customer',$id_customer );
         $criteria->compare('id_order',Order::IS_ORDERED );
-
         return  $this->findAll($criteria);
     }
     /**
@@ -151,7 +143,6 @@ class OrderDetails extends CActiveRecord
             $iData[0]['key'] = $key;
             $iData[0]['price_per_line'] =  (int)$iData[0]['price'] * (int)$iData[0]['quantity']*(int)$iData[0]['count_of_items'];
 
-
             self::$totalItemsQuantity +=(int)$iData[0]['count_of_items'] * (int)$iData[0]['quantity'];
             self::$totalPrice +=(int)$iData[0]['price']*(int)$iData[0]['count_of_items']*(int)$iData[0]['quantity'];
 
@@ -170,17 +161,11 @@ class OrderDetails extends CActiveRecord
         foreach ($iData as $key=>$value){
             $iData[$key]['price_per_line']= (int)$iData[$key]['price'] * (int)$iData[$key]['quantity']*(int)$iData[$key]['count_of_items'];
 
-
             self::$totalItemsQuantity +=(int)$iData[$key]['count_of_items'] * (int)$iData[$key]['quantity'];
             self::$totalPrice +=(int)$iData[$key]['price']*(int)$iData[$key]['count_of_items']*(int)$iData[$key]['quantity'];
         }
         return  $iData;
     }
-//
-//    public  function getPricePerLine($price, $quantity)
-//    {
-//        return $price*$quantity;
-//    }
 
     public function afterSave()
     {

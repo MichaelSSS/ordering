@@ -43,17 +43,10 @@ class Order extends CActiveRecord
     public $gift;
     public $giftChecked;
 
-
-
-//    private $_errorCode;
-
     public $filterCriterias = array('Status', 'Role');
-
     public $filterStatuses = array('None', 'Pending', 'Ordered', 'Delivered');
     public $filterRoles = array('None', 'Merchandiser', 'Supervisor', 'Administrator');
-
     public $searchCriterias = array('order_name'=>'Order Name',  'status'=>'Status', 'assignees.username'=>'Assignee');
-
     public $filterAttributes = array(
         'Status' => 'status',
         'Role' => 'assignees.role',
@@ -82,14 +75,11 @@ class Order extends CActiveRecord
             array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=', 'message' => 'Please select items and add them to the order', 'except' => 'remove,merchandiserEdit'),
             array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters'),
             array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank' , 'except' => 'edit, order,update,merchandiserEdit'),
-
             array(' assignee, customer', 'numerical', 'integerOnly' => true),
             array(' assignee', 'checkAssignee', 'on' => 'order'),
-
             array('order_name', 'checkEdit', 'on' => 'edit'),
             array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy', 'message' => 'Illegal Date Format', 'except' => 'remove,merchandiserEdit'),
             array('preferable_date', 'checkDate', 'except' => 'remove,merchandiserEdit'),
-
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id_order,  order_name, total_price, searchCriteria,  max_discount, filterValue, filterRole, delivery_date, preferable_date ,filterCriteria, status, assignees, searchValue, assigneesRole, customer,trash,uncheckOrderedStatus,gift', 'safe','on'=>'search'),
@@ -167,7 +157,6 @@ class Order extends CActiveRecord
         $sort = new CSort('User');
         $sort->defaultOrder =  'id_order DESC';
         $sort->attributes = array(
-
             'assigneesRole' => array(
                 'asc' => 'assignees.role',
                 'desc' => 'assignees.role DESC',
@@ -200,10 +189,10 @@ class Order extends CActiveRecord
 
 //    public function get
 
-    public function formatDate($d)
-    {
-        return date('Y-m-d', strtotime($d));
-    }
+//    public function formatDate($d)
+//    {
+//        return date('Y-m-d', strtotime($d));
+//    }
 
     protected function beforeSave()
     {
@@ -223,8 +212,8 @@ class Order extends CActiveRecord
             while ( $row );
             $this->auto_index = $index;
         }
-        $this->order_date = $this->formatDate($this->order_date);
-        $this->preferable_date = $this->formatDate($this->preferable_date);
+        $this->order_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->order_date) ;
+        $this->preferable_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->preferable_date) ;
         return true;
     }
 
@@ -234,7 +223,6 @@ class Order extends CActiveRecord
             return true;
 
         $oldName = $this->findByPk(Yii::app()->session->get("orderId"))->order_name;
-
 
         if($this->order_name == $oldName)
         {
@@ -252,6 +240,7 @@ class Order extends CActiveRecord
         }
         return true;
     }
+
     public function checkDate($preferable_date)
     {
         if (strtotime($this->order_date) > strtotime($this->preferable_date))
@@ -274,6 +263,7 @@ class Order extends CActiveRecord
      * @param string $className active record class name.
      * @return Order the static model class
      */
+
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
@@ -295,7 +285,5 @@ class Order extends CActiveRecord
 //    public  function getErrorCode(){
 //        return $this->_errorCode;
 //    }
-public function itemCount(){
 
-}
 }

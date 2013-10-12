@@ -16,7 +16,6 @@ class Customer extends CActiveRecord
     const CUSTOMER_GOLD = 3000;
     const CUSTOMER_PLATINUM = 10000;
 
-
     const STANDART_DISCOUNT = 0;
     const SILVER_DISCOUNT = 3;
     const GOLD_DISCOUNT = 5;
@@ -144,9 +143,6 @@ class Customer extends CActiveRecord
                 return self::PLATINUM_DISCOUNT;
                 break;
         }
-
-
-
     }
 	/**
 	 * Returns the static model of the specified AR class.

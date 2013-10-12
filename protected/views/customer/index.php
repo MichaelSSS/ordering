@@ -1,16 +1,14 @@
-
 <p>This page is appointed for creating new and managing existing users</p>
 
 <?php echo CHtml::link('Create New Order', array('customer/create')); ?>
 
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
-    /*'enableAjaxValidation'=>true*/
 ));
 ?>
 
 <fieldset>
-    <legend>Search 
+    <legend>Search
         <span>by</span>
     </legend>
     <div id='search-fields'>
@@ -56,34 +54,33 @@
             </div>
             <div class='span2 pull-right'>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label'      => 'Apply',
+                    'label' => 'Apply',
                     'buttonType' => 'submit',
-                    'type'       => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'size'       => 'null', // null, 'large', 'small' or 'mini'
+                    'type' => 'info',
+                    'size' => 'null',
                 ));?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label'      => 'Reset',
+                    'label' => 'Reset',
                     'buttonType' => 'ajaxLink',
                     'buttonType' => 'ajaxLink',
-                    'type'       => 'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'htmlOptions'       => array(
-                        'name'=>'reset',
+                    'type' => 'primary',
+                    'htmlOptions' => array(
+                        'name' => 'reset',
 
                     ),
                     'ajaxOptions' => array(
-                        'data'=>'reset',
-                        'url'=>'Yii::app()->createUrl(\'customer/resetFilter\')',
-                        'success'=>'js:function(response){debugger;$.fn.yiiGridView.update("yw0");}',
+                        'data' => 'reset',
+                        'url' => 'Yii::app()->createUrl(\'customer/resetFilter\')',
+                        'success' => 'js:function(response){debugger;$.fn.yiiGridView.update("yw0");}',
                     ),
 
                 ));?>
                 <?php echo CHtml::errorSummary($model) ?>
             </div>
         </div>
-    </div>        
+    </div>
 </fieldset>
 <?php $this->endWidget(); ?>
-
 <?php
 $grid = $this->widget('TGridView', array(
     'dataProvider' => $model->search(),
@@ -97,9 +94,9 @@ $grid = $this->widget('TGridView', array(
         'header' => '',
         'maxButtonCount' => 0,
         'firstPageLabel' => '&lsaquo; First',
-        'prevPageLabel'  => '&larr; Backward',
-        'nextPageLabel'  => 'Forward &rarr;',
-        'lastPageLabel'  => 'Last &rsaquo;',
+        'prevPageLabel' => '&larr; Backward',
+        'nextPageLabel' => 'Forward &rarr;',
+        'lastPageLabel' => 'Last &rsaquo;',
         'htmlOptions' => array(
             'class' => 'yiiPager',
         ),
@@ -140,7 +137,7 @@ $grid = $this->widget('TGridView', array(
             'buttons' => array(
                 'edit' => array(
                     'icon' => 'icon-edit icon-large',
-                    'url'  => 'Yii::app()->createUrl(\'customer/edit\',array(\'id\'=>$data->id_order))',
+                    'url' => 'Yii::app()->createUrl(\'customer/edit\',array(\'id\'=>$data->id_order))',
                 ),
             )
         ),
@@ -170,17 +167,13 @@ $grid = $this->widget('TGridView', array(
 <script>
     function beforeRemove(el) {
         $('#modal_remove').attr('href', $(el).attr('href'));
-
-
-    };
-    $(function(){
-        $('#modal_remove').click(function() {
+    }
+    $(function () {
+        $('#modal_remove').click(function () {
             var url = $(this).attr('href');
-            $.get(url, function(response) {
+            $.get(url, function (response) {
                 $('.modal-header .close').click();
                 $.fn.yiiGridView.update('yw0');
-
-
             });
             return false;
         });

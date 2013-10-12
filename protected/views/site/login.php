@@ -8,7 +8,6 @@
 
 
 <div class='wrp'>
-
     <div class="span6 offset3">
         <?php /** @var BootActiveForm $form */
         $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -55,9 +54,7 @@
                     'buttonType'  => 'submit',
                     'type'        => 'success',
                     'label'       => 'sign in',
-                    'block'       => 'true',
-                    'htmlOptions' => array(
-                    ),
+                    'block'       => 'true',   
                 )); ?>
             </div>
         </div>

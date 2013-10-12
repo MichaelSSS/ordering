@@ -190,9 +190,6 @@ tr.user-deleted td.remove a{
 .ui-datepicker-trigger {
     cursor: pointer;
 }
-.text-order {
-    margin: 5px 0 0;
-}
 #orderInfo .text-order {
     margin-top: 5px;
     margin-left: 180px;
@@ -214,25 +211,19 @@ tr.user-deleted td.remove a{
     text-align: left;
     margin-left: 30px;
 }
-.item_error {
-
-}
 
 /*merchandiser*/
-a.clndr, a:hover.clndr,
-a:visited.clndr
- {
-    color: #000;
+a.clndr, a:hover.clndr, a:visited.clndr {
     display: inline-block;
     margin-bottom: 30px;
     height: 20px;
 }
+
 a.clndr .control-label {
     text-align: center;   
 }
-a.clndr1, a:hover.clndr1,
-a:visited.clndr1,
-a.clndr2, a:hover.clndr2,
-a:visited.clndr2 {
+a.clndr,  a:hover.clndr,  a:visited.clndr,
+a.clndr1, a:hover.clndr1, a:visited.clndr1,
+a.clndr2, a:hover.clndr2, a:visited.clndr2 {
     color: #000;
 }

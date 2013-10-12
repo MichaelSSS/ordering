@@ -195,7 +195,7 @@
                          )
                  )); ?>
                  
-                 <div class="span6">
+                 <div class="span7">
                      <div class="control-group">
                          <label class="control-label">Name:</label>
                          <div class="controls">

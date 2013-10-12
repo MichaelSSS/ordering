@@ -191,16 +191,17 @@ tr.user-deleted td.remove a{
     cursor: pointer;
 }
 .text-order {
-    margin: 5px 0 0 ;
+    margin: 5px 0 0;
 }
-#orderForm div.text-order {
-    margin: 5px 0 0 180px ;
+#orderInfo .text-order {
+    margin-top: 5px;
+    margin-left: 180px;
+}   
+#orderInfo .control-label {
+    text-align: left;      
 }
-
-#cardInfo .control-label,
-#ItemForm .control-label {
+#cardInfo .control-label {
     text-align: left;
-    margin-left: 30px;
     width: 200px;
 }
 #item_result_name,
@@ -210,6 +211,8 @@ tr.user-deleted td.remove a{
 }
 #ItemForm .control-label {   
     cursor: default;
+    text-align: left;
+    margin-left: 30px;
 }
 .item_error {
 
@@ -226,4 +229,10 @@ a:visited.clndr
 }
 a.clndr .control-label {
     text-align: center;   
+}
+a.clndr1, a:hover.clndr1,
+a:visited.clndr1,
+a.clndr2, a:hover.clndr2,
+a:visited.clndr2 {
+    color: #000;
 }

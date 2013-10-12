@@ -1,4 +1,4 @@
-<div class="sapn12">
+<div class="span12">
     <div class="row">
         <?php /** @var BootActiveForm $form */
         $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -14,7 +14,9 @@
                 'afterValidate'=>'js:afterValidate',
             )
         )); ?>
+
         <p>This page is appointed for selecting and buying products</p>
+
         <fieldset>
             <legend>Items selection</legend>
             <?php $this->renderPartial('/order/orderItems', array(
@@ -23,75 +25,90 @@
                 'currentItems' => $currentItems,
             )); ?>
         </fieldset>
-        <div class="span6">
-            <?php $this->renderPartial('/order/orderInfo', array('order' => $order, 'form' => $form)); ?>
-        </div>
-        <div class="span6">
-            <fieldset id="cardInfo">
-                <legend>Card Info</legend>
-                <?php $this->renderPartial('/order/cardInfo', array('cardInfo' => $cardInfo, 'formCreditCard' => $form)); ?>
-            </fieldset>
-        </div>
+        
+        <div class="row">
+            <div class="span6">
+                <fieldset id="orderInfo">
+                    <legend>Totals</legend>
+                    <div class="span5">
+                        <?php $this->renderPartial('/order/orderInfo', array(
+                            'order' => $order,
+                            'form' => $form
+                        )); ?>
+                    </div>
+                </fieldset>
+            </div>    
+            <div class="span6">
+                <fieldset id="cardInfo">
+                    <legend>Card Info</legend>
+                    <div class="span6">
+                        <?php $this->renderPartial('/order/cardInfo', array(
+                            'cardInfo' => $cardInfo,
+                            'formCreditCard' => $form
+                        )); ?>
+                    </div>
+                </fieldset>
+            </div>      
+        </div>                    
     </div>
-    
-</div>
-<div class="form-actions">
-    <div class="span3 pull-right">
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'label'=>'Save',
-            'buttonType'=>'submit',
-            //   'url'=>Yii::app()->createUrl('customer/save'),
-            'htmlOptions' => array(
-                'name' => 'save',
-                'submit' => Yii::app()->createUrl('customer/save'),
-            ),
-        )); ?>
+    <div class="row">
+        <div class="form-actions">
+            <div class="span3 pull-right">
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'label'=>'Save',
+                    'buttonType'=>'submit',
+                    //   'url'=>Yii::app()->createUrl('customer/save'),
+                    'htmlOptions' => array(
+                        'name' => 'save',
+                        'submit' => Yii::app()->createUrl('customer/save'),
+                    ),
+                )); ?>
 
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'label'=>'Order',
-            'buttonType'=>'submit',
-            //   'url'=>Yii::app()->createUrl('customer/save'),
-            'htmlOptions' => array(
-                'name' => 'order',
-                'submit' => Yii::app()->createUrl('customer/order'),
-            ),
-        )); ?>
-      
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'label'=>'Order',
+                    'buttonType'=>'submit',
+                    //   'url'=>Yii::app()->createUrl('customer/save'),
+                    'htmlOptions' => array(
+                        'name' => 'order',
+                        'submit' => Yii::app()->createUrl('customer/order'),
+                    ),
+                )); ?>
+              
 
-        <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'label' => 'Cancel',
-            'type' => 'action',
-            'htmlOptions' => array(
-                'data-toggle' => 'modal',
-                'data-target' => '#cancelModal',
-                'id' => 'cancel_return'
-            ),
-        )); ?>
+                <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'label' => 'Cancel',
+                    'type' => 'action',
+                    'htmlOptions' => array(
+                        'data-toggle' => 'modal',
+                        'data-target' => '#cancelModal',
+                        'id' => 'cancel_return'
+                    ),
+                )); ?>
+            </div>
+        </div> 
     </div>
-</div>
-
-   
-
        
-
-
-
+</div>
 
 
     
 <?php $this->endWidget(); ?>
 
-<?php $this->renderPartial('/order/itemsEmpty', array('order'=>$order)); ?>
+<?php $this->renderPartial('/order/itemsEmpty', array('order' => $order)); ?>
 
 <?php $this->renderPartial('/order/_err'); ?>
 <?php $this->renderPartial('/order/_cancel'); ?>
 
 <script>
     $(function () {
-        $("#Order_preferable_date").datepicker({
-            showOn: "button",
-            buttonImage: "/images/Calendar.png",
-            buttonImageOnly: true
+       
+        $("#Order_preferable_date").datepicker({          
+            
+        });
+
+        $('.clndr').click(function (e) {
+            $('#Order_preferable_date').datepicker("show");
+            e.preventDefault();
         });
         $('#Order_preferable_date').tooltip({
             trigger : 'hover'

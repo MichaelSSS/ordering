@@ -1,6 +1,3 @@
-
-
-<p>This page is appointed for editing user for particular role</p>
 <script>
 
     $(document).ready(function () {
@@ -22,8 +19,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'validateOnSubmit'    =>  true
     )
 )); ?>
-    <fieldset>
-        <legend>edit user</legend>
         
             <?php echo $form->textFieldRow($model, 'username'); ?>
             <?php echo $form->textFieldRow($model, 'firstname'); ?>
@@ -60,9 +55,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 1 =>'Deleted',
             )); ?>
             
-       
-    </fieldset>
-
     <fieldset>
         <legend>Role</legend>
             <?php echo $form->radioButtonList($model, 'role', array(

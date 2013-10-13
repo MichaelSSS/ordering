@@ -19,12 +19,14 @@ class OrderControllerTest extends CDbTestCase {
         $item->setAttributes(array(
              'name' => 'item06',
         'description' => 'bla-bla-bla',
-        'price' => 10.98,
+        'price' =>10,
         'quantity' => 4,
         ),false);
 
         $this->assertTrue($item->save(false));
-      //  $this->assertEquals('0', $item->trash);
+       $this->assertEquals('item06', $item->name);
+        $this->assertEquals(10.98, $item->price);
+         $this->assertEquals(4, $item->quantity);
     }
     
    // public function testCheckDate()

@@ -46,7 +46,7 @@ return array(
                 'edit'      => array(
                     'url'   => 'Yii::app()->createUrl(\'admin/edit\',array(\'id\' => $data->id))',
                     'label' => 'edit',
-                    'icon'  => 'icon-edit icon-large',
+                    'icon'  => 'edits large',
                 ),
             ),
         ),
@@ -64,7 +64,7 @@ return array(
                     'url'     => '( !Yii::app()->user->isActive($data->id, time()) ) ?
                             Yii::app()->createUrl("admin/remove", array("id" => $data->id)) : "";',
                     'label'   => 'remove',
-                    'icon'    => 'icon-remove icon-large',
+                    'icon'    => 'remove large',
                     'visible' => '!$data->deleted',
                 ),
             ),
@@ -77,8 +77,7 @@ return array(
                 'duplicate' => array(
                     'url'   => 'Yii::app()->createUrl(\'admin/duplicate\', array(\'id\' => $data->id))',
                     'label' =>'duplicate',
-                    'icon'  => 'icon-copy icon-large'
-                ),
+                    'icon'  => 'copy large',
             ),
         ),
     ),

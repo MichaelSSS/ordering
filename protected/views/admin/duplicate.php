@@ -1,5 +1,3 @@
-
-<p>This page is appointed for duplicating user for particular role</p>
 <?php /** @var BootActiveForm $form */
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id'                     => 'horizontalForm',
@@ -10,9 +8,6 @@
             )
         ));
 ?>
-
-    <fieldset>
-        <legend>user creation</legend>
 
         <?php echo $form->textFieldRow($model, 'username'); ?>
 
@@ -39,7 +34,6 @@
             'west'  => 'West',
             'east'  => 'East'
         )); ?>
-    </fieldset>
 
     <fieldset>
         <legend>Role</legend>

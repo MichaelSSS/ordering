@@ -36,7 +36,7 @@ class MerchandiserController extends Controller
         if (isset($_GET['Order']))
             $model->attributes = $_GET['Order'];
 
-        $model->delivery_date = $model->formatDate($model->delivery_date);
+        $model->delivery_date =  Yii::app()->dateFormatter->format("yyyy-MM-dd",$model->delivery_date);
         $this->render('index', array('model' => $model));
     }
 

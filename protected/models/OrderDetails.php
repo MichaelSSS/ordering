@@ -34,14 +34,13 @@ class OrderDetails extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
             return array(
-			array('quantity', 'numerical', 'integerOnly'=>true),
-                        array('quantity', 'required'),
-                        array('quantity', 'length', 'max'=>3),
-                        array('quantity', 'length', 'max'=>3),
-                array('id_order, id_item, id_customer, quantity, price, id_dimension', 'safe','on'=>'save'),
-
+                array('id_order, id_item, id_dimension, id_customer, quantity, price', 'required'),
+                array('id_order, id_item, id_dimension, id_customer, quantity', 'numerical', 'integerOnly'=>true),
+                array('quantity', 'length', 'max'=>3),
+                array('price', 'length', 'max'=>3),
+                array('id_order','length','max'=>6),
+                array('id_order_details, id_order, id_item, id_customer, quantity, price, id_dimension', 'safe','on'=>'save'),
 		);
-
 	}
 
 	/**
@@ -160,11 +159,23 @@ class OrderDetails extends CActiveRecord
             ->queryAll();
         foreach ($iData as $key=>$value){
             $iData[$key]['price_per_line']= (int)$iData[$key]['price'] * (int)$iData[$key]['quantity']*(int)$iData[$key]['count_of_items'];
-
+            $iData[$key]['key'] = $key;
             self::$totalItemsQuantity +=(int)$iData[$key]['count_of_items'] * (int)$iData[$key]['quantity'];
             self::$totalPrice +=(int)$iData[$key]['price']*(int)$iData[$key]['count_of_items']*(int)$iData[$key]['quantity'];
         }
         return  $iData;
+    }
+
+    public function saveOrderedItems($currentItems, $orderDetails){
+
+        foreach ($currentItems as $item) {
+
+            $orderDetails->attributes = $item;
+            $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;
+            $orderDetails->save(false);
+            $a=0;
+        }
+        if(true);
     }
 
     public function afterSave()

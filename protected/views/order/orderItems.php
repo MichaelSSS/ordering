@@ -1,11 +1,7 @@
 <?php
     echo CHtml::link('Add Item', array('customer/additem'));
-
     $grid = $this->widget('TGridView', array(
-
-
     'dataProvider' => $orderDetails,
-
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
@@ -32,7 +28,7 @@
     'columns'=>array(
         array(
 
-            'header'    => 'Item Number',
+            'header' => 'Item Number',
             'value'=>'$data["id_item"]',
         ),
 

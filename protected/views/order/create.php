@@ -1,25 +1,27 @@
-<div class="sapn12">
+<?php /** @var BootActiveForm $form */
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    'id' => 'orderForm',
+    'type' => 'horizontal',
+    'enableClientValidation' => true,
+    'enableAjaxValidation' => true,
+    'clientOptions' => array(
+        'validateOnSubmit' => true,
+        'hideErrorMessage' => true,
+        'validationUrl' => Yii::app()->createUrl("customer/validateorder"),
+        'afterValidate' => 'js:afterValidate',
+    )
+)); ?>
+
+<div class="span12">
     <div class="row">
-        <?php /** @var BootActiveForm $form */
-        $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-            'id' => 'orderForm',
-            'type' => 'horizontal',
-            'enableClientValidation' => true,
-            'enableAjaxValidation' => true,
-            'clientOptions' => array(
-                'validateOnSubmit' => true,
-                'hideErrorMessage' => true,
-                'validationUrl' => Yii::app()->createUrl("customer/validateorder"),
-                'afterValidate' => 'js:afterValidate',
-            )
-        )); ?>
+
         <p>This page is appointed for selecting and buying products</p>
         <fieldset>
             <legend>Items selection</legend>
             <?php $this->renderPartial('/order/orderItems', array(
                 'orderDetails' => $orderDetails,
-                'form' => $form, 
-                'currentItems' => $currentItems,
+                'form' => $form,
+//                'currentItems' => $currentItems,
             )); ?>
         </fieldset>
         <div class="span6">
@@ -65,15 +67,6 @@
     </div>
 </div>
 
-   
-
-       
-
-
-
-
-
-    
 <?php $this->endWidget(); ?>
 
 <?php $this->renderPartial('/order/itemsEmpty', array('order' => $order)); ?>
@@ -173,6 +166,6 @@
                 $("#errorMessage").html(errorCC);
             });
         }
-        ;
+
     }
 </script>

@@ -35,10 +35,17 @@ class CustomerController extends Controller
     public function actionIndex()
     {
         $model = new Order('search');
+
         $model->customer = Yii::app()->user->id;
 
+
+
+
         if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
+        {
             $model->currentPageSize = $_GET['pageSize'];
+        }
+
 
         if (isset($_GET['Order']))
             $model->attributes = $_GET['Order'];
@@ -47,13 +54,16 @@ class CustomerController extends Controller
         $this->render('index', array('model' => $model,));
     }
 
-    public  function resetFilter(){
+    public  function actionResetFilter(){
+        $model = new Order('search');
+        if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
+        {
+            $model->currentPageSize = $_GET['pageSize'];
+        }
         if( isset($_GET['reset']))
         {
-            $model = new Order('search');
-            $model->unsetAttributes(array('filterCriteria', 'searchValue'));
-            $this->render('index', array('model' => $model,));
-            Yii::app()->end();
+            $model->customer = Yii::app()->user->id;
+            $this->renderPartial('grid', array('model' => $model,));
         }
     }
 
@@ -87,7 +97,7 @@ class CustomerController extends Controller
             'order' => $order,
             'orderDetails' => $orderDetails,
             'cardInfo' => $cardInfo,
-            'currentItems' => $currentItems,
+//            'currentItems' => $currentItems,
         ));
     }
 
@@ -120,7 +130,7 @@ class CustomerController extends Controller
                 {
                     $order->save(false, array('order_name','total_price','preferable_date', 'assignee'));
                 }
-// @todo to the model
+
                 foreach ($currentItems as $item) {
                     $orderDetails = new OrderDetails('save');
                     $orderDetails->attributes = $item;
@@ -223,11 +233,6 @@ class CustomerController extends Controller
         ));
     }
 
-//    public function actionError($view)
-//    {
-//        $this->render($view);
-//    }
-
     public function actionAdd()
     {
 
@@ -297,7 +302,6 @@ class CustomerController extends Controller
         }
     }
 
-  //  @todo  to the model
     public function actionDependentSelect()
     {
         $data = new Order;

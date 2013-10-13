@@ -1,6 +1,6 @@
 <?php
 
-class AdminCreateTest extends WebTestCase
+class AdminDuplicateTest extends WebTestCase
 {
     protected function setUp()
     {
@@ -16,15 +16,14 @@ class AdminCreateTest extends WebTestCase
         'authAssignment' => ':auth_assignment',
     );
 
-    public function testCreateUser()
+    public function testDuplicateUser()
     {
         $this->open('index-test.php');
         $this->type("id=LoginForm_username", "admin01");
         $this->type("id=LoginForm_password", "aA1!");
         $this->clickAndWait("name=yt0");
         //$this->setSpeed(500);
-        $this->assertElementPresent("id=create-user");
-        $this->click("id=create-user");
+        $this->click("//table[@id='table-user']/tbody/tr/td[9]/a");
         $this->waitForNotVisible("css=div.edit-shade");
         $this->type("id=User_username","smith");
         $this->type("id=User_firstname","Adam");
@@ -43,5 +42,6 @@ class AdminCreateTest extends WebTestCase
         $this->assertTable("id=table-user.2.3","merchandiser"); 
         $this->assertTable("id=table-user.2.4","adsm@adsm.com"); 
         $this->assertTable("id=table-user.2.5","west"); 
+        
     }
 }

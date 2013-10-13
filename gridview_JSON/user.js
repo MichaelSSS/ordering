@@ -127,8 +127,8 @@ $(function(){
 
         initialize: function() { 
             this.url = window.location.href.split('?',1)[0]
-                + '?r=admin/index&ajax=' + oms.gridId 
-                + '&'+oms.sortVar+'=username';
+                + '?r=admin/index&ajax=' + oms.gridId;
+                //+ '&'+oms.sortVar+'=username';
             this.on('request',function(model, xhr, options) {
                 $('#'+oms.gridId).addClass('grid-view-loading');
             });
@@ -287,23 +287,24 @@ $(function(){
                     if ( 0 <= existingPos ) {
                         // already sorted by given column asc
                         sortAdd += '.desc';
-                        sortAttr.splice(existingPos,1);
-                        sortAttr.unshift(sortAdd);
+                        //sortAttr.splice(existingPos,1);
+                        //sortAttr.push(sortAdd);
+                        sortAttr[existingPos] = sortAdd;
                         sortNow = sortAttr.join('-');
                     } else {
                         existingPos = sortAttr.indexOf(sortAdd+'.desc');
                         if ( 0 <= existingPos ) {
                             // already sorted desc
                             sortAttr.splice(existingPos,1);
-                            sortAttr.unshift(sortAdd);
+                            //sortAttr.push(sortAdd);
                             sortNow = sortAttr.join('-');
                         } else {
                             // have not sorted by a given column
-                            sortNow = sortAdd + '-' + sortNow;
+                            sortNow = sortNow + '-' + sortAdd;
                         }
                     }    
                 } else {
-                    //have not sort by either column
+                    //have not sorted by either column
                     sortNow = sortAdd;
                 }
                 sortNow = oms.sortVar + '=' + sortNow;
@@ -369,8 +370,6 @@ $(function(){
             $("#page-size").on('click', this.pageSizeClick);
             $('ul.yiiPager li').on("click", this.pageButtonClick);
             $(oms.sortSelector).on('click', this.sortLinkClick);
-
-            $('#' + oms.gridId + ' th:first a').addClass('asc');
             $(oms.sortSelector).css('cursor','default');
             $(document).on('keydown',function(e) {
                 if ( e.ctrlKey ) {
@@ -391,27 +390,31 @@ $(function(){
             this.renderHeader();
             this.renderFooter();
             $("#page-size").text("show "+oms.fields.nextPageSize+" items");
-            $('#toggle-deleted').text(oms.fields.get("showDeleted")==0 ? "show deleted" : "hide deleted");
         },
 
         renderHeader: function() {
-            var sortAttr = $.deparam.querystring(oms.users.url)[oms.sortVar].split('-');
-            $('#' + oms.gridId + ' th a').each(function(index){
-                var $this = $(this),
-                    attr = oms.fields.attributeLabels[$this.text()];
-                               
-                if (0 <= sortAttr.indexOf(attr) ) {
-                    $this.removeClass('desc');
-                    $this.addClass('asc');
-                } else if (0 <= sortAttr.indexOf(attr+'.desc') ) {
-                    $this.removeClass('asc');
-                    $this.addClass('desc');                    
-                } else {
-                    $this.removeClass('asc');
-                    $this.removeClass('desc');                    
-                }
-            });
-
+            var params = $.deparam.querystring(oms.users.url);
+            if ( params[oms.sortVar] ) {
+                var sortAttr = params[oms.sortVar].split('-');
+                $('#' + oms.gridId + ' th a').each(function(index) {
+                    var $this = $(this),
+                        attr = oms.fields.attributeLabels[$this.text()];
+                                   
+                    if (0 <= sortAttr.indexOf(attr) ) {
+                        $this.removeClass('desc');
+                        $this.addClass('asc');
+                    } else if (0 <= sortAttr.indexOf(attr+'.desc') ) {
+                        $this.removeClass('asc');
+                        $this.addClass('desc');                    
+                    } else {
+                        $this.removeClass('asc');
+                        $this.removeClass('desc');                    
+                    }
+                });
+            } else {
+                this.$('th a').removeClass('asc');
+                this.$('th a').removeClass('desc');                    
+            }
         },
 
         renderTotal: function() {
@@ -485,8 +488,12 @@ $(function(){
                     });
                     $.post(userEditWindow.url, data)
                         .done(userEditWindow.action.saveDone)
-                        .fail(function(jqXHR, textStatus, errorThrown) {
-                            alert( "Error: " + jqXHR.status + " " + jqXHR.statusText );
+                        .fail(function(xhr, textStatus, errorThrown) {
+                            if ( xhr.status == 403 ) {
+                                window.location.href = "";
+                            } else {
+                                alert( "Error: " + xhr.status + " " + xhr.statusText );
+                            }
                         });
                     userEditWindow.modalHide();
                     $('#'+oms.gridId).addClass('grid-view-loading');
@@ -533,7 +540,7 @@ $(function(){
 
                 },
                 error: function(xhr){
-                    if ( response.status == 403 ) {
+                    if ( xhr.status == 403 ) {
                         window.location.href = "";
                     } else {
                         alert( "Error: " + xhr.status + " " + xhr.statusText );
@@ -663,7 +670,7 @@ $(function(){
         },
         name: 'Edit User',
         appointment: "This page is appointed for editing user for particular role",
-        buttonName: 'Save',
+        buttonName: 'Update',
         render: function() {
             var attributes = userEditWindow.model.attributes;
 

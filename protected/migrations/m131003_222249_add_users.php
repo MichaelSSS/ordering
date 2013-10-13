@@ -4,22 +4,12 @@ class m131003_222249_add_users extends CDbMigration
 {
 	public function up()
 	{
-        $password = CPasswordHelper::hashPassword('password');
+        $password = CPasswordHelper::hashPassword('aA1!');
 
         $this->insert('user', array(
-            'username' => 'admin02',
+            'username' => 'customer03',
             'password' => $password,
-                'role' => 'admin',
-           'firstname' => "Clement",
-            'lastname' => "Walladingen",
-               'email' => "cw@nowhere.com",
-              'region' => "north",
-        ));
-
-        $this->insert('user', array(
-            'username' => 'admin03',
-            'password' => $password,
-                'role' => 'admin',
+                'role' => 'customer',
            'firstname' => "Anabella",
             'lastname' => "Byron",
                'email' => "anb@nowhere.com",
@@ -27,9 +17,9 @@ class m131003_222249_add_users extends CDbMigration
         ));
 
         $this->insert('user', array(
-            'username' => 'admin04',
+            'username' => 'customer04',
             'password' => $password,
-                'role' => 'admin',
+                'role' => 'customer',
            'firstname' => "Alphonse",
             'lastname' => "Lamartine",
                'email' => "all@nowhere.com",
@@ -37,9 +27,9 @@ class m131003_222249_add_users extends CDbMigration
         ));
 
         $this->insert('user', array(
-            'username' => 'admin05',
+            'username' => 'customer05',
             'password' => $password,
-                'role' => 'admin',
+                'role' => 'customer',
            'firstname' => "Gotie",
             'lastname' => "Teofille",
                'email' => "got@nowhere.com",
@@ -47,9 +37,9 @@ class m131003_222249_add_users extends CDbMigration
         ));
 
         $this->insert('user', array(
-            'username' => 'admin06',
+            'username' => 'customer06',
             'password' => $password,
-                'role' => 'admin',
+                'role' => 'customer',
            'firstname' => "Elizabeth",
             'lastname' => "Hovard",
                'email' => "elh@nowhere.com",
@@ -57,7 +47,17 @@ class m131003_222249_add_users extends CDbMigration
         ));
 
         $this->insert('user', array(
-            'username' => 'customer03',
+            'username' => 'customer07',
+            'password' => $password,
+                'role' => 'customer',
+           'firstname' => "Clement",
+            'lastname' => "Walladingen",
+               'email' => "cw@nowhere.com",
+              'region' => "north",
+        ));
+
+        $this->insert('user', array(
+            'username' => 'customer08',
             'password' => $password,
                 'role' => 'customer',
            'firstname' => "Henry",
@@ -67,7 +67,7 @@ class m131003_222249_add_users extends CDbMigration
         ));
 
         $this->insert('user', array(
-            'username' => 'customer04',
+            'username' => 'customer09',
             'password' => $password,
                 'role' => 'customer',
            'firstname' => "Fransua",
@@ -77,7 +77,7 @@ class m131003_222249_add_users extends CDbMigration
         ));
 
         $this->insert('user', array(
-            'username' => 'customer05',
+            'username' => 'customer10',
             'password' => $password,
                 'role' => 'customer',
            'firstname' => "Josef",

@@ -33,7 +33,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         <div class='controls'>
             <div class='span4'>
                 <?php echo $form->dropDownListRow($fields, 'keyField',
-                    array('All Columns', 'User Name', 'First Name', 'Last Name', 'Role'),
+                    $fields->keyFields,
                     array('class' => 'input-xlarge',
                         'options' => array(
                             array_search('User Name', $fields->keyFields) => array(
@@ -45,7 +45,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             </div>
             <div class='span4'>
                 <?php echo $form->dropDownListRow($fields, 'criteria',
-                    array('equals', 'not equal to', 'starts with', 'contains', 'does not contain'),
+                    $fields->criterias,
                     array('class' => 'input-xlarge',
                         'options' => array(
                             array_search('starts with', $fields->criterias) => array(
@@ -90,9 +90,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         <span class='helper'>show</span>
                     </label> 
                 </form>
-                 <a class='pull-right' id='toggle-deleted' href="
-                    <?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>"> show deleted users
-                 </a>
             </div>
         </div>
     </div>
@@ -142,15 +139,15 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 </div>
 <?php
     $cs=Yii::app()->getClientScript();
-
-    $cs->registerCssFile('gridview_JSON/pager.css');
+    $baseUrl = Yii::app()->getBaseUrl();
+    $cs->registerCssFile($baseUrl . '/gridview_JSON/pager.css');
 
     $cs->registerCoreScript('jquery');
     $cs->registerCoreScript('bbq');
 
-    $cs->registerScriptFile('gridview_JSON/underscore.js',CClientScript::POS_END);
-    $cs->registerScriptFile('gridview_JSON/backbone_002.js',CClientScript::POS_END);
-    $cs->registerScriptFile('gridview_JSON/user.js',CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/gridview_JSON/underscore.js', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/gridview_JSON/backbone_002.js', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/gridview_JSON/user.js', CClientScript::POS_END);
 
     $cs->registerScript('1','
         oms.users.reset(' . $this->prepareAjaxData($dataProvider) . ');

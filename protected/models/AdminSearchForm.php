@@ -7,7 +7,6 @@
  */
 class AdminSearchForm extends CFormModel
 {
-    
     public $keyField;
     public $criteria;
     public $keyValue;
@@ -80,7 +79,7 @@ class AdminSearchForm extends CFormModel
 
             $criteria = $this->operators[$this->criterias[$this->criteria]];
 
-            for($i=1; $i < $numKeys-1; ++$i) {
+            for($i=0; $i < $numKeys-1; ++$i) {
                 $condition .= '(' . $keyAttr[$i] . $criteria . ') OR ';
             }
 
@@ -88,7 +87,7 @@ class AdminSearchForm extends CFormModel
 
             return array(
                 'condition'  => $condition,
-                'params'     => array_fill(1,$numKeys-1,$this->keyValue)
+                'params'     => array_fill(1,$numKeys,$this->keyValue)
             );
 
         }        

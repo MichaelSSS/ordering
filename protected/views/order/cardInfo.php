@@ -1,23 +1,30 @@
-<?php  //Yii::app()->bootstrap->register('/css/bootstrap.css'); ?>
-<?php  //Yii::app()->bootstrap->register('/css/bootstrap-responsive.css'); ?>
+
 <script>
     // Form behaviour for Credit Card type
     $(function ()
-    {
-        $("#CreditCardFormModel_expiry_date").datepicker({
-            showOn: "button",
-            buttonImage: "/images/Calendar.png",
-            buttonImageOnly: true,
-            defaultDate: new Date(),
-            dateFormat: "mm/dd/yy"
+    {   
+        $("#CreditCardFormModel_expiry_date").datepicker({          
+            
         });
-        $("#CreditCardFormModel_start_date").datepicker({
-            showOn: "button",
-            buttonImage: "/images/Calendar.png",
-            buttonImageOnly: true,
-            defaultDate: new Date(),
-            dateFormat: "mm/dd/yy",
-            disabled: true
+
+        $('.clndr1').click(function (e) {
+            $('#CreditCardFormModel_expiry_date').datepicker("show");
+            e.preventDefault();
+        });
+         $('#CreditCardFormModel_expiry_date').tooltip({
+            trigger : 'hover'
+        });
+        $("#CreditCardFormModel_start_date").datepicker({          
+            
+            disabled: true      
+        });
+
+        $('.clndr2').click(function (e) {
+           $('#CreditCardFormModel_expiry_date').datepicker("show");
+           e.preventDefault();
+        });
+        $('#CreditCardFormModel_start_date').tooltip({
+            trigger : 'hover'
         });
         $("#CreditCardFormModel_cvv2_code_tip").popover(
             {
@@ -74,17 +81,30 @@
         'id'=>'CreditCardFormModel_cvv2_code_label',
     ),
 )); ?>
+<div class="row">
+   <div class="span6">
+        <a href="#" class='clndr1'>
+            <?php echo $formCreditCard->textFieldRow($cardInfo, 'expiry_date', array(
+                'title'=>'Type date in format mm/dd/yyyy',
+                'append' => '<i class="icon-calendar icon-large"></i>',
+                'value'=>date("m/d/y"),
+            )); ?>  
+        </a>
+   </div>
+</div>
 
-<?php echo $formCreditCard->textFieldRow($cardInfo, 'expiry_date', array(
-    'title'=>'Type date in format mm/dd/yyyy',
-    'value'=>date("m/d/y"),
-)); ?>
-
-<?php echo $formCreditCard->textFieldRow($cardInfo, 'start_date', array(
-    'title'=>'Type date in format mm/dd/yyyy',
-    'disabled'=>'disabled',
-    'value'=>date("m/d/y"),
-)); ?>
+<div class="row">
+   <div class="span6">
+        <a href="#" class='clndr2'>
+            <?php echo $formCreditCard->textFieldRow($cardInfo, 'start_date', array(
+                'title'=>'Type date in format mm/dd/yyyy',
+                'append' => '<i class="icon-calendar icon-large"></i>',
+                'disabled'=>'disabled',
+                'value'=>date("m/d/y"),
+            )); ?>  
+        </a>
+   </div>
+</div>
 
 <?php echo $formCreditCard->textFieldRow($cardInfo, 'issue_number', array(
     'disabled'=>'disabled', 
@@ -93,4 +113,3 @@
         'class'=>'control-label'
     ),
 )); ?>
-

@@ -5,8 +5,7 @@
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
     'method'=>'GET',
-));
-?>
+)); ?>
 
 <fieldset>
     <legend>Search
@@ -19,7 +18,8 @@
                 <?php echo $form->dropDownlist($model, 'filterCriteria', $model->filterCriterias, array(
                     'class' => 'span3',
                     'options' => array(
-                        array_search('Status', $model->filterCriterias) => array('selected' => true)
+                        array_search('Status', $model->filterCriterias) => array('selected' => true
+                        )
                     ),
                     'ajax' => array(
                         'type' => 'Post',
@@ -33,7 +33,8 @@
                 <?php echo $form->dropDownlist($model, 'filterValue', $model->filterStatuses,
                     array('class' => 'span3',
                         'options' => array(
-                            array_search('None', $model->filterStatuses) => array('selected' => true)
+                            array_search('None', $model->filterStatuses) => array('selected' => true
+                            )
                         ),
                     ));
                 ?>
@@ -46,7 +47,8 @@
                     array('class' => 'span3',
                         'options' => array(
                             array_search('Order Name', $model->searchCriterias) => array('selected' => true
-                            ))
+                            )
+                        )
                     ));
                 ?>
             </div>
@@ -82,6 +84,7 @@
 <?php $this->endWidget(); ?>
 
 <?php $this->renderPartial('/customer/grid',  array('model' => $model,)); ?>
+
 
 
 

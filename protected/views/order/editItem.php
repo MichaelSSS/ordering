@@ -97,13 +97,11 @@
 <fieldset class="item_search">
     <legend>Search <span>by</span></legend>
 
-
     <?php $searchForm = $this->beginWidget('CActiveForm', array(
         'id' => 'search-form',
         'method' => 'GET',
     ));
     ?>
-
 
     <div class="span2">
         <p>Search for item by:</p>
@@ -126,7 +124,7 @@
             'buttonType' => 'submit',
             'type' => 'info', 
             'size' => 'null', 
-        ));?>
+        )); ?>
         <?php echo CHtml::errorSummary($model) ?>
     </div>
 
@@ -167,10 +165,7 @@
         ),
     ),
 )); ?>
-    
-    
- 
-
+        
 <div class="span12">
 <div class="row">
         <fieldset>
@@ -197,7 +192,7 @@
                         )
                 )); ?>
                  
-                <div class="span6">
+                <div class="span7">
                     <div class="control-group">
                         <label class="control-label">Name:</label>
                         <div class="controls">
@@ -221,6 +216,7 @@
                         <label class="control-label">Maximum quantity of item:</label>
                         <div class="controls">
                             <span class="quantity_of_item"><?php echo $model->quantity; ?></span>
+
                             <?php echo $itemForm->hiddenField($orderDetails, 'key', array('id' => 'key', 'value' => $key)); ?>
                             <?php echo $itemForm->hiddenField($orderDetails, 'id_item', array('id' => 'id_item', 'value' => $model->id_item)); ?>
                             <?php echo $itemForm->hiddenField($model, 'quantity', array('id' => 'max_quantity', 'value' => $model->quantity)); ?>

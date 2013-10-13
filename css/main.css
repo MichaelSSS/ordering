@@ -48,7 +48,7 @@ small {
 .panel-body:before,
 .panel-body:after {
     display: table;
-    content: ' ';
+    content: '';
 }
 .panel-body:after {
     clear: both;
@@ -77,7 +77,7 @@ small {
 }
 
 .panel-default > .panel-heading {
-    color: #333333;
+    color: #333;
     background-color: #f5f5f5;
     border-color: #ddd;
 }
@@ -89,63 +89,31 @@ small {
     background-color: #ff7518;
     border-color: #ff4309;
 }
-.panel-primary {
-    border-color: #007fff;
-}
-.panel-primary > .panel-heading {
-    color: #fff;
-    background-color: #007fff;
-    border-color: #007fff;
-}
-.panel-success {
-    border-color: #3fb618;
-}
-.panel-success > .panel-heading {
-    color: #fff;
-    background-color: #3fb618;
-    border-color: #4e9f15;
-}
-.panel-danger {
-    border-color: #b94a48;
-}
-.panel-danger > .panel-heading {
-    color: #fff;
-    background-color: #f2dede;
-    border-color: #b94a48;
-}
-.panel-info {
-    border-color: #7643a8;
-}
-.panel-info > .panel-heading {
-    color: #fff;
-    background-color: #9954bb;
-    border-color: #7643a8;
-}
 
 /*admin start*/
 
 #modal-editing{
-    width:90%;
-    min-height:400px;
-    margin:0;
-    left:5%;
-    top:0;
+    width: 90%;
+    min-height: 400px;
+    margin: 0;
+    left: 5%;
+    top: 0;
 }
 
 #modal-editing .modal-body{
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
 #modal-editing .edit-shade{
     display: none;
 }
 #modal-editing .edit-shade.loading{
-//  background:url(../gridview_JSON/loading.gif) no-repeat 50% 50%;
-    position:absolute;
+//  background: url(../gridview_JSON/loading.gif) no-repeat 50% 50%;
+    position: absolute;
     width: 100%;
     height: 100%;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     opacity: 0.7;
     background-color: white;
     display: block;
@@ -176,31 +144,27 @@ tr.user-deleted td.remove a{
     padding: 10px 15px;
 }
 #search-result-count {
-  min-width: 10px;
-  padding: 3px 7px; 
-  line-height: 1;
-  position: relative;
-  text-decoration: underline;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  color: #888;
-  background-color: #fff;
-  border-radius: 3px;
-  margin-left: 10px;
+    min-width: 10px;
+    padding: 3px 7px; 
+    line-height: 1;
+    position: relative;
+    text-decoration: underline;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    color: #888;
+    background-color: #fff;
+    border-radius: 3px;
+    margin-left: 10px;
 }
 #search-result-count:before {
     content: '';
     border-right: 6px solid #fff;
     border-top: 3px solid transparent;
-    border-bottom: 3px solid transparent;;
+    border-bottom: 3px solid transparent;
     position: absolute;
     top: 6px;
     left: -6px;
-}
-
-.span3 button.btn, input[type='submit'].btn, input[type='reset'].btn  {
-    margin: .7em 0 .7em 3em;
 }
 #horizontalForm .radio label {
     margin-left: 3em;
@@ -211,43 +175,55 @@ tr.user-deleted td.remove a{
 .table-bordered th, .table-bordered td {
     text-align: center;
 }
-
-/*order*/
-.ui-datepicker-trigger {
-    cursor: pointer;
-}
-.text-order {
-    margin: 5px 0 0 ;
-}
-#orderForm div.text-order {
-    margin: 5px 0 0 180px ;
-}
-.order-buttons {
-    float: right;
-}
-#cardInfo .control-label {
-    margin-left: 1em;
-    text-align: left;
-}
-#cardInfo .required span {
-    display: inline;
-}
-.status{
-    display: inline-block;
-    margin-right: 20px;
-}
 .password_buttons{
     margin-top: -20px;
     margin-bottom: 8px;
 }
 .generate_pass{
-    width:94px !important;
+    width: 94px !important;
 }
-
-/*merchandiser*/
-a.clndr, a:hover.clndr,
-a:visited.clndr
- {
+/*order*/
+.ui-datepicker-trigger {
+    cursor: pointer;
+}
+#orderInfo .text-order {
+    margin-top: 5px;
+    margin-left: 180px;
+}   
+#orderInfo .control-label {
+    text-align: left;      
+}
+#cardInfo .control-label {
+    text-align: left;
+    width: 200px;
+}
+#item_result_name,
+#item_result_price,
+.quantity_of_item {
+    line-height: 30px;
+}
+#ItemForm .control-label {   
+    cursor: default;
+    text-align: left;
+    margin-left: 30px;
+}
+a.clndr,  a:hover.clndr,  a:visited.clndr,
+a.clndr1, a:hover.clndr1, a:visited.clndr1,
+a.clndr2, a:hover.clndr2, a:visited.clndr2 {
     color: #000;
-    display: inline-block;
 }
+/*merchandiser*/
+a.clndr, a:hover.clndr, a:visited.clndr {
+    display: inline-block;
+    margin-bottom: 30px;
+    height: 20px;
+}
+a.clndr .control-label {
+    text-align: center;   
+}
+/*@madia-query for login-form*/
+@media screen and (max-width: 1200px) {
+    #login-form {
+        width: 570px;
+    }
+ }

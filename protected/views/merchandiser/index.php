@@ -1,8 +1,6 @@
 
 <p>This page is appointed for creating new and managing existing users</p>
 
-<?php echo CHtml::link('Create New Order', array('customer/create')); ?>
-
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
     /*'enableAjaxValidation'=>true*/

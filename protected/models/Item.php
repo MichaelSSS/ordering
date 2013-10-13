@@ -18,12 +18,16 @@ class Item extends CActiveRecord
 
     public $addI;
 
- 
+         /**
+         * @return string the associated database table name
+         */
 	public function tableName()
 	{
 		return 'item';
 	}
-
+        /**
+         * @return array validation rules for model attributes.
+         */
 	public function rules()
 	{
 		return array(
@@ -77,9 +81,9 @@ class Item extends CActiveRecord
     {
         
         $criteria= new CDbCriteria;
-  //    $criteria->compare('id_item',$this->id_item);
-  //    $criteria->compare('name',$this->name,true);
-  //    $criteria->compare('price',$this->price,true);
+    // $criteria->compare('id_item',$this->id_item,true);
+      $criteria->compare('name',$this->name,true);
+      $criteria->compare('price',$this->price,true);
  
       
         if ($this->searchValue!="")
@@ -116,39 +120,7 @@ return new CActiveDataProvider($this,array(
 
     }
     
-        public function add()
-    {
-
-
-            // получаем ID статьи, но учтите, т.к. это тренировочный
-            // скрипт мы не фильтруем содержимое $_POST
-            // в реальном скрипте фильтрация обязательна
-            //$item_id = $this->addI;
-       // if (isset($_POST['item_id']))
-            
-            //echo '{"item_id":"'.$item_id.'"}';
-            
-           /* $command = Yii::app()->db->createCommand();
-            $user = Yii::app()->db->createCommand()
-                ->select('name, price')
-                ->from('item')
-                ->where('id=:id', array(':id'=>$item_id))
-                ->queryRow();*/
-            //$connect = new mysqli("localhost", "root", "", "managerarticle");
-
-            // считываем все данные статьи по $article_id
-            //$result = $connect->query("select * from item where article_id = '$article_id'");
-            //$row = $result->fetch_object();
-
-            // отправляем все данные в формате JSON нашему основному скрипту (index.php)
-            //формат JSON выглядит так:
-            // "ключ1":"значени1", "ключ2":"значени2" и т.д.
-           // echo '{"item_id";"'.$item_id.'"}';
-            /*echo '{"item_name":"'.$this->name.'",
-             "item_price":"'.$this->price.'",
-                 "fff":"'.'fff'.'"}';*/
-
-    }
+       
     public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

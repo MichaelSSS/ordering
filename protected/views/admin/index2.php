@@ -6,7 +6,7 @@
 
 <p>This page is appointed for creating new and managing existing users</p>
 
-<?php echo CHtml::link('Create New User', array('admin/create'), array('id'=>'create-user')); ?>
+<?php echo CHtml::link('Create New User', array('admin/create'), array('id' => 'create-user')); ?>
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -19,8 +19,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'htmlOptions' => array(
         'class'   => '',
     )
-));
-?>
+)); ?>
 
 <fieldset>
     <legend>Search 
@@ -72,17 +71,19 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     </div>
 </fieldset>
 <?php $this->endWidget(); ?>
-<div class='wrp1'>
-    <div class='row'>
-        <div class='span3'>
-            <?php
-            $dataProvider = $model->search();
-            echo '<div id="search-result">Number of Found Users <i class="icon-user icon-large"></i> <span id="search-result-count">'
-                . $dataProvider->getTotalItemCount() . '</span></div>';
-            ?>
-        </div>
 
-        <div class='span9'>
+<div class='wrp1'>
+    <div class='row'>        
+        <?php $dataProvider = $model->search(); ?>
+        <div class="span4">
+            <div id="search-result">Number of Found Users            
+                <div class="span1 pull-right">
+                    <i class="icon-user icon-large"></i>
+                    <span id="search-result-count"><?= $dataProvider->getTotalItemCount(); ?></span>
+                </div> 
+            </div>
+        </div>
+        <div class='span8'>
              <div class='metrouicss pull-right'>
                 <form>
                     <label class='input-control switch' onclick=''>hide
@@ -94,9 +95,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         </div>
     </div>
 </div>
-
-
-
 
 <div id="oms-grid-view0" class="grid-view">
     <div id="grid-extend"><a id="page-size" href="">show 25 items</a></div>
@@ -171,7 +169,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             ('<a rel="tooltip" title="deleted user">&times;</a>') : 
             (
                 ( active ) ? 
-                ('<a rel="tooltip" title="active user"><i class="icon-remove"></i></a>') : 
+                ('<a rel="tooltip" title="active user"><i class="icon-remove icon-large"></i></a>') : 
                 ('<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
                     + id + '"><i class="icon-remove icon-large"></i></a>' )
             )

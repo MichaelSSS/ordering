@@ -30,11 +30,16 @@
                 'label'      => 'Reset ',
             )); ?>
             <?php $this->widget('bootstrap.widgets.TbButton', array(
-                'buttonType' => 'submit',
-                'type'       => 'null',
-                'label'      => 'Back',
-            ));?>
-        </div>
-    <?php $this->endWidget(); ?>
+                    'label' => 'Cancel',
+                    'type' => 'action',
+                    'htmlOptions' => array(
+                        'data-toggle' => 'modal',
+                        'data-target' => '#cancelModal',
+                    ),
+                )); ?>
+            
+        <?php $this->endWidget(); ?>
+        <?php $this->renderPartial('/supervisor/_cancel'); ?>
+    </div>              
 </fieldset>
 

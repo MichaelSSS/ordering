@@ -5,7 +5,6 @@ class AdminUiTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->setBrowserUrl('http://mine/ordering-master/');
         $this->setBrowser("*firefox");
     }
 
@@ -15,7 +14,7 @@ class AdminUiTest extends WebTestCase
 
     public function testUi()
     {
-        $this->open('index-test.php');
+        $this->open('');
         $this->type("id=LoginForm_username", "admin01");
         $this->type("id=LoginForm_password", "aA1!");
         $this->clickAndWait("name=yt0");
@@ -40,7 +39,6 @@ class AdminUiTest extends WebTestCase
         $this->select("id=AdminSearchForm_keyField","label=Role");
         $this->type("id=AdminSearchForm_keyValue","customer");
         $this->keyUp("id=AdminSearchForm_keyValue","r");
-        //$this->pause(1000);
         $this->click("id=btn-search");
         $this->waitForElementNotPresent("css=.grid-view-loading");
 

@@ -5,7 +5,6 @@ class AdminCreateTest extends WebTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->setBrowserUrl('http://mine/ordering-master/');
         $this->setBrowser("*firefox");
     }
 
@@ -18,7 +17,7 @@ class AdminCreateTest extends WebTestCase
 
     public function testCreateUser()
     {
-        $this->open('index-test.php');
+        $this->open('');
         $this->type("id=LoginForm_username", "admin01");
         $this->type("id=LoginForm_password", "aA1!");
         $this->clickAndWait("name=yt0");

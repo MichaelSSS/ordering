@@ -110,7 +110,10 @@ class UserIdentity extends CUserIdentity
     
     public function authenticate()
     {
-        $model = User::model()->find('LOWER(username)=?',array(strtolower($this->username)));
+        $model = User::model()->find(
+            'LOWER(username)=?',
+            array(strtolower(trim($this->username)))
+        );
         $userIp = $_SERVER['REMOTE_ADDR'];
         $attemptCount = 0;
         if ( $model===null || $model->deleted ) {

@@ -24,7 +24,7 @@
 			</li>
 
 			<?php if($model->role == 'customer') : ?>
-			
+
 			<li>
 				<a href='#'>
 					<i class='icon-large icon-credit-card'></i><?= ' Customer Type: ' . $customer->customer_type ?>

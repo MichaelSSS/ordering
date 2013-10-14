@@ -8,7 +8,7 @@
             'type' => 'horizontal',
         ));
     ?>
-
+    
     <?php echo $form->textFieldRow($model, 'id_item',array('class' => 'span3',)); ?>
 
     <?php echo $form->textFieldRow($model, 'price',array('class' => 'span3',)); ?>
@@ -30,8 +30,23 @@
             'buttonType' => 'reset',
             'type'       => 'primary',
             'label'      => 'Reset ',
-        )); ?>
+            'size'       => 'null',
+            ));
+        
+         ?>
+          <?php $this->widget('bootstrap.widgets.TbButton', array(
+                    'label' => 'Cancel',
+                    'type' => 'action',
+                    'htmlOptions' => array(
+                        'data-toggle' => 'modal',
+                        'data-target' => '#cancelModal',
+                    ),
+                )); ?>
+
+    
+
         <?php $this->endWidget(); ?>
+        <?php $this->renderPartial('/supervisor/_cancel'); ?>
     </div>
 </fieldset>
 

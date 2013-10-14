@@ -85,11 +85,11 @@ class LoginForm extends CFormModel
             $user = Yii::app()->user;
             $userId = $this->_identity->getId();
             
-            $isUserActive = $user->isActive($userId, time());
+            $isUserActive = OmsWebUser::isActive($userId, time());
 
             // determine if user logged in another browser
             if ( $isUserActive 
-                && !$user->isSameUserAgent($userId) ) {
+                && !OmsWebUser::isSameUserAgent($userId) ) {
                
                 $this->_errorCode = self::ERROR_USER_LOGGED;
 

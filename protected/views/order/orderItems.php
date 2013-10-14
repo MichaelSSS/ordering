@@ -1,14 +1,7 @@
-
-
-
 <?php
-
-echo CHtml::link('Add Item',array('customer/additem'));
-  $grid = $this->widget('TGridView', array(
-
-
+    echo CHtml::link('Add Item', array('customer/additem'));
+    $grid = $this->widget('TGridView', array(
     'dataProvider' => $orderDetails,
-
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
@@ -18,10 +11,10 @@ echo CHtml::link('Add Item',array('customer/additem'));
         'class' => 'OmsPager',
         'header' => '',
         'maxButtonCount' => 0,
-        'firstPageLabel' => 'First',
-        'prevPageLabel' => 'Backward',
-        'nextPageLabel' => 'Forward',
-        'lastPageLabel' => 'Last',
+        'firstPageLabel' => '&lsaquo; First',
+        'prevPageLabel'  => '&larr; Backward',
+        'nextPageLabel'  => 'Forward &rarr;',
+        'lastPageLabel'  => 'Last &rsaquo;',
         'htmlOptions' => array(
             'class' => 'yiiPager',
         ),
@@ -35,7 +28,7 @@ echo CHtml::link('Add Item',array('customer/additem'));
     'columns'=>array(
         array(
 
-            'header'    => 'Item Number',
+            'header' => 'Item Number',
             'value'=>'$data["id_item"]',
         ),
 
@@ -78,13 +71,13 @@ echo CHtml::link('Add Item',array('customer/additem'));
             ),
             'buttons'  => array(
                 'edit' => array(
-                    'icon' => 'pencil',
+                    'icon' => 'edit large',
                     'url'  => 'Yii::app()->createUrl(\'customer/edititem\',array(\'id\'=>$data["id_item"], \'key\'=>$data["key"]))',
                 ),
             )
         ),
         
-                array(
+        array(
             'header' => 'Remove',
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{remove}',
@@ -93,7 +86,7 @@ echo CHtml::link('Add Item',array('customer/additem'));
             ),
             'buttons' => array(
                 'remove' => array(
-                    'icon' => 'icon-remove icon-large',
+                    'icon' => 'remove large',
                     'url' => 'Yii::app()->createUrl(\'customer/removeitem\',array(\'key\'=>$data["key"]))',
                     'options' => array(
                         'data-toggle' => 'modal',
@@ -108,21 +101,18 @@ echo CHtml::link('Add Item',array('customer/additem'));
 
 ?>
 <?php $this->renderPartial('/order/_del'); ?>
+
 <script>
- function beforeRemove(el) {
+    function beforeRemove(el) {
         $('#modal_remove').attr('href', $(el).attr('href'));
-
-
     };
+
     $(function(){
         $('#modal_remove').click(function() {
             var url = $(this).attr('href');
             $.get(url, function(response) {
                 $('.modal-header .close').click();
-
                 $.fn.yiiGridView.update('yw0');
-
-
             });
             return false;
         });

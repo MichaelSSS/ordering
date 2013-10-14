@@ -36,7 +36,6 @@ class MerchandiserController extends Controller
         if (isset($_GET['Order']))
             $model->attributes = $_GET['Order'];
 
-        $model->delivery_date = $model->formatDate($model->delivery_date);
         $this->render('index', array('model' => $model));
     }
 
@@ -69,13 +68,13 @@ class MerchandiserController extends Controller
             if($_POST['Order']['uncheckDeliveredStatus'] == 'delivered'){
                 $orderModel->status = 'delivered';
             }
-           $orderModel->delivery_date = $orderModel->formatDate($orderModel->delivery_date);
             $orderModel->attributes = $_POST['Order'];
 
             if($orderModel->save()) {
                $this->redirect( array( 'merchandiser/index' ) );
 
             }
+
         }
 
         if(isset($_POST['ordered'])){

@@ -130,12 +130,10 @@ class AdminController extends Controller
             $model->scenario = 'remove';
             $model->deleted = 1;
 
-            if($model->save()){
-
+            if ( $model->save() ) {
                 $this->actionIndex();
-            }
-            else{
-                throw new \Exception(print_r($model->getErrors(), true));
+            } else {
+                throw new Exception(print_r($model->getErrors(), true));
             }
         }
     }
@@ -150,17 +148,22 @@ class AdminController extends Controller
         if ( !empty($_POST['User'] ) ) {
             $model->attributes = $_POST['User'];
 
-            if (strlen($model->password) == 0 ){
-                if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
-                    $this->assignRole($model->role,$model->id,false);
-                    $this->actionUser($id);
-                }
+            if (strlen($model->password) == 0 ) {
+                $ret = $model->save(true,
+                    array(
+                        'username','role','firstname','lastname','email','region','deleted'
+                    )
+                );
             } else {
-                if($model->save()) {
-                    $this->assignRole($model->role,$model->id,false);
-                    $this->actionUser($id);
-                }
+                $ret = $model->save();
             }
+            if ($ret) {
+                $this->assignRole($model->role,$model->id,false);
+                $this->actionUser($id);
+            } else {
+                throw new Exception(print_r($model->getErrors(), true));
+            }
+
         } else {
             $this->layout='ajax';
             $this->render('edit',array(
@@ -188,9 +191,9 @@ class AdminController extends Controller
             $duplicate->attributes=$_POST['User'];
 
             if($duplicate->save()) {
-
                 $this->assignRole($duplicate->role, $duplicate->id);
-                $this->actionIndex();
+            } else {
+                throw new Exception(print_r($duplicate->getErrors(), true));
             }
         } else {
             $this->layout='ajax';

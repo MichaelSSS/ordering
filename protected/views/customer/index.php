@@ -1,16 +1,14 @@
-
 <p>This page is appointed for creating new and managing existing users</p>
 
 <?php echo CHtml::link('Create New Order', array('customer/create')); ?>
 
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
-    /*'enableAjaxValidation'=>true*/
-));
-?>
+    'method'=>'GET',
+)); ?>
 
 <fieldset>
-    <legend>Search 
+    <legend>Search
         <span>by</span>
     </legend>
     <div id='search-fields'>
@@ -20,7 +18,8 @@
                 <?php echo $form->dropDownlist($model, 'filterCriteria', $model->filterCriterias, array(
                     'class' => 'span3',
                     'options' => array(
-                        array_search('Status', $model->filterCriterias) => array('selected' => true)
+                        array_search('Status', $model->filterCriterias) => array('selected' => true
+                        )
                     ),
                     'ajax' => array(
                         'type' => 'Post',
@@ -34,7 +33,8 @@
                 <?php echo $form->dropDownlist($model, 'filterValue', $model->filterStatuses,
                     array('class' => 'span3',
                         'options' => array(
-                            array_search('None', $model->filterStatuses) => array('selected' => true)
+                            array_search('None', $model->filterStatuses) => array('selected' => true
+                            )
                         ),
                     ));
                 ?>
@@ -47,7 +47,8 @@
                     array('class' => 'span3',
                         'options' => array(
                             array_search('Order Name', $model->searchCriterias) => array('selected' => true
-                            ))
+                            )
+                        )
                     ));
                 ?>
             </div>
@@ -56,134 +57,63 @@
             </div>
             <div class='span2 pull-right'>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label'      => 'Apply',
+                    'label' => 'Apply',
                     'buttonType' => 'submit',
-                    'type'       => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'size'       => 'null', // null, 'large', 'small' or 'mini'
+                    'type' => 'info',
+                    'size' => 'null',
                 ));?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label'      => 'Reset',
-                    'buttonType' => 'ajaxLink',
-                    'buttonType' => 'ajaxLink',
-                    'type'       => 'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                    'htmlOptions'       => array(
-                        'name'=>'reset',
-
+                    'label' => 'Reset',
+                    'buttonType' => 'ajaxButton',
+                    'type' => 'primary',
+                    'url' => '?r=customer/resetfilter',
+                    'htmlOptions' => array(
+                        'onclick' => 'js:onReset()',
                     ),
                     'ajaxOptions' => array(
-                        'data'=>'reset',
-                        'url'=>'Yii::app()->createUrl(\'customer/resetFilter\')',
-                        'success'=>'js:function(response){debugger;$.fn.yiiGridView.update("yw0");}',
+                        'data' => 'reset',
+                        'success' => 'js:function(response){$("#yw0").replaceWith($(response)).removeClass("grid-view-loading");return false;}',
                     ),
 
-                ));?>
+                )); ?>
                 <?php echo CHtml::errorSummary($model) ?>
             </div>
         </div>
-    </div>        
+    </div>
 </fieldset>
 <?php $this->endWidget(); ?>
 
-<?php
-$grid = $this->widget('TGridView', array(
-    'dataProvider' => $model->search(),
-    'type' => 'striped bordered condensed',
-    'ajaxUpdate' => '',
-    'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
-    'filterSelector' => '{filter}',
-    'template' => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
-    'pager' => array(
-        'class' => 'OmsPager',
-        'header' => '',
-        'maxButtonCount' => 0,
-        'firstPageLabel' => '&lsaquo; First',
-        'prevPageLabel'  => '&larr; Backward',
-        'nextPageLabel'  => 'Forward &rarr;',
-        'lastPageLabel'  => 'Last &rsaquo;',
-        'htmlOptions' => array(
-            'class' => 'yiiPager',
-        ),
-        'cssFile' => 'css/pager.css',
-    ),
-    'pagerCssClass' => 'oms-pager',
-    'baseScriptUrl' => 'gridview',
-    'columns' => array(
-        array('name' => 'order_name', 'header' => 'Order Name'),
-        array(
-            'name' => 'total_price',
-            'value' => '(int)$data->total_price . "\$"',
-        ),
-        array(
-            'name' => 'max_discount',
-            'value' => '$data->max_discount.""."%"',
-        ),
-        array(
-            'name' => 'delivery_date',
-            'value' => '($data->delivery_date != "0000-00-00") ?
-                Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date) : "Delivery Date not assigned";',
-        ),
-        'status',
-        array(
-            'name' => 'assignee',
-            'value' => '$data->assignees->username',
-        ),
-        array(
-            'name' => 'assigneesRole',
-            'value' => '$data->assignees->role',
+<?php $this->renderPartial('/customer/grid',  array('model' => $model,)); ?>
 
-        ),
-        array(
-            'header' => 'Edit',
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{edit}',
-            'htmlOptions' => array(),
-            'buttons' => array(
-                'edit' => array(
-                    'icon' => 'icon-edit icon-large',
-                    'url'  => 'Yii::app()->createUrl(\'customer/edit\',array(\'id\'=>$data->id_order))',
-                ),
-            )
-        ),
-        array(
-            'header' => 'Remove',
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{remove}',
-            'htmlOptions' => array(
-                'id' => 'col_remove',
-            ),
-            'buttons' => array(
-                'remove' => array(
-                    'icon' => 'icon-remove icon-large',
-                    'url' => 'Yii::app()->createUrl(\'customer/remove\',array(\'id\'=>$data->id_order))',
-                    'options' => array(
-                        'data-toggle' => 'modal',
-                        'data-target' => '#remove_order',
-                        'onclick' => 'beforeRemove(this)',
-                    ),
-                ),
-            )
-        ),
-    ),
-));?>
+
+
+
+
+
 <?php $this->renderPartial('/customer/_delete'); ?>
 
+
 <script>
+    function onReset(){
+        $('#yw0').addClass('grid-view-loading');
+        $('#search-form')[0].reset();
+    }
+
     function beforeRemove(el) {
         $('#modal_remove').attr('href', $(el).attr('href'));
+    }
 
-
-    };
-    $(function(){
-        $('#modal_remove').click(function() {
+    $(function () {
+        $('#modal_remove').click(function () {
             var url = $(this).attr('href');
-            $.get(url, function(response) {
+            $.get(url, function (response) {
                 $('.modal-header .close').click();
                 $.fn.yiiGridView.update('yw0');
-
-
             });
             return false;
         });
     });
+
+
 
 </script>

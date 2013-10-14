@@ -24,8 +24,6 @@ class CustomerController extends Controller
         );
     }
 
-
-
     public function loadModel($id)
     {
         $model=Order::model()->findByPk($id);
@@ -34,82 +32,49 @@ class CustomerController extends Controller
         return $model;
     }
 
-
-
     public function actionIndex()
     {
         $model = new Order('search');
+
         $model->customer = Yii::app()->user->id;
 
 
 
+
         if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
+        {
             $model->currentPageSize = $_GET['pageSize'];
+        }
+
 
         if (isset($_GET['Order']))
             $model->attributes = $_GET['Order'];
 
-        $model->delivery_date = $model->formatDate($model->delivery_date);
+//        $model->delivery_date =  Yii::app()->dateFormatter->format("yyyy-MM-dd",$model->delivery_date);
         $this->render('index', array('model' => $model,));
     }
 
-    public  function resetFilter(){
+    public  function actionResetFilter(){
+        $model = new Order('search');
+        if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
+        {
+            $model->currentPageSize = $_GET['pageSize'];
+        }
         if( isset($_GET['reset']))
         {
-            $model = new Order('search');
-            $model->unsetAttributes(array('filterCriteria', 'searchValue'));
-            $this->render('index', array('model' => $model,));
-            Yii::app()->end();
-        }
-    }
-
-    public function actionDependentSelect()
-    {
-        $data = new Order;
-        if ($_POST['Order']["filterCriteria"] == '1') {
-            $data = $data->filterRoles;
-            foreach ($data as $value => $name) {
-                echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
-            }
-        } else {
-            $data = $data->filterStatuses;
-            foreach ($data as $value => $name) {
-                echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
-            }
-        }
-    }
-
-    public  function actionValidateOrder(){
-
-        if(isset($_POST['order'])&&Yii::app()->session->get("orderId"))
-        {
-            $order = new Order('order');
-            $cardInfo = new CreditCardFormModel('required');
-        }
-        elseif(Yii::app()->session->get("orderId"))
-        {
-            $order = new Order('edit');
-            $cardInfo = new CreditCardFormModel('not_required');
-        }
-        else
-        {
-
-            $order = new Order;
-            $cardInfo = new CreditCardFormModel('not_required');
-        }
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'orderForm') {
-                echo CActiveForm::validate(array($order,$cardInfo ));
-                Yii::app()->end();
+            $model->customer = Yii::app()->user->id;
+            $this->renderPartial('grid', array('model' => $model,));
         }
     }
 
     public function actionRemove()
     {
-        if (isset($_GET['id'])) {
+        if(isset($_GET['id']))
+        {
             $order = Order::model()->findByPk($_GET['id']);
             $order->scenario = 'remove';
             $order->trash = 1;
-            if ($order->save())
+            if($order->save())
                 $this->redirect(Yii::app()->createUrl('customer/index'));
         }
     }
@@ -117,6 +82,7 @@ class CustomerController extends Controller
     public function actionCreate()
     {
         $order = new Order;
+        $cardInfo = new CreditCardFormModel('not_required');
         $order->scenario = 'create';
         $currentItems = Yii::app()->session->get("OrderItems");
 
@@ -126,13 +92,12 @@ class CustomerController extends Controller
         $orderDetails = OrderDetails::getOrderedItems($currentItems);
 
         $order->order_date = date('m/d/Y');
-        $cardInfo = new CreditCardFormModel('not_required');
 
         $this->render('/order/create', array(
             'order' => $order,
             'orderDetails' => $orderDetails,
             'cardInfo' => $cardInfo,
-            'currentItems' => $currentItems,
+//            'currentItems' => $currentItems,
         ));
     }
 
@@ -146,21 +111,18 @@ class CustomerController extends Controller
             $order =  $this->loadModel(Yii::app()->session->get("orderId"));
         }
 
-
         $currentItems = Yii::app()->session->get("OrderItems");
 
         if($currentItems === null)
             $currentItems = array();
 
-       $order->status = "Created";
+        $order->status = "Created";
 
-
-        if (isset($_POST['Order'])) {
+        if (isset($_POST['Order']))
+        {
             $order->attributes = $_POST['Order'];
             $order->customer = Yii::app()->user->id;
             if ($order->validate()) {
-
-
                 if(!(Yii::app()->session->get("orderId")))
                 {
                     $order->save(false);
@@ -168,9 +130,6 @@ class CustomerController extends Controller
                 {
                     $order->save(false, array('order_name','total_price','preferable_date', 'assignee'));
                 }
-
-
-
 
                 foreach ($currentItems as $item) {
                     $orderDetails = new OrderDetails('save');
@@ -180,22 +139,11 @@ class CustomerController extends Controller
                     $orderDetails->save(false);
 
                 }
-
             }
             Yii::app()->session->remove("OrderItems");
             Yii::app()->session->remove("orderId");
-
             $this->redirect(Yii::app()->createUrl('customer/edit',array('id'=>$order->id_order)));
         }
-
-
-
-
-    }
-
-    public function prepareAjaxData($data){
-        $res[] = $data;
-        return CJSON::encode($res);
     }
 
     public function actionOrder()
@@ -203,6 +151,7 @@ class CustomerController extends Controller
         $order =  $this->loadModel(Yii::app()->session->get("orderId"));
         $customerInfo = new Customer();
         $cardInfo = new CreditCardFormModel('required');
+
         $order->status = "Pending";
 
         $order->max_discount = $customerInfo->getDiscount($order->customer);
@@ -222,15 +171,11 @@ class CustomerController extends Controller
 //            Yii::app()->end();
 //        }
 
-
         $customerInfo->updateBalance($order->total_price, $order->customer);
-
-
 
         Yii::app()->session->remove("orderId");
         $this->redirect(Yii::app()->createUrl('customer/index'));
     }
-
 
     public function actionCancel()
     {
@@ -242,6 +187,8 @@ class CustomerController extends Controller
     public function actionEdit($id)
     {
         $order = Order::model()->findByPk($id);
+        $order->scenario = 'edit';
+        $cardInfo = new CreditCardFormModel;
         Yii::app()->session->add("orderId", $id);
 
         $orderDetails = OrderDetails::findOrderDetails($id);
@@ -256,11 +203,8 @@ class CustomerController extends Controller
         $orderDetails = new CArrayDataProvider($orderDetails, array('keyField' => false));
         $order->currentName =  $order->order_name;
 
-
-        $cardInfo = new CreditCardFormModel;
-        $order->scenario = 'edit';
-        $order->preferable_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->preferable_date);
-        $order->order_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->order_date);
+//        $order->preferable_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->preferable_date);
+//        $order->order_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->order_date);
 
 
         $this->render('/order/create', array(
@@ -289,11 +233,6 @@ class CustomerController extends Controller
         ));
     }
 
-    public function actionError($view)
-    {
-        $this->render($view);
-    }
-
     public function actionAdd()
     {
 
@@ -308,7 +247,6 @@ class CustomerController extends Controller
                     "item_quantity":"'.$item_quantity.'" }';
 
     }
-
 
     public function actionSaveItem()
     {
@@ -342,7 +280,6 @@ class CustomerController extends Controller
                 }
             }
             Yii::app()->session->add("OrderItems", $currentItems);
-        //    $currentItems
             $this->redirect(Yii::app()->createUrl('customer/create'));
         }
     }
@@ -364,5 +301,44 @@ class CustomerController extends Controller
         ));
         }
     }
-    
+
+    public function actionDependentSelect()
+    {
+        $data = new Order;
+        if ($_POST['Order']["filterCriteria"] == '1') {
+            $data = $data->filterRoles;
+            foreach ($data as $value => $name) {
+                echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
+            }
+        } else {
+            $data = $data->filterStatuses;
+            foreach ($data as $value => $name) {
+                echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
+            }
+        }
+    }
+
+    public  function actionValidateOrder()
+    {
+        if(isset($_POST['order'])&&Yii::app()->session->get("orderId"))
+        {
+            $order = new Order('order');
+            $cardInfo = new CreditCardFormModel('required');
+        }
+        elseif(Yii::app()->session->get("orderId"))
+        {
+            $order = new Order('edit');
+            $cardInfo = new CreditCardFormModel('not_required');
+        }
+        else
+        {
+            $order = new Order;
+            $cardInfo = new CreditCardFormModel('not_required');
+        }
+
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'orderForm') {
+            echo CActiveForm::validate(array($order,$cardInfo ));
+            Yii::app()->end();
+        }
+    }
 }

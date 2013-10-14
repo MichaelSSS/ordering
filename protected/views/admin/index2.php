@@ -6,7 +6,7 @@
 
 <p>This page is appointed for creating new and managing existing users</p>
 
-<?php echo CHtml::link('Create New User', array('admin/create'), array('id'=>'create-user')); ?>
+<?php echo CHtml::link('Create New User', array('admin/create'), array('id' => 'create-user')); ?>
 
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -19,8 +19,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'htmlOptions' => array(
         'class'   => '',
     )
-));
-?>
+)); ?>
 
 <fieldset>
     <legend>Search 
@@ -33,7 +32,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         <div class='controls'>
             <div class='span4'>
                 <?php echo $form->dropDownListRow($fields, 'keyField',
-                    array('All Columns', 'User Name', 'First Name', 'Last Name', 'Role'),
+                    $fields->keyFields,
                     array('class' => 'input-xlarge',
                         'options' => array(
                             array_search('User Name', $fields->keyFields) => array(
@@ -45,7 +44,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             </div>
             <div class='span4'>
                 <?php echo $form->dropDownListRow($fields, 'criteria',
-                    array('equals', 'not equal to', 'starts with', 'contains', 'does not contain'),
+                    $fields->criterias,
                     array('class' => 'input-xlarge',
                         'options' => array(
                             array_search('starts with', $fields->criterias) => array(
@@ -72,17 +71,19 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     </div>
 </fieldset>
 <?php $this->endWidget(); ?>
-<div class='wrp1'>
-    <div class='row'>
-        <div class='span3'>
-            <?php
-            $dataProvider = $model->search();
-            echo '<div id="search-result">Number of Found Users <i class="icon-user icon-large"></i> <span id="search-result-count">'
-                . $dataProvider->getTotalItemCount() . '</span></div>';
-            ?>
-        </div>
 
-        <div class='span9'>
+<div class='wrp1'>
+    <div class='row'>        
+        <?php $dataProvider = $model->search(); ?>
+        <div class="span4">
+            <div id="search-result">Number of Found Users            
+                <div class="span1 pull-right">
+                    <i class="icon-user icon-large"></i>
+                    <span id="search-result-count"><?= $dataProvider->getTotalItemCount(); ?></span>
+                </div> 
+            </div>
+        </div>
+        <div class='span8'>
              <div class='metrouicss pull-right'>
                 <form>
                     <label class='input-control switch' onclick=''>hide
@@ -90,19 +91,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         <span class='helper'>show</span>
                     </label> 
                 </form>
-                 <a class='pull-right' id='toggle-deleted' href="
-                    <?php echo CHtml::normalizeUrl(array('admin/index','showDel'=>'1'));?>"> show deleted users
-                 </a>
             </div>
         </div>
     </div>
 </div>
 
-
-
-
 <div id="oms-grid-view0" class="grid-view">
-    <div id="grid-extend"><a id="page-size" href="/ordering/index.php?r=admin/index&amp;ajax=yw0&amp;pageSize=25">show 25 items</a></div>
+    <div id="grid-extend"><a id="page-size" href="">show 25 items</a></div>
     <table class="items table table-striped table-bordered table-condensed" id="table-user">
     <thead><tr>
         <th id="oms-grid-view0_c0">
@@ -142,15 +137,15 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 </div>
 <?php
     $cs=Yii::app()->getClientScript();
-
-    $cs->registerCssFile('gridview_JSON/pager.css');
+    $baseUrl = Yii::app()->getBaseUrl();
+    $cs->registerCssFile($baseUrl . '/gridview_JSON/pager.css');
 
     $cs->registerCoreScript('jquery');
     $cs->registerCoreScript('bbq');
 
-    $cs->registerScriptFile('gridview_JSON/underscore.js',CClientScript::POS_END);
-    $cs->registerScriptFile('gridview_JSON/backbone_002.js',CClientScript::POS_END);
-    $cs->registerScriptFile('gridview_JSON/user.js',CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/gridview_JSON/underscore.js', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/gridview_JSON/backbone_002.js', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/gridview_JSON/user.js', CClientScript::POS_END);
 
     $cs->registerScript('1','
         oms.users.reset(' . $this->prepareAjaxData($dataProvider) . ');
@@ -174,7 +169,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             ('<a rel="tooltip" title="deleted user">&times;</a>') : 
             (
                 ( active ) ? 
-                ('<a rel="tooltip" title="active user"><i class="icon-remove"></i></a>') : 
+                ('<a rel="tooltip" title="active user"><i class="icon-remove icon-large"></i></a>') : 
                 ('<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
                     + id + '"><i class="icon-remove icon-large"></i></a>' )
             )

@@ -118,10 +118,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         </ul>
                         <div class="row">
                             <a href="#" class='clndr'>
-                               <?php echo $form->textFieldRow($orderModel, 'delivery_date', array(
-                                   'id'      => 'preferable_date',
-                                    'append' => '<i class="icon-calendar icon-large"></i>',
-                               )); ?>
+                               <?php echo $form->textFieldRow($orderModel,
+                                   'delivery_date',
+                                    array(
+                                       'id'     => 'preferable_date',
+                                       'append' => '<i class="icon-calendar icon-large"></i>',
+                                    )
+                                ); ?>
                             </a>
                         </div>        
                            
@@ -239,12 +242,14 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             }
         })
 
-        $("#preferable_date").datepicker({          
-            
+        $("#preferable_date").datepicker({
+            dateFormat: 'yy-mm-dd'
         });
 
         $('.clndr').click(function (e) {
-            $('#preferable_date').datepicker("show");
+            $('#preferable_date').datepicker("show",{
+
+            });
             e.preventDefault();
         });
     });

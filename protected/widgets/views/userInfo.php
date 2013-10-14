@@ -24,8 +24,7 @@
 			</li>
 
 			<?php if($model->role == 'customer') : ?>
-			<?php $customer = Customer::model()->findByPk($user_id); ?>
-
+			
 			<li>
 				<a href='#'>
 					<i class='icon-large icon-credit-card'></i><?= ' Customer Type: ' . $customer->customer_type ?>

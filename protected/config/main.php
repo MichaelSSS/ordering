@@ -1,7 +1,7 @@
 <?php
 
 // uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
+//Yii::setPathOfAlias('bootstrap','ext.bootstrap');
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
@@ -86,7 +86,7 @@ return array(
                     // внизу страницы)
                     'class'=>'CProfileLogRoute',
                     'levels'=>'profile',
-                    'enabled'=>false,
+                    'enabled'=>true,
                 ),
 
                 array(

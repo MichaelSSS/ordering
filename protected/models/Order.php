@@ -80,9 +80,10 @@ class Order extends CActiveRecord
             array('order_name', 'checkEdit', 'on' => 'edit'),
             array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy', 'message' => 'Illegal Date Format', 'except' => 'remove,merchandiserEdit'),
             array('preferable_date', 'checkDate', 'except' => 'remove,merchandiserEdit'),
+
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id_order,  order_name, total_price, searchCriteria,  max_discount, filterValue, filterRole, delivery_date, preferable_date ,filterCriteria, status, assignees, searchValue, assigneesRole, customer,trash,uncheckOrderedStatus,gift', 'safe','on'=>'search'),
+            array('id_order,  order_name, total_price, searchCriteria,  max_discount, filterValue, filterRole, delivery_date, preferable_date ,filterCriteria, status, assignees, searchValue, assigneesRole, customer,trash,uncheckOrderedStatus,gift', 'safe','on'=>'search,merchandiserEdit'),
         );
     }
 
@@ -212,8 +213,15 @@ class Order extends CActiveRecord
             while ( $row );
             $this->auto_index = $index;
         }
+
+       /* $this->order_date = $this->formatDate($this->order_date);
+        $this->preferable_date = $this->formatDate($this->preferable_date);
+        $this->delivery_date = $this->formatDate($this->delivery_date);*/
+
         $this->order_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->order_date) ;
         $this->preferable_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->preferable_date) ;
+        $this->delivery_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->delivery_date) ;
+
         return true;
     }
 

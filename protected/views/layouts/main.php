@@ -16,7 +16,7 @@
             Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
         );
     ?>
-    <title><?= Yii::app()->name,' Release 1.0, version 1.0,', date(' mdY'); ?></title>
+    <title><?= Yii::app()->name.' Release 1.0, version 1.0,'. date(' m-d-Y'); ?></title>
 </head>
 <body>
     <div class='container'>

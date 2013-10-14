@@ -69,7 +69,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                             <li><?php echo $orderModel->order_name; ?></li>
                             <li><?php echo $orderModel->id_order; ?></li>
                             <li><?php echo $orderModel->total_price; ?> $</li>
-                            <li>--</li>
+                            <li><?php echo $model->getTotalItemCount();?></li>
                             <li><?php echo $orderModel->assignees->username; ?></li>
                             <li><?php echo $orderModel->order_date; ?></li>
                             <li><?php echo $orderModel->preferable_date; ?></li>
@@ -118,10 +118,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                         </ul>
                         <div class="row">
                             <a href="#" class='clndr'>
-                               <?php echo $form->textFieldRow($orderModel, 'delivery_date', array(
-                                   'id'      => 'preferable_date',
-                                    'append' => '<i class="icon-calendar icon-large"></i>',
-                               )); ?>
+                               <?php echo $form->textFieldRow($orderModel,
+                                   'delivery_date',
+                                    array(
+                                       'id'     => 'preferable_date',
+                                       'append' => '<i class="icon-calendar icon-large"></i>',
+                                    )
+                                ); ?>
                             </a>
                         </div>        
                            
@@ -214,11 +217,17 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         if($('#delivered_status').prop("checked"))
         {
             $('#delivered_status').prop("disabled", true);
+            $('#preferable_date').prop("disabled", true);
+            $('.add-on').click(function(){
+                return false;
+            })
         }
+
         if($('#delivered_status').prop("checked"))
         {
             $('#gift').prop("disabled", true);
         }
+
         $('#ordered_status').change(function(){
             if($(this).attr('checked')){
                 $('#delivered_status').prop("disabled", false);
@@ -233,12 +242,14 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             }
         })
 
-        $("#preferable_date").datepicker({          
-            
+        $("#preferable_date").datepicker({
+            dateFormat: 'yy-mm-dd'
         });
 
         $('.clndr').click(function (e) {
-            $('#preferable_date').datepicker("show");
+            $('#preferable_date').datepicker("show",{
+
+            });
             e.preventDefault();
         });
     });

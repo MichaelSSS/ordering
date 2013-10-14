@@ -69,7 +69,7 @@ class MerchandiserController extends Controller
             if($_POST['Order']['uncheckDeliveredStatus'] == 'delivered'){
                 $orderModel->status = 'delivered';
             }
-
+           $orderModel->delivery_date = $orderModel->formatDate($orderModel->delivery_date);
             $orderModel->attributes = $_POST['Order'];
 
             if($orderModel->save()) {

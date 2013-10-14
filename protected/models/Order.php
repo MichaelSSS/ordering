@@ -225,6 +225,7 @@ class Order extends CActiveRecord
         }
         $this->order_date = $this->formatDate($this->order_date);
         $this->preferable_date = $this->formatDate($this->preferable_date);
+        $this->delivery_date = $this->formatDate($this->delivery_date);
         return true;
     }
 

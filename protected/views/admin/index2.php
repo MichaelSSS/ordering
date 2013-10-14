@@ -56,7 +56,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             </div>
             <div class='row'>
                 <div class='span4'>
-                    <div class="input-append">
+                    <div class='input-append'>
                         <?php echo $form->textField($fields, 'keyValue', array(
                             'onkeyup' => 'document.getElementById(\'btn-search\').disabled = !(this.value.length);',
                             'class' => 'span2',
@@ -75,11 +75,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <div class='wrp1'>
     <div class='row'>        
         <?php $dataProvider = $model->search(); ?>
-        <div class="span4">
-            <div id="search-result">Number of Found Users            
-                <div class="span1 pull-right">
-                    <i class="icon-user icon-large"></i>
-                    <span id="search-result-count"><?= $dataProvider->getTotalItemCount(); ?></span>
+        <div class='span4'>
+            <div id='search-result'>Number of Found Users
+                <div class='pull-right'>
+                    <i class='icon-user icon-large'></i>
+                    <span id='search-result-count'><?= $dataProvider->getTotalItemCount(); ?></span>
                 </div> 
             </div>
         </div>

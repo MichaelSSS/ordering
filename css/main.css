@@ -218,9 +218,7 @@ a.clndr, a:hover.clndr, a:visited.clndr {
     margin-bottom: 30px;
     height: 20px;
 }
-a.clndr .control-label {
-    text-align: center;   
-}
+
 /*@madia-query for login-form*/
 @media screen and (max-width: 1200px) {
     #login-form {

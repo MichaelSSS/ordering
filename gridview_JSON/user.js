@@ -128,7 +128,6 @@ $(function(){
         initialize: function() { 
             this.url = window.location.href.split('?',1)[0]
                 + '?r=admin/index&ajax=' + oms.gridId;
-                //+ '&'+oms.sortVar+'=username';
             this.on('request',function(model, xhr, options) {
                 $('#'+oms.gridId).addClass('grid-view-loading');
             });
@@ -333,15 +332,19 @@ $(function(){
             userEditWindow.url = url;
             userEditWindow.action = event.data.action;
             userEditWindow.model = model;
-            userEditWindow.listenTo(userEditWindow.model,'user:fetched',userEditWindow.render);
             model.row = event.data.row;
             userEditWindow.$('.edit-shade').addClass('loading');
             userEditWindow.modalShow();
             if ( prevAction == userEditWindow.action ) {
-                model.fetchUser();
+                userEditWindow.listenTo(
+                    userEditWindow.model,
+                    'user:fetched',
+                    userEditWindow.render
+                );
             } else {
                 userEditWindow.loadForm();
             }
+            model.fetchUser();
 
             return false;
         },
@@ -370,6 +373,12 @@ $(function(){
             $("#page-size").on('click', this.pageSizeClick);
             $('ul.yiiPager li').on("click", this.pageButtonClick);
             $(oms.sortSelector).on('click', this.sortLinkClick);
+            $('a.dropdown-toggle').on('click', function(e) {
+                $('li.dropdown').toggleClass('open');
+                e.stopPropagation();
+                e.preventDefault();
+                return false;
+            });
             $(oms.sortSelector).css('cursor','default');
             $(document).on('keydown',function(e) {
                 if ( e.ctrlKey ) {
@@ -563,23 +572,23 @@ $(function(){
                 $modalWindow.find('#modal-editing-body').scrollTop(0);
             });
 
-                    $('#cofirm-edit-cancel').on('shown',function(){
-                        $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
-                    });
-                    $('#cofirm-edit-cancel').on('hidden',function(){
-                        $('.modal-backdrop').remove();
-                    });
-                    this.$('.edit-cancel-yes').click(function() {
-                        $('#cofirm-edit-cancel').prev('.modal-backdrop').remove();
-                    });
-                    this.$('.edit-cancel-not').click(function() {
-                        var shadow = $('.modal-backdrop:last').clone();
-                        $('#cofirm-edit-cancel').modal('hide');
-                        if ( !$('.modal-backdrop').length ) {
-                            $('body').append(shadow);
-                        }
-                        return false;
-                    });
+            $('#cofirm-edit-cancel').on('shown',function(){
+                $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
+            });
+            $('#cofirm-edit-cancel').on('hidden',function(){
+                $('.modal-backdrop').remove();
+            });
+            this.$('.edit-cancel-yes').click(function() {
+                $('#cofirm-edit-cancel').prev('.modal-backdrop').remove();
+            });
+            this.$('.edit-cancel-not').click(function() {
+                var shadow = $('.modal-backdrop:last').clone();
+                $('#cofirm-edit-cancel').modal('hide');
+                if ( !$('.modal-backdrop').length ) {
+                    $('body').append(shadow);
+                }
+                return false;
+            });
 
             this.$('#edit-save').click(this.saveClick);
             this.$('#edit-refresh').click(this.refreshClick);
@@ -623,11 +632,12 @@ $(function(){
             document.getElementById('User_email').value = '';
             document.getElementById('User_password').value='';
             document.getElementById('User_confirmPassword').value='';
-            userEditWindow.$('#User_region option[selected]').removeAttr('selected');
-            userEditWindow.$('#User_region option[value="north"]').attr('selected','true');
-            userEditWindow.$('#User_deleted').parents('.control-group').hide();
-            userEditWindow.$('input[name="User[role]"]').filter('[checked]').removeAttr('checked');
-            userEditWindow.$('input[name="User[role]"]').filter('[value="customer"]').attr('checked','true');
+            userEditWindow.$('#User_region option').prop('selected',false);
+            userEditWindow.$('#User_region option[value="north"]').prop('selected','true');
+            userEditWindow.$('input[name="User[role]"]').prop('checked',false);
+            userEditWindow.$('input[name="User[role]"]')
+                .filter('[value="customer"]')
+                .prop('checked','true');
         },
         refresh: function() {
             userEditWindow.render();
@@ -651,10 +661,11 @@ $(function(){
             document.getElementById('User_password').value='';
             document.getElementById('User_confirmPassword').value='';
             userEditWindow.$('#User_region option').prop('selected',false);
-            userEditWindow.$('#User_region option[value="' + attributes.region + '"]').prop('selected','true');
-            userEditWindow.$('#User_deleted').parents('.control-group').hide();
+            userEditWindow.$('#User_region option[value="' + attributes.region + '"]')
+                .prop('selected','true');
             userEditWindow.$('input[name="User[role]"]').prop('checked',false);
-            userEditWindow.$('input[name="User[role]"]').filter('[value="' + attributes.role + '"]').prop('checked','true');
+            userEditWindow.$('input[name="User[role]"]').filter('[value="' + attributes.role + '"]')
+                .prop('checked','true');
         },
         refresh: function() {
             userEditWindow.model.fetchUser();
@@ -680,13 +691,16 @@ $(function(){
             document.getElementById('User_email').value = attributes.email;
             document.getElementById('User_password').value='';
             document.getElementById('User_confirmPassword').value='';
-            userEditWindow.$('#User_region option[selected]').removeAttr('selected');
-            userEditWindow.$('#User_region option[value="' + attributes.region + '"]').attr('selected','true');
-            userEditWindow.$('#User_deleted').parents('.control-group').show();
-            userEditWindow.$('#User_deleted option[selected]').removeAttr('selected');
-            userEditWindow.$('#User_deleted option[value=' + attributes.deleted + ']').attr('selected','true');
-            userEditWindow.$('input[name="User[role]"]').filter('[checked]').removeAttr('checked');
-            userEditWindow.$('input[name="User[role]"]').filter('[value="' + attributes.role + '"]').attr('checked','true');
+            userEditWindow.$('#User_region').prop('selected',false);
+            userEditWindow.$('#User_region option[value="' + attributes.region + '"]')
+                .prop('selected','true');
+            userEditWindow.$('#User_deleted option[selected]').prop('selected',false);
+            userEditWindow.$('#User_deleted option[value=' + (attributes.deleted==1?'1':'0') + ']')
+                .prop('selected','true');
+            userEditWindow.$('input[name="User[role]"]').prop('checked',false);
+            userEditWindow.$('input[name="User[role]"]')
+                .filter('[value="' + attributes.role + '"]')
+                .prop('checked','true');
         },
         refresh: function() {
             userEditWindow.model.fetchUser();

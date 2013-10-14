@@ -100,6 +100,12 @@ small {
     top: 0;
 }
 
+@media (min-height:769px){
+#modal-editing .modal-body{
+    max-height: none;
+}
+}
+
 #modal-editing .modal-body{
     overflow-x: hidden;
 }

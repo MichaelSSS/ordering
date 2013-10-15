@@ -105,10 +105,10 @@ class CustomerController extends Controller
         }else
         {
             //$order =  $this->loadModel(Yii::app()->session->get("orderId"));
-            $orderDet = Order::model()->findByPk(Yii::app()->session->get("orderId"));
+           /* $orderDet = Order::model()->findByPk(Yii::app()->session->get("orderId"));
              
                $orderDet->delete();
-               $orderDet->save();
+               $orderDet->save();*/
                $order = new Order('save');
                        
         }
@@ -119,7 +119,7 @@ class CustomerController extends Controller
             $currentItems = array();
 
         $order->status = "Created";
-
+print_r($_POST['Order']);
         if (isset($_POST['Order']))
         {
             $order->attributes = $_POST['Order'];
@@ -273,7 +273,7 @@ class CustomerController extends Controller
     {
         if (isset($_GET['id'] ) && isset($_GET['key'])) {
         $model = Item::model()->findByPk($_GET['id']);
-        $orderDetails = OrderDetails::model()->findByPk($_GET['det']);
+        $orderDetails = OrderDetails::model();
 
             $currentItems = Yii::app()->session->get("OrderItems");
            // Yii::app()->session->add("OrderItems", $currentItems);

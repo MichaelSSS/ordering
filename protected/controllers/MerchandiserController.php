@@ -45,12 +45,10 @@ class MerchandiserController extends Controller
         $orderModel = Order::model()->findByPk($id);
         $orderModel->scenario = 'merchandiserEdit';
 
-        if($orderModel->status == 'Ordered' )
-        {
+        if($orderModel->status == 'Ordered' ){
             $orderModel->trueOrderedStatus = 'checked';
         }
-        if($orderModel->status == 'Delivered' )
-        {
+        if($orderModel->status == 'Delivered' ){
             $orderModel->trueDeliveredStatus = 'checked';
             $orderModel->trueOrderedStatus = 'checked';
         }

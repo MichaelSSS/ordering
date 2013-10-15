@@ -140,6 +140,7 @@ class OrderDetails extends CActiveRecord
             $iData[0]['customer'] = $item['id_customer'];
             $iData[0]['quantity'] = $item['quantity'];
             $iData[0]['key'] = $key;
+            $iData[0]['id_order_details'] = 0;
             $iData[0]['price_per_line'] =  (int)$iData[0]['price'] * (int)$iData[0]['quantity']*(int)$iData[0]['count_of_items'];
 
             self::$totalItemsQuantity +=(int)$iData[0]['count_of_items'] * (int)$iData[0]['quantity'];
@@ -159,6 +160,7 @@ class OrderDetails extends CActiveRecord
             ->queryAll();
         foreach ($iData as $key=>$value){
             $iData[$key]['price_per_line']= (int)$iData[$key]['price'] * (int)$iData[$key]['quantity']*(int)$iData[$key]['count_of_items'];
+            $iData[$key]['id_order_details'] = $iData[$key]['id_order_details'];
             $iData[$key]['key'] = $key;
             self::$totalItemsQuantity +=(int)$iData[$key]['count_of_items'] * (int)$iData[$key]['quantity'];
             self::$totalPrice +=(int)$iData[$key]['price']*(int)$iData[$key]['count_of_items']*(int)$iData[$key]['quantity'];

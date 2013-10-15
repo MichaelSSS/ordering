@@ -205,10 +205,13 @@
                             <span id="item_result_price"><?php echo $model->price; ?></span>$
                         </div>
                     </div>      
-                    <p>Maximum quantity of item: <span class="quantity_of_item"><?php echo $model->quantity ?></span>
-                    </p>
                      
-                    <?php echo $itemForm->textFieldRow($orderDetails, 'quantity', array('value' => $currentItems[$key]['quantity'])); ?>
+                    <?php if(isset($currentItems)){
+                         echo $itemForm->textFieldRow($orderDetails, 'quantity', array('value' => $currentItems[$key]['quantity']));
+                    }else{
+                        echo $itemForm->textFieldRow($orderDetails, 'quantity', array('value' => $orderDetails->quantity));
+                    }
+?>
                     <div class="controls">
                         <span class="help-inline error item_error"></span>
                     </div>
@@ -254,7 +257,7 @@
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
                         'label' => 'Cancel',
                         'type' => 'action',
-                        'url'=>'?r=customer/create',
+                        'url'=>'?r=customer/canselItem',
                         'htmlOptions' => array(
                             'data-toggle' => 'modal',   
                         ),

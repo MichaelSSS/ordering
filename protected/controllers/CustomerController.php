@@ -272,7 +272,7 @@ class CustomerController extends Controller
 
     public function actionRemoveItem()
     {
-        if (isset($_GET['key'])) {
+        if (isset($_GET['key']) && $_GET['key']!=0 && $_GET['det']=0) {
             $currentItems = Yii::app()->session->get("OrderItems");
             foreach ($currentItems as $key=>$value){
                 if($key == $_GET['key']){
@@ -281,14 +281,23 @@ class CustomerController extends Controller
             }
             Yii::app()->session->add("OrderItems", $currentItems);
             $this->redirect(Yii::app()->createUrl('customer/create'));
+        }elseif (isset($_GET['det']) && $_GET['key']=0 && $_GET['det']!=0) {
+            $orderItem = OrderDetails::model()->findByPk($_GET['det']);
+          
+            if($orderItem->save()) {   
+               $orderItem->delete();
+               $this->redirect(Yii::app()->createUrl('customer/create'));
+            }           
         }
+           
+        
     }
     
     public function actionEditItem()
     {
         if (isset($_GET['id'] ) && isset($_GET['key'])) {
-        $model = Item::model()->findByPk($_GET['id']);;
-        $orderDetails = new OrderDetails;
+        $model = Item::model()->findByPk($_GET['id']);
+        $orderDetails = OrderDetails::model()->findByPk($_GET['det']);
 
             $currentItems = Yii::app()->session->get("OrderItems");
            // Yii::app()->session->add("OrderItems", $currentItems);
@@ -340,5 +349,13 @@ class CustomerController extends Controller
             echo CActiveForm::validate(array($order,$cardInfo ));
             Yii::app()->end();
         }
+    }
+    
+    public function actionCanselItem(){
+         if(Yii::app()->session->get("orderId"))
+        {
+            $this->redirect(Yii::app()->createUrl('customer/edit', array('id' => Yii::app()->session->get("orderId"))));
+        }
+        $this->redirect(Yii::app()->createUrl('customer/create'));
     }
 }

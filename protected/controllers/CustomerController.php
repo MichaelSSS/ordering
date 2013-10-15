@@ -71,10 +71,7 @@ class CustomerController extends Controller
     {
         if(isset($_GET['id']))
         {
-            $order = Order::model()->findByPk($_GET['id']);
-            $order->scenario = 'remove';
-            $order->trash = 1;
-            if($order->save())
+            if(Order::deleteOrder($_GET['id']))
                 $this->redirect(Yii::app()->createUrl('customer/index'));
         }
     }
@@ -137,7 +134,6 @@ class CustomerController extends Controller
                     $orderDetails->id_order = $order->id_order;
                     $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;
                     $orderDetails->save(false);
-
                 }
             }
             Yii::app()->session->remove("OrderItems");

@@ -119,7 +119,7 @@ class CustomerController extends Controller
             $currentItems = array();
 
         $order->status = "Created";
-print_r($currentItems);
+print_r($_POST['Order']);
         if (isset($_POST['Order']))
         {
             $order->attributes = $_POST['Order'];
@@ -127,7 +127,7 @@ print_r($currentItems);
             if ($order->validate()) {
                 if(!(Yii::app()->session->get("orderId")))
                 {
-                    $order->save(false, array('order_name','total_price','preferable_date', 'assignee'));
+                    $order->save();
                 }else
                 {
                     $order->save(false, array('order_name','total_price','preferable_date', 'assignee'));
@@ -144,7 +144,7 @@ print_r($currentItems);
             Yii::app()->session->remove("OrderItems");
             Yii::app()->session->remove("orderId");
             Yii::app()->session->remove("edit");
-            $this->redirect(Yii::app()->createUrl('customer/edit'));
+           // $this->redirect(Yii::app()->createUrl('customer/edit'));
         }
     }
 

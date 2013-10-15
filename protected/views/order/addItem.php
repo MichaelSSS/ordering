@@ -254,7 +254,7 @@
                      <?php $this->widget('bootstrap.widgets.TbButton', array(
                          'label' => 'Cancel',
                          'type' => 'action',
-                         'url'=>'?r=customer/create',
+                         'url'=>'?r=customer/canselItem',
                          'htmlOptions' => array(
                              'data-toggle' => 'modal',   
                          ),

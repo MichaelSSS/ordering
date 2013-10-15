@@ -100,6 +100,12 @@ small {
     top: 0;
 }
 
+@media (min-height:769px){
+#modal-editing .modal-body{
+    max-height: none;
+}
+}
+
 #modal-editing .modal-body{
     overflow-x: hidden;
 }
@@ -129,10 +135,6 @@ tr.user-deleted {
 tr.user-deleted td.remove a{
     color: #bbb;
     cursor: default;
-    left: -302px;
-    position: absolute;
-    top: 95px;
-    width: 300px;
     text-decoration: none;
 }
 #toggle-deleted {
@@ -222,9 +224,7 @@ a.clndr, a:hover.clndr, a:visited.clndr {
     margin-bottom: 30px;
     height: 20px;
 }
-a.clndr .control-label {
-    text-align: center;   
-}
+
 /*@madia-query for login-form*/
 @media screen and (max-width: 1200px) {
     #login-form {

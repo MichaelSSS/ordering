@@ -20,11 +20,26 @@ class AdminCreateDbTest extends PHPUnit_Extensions_Database_TestCase
     public function testCreateUser()
     {
         $queryTable = $this->getConnection()->createQueryTable(
-            'user', 'SELECT * FROM user WHERE id=2'
+            'user', 
+            'SELECT id,username,role,firstname,lastname,email,region,deleted 
+             FROM user 
+             WHERE id=2'
         );
-        $expectedTable = $this->createXmlDataSet("fixtures/userCreate.xml")
+        $expectedTable = $this->createXmlDataSet("unit/userCreated.xml")
                               ->getTable("user");
         $this->assertTablesEqual($expectedTable, $queryTable);
+
+        $queryTable = $this->getConnection()->createQueryTable(
+            'user', 
+            'SELECT password 
+             FROM user 
+             WHERE id=2'
+        );
+        
+        $queryPasswordHash = $queryTable->getValue(0,'password');
+        $expectedPasswordHash = crypt('aA1!',$queryPasswordHash);
+
+        $this->assertEquals($expectedPasswordHash,$queryPasswordHash);
     }
 }
 ?>

@@ -24,7 +24,6 @@
 			</li>
 
 			<?php if($model->role == 'customer') : ?>
-			<?php $customer = Customer::model()->findByPk($user_id); ?>
 
 			<li>
 				<a href='#'>

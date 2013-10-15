@@ -39,9 +39,11 @@ class OmsWebUser extends CWebUser
     
     public function getRememberedName()
     {
-        $rememberedName = $this->rememberedName;                    //remembered name from cookie
+        //remembered name from cookie
+        $rememberedName = $this->rememberedName;
         if (empty($rememberedName)) {
-            $rememberedName = $this->getState('Remembered Name');   //remembered name from session
+            //remembered name from session
+            $rememberedName = $this->getState('Remembered Name');
         }
         return $rememberedName;
     }
@@ -50,9 +52,9 @@ class OmsWebUser extends CWebUser
     /**
     *@return true if last action time is fresh, false otherwise
     */
-    public function isActive($userId, $currentTime)
+    public static function isActive($userId, $currentTime)
     {
-        $lastActionTime = $this->getLastActionTime($userId);
+        $lastActionTime = self::getLastActionTime($userId);
         return ($lastActionTime != 0) &&
             ($currentTime - $lastActionTime < Yii::app()->params['secondsBeforeDisactivate']);
     }
@@ -60,18 +62,21 @@ class OmsWebUser extends CWebUser
     /**
     *@return time() of last action or zero
     */
-    public function getLastActionTime($userId)
+    public static function getLastActionTime($userId)
     {
-            $command = Yii::app()->db->createCommand('
-                SELECT last_action_time 
-                FROM user_login 
-                WHERE user_id=?
-            ');
-            return (int)($command->queryScalar(array(1=>$userId)));
-
-    
+        $command = Yii::app()->db->createCommand('
+            SELECT last_action_time 
+            FROM user_login 
+            WHERE user_id=?
+        ');
+        return (int)($command->queryScalar(array(1=>$userId)));
     }
 
+    /**
+    * update last action time to the current time for logged user
+    * or insert new record if user made first action
+    *@return number of affected rows
+    */
     public function updateLastActionTime()
     {
             
@@ -95,7 +100,7 @@ class OmsWebUser extends CWebUser
                 'currentTime' => $currentTime,
                 'userAgent'   => $_SERVER['HTTP_USER_AGENT'],
             ));
-        } else {                                        //        if ($affectedRows == 0) {
+        } else {
 
             $command = Yii::app()->db->createCommand('
                 INSERT INTO user_login (user_id,last_action_time,user_agent) 
@@ -111,6 +116,9 @@ class OmsWebUser extends CWebUser
         return $affectedRows;
     }
 
+    /**
+    *@return number of active users for given $currentTime
+    */
     public function countActive($currentTime)
     {
             $command = Yii::app()->db->createCommand('
@@ -124,7 +132,10 @@ class OmsWebUser extends CWebUser
     
     }
 
-    public function isSameUserAgent($userId)
+    /**
+    *@return true if user's current request is made from the same browser as previos one
+    */
+    public static function isSameUserAgent($userId)
     {
             $command = Yii::app()->db->createCommand('
                 SELECT user_agent
@@ -132,9 +143,16 @@ class OmsWebUser extends CWebUser
                 WHERE user_id=?
             ');
             
-            return 0 == strcmp($command->queryScalar(array(1=>$userId)), $_SERVER['HTTP_USER_AGENT']);
+            return 0 == strcmp(
+                $command->queryScalar(array(1=>$userId)),
+                $_SERVER['HTTP_USER_AGENT']
+            );
     }
 
+    /**
+    * update the table so that current user will be considered to be inactive
+    *@return number of affected rows
+    */
     public function makeUnActive()
     {
             

@@ -3,7 +3,6 @@
     <table name="user">
         <column>id</column>
         <column>username</column>
-        <column>password</column>
         <column>role</column>
         <column>firstname</column>
         <column>lastname</column>
@@ -13,7 +12,6 @@
         <row>
             <value>2</value>
             <value>smith</value>
-            <value>$2a$13$klB07BKwZpz1yWlLewmHk.EqWTXq0hq049Eosrau91n6Gz27fclbe</value>
             <value>merchandiser</value>
             <value>Adam</value>
             <value>Smith</value>

@@ -127,8 +127,7 @@ $(function(){
 
         initialize: function() { 
             this.url = window.location.href.split('?',1)[0]
-                + '?r=admin/index&ajax=' + oms.gridId 
-                + '&'+oms.sortVar+'=username';
+                + '?r=admin/index&ajax=' + oms.gridId;
             this.on('request',function(model, xhr, options) {
                 $('#'+oms.gridId).addClass('grid-view-loading');
             });
@@ -287,23 +286,24 @@ $(function(){
                     if ( 0 <= existingPos ) {
                         // already sorted by given column asc
                         sortAdd += '.desc';
-                        sortAttr.splice(existingPos,1);
-                        sortAttr.unshift(sortAdd);
+                        //sortAttr.splice(existingPos,1);
+                        //sortAttr.push(sortAdd);
+                        sortAttr[existingPos] = sortAdd;
                         sortNow = sortAttr.join('-');
                     } else {
                         existingPos = sortAttr.indexOf(sortAdd+'.desc');
                         if ( 0 <= existingPos ) {
                             // already sorted desc
                             sortAttr.splice(existingPos,1);
-                            sortAttr.unshift(sortAdd);
+                            //sortAttr.push(sortAdd);
                             sortNow = sortAttr.join('-');
                         } else {
                             // have not sorted by a given column
-                            sortNow = sortAdd + '-' + sortNow;
+                            sortNow = sortNow + '-' + sortAdd;
                         }
                     }    
                 } else {
-                    //have not sort by either column
+                    //have not sorted by either column
                     sortNow = sortAdd;
                 }
                 sortNow = oms.sortVar + '=' + sortNow;
@@ -332,15 +332,19 @@ $(function(){
             userEditWindow.url = url;
             userEditWindow.action = event.data.action;
             userEditWindow.model = model;
-            userEditWindow.listenTo(userEditWindow.model,'user:fetched',userEditWindow.render);
             model.row = event.data.row;
             userEditWindow.$('.edit-shade').addClass('loading');
             userEditWindow.modalShow();
             if ( prevAction == userEditWindow.action ) {
-                model.fetchUser();
+                userEditWindow.listenTo(
+                    userEditWindow.model,
+                    'user:fetched',
+                    userEditWindow.render
+                );
             } else {
                 userEditWindow.loadForm();
             }
+            model.fetchUser();
 
             return false;
         },
@@ -369,8 +373,12 @@ $(function(){
             $("#page-size").on('click', this.pageSizeClick);
             $('ul.yiiPager li').on("click", this.pageButtonClick);
             $(oms.sortSelector).on('click', this.sortLinkClick);
-
-            $('#' + oms.gridId + ' th:first a').addClass('asc');
+            $('a.dropdown-toggle').on('click', function(e) {
+                $('li.dropdown').toggleClass('open');
+                e.stopPropagation();
+                e.preventDefault();
+                return false;
+            });
             $(oms.sortSelector).css('cursor','default');
             $(document).on('keydown',function(e) {
                 if ( e.ctrlKey ) {
@@ -391,27 +399,31 @@ $(function(){
             this.renderHeader();
             this.renderFooter();
             $("#page-size").text("show "+oms.fields.nextPageSize+" items");
-            $('#toggle-deleted').text(oms.fields.get("showDeleted")==0 ? "show deleted" : "hide deleted");
         },
 
         renderHeader: function() {
-            var sortAttr = $.deparam.querystring(oms.users.url)[oms.sortVar].split('-');
-            $('#' + oms.gridId + ' th a').each(function(index){
-                var $this = $(this),
-                    attr = oms.fields.attributeLabels[$this.text()];
-                               
-                if (0 <= sortAttr.indexOf(attr) ) {
-                    $this.removeClass('desc');
-                    $this.addClass('asc');
-                } else if (0 <= sortAttr.indexOf(attr+'.desc') ) {
-                    $this.removeClass('asc');
-                    $this.addClass('desc');                    
-                } else {
-                    $this.removeClass('asc');
-                    $this.removeClass('desc');                    
-                }
-            });
-
+            var params = $.deparam.querystring(oms.users.url);
+            if ( params[oms.sortVar] ) {
+                var sortAttr = params[oms.sortVar].split('-');
+                $('#' + oms.gridId + ' th a').each(function(index) {
+                    var $this = $(this),
+                        attr = oms.fields.attributeLabels[$this.text()];
+                                   
+                    if (0 <= sortAttr.indexOf(attr) ) {
+                        $this.removeClass('desc');
+                        $this.addClass('asc');
+                    } else if (0 <= sortAttr.indexOf(attr+'.desc') ) {
+                        $this.removeClass('asc');
+                        $this.addClass('desc');                    
+                    } else {
+                        $this.removeClass('asc');
+                        $this.removeClass('desc');                    
+                    }
+                });
+            } else {
+                this.$('th a').removeClass('asc');
+                this.$('th a').removeClass('desc');                    
+            }
         },
 
         renderTotal: function() {
@@ -485,8 +497,12 @@ $(function(){
                     });
                     $.post(userEditWindow.url, data)
                         .done(userEditWindow.action.saveDone)
-                        .fail(function(jqXHR, textStatus, errorThrown) {
-                            alert( "Error: " + jqXHR.status + " " + jqXHR.statusText );
+                        .fail(function(xhr, textStatus, errorThrown) {
+                            if ( xhr.status == 403 ) {
+                                window.location.href = "";
+                            } else {
+                                alert( "Error: " + xhr.status + " " + xhr.statusText );
+                            }
                         });
                     userEditWindow.modalHide();
                     $('#'+oms.gridId).addClass('grid-view-loading');
@@ -533,7 +549,7 @@ $(function(){
 
                 },
                 error: function(xhr){
-                    if ( response.status == 403 ) {
+                    if ( xhr.status == 403 ) {
                         window.location.href = "";
                     } else {
                         alert( "Error: " + xhr.status + " " + xhr.statusText );
@@ -556,23 +572,23 @@ $(function(){
                 $modalWindow.find('#modal-editing-body').scrollTop(0);
             });
 
-                    $('#cofirm-edit-cancel').on('shown',function(){
-                        $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
-                    });
-                    $('#cofirm-edit-cancel').on('hidden',function(){
-                        $('.modal-backdrop').remove();
-                    });
-                    this.$('.edit-cancel-yes').click(function() {
-                        $('#cofirm-edit-cancel').prev('.modal-backdrop').remove();
-                    });
-                    this.$('.edit-cancel-not').click(function() {
-                        var shadow = $('.modal-backdrop:last').clone();
-                        $('#cofirm-edit-cancel').modal('hide');
-                        if ( !$('.modal-backdrop').length ) {
-                            $('body').append(shadow);
-                        }
-                        return false;
-                    });
+            $('#cofirm-edit-cancel').on('shown',function(){
+                $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
+            });
+            $('#cofirm-edit-cancel').on('hidden',function(){
+                $('.modal-backdrop').remove();
+            });
+            this.$('.edit-cancel-yes').click(function() {
+                $('#cofirm-edit-cancel').prev('.modal-backdrop').remove();
+            });
+            this.$('.edit-cancel-not').click(function() {
+                var shadow = $('.modal-backdrop:last').clone();
+                $('#cofirm-edit-cancel').modal('hide');
+                if ( !$('.modal-backdrop').length ) {
+                    $('body').append(shadow);
+                }
+                return false;
+            });
 
             this.$('#edit-save').click(this.saveClick);
             this.$('#edit-refresh').click(this.refreshClick);
@@ -616,11 +632,12 @@ $(function(){
             document.getElementById('User_email').value = '';
             document.getElementById('User_password').value='';
             document.getElementById('User_confirmPassword').value='';
-            userEditWindow.$('#User_region option[selected]').removeAttr('selected');
-            userEditWindow.$('#User_region option[value="north"]').attr('selected','true');
-            userEditWindow.$('#User_deleted').parents('.control-group').hide();
-            userEditWindow.$('input[name="User[role]"]').filter('[checked]').removeAttr('checked');
-            userEditWindow.$('input[name="User[role]"]').filter('[value="customer"]').attr('checked','true');
+            userEditWindow.$('#User_region option').prop('selected',false);
+            userEditWindow.$('#User_region option[value="north"]').prop('selected','true');
+            userEditWindow.$('input[name="User[role]"]').prop('checked',false);
+            userEditWindow.$('input[name="User[role]"]')
+                .filter('[value="customer"]')
+                .prop('checked','true');
         },
         refresh: function() {
             userEditWindow.render();
@@ -644,10 +661,11 @@ $(function(){
             document.getElementById('User_password').value='';
             document.getElementById('User_confirmPassword').value='';
             userEditWindow.$('#User_region option').prop('selected',false);
-            userEditWindow.$('#User_region option[value="' + attributes.region + '"]').prop('selected','true');
-            userEditWindow.$('#User_deleted').parents('.control-group').hide();
+            userEditWindow.$('#User_region option[value="' + attributes.region + '"]')
+                .prop('selected','true');
             userEditWindow.$('input[name="User[role]"]').prop('checked',false);
-            userEditWindow.$('input[name="User[role]"]').filter('[value="' + attributes.role + '"]').prop('checked','true');
+            userEditWindow.$('input[name="User[role]"]').filter('[value="' + attributes.role + '"]')
+                .prop('checked','true');
         },
         refresh: function() {
             userEditWindow.model.fetchUser();
@@ -663,7 +681,7 @@ $(function(){
         },
         name: 'Edit User',
         appointment: "This page is appointed for editing user for particular role",
-        buttonName: 'Save',
+        buttonName: 'Update',
         render: function() {
             var attributes = userEditWindow.model.attributes;
 
@@ -673,13 +691,16 @@ $(function(){
             document.getElementById('User_email').value = attributes.email;
             document.getElementById('User_password').value='';
             document.getElementById('User_confirmPassword').value='';
-            userEditWindow.$('#User_region option[selected]').removeAttr('selected');
-            userEditWindow.$('#User_region option[value="' + attributes.region + '"]').attr('selected','true');
-            userEditWindow.$('#User_deleted').parents('.control-group').show();
-            userEditWindow.$('#User_deleted option[selected]').removeAttr('selected');
-            userEditWindow.$('#User_deleted option[value=' + attributes.deleted + ']').attr('selected','true');
-            userEditWindow.$('input[name="User[role]"]').filter('[checked]').removeAttr('checked');
-            userEditWindow.$('input[name="User[role]"]').filter('[value="' + attributes.role + '"]').attr('checked','true');
+            userEditWindow.$('#User_region').prop('selected',false);
+            userEditWindow.$('#User_region option[value="' + attributes.region + '"]')
+                .prop('selected','true');
+            userEditWindow.$('#User_deleted option[selected]').prop('selected',false);
+            userEditWindow.$('#User_deleted option[value=' + (attributes.deleted==1?'1':'0') + ']')
+                .prop('selected','true');
+            userEditWindow.$('input[name="User[role]"]').prop('checked',false);
+            userEditWindow.$('input[name="User[role]"]')
+                .filter('[value="' + attributes.role + '"]')
+                .prop('checked','true');
         },
         refresh: function() {
             userEditWindow.model.fetchUser();

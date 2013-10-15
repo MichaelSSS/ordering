@@ -15,7 +15,7 @@ class UserIdentity extends CUserIdentity
     * increments number of times user entered incorrect credentials
     * @return current counter
     */
-    protected function addFailedAttempt($userIp)
+    public static function addFailedAttempt($userIp)
     {
         $curAttempts = 0;
         $affectedRows = 0;
@@ -57,7 +57,7 @@ class UserIdentity extends CUserIdentity
     * sets blocked until time for userIp
     * @return number of affected rows
     */
-    protected function setBlock($userIp)
+    public static function setBlock($userIp)
     {
         $affectedRows = 0;        
         $command = Yii::app()->db->createCommand('
@@ -77,7 +77,7 @@ class UserIdentity extends CUserIdentity
     * resets number of attempts to zero 
     * @return number of affected rows
     */
-    protected function resetAttempt($userIp)
+    public static function resetAttempt($userIp)
     {
         $affectedRows = 0;
         $command = Yii::app()->db->createCommand('
@@ -110,25 +110,28 @@ class UserIdentity extends CUserIdentity
     
     public function authenticate()
     {
-        $model = User::model()->find('LOWER(username)=?',array(strtolower($this->username)));
+        $model = User::model()->find(
+            'LOWER(username)=?',
+            array(strtolower(trim($this->username)))
+        );
         $userIp = $_SERVER['REMOTE_ADDR'];
         $attemptCount = 0;
         if ( $model===null || $model->deleted ) {
-            $attemptCount = $this->addFailedAttempt($userIp);
+            $attemptCount = self::addFailedAttempt($userIp);
             if ( $attemptCount >= Yii::app()->params['maxCredentialAttempts'] ) {
-                $this->setBlock($userIp);
+                self::setBlock($userIp);
             } else {
                 $this->errorCode=self::ERROR_USERNAME_INVALID;
             }
         } elseif ( !$model->validatePassword($this->password) ) {
-            $attemptCount = $this->addFailedAttempt($userIp);
+            $attemptCount = self::addFailedAttempt($userIp);
             if ( $attemptCount >= Yii::app()->params['maxCredentialAttempts'] ) {
-                $this->setBlock($userIp);
+                self::setBlock($userIp);
             } else {
                 $this->errorCode=self::ERROR_PASSWORD_INVALID;
             }
         } else {
-            $this->resetAttempt($userIp);
+            self::resetAttempt($userIp);
             $this->errorCode=self::ERROR_NONE;
             $this->_userId = $model->id;
             $this->_home = $model->role;

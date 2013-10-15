@@ -88,7 +88,8 @@ class AdminController extends Controller
             ')->execute(array(
                 'role'   => $role,
                 'userId' => $userId
-            ));
+                )
+            );
         }
     }
 
@@ -96,7 +97,9 @@ class AdminController extends Controller
     {
         $response = CJSON::encode($this->loadModel($id)->getAttributes(array(
             'username', 'firstname', 'lastname', 'role', 'email', 'region', 'deleted'
-        )));
+                 )
+            )
+        );
         echo $response;
         Yii::app()->end();
     }
@@ -120,29 +123,27 @@ class AdminController extends Controller
         $this->layout='ajax';
         $this->render('create',array(
             'model'=>$model,
-        ));
+            )
+        );
 
     }
-    public function actionRemove(){
-
+    public function actionRemove()
+    {
         if(isset($_GET['id'])){
             $model = User::model()->findByPk($_GET['id']);
             $model->scenario = 'remove';
             $model->deleted = 1;
 
-            if($model->save()){
-
+            if ( $model->save() ) {
                 $this->actionIndex();
-            }
-            else{
-                throw new \Exception(print_r($model->getErrors(), true));
+            } else {
+                throw new Exception(print_r($model->getErrors(), true));
             }
         }
     }
 
     public function actionEdit($id)
     {
-
         $model = $this->loadModel($id);
         $model->scenario = 'edit';
         $model->password = false;
@@ -150,22 +151,34 @@ class AdminController extends Controller
         if ( !empty($_POST['User'] ) ) {
             $model->attributes = $_POST['User'];
 
-            if (strlen($model->password) == 0 ){
-                if($model->save(true,array('username','role','firstname','lastname','email','region','deleted'))) {
-                    $this->assignRole($model->role,$model->id,false);
-                    $this->actionUser($id);
-                }
+            if (strlen($model->password) == 0 ) {
+                $ret = $model->save(true,
+                    array(
+                        'username',
+                        'role',
+                        'firstname',
+                        'lastname',
+                        'email',
+                        'region',
+                        'deleted'
+                    )
+                );
             } else {
-                if($model->save()) {
-                    $this->assignRole($model->role,$model->id,false);
-                    $this->actionUser($id);
-                }
+                $ret = $model->save();
             }
+            if ($ret) {
+                $this->assignRole($model->role,$model->id,false);
+                $this->actionUser($id);
+            } else {
+                throw new Exception(print_r($model->getErrors(), true));
+            }
+
         } else {
             $this->layout='ajax';
             $this->render('edit',array(
                 'model'=>$model,
-            ));
+                )
+            );
         }
     }
     public function loadModel($id)
@@ -188,15 +201,16 @@ class AdminController extends Controller
             $duplicate->attributes=$_POST['User'];
 
             if($duplicate->save()) {
-
                 $this->assignRole($duplicate->role, $duplicate->id);
-                $this->actionIndex();
+            } else {
+                throw new Exception(print_r($duplicate->getErrors(), true));
             }
         } else {
             $this->layout='ajax';
             $this->render('duplicate',array(
                 'model'=>$model,
-            ));
+                )
+            );
         }
     }
 }

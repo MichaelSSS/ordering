@@ -2,9 +2,8 @@
 
 return array(
     'user1' => array(
-        'id'         => 1,
         'username'   => 'admin01',
-        'password'   => CPasswordHelper::hashPassword('admin01'),
+        'password'   => CPasswordHelper::hashPassword('aA1!'),
         'role'       => 'admin',
         'firstname'  => "Izambard",
         'lastname'   => "Brunnel",

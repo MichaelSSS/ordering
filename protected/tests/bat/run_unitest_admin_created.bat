@@ -1,0 +1,1 @@
+cmd /K "C:\Program Files (x86)\Zend\ZendServer\bin\php.exe" phpunit.phar unit/AdminCreateDbTest.php

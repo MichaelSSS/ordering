@@ -1,11 +1,10 @@
 <?php
 
-class AdminDuplicateTest extends WebTestCase
+class AdminEditTest extends WebTestCase
 {
     protected function setUp()
     {
         parent::setUp();
-        $this->setBrowserUrl('http://mine/ordering-master/');
         $this->setBrowser("*firefox");
     }
 
@@ -16,15 +15,30 @@ class AdminDuplicateTest extends WebTestCase
         'authAssignment' => ':auth_assignment',
     );
 
-    public function testDuplicateUser()
+    public function testEditUser()
     {
-        $this->open('index-test.php');
+        $this->open('');
         $this->type("id=LoginForm_username", "admin01");
         $this->type("id=LoginForm_password", "aA1!");
         $this->clickAndWait("name=yt0");
         //$this->setSpeed(500);
         $this->click("//table[@id='table-user']/tbody/tr/td[7]/a");
         $this->waitForNotVisible("css=div.edit-shade");
+
+        $this->assertAttribute("id=User_username@value","admin01");
+        $this->assertAttribute("id=User_firstname@value","Izambard");
+        $this->assertAttribute("id=User_lastname@value","Brunnel");
+        $this->assertAttribute("id=User_email@value","a@a.com");
+        $this->assertAttribute(
+            "css=#User_deleted > option[value='0']@selected",
+            "selected"
+        );
+        $this->assertAttribute(
+            "css=#User_region > option[value='north']@selected",
+            "selected"
+        );
+        $this->assertAttribute("id=User_role_0@checked","checked");
+
         $this->type("id=User_username","smith");
         $this->type("id=User_firstname","Adam");
         $this->type("id=User_lastname","Smith");

@@ -199,19 +199,7 @@ class Order extends CActiveRecord
     {
         if ($this->order_name == "")
         {
-            $criteria = new CDbCriteria;
-            $criteria->select = 'MAX(auto_index) AS auto_index';
-            $row = $this->find($criteria);
-            $index = $row->auto_index;
-            do
-            {
-                $this->order_name = self::ORDER_FORMAT . ++$index;
-                $criteria = new CDbCriteria;
-                $criteria->compare('order_name' , $this->order_name);
-                $row = $this->find($criteria);
-            }
-            while ( $row );
-            $this->auto_index = $index;
+           $this->createOrderName();
         }
 
        /* $this->order_date = $this->formatDate($this->order_date);
@@ -220,11 +208,34 @@ class Order extends CActiveRecord
 
         $this->order_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->order_date) ;
         $this->preferable_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->preferable_date) ;
-        $this->delivery_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->delivery_date) ;
-
+//        $this->delivery_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->delivery_date) ;
+//        $a=0;
         return true;
     }
 
+    public static function deleteOrder($id){
+        $order = self::model()->findByPk($id);
+        $order->scenario = 'remove';
+        $order->trash = 1;
+        return $order->save();
+    }
+
+    public function createOrderName()
+    {
+        $criteria = new CDbCriteria;
+        $criteria->select = 'MAX(auto_index) AS auto_index';
+        $row = $this->find($criteria);
+        $index = $row->auto_index;
+        do
+        {
+            $this->order_name = self::ORDER_FORMAT . ++$index;
+            $criteria = new CDbCriteria;
+            $criteria->compare('order_name' , $this->order_name);
+            $row = $this->find($criteria);
+        }
+        while ( $row );
+        $this->auto_index = $index;
+    }
 
     public function checkEdit($order_name){
         if($this->order_name == "")
@@ -244,9 +255,11 @@ class Order extends CActiveRecord
             if(isset($row))
             {
                 $this->addError($order_name, 'Order name name already exists in the System. Please re-type it or just leave it blank');
+                return false;
             }
+            return true;
         }
-        return true;
+
     }
 
     public function checkDate($preferable_date)
@@ -254,14 +267,17 @@ class Order extends CActiveRecord
         if (strtotime($this->order_date) > strtotime($this->preferable_date))
         {
             $this->addError($preferable_date, 'Preferable Delivery Date can not be earlier than current date.');
+            return false;
         }
         return true;
     }
 
-    public function checkAssignee($assignee){
+    public function checkAssignee($assignee)
+    {
         if($this->assignee == Yii::app()->user->id)
         {
             $this->addError($assignee, 'Please re-assigne the Order to the appropriate merchandiser.');
+            return false;
         }
         return true;
     }

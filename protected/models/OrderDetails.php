@@ -158,7 +158,8 @@ class OrderDetails extends CActiveRecord
             ->from('order_details o, item i, dimension d')
             ->where('o.id_order =:id_order and o.id_dimension =d.id_dimension AND o.id_item = i.id_item', array(':id_order'=>$id))
             ->queryAll();
-        foreach ($iData as $key=>$value){
+        foreach ($iData as $key=>$value)
+        {
             $iData[$key]['price_per_line']= (int)$iData[$key]['price'] * (int)$iData[$key]['quantity']*(int)$iData[$key]['count_of_items'];
             $iData[$key]['id_order_details'] = $iData[$key]['id_order_details'];
             $iData[$key]['key'] = $key;
@@ -168,17 +169,16 @@ class OrderDetails extends CActiveRecord
         return  $iData;
     }
 
-    public function saveOrderedItems($currentItems, $orderDetails){
-
-        foreach ($currentItems as $item) {
-
-            $orderDetails->attributes = $item;
-            $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;
-            $orderDetails->save(false);
-            $a=0;
-        }
-        if(true);
-    }
+//    public function saveOrderedItems($currentItems, $orderDetails){
+//
+//        foreach ($currentItems as $item) {
+//
+//            $orderDetails->attributes = $item;
+//            $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;
+//            $orderDetails->save(false);
+//        }
+//        if(true);
+//    }
 
     public function afterSave()
     {

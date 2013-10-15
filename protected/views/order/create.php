@@ -108,6 +108,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             $('#order').hide();
         }
 
+//if ($('#Order_status').val()=="Pending"){
+//            $('#order').hide();
+//        }
+
         if (!$('#Order_status').val()) {
             $('#order').attr('disabled', 'disabled').on('click', function () {
                 return false;

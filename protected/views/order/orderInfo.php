@@ -52,7 +52,10 @@
 <div class="row">
     <div class="span5">
         <?php echo $form->labelEx($order, 'delivery_date', array('class' => 'control-label')); ?>
-        <div class="text-order"><?php echo "//"; ?></div>
+        <div class="text-order">
+            <?php echo ($order->delivery_date != "0000-00-00") ?
+                Yii::app()->dateFormatter->format("MM/dd/yyyy",$order->delivery_date) : "//";; ?>
+        </div>
     </div>
 </div>
 <div class="row">

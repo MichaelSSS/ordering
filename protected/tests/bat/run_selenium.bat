@@ -1,0 +1,1 @@
+cmd /K java -jar "C:\Program Files (x86)\Zend\ZendServer\bin\selenium-server-standalone-2.35.0.jar" -browserSessionReuse

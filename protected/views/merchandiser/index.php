@@ -4,15 +4,14 @@
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
     /*'enableAjaxValidation'=>true*/
-));
-?>
+)); ?>
 
 <fieldset>
     <legend>Search
         <span>by</span>
     </legend>
     <div id='search-fields'>
-        <div class="span12">
+        <div class='span12'>
             <div class='span2'><p>Filter orders by:</p></div>
             <div class='span3'>
                 <?php echo $form->dropDownlist($model, 'filterCriteria', $model->filterCriterias, array(
@@ -25,8 +24,7 @@
                         'url' => $this->createUrl('customer/dependentselect'),
                         'update' => '#Order_filterValue',
                     ),
-                ));
-                ?>
+                )); ?>
             </div>
             <div class='span3'>
                 <?php echo $form->dropDownlist($model, 'filterValue', $model->filterStatuses,
@@ -92,32 +90,31 @@ $grid = $this->widget('TGridView', array(
     'columns' => array(
         array('name' => 'order_name', 'header' => 'Order Name'),
         array(
-            'name' => 'total_price',
+            'name'  => 'total_price',
             'value' => '(int)$data->total_price . "\$"',
         ),
         array(
-            'name' => 'max_discount',
+            'name'  => 'max_discount',
             'value' => '$data->max_discount.""."%"',
         ),
         array(
-            'name' => 'delivery_date',
+            'name'  => 'delivery_date',
             'value' => '($data->delivery_date != "0000-00-00") ?
                 Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date) : "Delivery Date not assigned";',
         ),
         'status',
         array(
-            'name' => 'assignee',
+            'name'  => 'assignee',
             'value' => '$data->assignees->username',
         ),
         array(
-            'name' => 'assigneesRole',
+            'name'  => 'assigneesRole',
             'value' => '$data->assignees->role',
-
         ),
         array(
-            'header' => 'Edit',
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{edit}',
+            'header'      => 'Edit',
+            'class'       => 'bootstrap.widgets.TbButtonColumn',
+            'template'    => '{edit}',
             'htmlOptions' => array(),
             'buttons' => array(
                 'edit' => array(
@@ -126,9 +123,8 @@ $grid = $this->widget('TGridView', array(
                 ),
             )
         ),
-
     ),
-));?>
+)); ?>
 
 
 

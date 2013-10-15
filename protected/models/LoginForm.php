@@ -28,6 +28,20 @@ class LoginForm extends CFormModel
         return array(
             // username and password are required
             array('username', 'required', 'message'=>'Please enter user name'),
+            array(
+                'username',
+                'length',
+                'max'     => 20,
+                'message' => 'Login Name is too long'
+            ),
+            array(
+                'username',
+                'match',
+                'not'=> true,
+                'pattern' => '/^\S+\s+\S+$/',
+                'message' => 'Login Name cannot contain spaces'
+            ),
+
             array('password', 'required', 'message'=>'Please enter password'),
             // rememberMe needs to be a boolean
             array('rememberMe', 'boolean'),
@@ -57,10 +71,18 @@ class LoginForm extends CFormModel
             $this->_identity=new UserIdentity($this->username,$this->password);            
 
             if ( !$this->_identity->authenticate() ) {
-                if ( $this->_identity->errorCode == CUserIdentity::ERROR_USERNAME_INVALID ) {
-                    $this->addError('username','Such user does not exist in the system - please try again');
-                } elseif ( $this->_identity->errorCode == CUserIdentity::ERROR_PASSWORD_INVALID ) {
-                    $this->addError('password','Password is incorrect - please try again');
+                if ( $this->_identity->errorCode 
+                        == CUserIdentity::ERROR_USERNAME_INVALID ) {
+                    $this->addError(
+                        'username',
+                        'Such user does not exist in the system - please try again'
+                    );
+                } elseif ( $this->_identity->errorCode 
+                        == CUserIdentity::ERROR_PASSWORD_INVALID ) {
+                    $this->addError(
+                        'password',
+                        'Password is incorrect - please try again'
+                    );
                 } 
             }
 

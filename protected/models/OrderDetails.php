@@ -11,13 +11,12 @@
  * @property integer $id_dimension
  */
 
-
-
 class OrderDetails extends CActiveRecord
 {
 
      public static $totalItemsQuantity = 0;
      public static $totalPrice = 0;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -31,8 +30,6 @@ class OrderDetails extends CActiveRecord
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
             return array(
                 array('id_order, id_item, id_dimension, id_customer, quantity, price', 'required'),
                 array('id_order, id_item, id_dimension, id_customer, quantity', 'numerical', 'integerOnly'=>true),
@@ -48,8 +45,6 @@ class OrderDetails extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
             'itemOredered' =>array(self::BELONGS_TO, 'Item', 'id_item'),
             'orderId' =>array(self::BELONGS_TO, 'Order', 'id_order'),
@@ -85,8 +80,6 @@ class OrderDetails extends CActiveRecord
 	 */
 	public function search($id)
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
 		$criteria=new CDbCriteria;
         $criteria->compare('id_customer', Yii::app()->user->id);
         if(isset($id))
@@ -115,6 +108,7 @@ class OrderDetails extends CActiveRecord
         $criteria->compare('id_order',Order::IS_ORDERED );
         return  $this->findAll($criteria);
     }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -169,17 +163,6 @@ class OrderDetails extends CActiveRecord
         return  $iData;
     }
 
-//    public function saveOrderedItems($currentItems, $orderDetails){
-//
-//        foreach ($currentItems as $item) {
-//
-//            $orderDetails->attributes = $item;
-//            $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;
-//            $orderDetails->save(false);
-//        }
-//        if(true);
-//    }
-
     public function afterSave()
     {
         Yii::app()->session->remove("OrderItems");
@@ -187,8 +170,6 @@ class OrderDetails extends CActiveRecord
 
     public function searchItem($orderId)
     {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-
         $criteria = new CDbCriteria;
         $criteria->addCondition('id_order = ' . (int)$orderId);
 

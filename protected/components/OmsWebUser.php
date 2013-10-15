@@ -119,7 +119,7 @@ class OmsWebUser extends CWebUser
     /**
     *@return number of active users for given $currentTime
     */
-    public function countActive($currentTime)
+    public static function countActive($currentTime)
     {
             $command = Yii::app()->db->createCommand('
                 SELECT COUNT(*)

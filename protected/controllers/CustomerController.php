@@ -50,7 +50,6 @@ class CustomerController extends Controller
         if (isset($_GET['Order']))
             $model->attributes = $_GET['Order'];
 
-//        $model->delivery_date =  Yii::app()->dateFormatter->format("yyyy-MM-dd",$model->delivery_date);
         $this->render('index', array('model' => $model,));
     }
 
@@ -94,7 +93,6 @@ class CustomerController extends Controller
             'order' => $order,
             'orderDetails' => $orderDetails,
             'cardInfo' => $cardInfo,
-//            'currentItems' => $currentItems,
         ));
     }
 
@@ -159,20 +157,6 @@ class CustomerController extends Controller
         $order->max_discount = $customerInfo->getDiscount($order->customer);
         $order->save(true, array('status','max_discount'));
 
-//        if (isset($_POST['CreditCardFormModel']))
-//        {
-//            foreach ($_POST['CreditCardFormModel'] as $name => $value) {
-//                $cardInfo->$name = $value;
-//            }
-//            if ($cardInfo->credit_card_type == "4") {
-//                $cardInfo->setScenario('validateMaestroCardInfo');
-//            } else {
-//                $cardInfo->setScenario('validateCardInfo');
-//            }
-//            echo CActiveForm::validate($cardInfo);
-//            Yii::app()->end();
-//        }
-
         $customerInfo->updateBalance($order->total_price, $order->customer);
 
         Yii::app()->session->remove("orderId");
@@ -209,10 +193,6 @@ class CustomerController extends Controller
         $orderDetails = new CArrayDataProvider($orderDetails, array('keyField' => false));
         $order->currentName =  $order->order_name;
 
-//        $order->preferable_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->preferable_date);
-//        $order->order_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->order_date);
-
-
         $this->render('/order/create', array(
             'order' => $order,
             'orderDetails' => $orderDetails,
@@ -241,7 +221,6 @@ class CustomerController extends Controller
 
     public function actionAdd()
     {
-
         $item = Item::model()->findByPk($_GET['item_id']);
 
         // Получаем автора записи. Здесь будет выполнен реляционный запрос.
@@ -251,7 +230,6 @@ class CustomerController extends Controller
         echo '{"item_name":"' . $item_name . '",
                     "item_price":"'.$item_price.'", 
                     "item_quantity":"'.$item_quantity.'" }';
-
     }
 
     public function actionSaveItem()

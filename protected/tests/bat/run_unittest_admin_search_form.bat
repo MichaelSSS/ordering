@@ -1,1 +1,1 @@
-cmd /K "C:\Program Files (x86)\Zend\ZendServer\bin\php.exe" phpunit.phar unit/AdminSearchFormTest.php
+cmd /K "C:\Program Files (x86)\Zend\ZendServer\bin\php.exe" phpunit.phar -c phpunit_grigorov.xml unit/AdminSearchFormTest.php

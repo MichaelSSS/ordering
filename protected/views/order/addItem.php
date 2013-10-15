@@ -1,4 +1,3 @@
-
 <div id="grid-extend">
     <script>
         function enableButton(){

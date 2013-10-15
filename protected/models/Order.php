@@ -45,7 +45,7 @@ class Order extends CActiveRecord
 
     public $filterCriterias = array('Status', 'Role');
     public $filterStatuses = array('None', 'Pending', 'Ordered', 'Delivered');
-    public $filterRoles = array('None', 'Merchandiser', 'Supervisor', 'Administrator');
+    public $filterRoles = array('None', 'Merchandiser', 'Supervisor', 'Admin');
     public $searchCriterias = array('order_name'=>'Order Name',  'status'=>'Status', 'assignees.username'=>'Assignee');
     public $filterAttributes = array(
         'Status' => 'status',
@@ -66,8 +66,6 @@ class Order extends CActiveRecord
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
 
             array('total_price,preferable_date,order_date, assignee,  ', 'required', 'except'=>'remove,merchandiserEdit'),
@@ -80,9 +78,6 @@ class Order extends CActiveRecord
             array('order_name', 'checkEdit', 'on' => 'edit'),
             array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy', 'message' => 'Illegal Date Format', 'except' => 'remove,merchandiserEdit'),
             array('preferable_date', 'checkDate', 'except' => 'remove,merchandiserEdit'),
-
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
             array('id_order,  order_name, total_price, searchCriteria,  max_discount, filterValue, filterRole, delivery_date, preferable_date ,filterCriteria, status, assignees, searchValue, assigneesRole, customer,trash,uncheckOrderedStatus,gift', 'safe','on'=>'search,merchandiserEdit'),
         );
     }
@@ -93,8 +88,6 @@ class Order extends CActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'assignees' => array(self::BELONGS_TO, 'User', 'assignee'),
             'userNameOrder' => array(self::BELONGS_TO, 'User', 'customer'),
@@ -139,11 +132,11 @@ class Order extends CActiveRecord
      */
     public function search()
     {
-        // @todo Please modify the following code to remove attributes that should not be searched.
         $criteria = new CDbCriteria;
         $criteria->with = array('assignees');
         $criteria->compare('customer', $this->customer);
         $criteria->compare('trash', self::IS_DELETED);
+
         if (empty($this->filterCriteria) && !empty($this->filterValue))
             $criteria->compare('status', $this->filterStatuses[$this->filterValue]);
         elseif (!empty($this->filterCriteria) && !empty($this->filterValue))
@@ -188,13 +181,6 @@ class Order extends CActiveRecord
         return $list;
     }
 
-//    public function get
-
-//    public function formatDate($d)
-//    {
-//        return date('Y-m-d', strtotime($d));
-//    }
-
     protected function beforeSave()
     {
         if ($this->order_name == "")
@@ -202,14 +188,9 @@ class Order extends CActiveRecord
            $this->createOrderName();
         }
 
-       /* $this->order_date = $this->formatDate($this->order_date);
-        $this->preferable_date = $this->formatDate($this->preferable_date);
-        $this->delivery_date = $this->formatDate($this->delivery_date);*/
 
         $this->order_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->order_date) ;
         $this->preferable_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->preferable_date) ;
-//        $this->delivery_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->delivery_date) ;
-//        $a=0;
         return true;
     }
 
@@ -237,7 +218,8 @@ class Order extends CActiveRecord
         $this->auto_index = $index;
     }
 
-    public function checkEdit($order_name){
+    public function checkEdit($order_name)
+    {
         if($this->order_name == "")
             return true;
 
@@ -254,7 +236,8 @@ class Order extends CActiveRecord
             $row = $this->find($criteria);
             if(isset($row))
             {
-                $this->addError($order_name, 'Order name name already exists in the System. Please re-type it or just leave it blank');
+                $this->addError($order_name,
+                    'Order name name already exists in the System. Please re-type it or just leave it blank');
                 return false;
             }
             return true;
@@ -281,33 +264,15 @@ class Order extends CActiveRecord
         }
         return true;
     }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
      * @return Order the static model class
      */
-
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
     }
-    /**
-     * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
-//    public function setErrorCode($err)
-//    {
-//        $this->_errorCode = $err;
-//    }
-//    public function isError()
-//    {
-//       if(isset($this->_errorCode))
-//           return true;
-//       return false;
-//    }
-//    public  function getErrorCode(){
-//        return $this->_errorCode;
-//    }
-
 }

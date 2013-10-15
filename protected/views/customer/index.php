@@ -85,13 +85,7 @@
 
 <?php $this->renderPartial('/customer/grid',  array('model' => $model,)); ?>
 
-
-
-
-
-
 <?php $this->renderPartial('/customer/_delete'); ?>
-
 
 <script>
     function onReset(){

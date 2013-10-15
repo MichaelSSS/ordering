@@ -98,7 +98,8 @@ class CustomerController extends Controller
 
     public function actionSave()
     {
-        if(!(Yii::app()->session->get("orderId")))
+      $orderId =  Yii::app()->session->get("orderId");
+        if(!isset($orderId))
         {
             $order = new Order('save');
         }else
@@ -186,7 +187,6 @@ class CustomerController extends Controller
         Yii::app()->session->add("OrderItems", $orderDetails);
         } 
         $orderDetails = Yii::app()->session->get("OrderItems");
-
             $orderDetails = OrderDetails::getOrderedItems($orderDetails)->rawData ;
         
       Yii::app()->session->add("edit", 1);

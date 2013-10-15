@@ -14,73 +14,73 @@
 class OrderDetails extends CActiveRecord
 {
 
-     public static $totalItemsQuantity = 0;
-     public static $totalPrice = 0;
+    public static $totalItemsQuantity = 0;
+    public static $totalPrice = 0;
 
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'order_details';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'order_details';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-            return array(
-                array('id_order, id_item, id_dimension, id_customer, quantity, price', 'required'),
-                array('id_order, id_item, id_dimension, id_customer, quantity', 'numerical', 'integerOnly'=>true),
-                array('quantity', 'length', 'max'=>3),
-                array('price', 'length', 'max'=>3),
-                array('id_order','length','max'=>6),
-                array('id_order_details, id_order, id_item, id_customer, quantity, price, id_dimension', 'safe','on'=>'save'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        return array(
+            array('id_order, id_item, id_dimension, id_customer, quantity, price', 'required'),
+            array('id_order, id_item, id_dimension, id_customer, quantity', 'numerical', 'integerOnly'=>true),
+            array('quantity', 'length', 'max'=>3),
+            array('price', 'length', 'max'=>3),
+            array('id_order','length','max'=>6),
+            array('id_order_details, id_order, id_item, id_customer, quantity, price, id_dimension', 'safe','on'=>'save'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		return array(
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        return array(
             'itemOredered' =>array(self::BELONGS_TO, 'Item', 'id_item'),
             'orderId' =>array(self::BELONGS_TO, 'Order', 'id_order'),
             'dimensionId' =>array(self::BELONGS_TO, 'Dimension', 'id_dimension'),
-		);
-	}
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id_order' => 'Id Order',
-			'id_item' => 'Id Item',
-			'quantity' => 'Quantity',
-			'price' => 'Price',
-			'id_dimension' => 'Id dimension',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id_order' => 'Id Order',
+            'id_item' => 'Id Item',
+            'quantity' => 'Quantity',
+            'price' => 'Price',
+            'id_dimension' => 'Id dimension',
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search($id)
-	{
-		$criteria=new CDbCriteria;
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search($id)
+    {
+        $criteria=new CDbCriteria;
         $criteria->compare('id_customer', Yii::app()->user->id);
         if(isset($id))
         {
@@ -91,10 +91,10 @@ class OrderDetails extends CActiveRecord
             $criteria->compare('id_order', 0);
         }
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
+    }
 
     public function setCustomer($id)
     {
@@ -115,10 +115,10 @@ class OrderDetails extends CActiveRecord
      * @param string $className active record class name.
      * @return OrderedOrder the static model class
      */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    public static function model($className=__CLASS__)
+    {
+        return parent::model($className);
+    }
 
     public static function getOrderedItems($currentItems)
     {

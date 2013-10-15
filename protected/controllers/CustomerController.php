@@ -86,7 +86,7 @@ class CustomerController extends Controller
             $currentItems = array();
 
         $orderDetails = OrderDetails::getOrderedItems($currentItems);
-        $currentItems = Yii::app()->session->get("OrderItems");
+
         $order->order_date = date('m/d/Y');
 
         $this->render('/order/create', array(
@@ -98,19 +98,12 @@ class CustomerController extends Controller
 
     public function actionSave()
     {
-      $orderId =  Yii::app()->session->get("orderId");
-        if(!isset($orderId))
+        if(!(Yii::app()->session->get("orderId")))
         {
             $order = new Order('save');
         }else
         {
-            //$order =  $this->loadModel(Yii::app()->session->get("orderId"));
-           /* $orderDet = Order::model()->findByPk(Yii::app()->session->get("orderId"));
-             
-               $orderDet->delete();
-               $orderDet->save();*/
-               $order = new Order('save');
-                       
+            $order =  $this->loadModel(Yii::app()->session->get("orderId"));
         }
 
         $currentItems = Yii::app()->session->get("OrderItems");
@@ -119,7 +112,7 @@ class CustomerController extends Controller
             $currentItems = array();
 
         $order->status = "Created";
-print_r($_POST['Order']);
+
         if (isset($_POST['Order']))
         {
             $order->attributes = $_POST['Order'];
@@ -127,7 +120,7 @@ print_r($_POST['Order']);
             if ($order->validate()) {
                 if(!(Yii::app()->session->get("orderId")))
                 {
-                    $order->save();
+                    $order->save(false);
                 }else
                 {
                     $order->save(false, array('order_name','total_price','preferable_date', 'assignee'));
@@ -143,8 +136,7 @@ print_r($_POST['Order']);
             }
             Yii::app()->session->remove("OrderItems");
             Yii::app()->session->remove("orderId");
-            Yii::app()->session->remove("edit");
-           // $this->redirect(Yii::app()->createUrl('customer/edit'));
+            $this->redirect(Yii::app()->createUrl('customer/edit',array('id'=>$order->id_order)));
         }
     }
 
@@ -174,27 +166,20 @@ print_r($_POST['Order']);
 
     public function actionEdit($id)
     {
-         
         $order = Order::model()->findByPk($id);
         $order->scenario = 'edit';
         $cardInfo = new CreditCardFormModel;
         Yii::app()->session->add("orderId", $id);
-        
+
+        $orderDetails = OrderDetails::findOrderDetails($id);
+
         $currentItems = Yii::app()->session->get("OrderItems");
-        if(!isset($currentItems)){
-            $currentItems = array();
+
+        if (isset($currentItems))
+        {
+            $orderDetails = array_merge($orderDetails, OrderDetails::getOrderedItems($currentItems)->rawData) ;
         }
-        $currentItemsOrder = OrderDetails::findOrderDetails($id);
-        $edit = Yii::app()->session->get("edit");
-        if(!isset($edit)){
-            $orderDetails = array_merge($currentItems, $currentItemsOrder);
-        Yii::app()->session->add("OrderItems", $orderDetails);
-        Yii::app()->session->add("edit", 1);
-        } 
-        $orderDetails = Yii::app()->session->get("OrderItems");
-            $orderDetails = OrderDetails::getOrderedItems($orderDetails)->rawData ;
-        
-      
+
         $orderDetails = new CArrayDataProvider($orderDetails, array('keyField' => false));
         $order->currentName =  $order->order_name;
 
@@ -231,7 +216,7 @@ print_r($_POST['Order']);
         // Получаем автора записи. Здесь будет выполнен реляционный запрос.
         $item_name = $item->name;
         $item_price = $item->price;
-                $item_quantity=$item->quantity;
+        $item_quantity=$item->quantity;
         echo '{"item_name":"' . $item_name . '",
                     "item_price":"'.$item_price.'", 
                     "item_quantity":"'.$item_quantity.'" }';
@@ -248,7 +233,7 @@ print_r($_POST['Order']);
             else{
                 $currentItems[] = $_POST['OrderDetails'];
             }
-            
+
             Yii::app()->session->add("OrderItems", $currentItems);
 
         }
@@ -261,7 +246,7 @@ print_r($_POST['Order']);
 
     public function actionRemoveItem()
     {
-        if (isset($_GET['key']) && $_GET['key']!=0) {
+        if (isset($_GET['key']) && $_GET['key']!=0 && $_GET['det']=0) {
             $currentItems = Yii::app()->session->get("OrderItems");
             foreach ($currentItems as $key=>$value){
                 if($key == $_GET['key']){
@@ -270,25 +255,33 @@ print_r($_POST['Order']);
             }
             Yii::app()->session->add("OrderItems", $currentItems);
             $this->redirect(Yii::app()->createUrl('customer/create'));
+        }elseif (isset($_GET['det']) && $_GET['key']=0 && $_GET['det']!=0) {
+            $orderItem = OrderDetails::model()->findByPk($_GET['det']);
+
+            if($orderItem->save()) {
+                $orderItem->delete();
+                $this->redirect(Yii::app()->createUrl('customer/create'));
+            }
         }
-        
+
+
     }
-    
+
     public function actionEditItem()
     {
         if (isset($_GET['id'] ) && isset($_GET['key'])) {
-        $model = Item::model()->findByPk($_GET['id']);
-        $orderDetails = OrderDetails::model();
+            $model = Item::model()->findByPk($_GET['id']);
+            $orderDetails = OrderDetails::model()->findByPk($_GET['det']);
 
             $currentItems = Yii::app()->session->get("OrderItems");
-           // Yii::app()->session->add("OrderItems", $currentItems);
-        //    $currentItems
+            // Yii::app()->session->add("OrderItems", $currentItems);
+            //    $currentItems
             $this->render('/order/editItem', array(
                 'model' => $model,
                 'key' => $_GET['key'],
                 'currentItems'=>$currentItems,
                 'orderDetails' => $orderDetails
-        ));
+            ));
         }
     }
 
@@ -331,9 +324,9 @@ print_r($_POST['Order']);
             Yii::app()->end();
         }
     }
-    
+
     public function actionCanselItem(){
-         if(Yii::app()->session->get("orderId"))
+        if(Yii::app()->session->get("orderId"))
         {
             $this->redirect(Yii::app()->createUrl('customer/edit', array('id' => Yii::app()->session->get("orderId"))));
         }

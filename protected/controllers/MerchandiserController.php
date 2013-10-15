@@ -45,12 +45,10 @@ class MerchandiserController extends Controller
         $orderModel = Order::model()->findByPk($id);
         $orderModel->scenario = 'merchandiserEdit';
 
-        if($orderModel->status == 'Ordered' )
-        {
+        if($orderModel->status == 'Ordered' ){
             $orderModel->trueOrderedStatus = 'checked';
         }
-        if($orderModel->status == 'Delivered' )
-        {
+        if($orderModel->status == 'Delivered' ){
             $orderModel->trueDeliveredStatus = 'checked';
             $orderModel->trueOrderedStatus = 'checked';
         }
@@ -68,6 +66,8 @@ class MerchandiserController extends Controller
             if($_POST['Order']['uncheckDeliveredStatus'] == 'delivered'){
                 $orderModel->status = 'delivered';
             }
+
+            $orderModel->delivery_date = Yii::app()->dateFormatter->format("yyyy-MM-dd", $_POST['Order']['delivery_date']);
             $orderModel->attributes = $_POST['Order'];
 
             if($orderModel->save()) {

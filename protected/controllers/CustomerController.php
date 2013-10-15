@@ -50,7 +50,6 @@ class CustomerController extends Controller
         if (isset($_GET['Order']))
             $model->attributes = $_GET['Order'];
 
-//        $model->delivery_date =  Yii::app()->dateFormatter->format("yyyy-MM-dd",$model->delivery_date);
         $this->render('index', array('model' => $model,));
     }
 
@@ -71,10 +70,7 @@ class CustomerController extends Controller
     {
         if(isset($_GET['id']))
         {
-            $order = Order::model()->findByPk($_GET['id']);
-            $order->scenario = 'remove';
-            $order->trash = 1;
-            if($order->save())
+            if(Order::deleteOrder($_GET['id']))
                 $this->redirect(Yii::app()->createUrl('customer/index'));
         }
     }
@@ -97,7 +93,6 @@ class CustomerController extends Controller
             'order' => $order,
             'orderDetails' => $orderDetails,
             'cardInfo' => $cardInfo,
-//            'currentItems' => $currentItems,
         ));
     }
 
@@ -137,7 +132,6 @@ class CustomerController extends Controller
                     $orderDetails->id_order = $order->id_order;
                     $orderDetails->price = Item::model()->findByPk($orderDetails->id_item)->price;
                     $orderDetails->save(false);
-
                 }
             }
             Yii::app()->session->remove("OrderItems");
@@ -156,20 +150,6 @@ class CustomerController extends Controller
 
         $order->max_discount = $customerInfo->getDiscount($order->customer);
         $order->save(true, array('status','max_discount'));
-
-//        if (isset($_POST['CreditCardFormModel']))
-//        {
-//            foreach ($_POST['CreditCardFormModel'] as $name => $value) {
-//                $cardInfo->$name = $value;
-//            }
-//            if ($cardInfo->credit_card_type == "4") {
-//                $cardInfo->setScenario('validateMaestroCardInfo');
-//            } else {
-//                $cardInfo->setScenario('validateCardInfo');
-//            }
-//            echo CActiveForm::validate($cardInfo);
-//            Yii::app()->end();
-//        }
 
         $customerInfo->updateBalance($order->total_price, $order->customer);
 
@@ -203,10 +183,6 @@ class CustomerController extends Controller
         $orderDetails = new CArrayDataProvider($orderDetails, array('keyField' => false));
         $order->currentName =  $order->order_name;
 
-//        $order->preferable_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->preferable_date);
-//        $order->order_date = Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->order_date);
-
-
         $this->render('/order/create', array(
             'order' => $order,
             'orderDetails' => $orderDetails,
@@ -235,7 +211,6 @@ class CustomerController extends Controller
 
     public function actionAdd()
     {
-
         $item = Item::model()->findByPk($_GET['item_id']);
 
         // Получаем автора записи. Здесь будет выполнен реляционный запрос.
@@ -245,7 +220,6 @@ class CustomerController extends Controller
         echo '{"item_name":"' . $item_name . '",
                     "item_price":"'.$item_price.'", 
                     "item_quantity":"'.$item_quantity.'" }';
-
     }
 
     public function actionSaveItem()
@@ -272,7 +246,7 @@ class CustomerController extends Controller
 
     public function actionRemoveItem()
     {
-        if (isset($_GET['key'])) {
+        if (isset($_GET['key']) && $_GET['key']!=0 && $_GET['det']=0) {
             $currentItems = Yii::app()->session->get("OrderItems");
             foreach ($currentItems as $key=>$value){
                 if($key == $_GET['key']){
@@ -281,14 +255,23 @@ class CustomerController extends Controller
             }
             Yii::app()->session->add("OrderItems", $currentItems);
             $this->redirect(Yii::app()->createUrl('customer/create'));
+        }elseif (isset($_GET['det']) && $_GET['key']=0 && $_GET['det']!=0) {
+            $orderItem = OrderDetails::model()->findByPk($_GET['det']);
+          
+            if($orderItem->save()) {   
+               $orderItem->delete();
+               $this->redirect(Yii::app()->createUrl('customer/create'));
+            }           
         }
+           
+        
     }
     
     public function actionEditItem()
     {
         if (isset($_GET['id'] ) && isset($_GET['key'])) {
-        $model = Item::model()->findByPk($_GET['id']);;
-        $orderDetails = new OrderDetails;
+        $model = Item::model()->findByPk($_GET['id']);
+        $orderDetails = OrderDetails::model()->findByPk($_GET['det']);
 
             $currentItems = Yii::app()->session->get("OrderItems");
            // Yii::app()->session->add("OrderItems", $currentItems);
@@ -340,5 +323,13 @@ class CustomerController extends Controller
             echo CActiveForm::validate(array($order,$cardInfo ));
             Yii::app()->end();
         }
+    }
+    
+    public function actionCanselItem(){
+         if(Yii::app()->session->get("orderId"))
+        {
+            $this->redirect(Yii::app()->createUrl('customer/edit', array('id' => Yii::app()->session->get("orderId"))));
+        }
+        $this->redirect(Yii::app()->createUrl('customer/create'));
     }
 }

@@ -32,9 +32,7 @@ $grid = $this->widget('TGridView', array(
             'value' => '$data->max_discount.""."%"',
         ),
         array(
-//            'header' => 'delivery_date',
             'name' => 'delivery_date',
-//            'value' => 'Yii::app()->dateFormatter->format("MM/dd/yyyy", strtotime($data->delivery_date))'
             'value' => '($data->delivery_date != "0000-00-00") ?
                 Yii::app()->dateFormatter->format("MM/dd/yyyy",$data->delivery_date) : "Delivery Date not assigned";',
         ),

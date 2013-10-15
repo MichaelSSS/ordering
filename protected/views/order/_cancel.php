@@ -1,5 +1,3 @@
-
-
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'cancelModal')); ?>
 
 <div class='modal-header'>

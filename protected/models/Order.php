@@ -208,8 +208,8 @@ class Order extends CActiveRecord
 
         $this->order_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->order_date) ;
         $this->preferable_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->preferable_date) ;
-        $this->delivery_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->delivery_date) ;
-
+//        $this->delivery_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->delivery_date) ;
+//        $a=0;
         return true;
     }
 

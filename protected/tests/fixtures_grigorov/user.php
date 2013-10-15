@@ -1,5 +1,5 @@
 <?php
-
+// просьба не редактировать данный файл !
 return array(
     'user1' => array(
         'username'   => 'admin01',

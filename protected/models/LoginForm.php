@@ -120,7 +120,7 @@ class LoginForm extends CFormModel
                 return false;
                 
             // apply 50 active users limit    
-            } elseif ( $user->countActive(time()) >= 50 
+            } elseif ( OmsWebUser::countActive(time()) >= 50 
                        && !$isUserActive) {
                 $this->_errorCode = self::ERROR_ACTIVE_LIMIT;
                 return false;

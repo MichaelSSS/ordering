@@ -88,7 +88,8 @@ class AdminController extends Controller
             ')->execute(array(
                 'role'   => $role,
                 'userId' => $userId
-            ));
+                )
+            );
         }
     }
 
@@ -96,7 +97,9 @@ class AdminController extends Controller
     {
         $response = CJSON::encode($this->loadModel($id)->getAttributes(array(
             'username', 'firstname', 'lastname', 'role', 'email', 'region', 'deleted'
-        )));
+                 )
+            )
+        );
         echo $response;
         Yii::app()->end();
     }
@@ -120,11 +123,12 @@ class AdminController extends Controller
         $this->layout='ajax';
         $this->render('create',array(
             'model'=>$model,
-        ));
+            )
+        );
 
     }
-    public function actionRemove(){
-
+    public function actionRemove()
+    {
         if(isset($_GET['id'])){
             $model = User::model()->findByPk($_GET['id']);
             $model->scenario = 'remove';
@@ -140,7 +144,6 @@ class AdminController extends Controller
 
     public function actionEdit($id)
     {
-
         $model = $this->loadModel($id);
         $model->scenario = 'edit';
         $model->password = false;
@@ -151,7 +154,13 @@ class AdminController extends Controller
             if (strlen($model->password) == 0 ) {
                 $ret = $model->save(true,
                     array(
-                        'username','role','firstname','lastname','email','region','deleted'
+                        'username',
+                        'role',
+                        'firstname',
+                        'lastname',
+                        'email',
+                        'region',
+                        'deleted'
                     )
                 );
             } else {
@@ -168,7 +177,8 @@ class AdminController extends Controller
             $this->layout='ajax';
             $this->render('edit',array(
                 'model'=>$model,
-            ));
+                )
+            );
         }
     }
     public function loadModel($id)
@@ -199,7 +209,8 @@ class AdminController extends Controller
             $this->layout='ajax';
             $this->render('duplicate',array(
                 'model'=>$model,
-            ));
+                )
+            );
         }
     }
 }

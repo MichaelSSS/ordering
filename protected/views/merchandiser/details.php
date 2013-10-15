@@ -26,7 +26,7 @@
         array('name' => 'Item Description', 'value' => '$data->itemOredered->description'),
         array('name' => 'Dimension', 'value' => '$data->dimensionId->dimension'),
         array('name' => 'Price', 'value' => '$data->price . " $"'),
-        array('name' => 'Price per line', 'value' => '$data->price . " $"'),
+        array('name' => 'Price per line', 'value' => '$data->price *  $data->dimensionId->count_of_items *  $data->quantity. " $"'),
         array('name' => 'quantity'),
     ),
 )); ?>
@@ -64,15 +64,15 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     </div>    
                     <div class="span2">
                         <ul class='nav'>
-                            <li><?php echo $orderModel->userNameOrder->username; ?></li>
-                            <li><?php echo $orderModel->customerType->customer_type; ?></li>
-                            <li><?php echo $orderModel->order_name; ?></li>
-                            <li><?php echo $orderModel->id_order; ?></li>
-                            <li><?php echo $orderModel->total_price; ?> $</li>
-                            <li><?php echo $model->getTotalItemCount();?></li>
-                            <li><?php echo $orderModel->assignees->username; ?></li>
-                            <li><?php echo $orderModel->order_date; ?></li>
-                            <li><?php echo $orderModel->preferable_date; ?></li>
+                            <li><?= $orderModel->userNameOrder->username; ?></li>
+                            <li><?= $orderModel->customerType->customer_type; ?></li>
+                            <li><?= $orderModel->order_name; ?></li>
+                            <li><?= $orderModel->id_order; ?></li>
+                            <li><?= $orderModel->total_price; ?> $</li>
+                            <li><?= $model->getTotalItemCount();?></li>
+                            <li><?= $orderModel->assignees->username; ?></li>
+                            <li><?= $orderModel->order_date; ?></li>
+                            <li><?= $orderModel->preferable_date; ?></li>
                         </ul>
                     </div>
                 </fieldset>

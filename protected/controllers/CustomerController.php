@@ -87,7 +87,7 @@ class CustomerController extends Controller
             $currentItems = array();
 
         $orderDetails = OrderDetails::getOrderedItems($currentItems);
-
+        $currentItems = Yii::app()->session->get("OrderItems");
         $order->order_date = date('m/d/Y');
 
         $this->render('/order/create', array(
@@ -105,7 +105,13 @@ class CustomerController extends Controller
             $order = new Order('save');
         }else
         {
-            $order =  $this->loadModel(Yii::app()->session->get("orderId"));
+            //$order =  $this->loadModel(Yii::app()->session->get("orderId"));
+            $orderDet = Order::model()->findByPk(Yii::app()->session->get("orderId"));
+             
+               $orderDet->delete();
+               $orderDet->save();
+               $order = new Order('save');
+                       
         }
 
         $currentItems = Yii::app()->session->get("OrderItems");
@@ -182,20 +188,24 @@ class CustomerController extends Controller
 
     public function actionEdit($id)
     {
+         
         $order = Order::model()->findByPk($id);
         $order->scenario = 'edit';
         $cardInfo = new CreditCardFormModel;
         Yii::app()->session->add("orderId", $id);
-
-        $orderDetails = OrderDetails::findOrderDetails($id);
-
+        
         $currentItems = Yii::app()->session->get("OrderItems");
+        $currentItemsOrder = OrderDetails::findOrderDetails($id);
+        $edit = Yii::app()->session->get("edit");
+        if(!isset($edit)){
+            $orderDetails = array_merge($currentItems, $currentItemsOrder);
+        Yii::app()->session->add("OrderItems", $orderDetails);
+        } 
+        $orderDetails = Yii::app()->session->get("OrderItems");
 
-        if (isset($currentItems))
-        {
-            $orderDetails = array_merge($orderDetails, OrderDetails::getOrderedItems($currentItems)->rawData) ;
-        }
-
+            $orderDetails = OrderDetails::getOrderedItems($orderDetails)->rawData ;
+        
+      Yii::app()->session->add("edit", 1);
         $orderDetails = new CArrayDataProvider($orderDetails, array('keyField' => false));
         $order->currentName =  $order->order_name;
 
@@ -268,7 +278,7 @@ class CustomerController extends Controller
 
     public function actionRemoveItem()
     {
-        if (isset($_GET['key']) && $_GET['key']!=0 && $_GET['det']=0) {
+        if (isset($_GET['key']) && $_GET['key']!=0) {
             $currentItems = Yii::app()->session->get("OrderItems");
             foreach ($currentItems as $key=>$value){
                 if($key == $_GET['key']){
@@ -277,15 +287,7 @@ class CustomerController extends Controller
             }
             Yii::app()->session->add("OrderItems", $currentItems);
             $this->redirect(Yii::app()->createUrl('customer/create'));
-        }elseif (isset($_GET['det']) && $_GET['key']=0 && $_GET['det']!=0) {
-            $orderItem = OrderDetails::model()->findByPk($_GET['det']);
-          
-            if($orderItem->save()) {   
-               $orderItem->delete();
-               $this->redirect(Yii::app()->createUrl('customer/create'));
-            }           
         }
-           
         
     }
     

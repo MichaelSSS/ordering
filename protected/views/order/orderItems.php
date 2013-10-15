@@ -74,7 +74,7 @@ if(!isset($data["id_order_details"]))
             'buttons'  => array(
                 'edit' => array(
                     'icon' => 'edit large',
-                    'url'  => 'Yii::app()->createUrl(\'customer/edititem\',array(\'id\'=>$data["id_item"], \'key\'=>$data["key"], \'det\'=>$data[\'id_order_details\']))',
+                    'url'  => 'Yii::app()->createUrl(\'customer/edititem\',array(\'id\'=>$data["id_item"], \'key\'=>$data["key"]))',
                 ),
             )
         ),
@@ -89,7 +89,7 @@ if(!isset($data["id_order_details"]))
             'buttons' => array(
                 'remove' => array(
                     'icon' => 'remove large',
-                    'url' => 'Yii::app()->createUrl(\'customer/removeitem\',array(\'key\'=>$data["key"], \'det\'=>$data[\'id_order_details\']))',
+                    'url' => 'Yii::app()->createUrl(\'customer/removeitem\',array(\'key\'=>$data["key"]))',
                     'options' => array(
                         'data-toggle' => 'modal',
                         'data-target' => '#removeitem',

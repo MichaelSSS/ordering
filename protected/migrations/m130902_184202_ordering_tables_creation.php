@@ -278,7 +278,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'max_discount' => 55,
             'order_date' => '2005-01-09',
             'preferable_date' => '2007-01-09',
-            'delivery_date' => '20013-08-01',
+            'delivery_date' => '2013-08-01',
             'status' => 'Ordered',
             'assignee' => 4,
             'customer' => 4,

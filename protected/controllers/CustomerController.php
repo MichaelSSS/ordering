@@ -119,7 +119,7 @@ class CustomerController extends Controller
             $currentItems = array();
 
         $order->status = "Created";
-print_r($_POST['Order']);
+print_r($currentItems);
         if (isset($_POST['Order']))
         {
             $order->attributes = $_POST['Order'];
@@ -127,7 +127,7 @@ print_r($_POST['Order']);
             if ($order->validate()) {
                 if(!(Yii::app()->session->get("orderId")))
                 {
-                    $order->save(false);
+                    $order->save(false, array('order_name','total_price','preferable_date', 'assignee'));
                 }else
                 {
                     $order->save(false, array('order_name','total_price','preferable_date', 'assignee'));
@@ -143,7 +143,8 @@ print_r($_POST['Order']);
             }
             Yii::app()->session->remove("OrderItems");
             Yii::app()->session->remove("orderId");
-            $this->redirect(Yii::app()->createUrl('customer/edit',array('id'=>$order->id_order)));
+            Yii::app()->session->remove("edit");
+            $this->redirect(Yii::app()->createUrl('customer/edit'));
         }
     }
 
@@ -180,16 +181,20 @@ print_r($_POST['Order']);
         Yii::app()->session->add("orderId", $id);
         
         $currentItems = Yii::app()->session->get("OrderItems");
+        if(!isset($currentItems)){
+            $currentItems = array();
+        }
         $currentItemsOrder = OrderDetails::findOrderDetails($id);
         $edit = Yii::app()->session->get("edit");
         if(!isset($edit)){
             $orderDetails = array_merge($currentItems, $currentItemsOrder);
         Yii::app()->session->add("OrderItems", $orderDetails);
+        Yii::app()->session->add("edit", 1);
         } 
         $orderDetails = Yii::app()->session->get("OrderItems");
             $orderDetails = OrderDetails::getOrderedItems($orderDetails)->rawData ;
         
-      Yii::app()->session->add("edit", 1);
+      
         $orderDetails = new CArrayDataProvider($orderDetails, array('keyField' => false));
         $order->currentName =  $order->order_name;
 

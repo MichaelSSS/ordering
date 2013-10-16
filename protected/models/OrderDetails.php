@@ -1,16 +1,5 @@
 <?php
 
-/**
- * This is the model class for table "order_details".
- *
- * The followings are the available columns in table 'order_details':
- * @property integer $id_order
- * @property integer $id_item
- * @property integer $quantity
- * @property string $price
- * @property integer $id_dimension
- */
-
 class OrderDetails extends CActiveRecord
 {
 

@@ -111,8 +111,7 @@ class AdminController extends Controller
         $model = new User;
         $model->role = self::CUSTOMER;
 
-        if( !empty( $_POST['User']) )
-        {
+        if( !empty( $_POST['User']) ){
             $model->attributes = $_POST['User'];
             if($model->save()) {
                 $this->assignRole( $model->role,$model->id );

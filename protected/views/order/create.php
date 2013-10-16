@@ -1,14 +1,14 @@
 <?php /** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-    'id' => 'orderForm',
-    'type' => 'horizontal',
+    'id'                     => 'orderForm',
+    'type'                   => 'horizontal',
     'enableClientValidation' => true,
-    'enableAjaxValidation' => true,
+    'enableAjaxValidation'   => true,
     'clientOptions' => array(
         'validateOnSubmit' => true,
         'hideErrorMessage' => true,
-        'validationUrl' => Yii::app()->createUrl("customer/validateorder"),
-        'afterValidate' => 'js:afterValidate',
+        'validationUrl'    => Yii::app()->createUrl("customer/validateorder"),
+        'afterValidate'    => 'js:afterValidate',
     )
 )); ?>
 
@@ -21,7 +21,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             <legend>Items selection</legend>
             <?php $this->renderPartial('/order/orderItems', array(
                 'orderDetails' => $orderDetails,
-                'form' => $form,
+                'form'         => $form,
             )); ?>
         </fieldset>
         
@@ -32,7 +32,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     <div class="span5">
                         <?php $this->renderPartial('/order/orderInfo', array(
                             'order' => $order,
-                            'form' => $form
+                            'form'  => $form
                         )); ?>
                     </div>
                 </fieldset>
@@ -42,7 +42,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                     <legend>Card Info</legend>
                     <div class="span6">
                         <?php $this->renderPartial('/order/cardInfo', array(
-                            'cardInfo' => $cardInfo,
+                            'cardInfo'       => $cardInfo,
                             'formCreditCard' => $form
                         )); ?>
                     </div>
@@ -52,31 +52,31 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     </div>
     <div class="row">
         <div class="form-actions">
-            <div class="span3 pull-right">
+            <div class="pull-right">
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label'=>'Save',
-                    'buttonType'=>'submit',
+                    'label'       => 'Save',
+                    'buttonType'  => 'submit',
                     'htmlOptions' => array(
-                        'name' => 'save',
+                        'name'   => 'save',
                         'submit' => Yii::app()->createUrl('customer/save'),
                     ),
                 )); ?>
 
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label'=>'Order',
-                    'buttonType'=>'submit',
+                    'label'       => 'Order',
+                    'buttonType'  => 'submit',
                     'htmlOptions' => array(
-                        'name' => 'order',
+                        'name'   => 'order',
                         'submit' => Yii::app()->createUrl('customer/order'),
                     ),
                 )); ?>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label' => 'Cancel',
-                    'type' => 'action',
+                    'label'       => 'Cancel',
+                    'type'        => 'action',
                     'htmlOptions' => array(
                         'data-toggle' => 'modal',
                         'data-target' => '#cancelModal',
-                        'id' => 'cancel_return'
+                        'id'          => 'cancel_return'
                     ),
                 )); ?>
             </div>
@@ -91,20 +91,22 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <script>
     $(function(){
        
-        $("#Order_preferable_date").datepicker({          
-            
-        });
+        $("#Order_preferable_date").datepicker();
 
         $('.clndr').click(function (e) {
             $('#Order_preferable_date').datepicker("show");
             e.preventDefault();
         });
+
         $('#Order_preferable_date').tooltip({
             trigger: 'hover'
         });
 
         if ($('#Order_status').val()=="Pending"){
             $('#order').hide();
+        }else if($('#Order_status').val()=="Delivered" || $('#Order_status').val()=="Ordered"){
+            $('#order').hide();
+            $('#save').hide();
         }
 
         if (!$('#Order_status').val()) {

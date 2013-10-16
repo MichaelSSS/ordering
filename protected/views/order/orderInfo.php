@@ -39,7 +39,7 @@
             <?php echo $form->textFieldRow($order, 'preferable_date', array(
                 'class' => 'input-large',
                 'title' => 'Type date in format mm/dd/yyyy',
-                'append' => '<i class="icon-calendar icon-large"></i>',
+                'append' => '<i class="icon-calendar icon-large clndr"></i>',
                 'value' => Yii::app()->dateFormatter->format("MM/dd/yyyy", $order->preferable_date)
             )); ?>
         </a>

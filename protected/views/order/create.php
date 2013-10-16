@@ -91,14 +91,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <script>
     $(function(){
        
-        $("#Order_preferable_date").datepicker({          
-            
-        });
+        $("#Order_preferable_date").datepicker();
 
         $('.clndr').click(function (e) {
             $('#Order_preferable_date').datepicker("show");
             e.preventDefault();
         });
+
         $('#Order_preferable_date').tooltip({
             trigger: 'hover'
         });
@@ -108,7 +107,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         }else if($('#Order_status').val()=="Delivered" || $('#Order_status').val()=="Ordered"){
             $('#order').hide();
             $('#save').hide();
-
         }
 
         if (!$('#Order_status').val()) {

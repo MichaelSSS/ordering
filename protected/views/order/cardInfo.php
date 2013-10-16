@@ -11,21 +11,24 @@
             $('#CreditCardFormModel_expiry_date').datepicker("show");
             e.preventDefault();
         });
+
          $('#CreditCardFormModel_expiry_date').tooltip({
             trigger : 'hover'
         });
+
         $("#CreditCardFormModel_start_date").datepicker({          
-            
-            disabled: true      
+            disabled: true
         });
 
         $('.clndr2').click(function (e) {
-           $('#CreditCardFormModel_expiry_date').datepicker("show");
+           $('#CreditCardFormModel_start_date').datepicker("show");
            e.preventDefault();
         });
+
         $('#CreditCardFormModel_start_date').tooltip({
             trigger : 'hover'
         });
+
         $("#CreditCardFormModel_cvv2_code_tip").popover(
             {
                 placement: "right",
@@ -86,7 +89,7 @@
         <a href="#" class='clndr1'>
             <?php echo $formCreditCard->textFieldRow($cardInfo, 'expiry_date', array(
                 'title'=>'Type date in format mm/dd/yyyy',
-                'append' => '<i class="icon-calendar icon-large"></i>',
+                'append' => '<i class="icon-calendar icon-large clndr1"></i>',
                 'value'=>date("m/d/y"),
             )); ?>  
         </a>
@@ -98,7 +101,7 @@
         <a href="#" class='clndr2'>
             <?php echo $formCreditCard->textFieldRow($cardInfo, 'start_date', array(
                 'title'=>'Type date in format mm/dd/yyyy',
-                'append' => '<i class="icon-calendar icon-large"></i>',
+                'append' => '<i class="icon-calendar icon-large clndr2"></i>',
                 'disabled'=>'disabled',
                 'value'=>date("m/d/y"),
             )); ?>  

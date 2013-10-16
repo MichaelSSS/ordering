@@ -38,14 +38,10 @@ class CustomerController extends Controller
 
         $model->customer = Yii::app()->user->id;
 
-
-
-
         if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
         {
             $model->currentPageSize = $_GET['pageSize'];
         }
-
 
         if (isset($_GET['Order']))
             $model->attributes = $_GET['Order'];
@@ -118,11 +114,9 @@ class CustomerController extends Controller
             $order->attributes = $_POST['Order'];
             $order->customer = Yii::app()->user->id;
             if ($order->validate()) {
-                if(!(Yii::app()->session->get("orderId")))
-                {
+                if(!(Yii::app()->session->get("orderId"))) {
                     $order->save(false);
-                }else
-                {
+                }else {
                     $order->save(false, array('order_name','total_price','preferable_date', 'assignee'));
                 }
 
@@ -294,7 +288,7 @@ class CustomerController extends Controller
 
     public  function actionValidateOrder()
     {
-        if(isset($_POST['order'])&&Yii::app()->session->get("orderId"))
+        if(isset($_POST['order']) &&  Yii::app()->session->get("orderId"))
         {
             $order = new Order('order');
             $cardInfo = new CreditCardFormModel('required');

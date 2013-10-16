@@ -96,13 +96,16 @@ $(function(){
 
     // model representing a row
     var User = Backbone.Model.extend({
-        fetchUser: function() {
+        fetchUser: function(options) {
             var that = this;
+            options = $.extend({silent: false}, options || {})
             this.url = window.location.href.split('?',1)[0]
                 + '?r=admin/user&id=' + this.get("id");
             this.fetch({         
                 success: function() {
-                    that.trigger('user:fetched');
+                    if ( !options.silent ) {
+                        that.trigger('user:fetched');
+                    }
                     that.row.render();
                 },
                 error: function(model, response, options) {
@@ -114,6 +117,7 @@ $(function(){
                 }
             }).always(function(){
                 $('#'+oms.gridId).removeClass('grid-view-loading');
+                userEditWindow.$('.edit-shade').removeClass('loading');
             });            
         }
 
@@ -331,19 +335,20 @@ $(function(){
             userEditWindow.url = url;
             userEditWindow.action = event.data.action;
             userEditWindow.model = model;
+            userEditWindow.listenTo(
+                userEditWindow.model,
+                'user:fetched',
+                userEditWindow.render
+            );
             model.row = event.data.row;
             userEditWindow.$('.edit-shade').addClass('loading');
             userEditWindow.modalShow();
             if ( prevAction == userEditWindow.action ) {
-                userEditWindow.listenTo(
-                    userEditWindow.model,
-                    'user:fetched',
-                    userEditWindow.render
-                );
+                model.fetchUser({silent:false});
             } else {
+                model.fetchUser({silent:true});
                 userEditWindow.loadForm();
             }
-            model.fetchUser();
 
             return false;
         },
@@ -667,7 +672,7 @@ $(function(){
                 .prop('checked','true');
         },
         refresh: function() {
-            userEditWindow.model.fetchUser();
+            userEditWindow.model.fetchUser({silent:false});
         }
     };
 
@@ -702,7 +707,7 @@ $(function(){
                 .prop('checked','true');
         },
         refresh: function() {
-            userEditWindow.model.fetchUser();
+            userEditWindow.model.fetchUser({silent:false});
         }
     };
 

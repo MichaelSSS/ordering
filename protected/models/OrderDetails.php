@@ -120,6 +120,7 @@ class OrderDetails extends CActiveRecord
                 ->leftJoin('dimension d', 'd.id_dimension = :id_dimension', array(':id_dimension'=>$item['id_dimension']))
                 ->where('i.id_item = :id_item', array(':id_item'=>$item['id_item']))
                 ->queryAll();
+
             $iData[0]['quantity'] = $item['quantity'];
             $iData[0]['key'] = $key;
             $iData[0]['price_per_line'] =  (int)$iData[0]['price'] * (int)$iData[0]['quantity']*(int)$iData[0]['count_of_items'];
@@ -129,6 +130,7 @@ class OrderDetails extends CActiveRecord
 
             $res[] = $iData[0];
         }
+
         return  new CArrayDataProvider($res, array('keyField' => false));
     }
 
@@ -139,13 +141,15 @@ class OrderDetails extends CActiveRecord
             ->from('order_details o, item i, dimension d')
             ->where('o.id_order = :id_order and o.id_dimension = d.id_dimension AND o.id_item = i.id_item', array(':id_order'=>$id))
             ->queryAll();
+
         foreach ($iData as $key=>$value)
         {
-            $iData[$key]['price_per_line']= (int)$iData[$key]['price'] * (int)$iData[$key]['quantity']*(int)$iData[$key]['count_of_items'];
+            $iData[$key]['price_per_line'] = (int)$iData[$key]['price'] * (int)$iData[$key]['quantity'] * (int)$iData[$key]['count_of_items'];
             $iData[$key]['key'] = $key;
-            self::$totalItemsQuantity +=(int)$iData[$key]['count_of_items'] * (int)$iData[$key]['quantity'];
-            self::$totalPrice +=(int)$iData[$key]['price']*(int)$iData[$key]['count_of_items']*(int)$iData[$key]['quantity'];
+            self::$totalItemsQuantity += (int)$iData[$key]['count_of_items'] * (int)$iData[$key]['quantity'];
+            self::$totalPrice += (int)$iData[$key]['price']*(int)$iData[$key]['count_of_items'] * (int)$iData[$key]['quantity'];
         }
+
         return  $iData;
     }
 

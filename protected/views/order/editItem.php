@@ -98,17 +98,16 @@
     <legend>Search <span>by</span></legend>
 
     <?php $searchForm = $this->beginWidget('CActiveForm', array(
-        'id' => 'search-form',
+        'id'     => 'search-form',
         'method' => 'GET',
-    ));
-    ?>
+    )); ?>
 
     <div class="span2">
         <p>Search for item by:</p>
     </div>
     <div class="span3">
         <?php echo $searchForm->dropDownlist($model, 'searchCriteria', $model->searchCriterias, array(
-            'class' => 'span3',
+            'class'   => 'span3',
             'options' => array(
                 array_search('Item Name', $model->searchCriterias) => array('selected' => true)
             ),
@@ -120,10 +119,9 @@
 
     <div class="span2 pull-right">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'label' => 'Apply',
+            'label'      => 'Apply',
             'buttonType' => 'submit',
-            'type' => 'info', 
-            'size' => 'null', 
+            'type'       => 'info', 
         )); ?>
         <?php echo CHtml::errorSummary($model) ?>
     </div>
@@ -132,20 +130,20 @@
 
 </fieldset>
 <?php $grid = $this->widget('TGridView', array(
-    'dataProvider' => $model->search(),
-    'type' => 'striped bordered condensed',
-    'ajaxUpdate' => '',
+    'dataProvider'   => $model->search(),
+    'type'           => 'striped bordered condensed',
+    'ajaxUpdate'     => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
     'filterSelector' => '{filter}',
-    'template' => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
+    'template'       => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
     'pager' => array(
-        'class' => 'OmsPager',
-        'header' => '',
+        'class'          => 'OmsPager',
+        'header'         => '',
         'maxButtonCount' => 0,
         'firstPageLabel' => '&lsaquo; First',
-        'prevPageLabel' => '&larr; Backward',
-        'nextPageLabel' => 'Forward &rarr;',
-        'lastPageLabel' => 'Last &rsaquo;',
+        'prevPageLabel'  => '&larr; Backward',
+        'nextPageLabel'  => 'Forward &rarr;',
+        'lastPageLabel'  => 'Last &rsaquo;',
         'htmlOptions' => array(
             'class' => 'yiiPager',
         ),
@@ -167,25 +165,25 @@
 )); ?>
         
 <div class="span12">
-<div class="row">
+    <div class="row">
         <fieldset>
             <legend class='text-right'>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label' => ' Add ',
-                    'buttonType' => 'submit',
-                    'type' => 'success',
-                    'size' => 'null',
-                    'htmlOptions'=>array(
-                        'id'=>'get_name',
+                    'label'       => ' Add ',
+                    'buttonType'  => 'submit',
+                    'type'        => 'success',
+                    'size'        => 'null',
+                    'htmlOptions' => array(
+                        'id' => 'get_name',
                     )
                     //'class'=>'get_name'
                 )); ?>
             </legend>
             <div class="row">
                 <?php $itemForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-                    'id'=>'ItemForm',
-                    'type'=>'horizontal',
-                    'action'=>Yii::app()->createUrl('customer/saveitem'),
+                    'id'                      => 'ItemForm',
+                    'type'                    => 'horizontal',
+                    'action'                  => Yii::app()->createUrl('customer/saveitem'),
                     'enableClientValidation'  =>  true,
                     'clientOptions'           =>  array(
                         'validateOnSubmit' => true 
@@ -208,10 +206,10 @@
                      
                     <?php if(isset($currentItems)){
                          echo $itemForm->textFieldRow($orderDetails, 'quantity', array('value' => $currentItems[$key]['quantity']));
-                    }else{
-                        echo $itemForm->textFieldRow($orderDetails, 'quantity', array('value' => $orderDetails->quantity));
-                    }
-?>
+                        } else {
+                            echo $itemForm->textFieldRow($orderDetails, 'quantity', array('value' => $orderDetails->quantity));
+                        }
+                    ?>
                     <div class="controls">
                         <span class="help-inline error item_error"></span>
                     </div>
@@ -236,28 +234,28 @@
                 </div>   
             </div>
             <div class="form-actions">
-                <div class="span3 pull-right">
+                <div class="pull-right">
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
-                        'buttonType' => 'submit',
-                        'type' => 'primary',
-                        'label' => 'Done',
+                        'buttonType'  => 'submit',
+                        'type'        => 'primary',
+                        'label'       => 'Done',
                         'htmlOptions' => array(
                             'id' => 'save'
                             )
                     )); ?>
 
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
-                        'type' => 'inverse',
-                        'label' => 'Remove',
+                        'type'        => 'inverse',
+                        'label'       => 'Remove',
                         'htmlOptions' => array(
-                            'id'=>'remove'
+                            'id' => 'remove'
                         ),
                     )); ?>
 
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
-                        'label' => 'Cancel',
-                        'type' => 'action',
-                        'url'=>'?r=customer/canselItem',
+                        'label'       => 'Cancel',
+                        'type'        => 'action',
+                        'url'         => '?r=customer/canselItem',
                         'htmlOptions' => array(
                             'data-toggle' => 'modal',   
                         ),
@@ -265,6 +263,6 @@
                 </div>
             </div>
         </fieldset>
-</div>
+    </div>
     <?php $this->endWidget(); ?> 
 </div>                          

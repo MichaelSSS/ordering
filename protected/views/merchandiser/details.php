@@ -45,35 +45,43 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             <div class="span6">
                 <fieldset>
                     <legend>Totals</legend>
-                    <div class="span2">
-                        <ul class='nav inline'>
-                            <li>
-                                <ul class='nav'>
-                                    <li>Customer name:</li>
-                                    <li>Customer type:</li>
-                                    <li>Order Name:</li>
-                                    <li>Order Number:</li>
-                                    <li>Total price:</li>
-                                    <li>Total number of items:</li>
-                                    <li>Assignee:</li>
-                                    <li>Date of ordering:</li>
-                                    <li>Preferable Delivery:</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="span2">
-                        <ul class='nav'>
-                            <li><?= $orderModel->userNameOrder->username; ?></li>
-                            <li><?= $orderModel->customerType->customer_type; ?></li>
-                            <li><?= $orderModel->order_name; ?></li>
-                            <li><?= $orderModel->id_order; ?></li>
-                            <li><?= $orderModel->total_price; ?> $</li>
-                            <li><?= $model->getTotalItemCount();?></li>
-                            <li><?= $orderModel->assignees->username; ?></li>
-                            <li><?= $orderModel->order_date; ?></li>
-                            <li><?= $orderModel->preferable_date; ?></li>
-                        </ul>
+                    <div class="span5">
+                        <div class="row">
+                            <div class="span3"><b>Customer name:</b></div>
+                            <div class="span2"><?= $orderModel->userNameOrder->username; ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="span3"><b>Customer type:</b></div>
+                            <div class="span2"><?= $orderModel->customerType->customer_type; ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="span3"><b>Order Name:</b></div>
+                            <div class="span2"><?= $orderModel->order_name; ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="span3"><b>Order Number:</b></div>
+                            <div class="span2"><?= $orderModel->id_order; ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="span3"><b>Total price:</b></div>
+                            <div class="span2"><?= $orderModel->total_price; ?> $</div>
+                        </div>
+                        <div class="row">
+                            <div class="span3"><b>Total number of items:</b></div>
+                            <div class="span2"><?= $model->getTotalItemCount(); ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="span3"><b>Assignee:</b></div>
+                            <div class="span2"><?= $orderModel->assignees->username; ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="span3"><b>Date of ordering:</b></div>
+                            <div class="span2"><?= $orderModel->order_date; ?></div>
+                        </div>
+                        <div class="row">
+                            <div class="span3"><b>Preferable Delivery:</b></div>
+                            <div class="span2"><?= $orderModel->preferable_date; ?></div>
+                        </div>
                     </div>
                 </fieldset>
             </div>
@@ -99,7 +107,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                                         'checked'      =>  $orderModel->trueDeliveredStatus,
                                         'id'           => 'delivered_status',
                                         'value'        => 'delivered',
-                                        'uncheckValue' => '0'
+                                        'uncheckValue' => '0',
+
                                     )); ?>
                                     Delivered
                                 </label>
@@ -122,15 +131,16 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                                     'delivery_date',
                                     array(
                                         'id'     => 'preferable_date',
+                                        'class' => 'span2',
                                         'append' => '<i class="icon-calendar icon-large"></i>',
                                     )
                                 ); ?>
                             </a>
                         </div>
-</div>
+                    </div>
                     <div class="span6">
                         <div class="row">
-                            <div class="form-actions">
+                            <div class="well text-center">
 
                                 <?php $this->widget('bootstrap.widgets.TbButton', array(
                                     'buttonType'  => 'submit',
@@ -166,8 +176,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         </div>
     </div>
 </div>
-
-
 
 
 <?php $this->endWidget(); ?>

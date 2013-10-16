@@ -70,15 +70,21 @@ class Order extends CActiveRecord
 
             array('total_price,preferable_date,order_date, assignee,  ', 'required', 'except'=>'remove,merchandiserEdit'),
             array('order_name', 'length', 'max' => 128),
-            array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=', 'message' => 'Please select items and add them to the order', 'except' => 'remove,merchandiserEdit'),
-            array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|', 'message' => 'Order name can only contain numbers and letters'),
-            array('order_name', 'unique', 'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank' , 'except' => 'edit, order,update,merchandiserEdit'),
+            array('totalQuantity', 'compare', 'compareValue'=>0,'operator' => '!=',
+                'message' => 'Please select items and add them to the order', 'except' => 'remove,merchandiserEdit'),
+            array('order_name', 'match', 'not' => 'true', 'pattern' => '|[^a-zA-Z0-9]|',
+                'message' => 'Order name can only contain numbers and letters'),
+            array('order_name', 'unique',
+                'message' => 'Order name name already exists in the System. Please re-type it or just leave it blank' ,
+                'except' => 'edit, order,update,merchandiserEdit'),
             array(' assignee, customer', 'numerical', 'integerOnly' => true),
             array(' assignee', 'checkAssignee', 'on' => 'order'),
             array('order_name', 'checkEdit', 'on' => 'edit'),
-            array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy', 'message' => 'Illegal Date Format', 'except' => 'remove,merchandiserEdit'),
+            array('preferable_date, order_date', 'date', 'format' => 'MM/dd/yyyy',
+                'message' => 'Illegal Date Format', 'except' => 'remove,merchandiserEdit'),
             array('preferable_date', 'checkDate', 'except' => 'remove,merchandiserEdit'),
-            array('id_order,  order_name, total_price, searchCriteria,  max_discount, filterValue, filterRole, delivery_date, preferable_date ,filterCriteria, status, assignees, searchValue, assigneesRole, customer,trash,uncheckOrderedStatus,gift', 'safe','on'=>'search,merchandiserEdit'),
+            array('id_order,  order_name, total_price, searchCriteria,  max_discount, filterValue, filterRole, delivery_date, preferable_date ,filterCriteria, status, assignees, searchValue, assigneesRole, customer,trash,uncheckOrderedStatus,gift',
+                'safe','on'=>'search,merchandiserEdit'),
         );
     }
 
@@ -102,19 +108,19 @@ class Order extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id_order' => 'Id Order',
-            'order_name' => 'Order Name',
-            'total_price' => 'Total Price',
-            'max_discount' => 'Max Discount',
-            'delivery_date' => 'Delivery Date',
-            'status' => 'Status',
-            'assignee' => 'Assignee',
-            'preferable_date' => 'Preferable Delivery Date',
-            'assigneesRole' => 'Role',
-            'customer' => 'Customer',
-            'uncheckDeliveredStatus'=>'uncheckDeliveredStatus',
-            'uncheckOrderedStatus'=>'uncheckOrderedStatus',
-            'gift'=>'gift'
+            'id_order'               => 'Id Order',
+            'order_name'             => 'Order Name',
+            'total_price'            => 'Total Price',
+            'max_discount'           => 'Max Discount',
+            'delivery_date'          => 'Delivery Date',
+            'status'                 => 'Status',
+            'assignee'               => 'Assignee',
+            'preferable_date'        => 'Preferable Delivery Date',
+            'assigneesRole'          => 'Role',
+            'customer'               => 'Customer',
+            'uncheckDeliveredStatus' => 'uncheckDeliveredStatus',
+            'uncheckOrderedStatus'   => 'uncheckOrderedStatus',
+            'gift'                   => 'gift'
         );
     }
 
@@ -142,8 +148,7 @@ class Order extends CActiveRecord
         elseif (!empty($this->filterCriteria) && !empty($this->filterValue))
             $criteria->compare('assignees.role', $this->filterRoles[$this->filterValue]);
 
-        if ($this->searchValue!="")
-        {
+        if ($this->searchValue!="") {
             $keyword = strtr($this->searchValue, array('%' => '\%', '_' => '\_', '\\' => '\\\\')) . '%';
             $criteria->compare($this->searchCriteria, $keyword, true, 'AND', false);
         }
@@ -183,11 +188,9 @@ class Order extends CActiveRecord
 
     protected function beforeSave()
     {
-        if ($this->order_name == "")
-        {
+        if ($this->order_name == "") {
            $this->createOrderName();
         }
-
 
         $this->order_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->order_date) ;
         $this->preferable_date = Yii::app()->dateFormatter->format("yyyy-MM-dd",$this->preferable_date) ;
@@ -225,17 +228,13 @@ class Order extends CActiveRecord
 
         $oldName = $this->findByPk(Yii::app()->session->get("orderId"))->order_name;
 
-        if($this->order_name == $oldName)
-        {
+        if($this->order_name == $oldName) {
             return true;
-        }
-        else
-        {
+        } else {
             $criteria = new CDbCriteria();
             $criteria->compare($order_name, $this->order_name);
             $row = $this->find($criteria);
-            if(isset($row))
-            {
+            if(isset($row)) {
                 $this->addError($order_name,
                     'Order name name already exists in the System. Please re-type it or just leave it blank');
                 return false;
@@ -247,8 +246,7 @@ class Order extends CActiveRecord
 
     public function checkDate($preferable_date)
     {
-        if (strtotime($this->order_date) > strtotime($this->preferable_date))
-        {
+        if (strtotime($this->order_date) > strtotime($this->preferable_date)) {
             $this->addError($preferable_date, 'Preferable Delivery Date can not be earlier than current date.');
             return false;
         }
@@ -257,8 +255,7 @@ class Order extends CActiveRecord
 
     public function checkAssignee($assignee)
     {
-        if($this->assignee == Yii::app()->user->id)
-        {
+        if($this->assignee == Yii::app()->user->id) {
             $this->addError($assignee, 'Please re-assigne the Order to the appropriate merchandiser.');
             return false;
         }

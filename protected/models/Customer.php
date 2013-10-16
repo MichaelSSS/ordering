@@ -107,20 +107,22 @@ class Customer extends CActiveRecord
 
     public  function checkType($customer_info)
     {
-        if($customer_info->account_balance > self::CUSTOMER_STANDART && $customer_info->account_balance < self::CUSTOMER_SILVER)
-        {
+        if(($customer_info->account_balance > self::CUSTOMER_STANDART)
+            && ($customer_info->account_balance < self::CUSTOMER_SILVER)
+        ) {
             $customer_info->customer_type = "Standart";
         }
-        elseif($customer_info->account_balance >= self::CUSTOMER_SILVER && $customer_info->account_balance < self::CUSTOMER_GOLD)
-        {
+        elseif(($customer_info->account_balance >= self::CUSTOMER_SILVER) &&
+            ($customer_info->account_balance < self::CUSTOMER_GOLD)
+        ) {
             $customer_info->customer_type = "Silver";
         }
-        elseif($customer_info->account_balance >= self::CUSTOMER_GOLD && $customer_info->account_balance < self::CUSTOMER_PLATINUM)
-        {
+        elseif(($customer_info->account_balance >= self::CUSTOMER_GOLD)
+            && ($customer_info->account_balance < self::CUSTOMER_PLATINUM)
+        ) {
             $customer_info->customer_type = "Gold";
         }
-        elseif($customer_info->account_balance >= self::CUSTOMER_PLATINUM)
-        {
+        elseif($customer_info->account_balance >= self::CUSTOMER_PLATINUM) {
             $customer_info->customer_type = "Platinum";
         }
     }
@@ -128,17 +130,19 @@ class Customer extends CActiveRecord
     public function getDiscount($id_customer)
     {
         $customer_info = $this->findByPk($id_customer);
-        switch($customer_info->customer_type)
-        {
+        switch($customer_info->customer_type) {
             case "Standart":
                 return self::STANDART_DISCOUNT;
                 break;
+
             case "Silver":
                 return self::SILVER_DISCOUNT;
                 break;
+
             case "Gold":
                 return self::GOLD_DISCOUNT;
                 break;
+
             case "Platinum":
                 return self::PLATINUM_DISCOUNT;
                 break;

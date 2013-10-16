@@ -66,6 +66,8 @@ class MerchandiserController extends Controller
             if($_POST['Order']['uncheckDeliveredStatus'] == 'delivered'){
                 $orderModel->status = 'delivered';
             }
+
+            $orderModel->delivery_date = Yii::app()->dateFormatter->format("yyyy-MM-dd", $_POST['Order']['delivery_date']);
             $orderModel->attributes = $_POST['Order'];
 
             if($orderModel->save()) {

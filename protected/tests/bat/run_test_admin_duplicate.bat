@@ -1,1 +1,1 @@
-cmd /K "C:\Program Files (x86)\Zend\ZendServer\bin\php.exe" phpunit.phar --tap functional/AdminDuplicateTest.php
+cmd /K "C:\Program Files (x86)\Zend\ZendServer\bin\php.exe" phpunit.phar -c phpunit_grigorov.xml functional/AdminDuplicateTest.php

@@ -22,7 +22,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             <?php $this->renderPartial('/order/orderItems', array(
                 'orderDetails' => $orderDetails,
                 'form' => $form,
-//                'currentItems' => $currentItems,
             )); ?>
         </fieldset>
         
@@ -106,6 +105,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
         if ($('#Order_status').val()=="Pending"){
             $('#order').hide();
+        }else if($('#Order_status').val()=="Delivered" || $('#Order_status').val()=="Ordered"){
+            $('#order').hide();
+            $('#save').hide();
+
         }
 
         if (!$('#Order_status').val()) {
@@ -141,42 +144,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         return true;
     }
 
-    // After validate
-    //    function afterValidate (form,data,hasError)
-    //    {
-    //        if (hasError)
-    //        {
-    //            // modal window with the FIRST error
-    //            /*
-    //             $.each( data, function( key, value )
-    //             {
-    //             $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html("<p>"+ value + "</p>"); });
-    //             return false;
-    //             });
-    //             */
-    //            // modal window with ALL errors
-    //            var errorCC = new Array;
-    //            var mess = new String;
-    //            $.each( data, function( key, value )
-    //            {
-    //                mess="<p>" + value + "</p>";
-    //                errorCC.push(mess);
-    //            });
-    //            $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html(errorCC); });
-    //        };
-    //    }
-    // After validate Credit Card information
     function afterValidateCC(result, status, xhr) {
         if (status) {
-            // modal window with the FIRST error
-            /*
-             $.each( result, function( key, value )
-             {
-             $("#errorModal").modal('show').on('shown', function(){ $("#errorMessage").html("<p>"+ value + "</p>"); });
-             return false;
-             });
-             */
-            // modal window with ALL errors
             var errorCC = new Array;
             var mess = new String;
             $.each(result, function (key, value) {
@@ -187,6 +156,5 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 $("#errorMessage").html(errorCC);
             });
         }
-
     }
 </script>

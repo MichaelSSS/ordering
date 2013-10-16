@@ -34,7 +34,7 @@ class OmsWebUserTest extends PHPUnit_Framework_TestCase {
 
     public function testCountActive()
     {
-        $this->assertEquals(1,$this->webUser->countActive(time()));
+        $this->assertEquals(1,OmsWebUser::countActive(time()));
     }
 
     public function testMakeUnActive()
@@ -43,7 +43,7 @@ class OmsWebUserTest extends PHPUnit_Framework_TestCase {
 
         $this->assertFalse(OmsWebUser::isActive($this->webUser->id, time()));
 
-        $this->assertEquals(0,$this->webUser->countActive(time()));
+        $this->assertEquals(0,OmsWebUser::countActive(time()));
     }
 
 }

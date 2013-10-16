@@ -194,6 +194,344 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
         ));
 
 
+        $this->insert('order', array(
+            'order_name' => 'aaa4',
+            'total_price' => '1402.29',
+            'max_discount' => 15,
+            'order_date' => '2002-11-09',
+            'preferable_date' => '2002-11-09',
+            'delivery_date' => '2007-08-01',
+            'status' => 'Created',
+            'assignee' => 2,
+            'customer' => 5,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'christmas order',
+            'total_price' => '1500',
+            'max_discount' => 15,
+            'order_date' => '2013-07-07',
+            'preferable_date' => '2013-12-24',
+            'delivery_date' => '0000-00-00',
+            'status' => 'Pending',
+            'assignee' => 2,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '01',
+            'total_price' => '14200',
+            'max_discount' => 22,
+            'order_date' => '2009-05-07',
+            'preferable_date' => '2009-06-09',
+            'delivery_date' => '2013-08-23',
+            'status' => 'Delivered',
+            'assignee' => 4,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'ddd2',
+            'total_price' => '5620',
+            'max_discount' => 2,
+            'order_date' => '2013-10-15',
+            'preferable_date' => '2013-10-18',
+            'delivery_date' => '0000-00-00',
+            'status' => 'Created',
+            'assignee' => 3,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'tty4',
+            'total_price' => '1402.29',
+            'max_discount' => 15,
+            'order_date' => '2002-11-09',
+            'preferable_date' => '2002-11-09',
+            'delivery_date' => '2007-08-01',
+            'status' => 'Created',
+            'assignee' => 2,
+            'customer' => 5,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '123456',
+            'total_price' => '123456',
+            'max_discount' => 123456,
+            'order_date' => '1234-05-06',
+            'preferable_date' => '1234-07-09',
+            'delivery_date' => '2200-08-13',
+            'status' => 'Pending',
+            'assignee' => 2,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'addt4',
+            'total_price' => '1234',
+            'max_discount' => 55,
+            'order_date' => '2005-01-09',
+            'preferable_date' => '2007-01-09',
+            'delivery_date' => '2013-08-01',
+            'status' => 'Ordered',
+            'assignee' => 4,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'asdf3e',
+            'total_price' => '1522',
+            'max_discount' => 2,
+            'order_date' => '2003-05-02',
+            'preferable_date' => '2003-09-22',
+            'delivery_date' => '2005-03-01',
+            'status' => 'Delivered',
+            'assignee' => 3,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'qwerrw',
+            'total_price' => '123321',
+            'max_discount' => 22,
+            'order_date' => '2010-12-06',
+            'preferable_date' => '2010-12-09',
+            'delivery_date' => '2010-12-12',
+            'status' => 'Delivered',
+            'assignee' => 2,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'azqwe6',
+            'total_price' => '968',
+            'max_discount' => 99,
+            'order_date' => '2012-02-05',
+            'preferable_date' => '2012-11-09',
+            'delivery_date' => '2013-08-01',
+            'status' => 'Ordered',
+            'assignee' => 1,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '115896',
+            'total_price' => '1500',
+            'max_discount' => 15,
+            'order_date' => '2001-01-01',
+            'preferable_date' => '2002-02-02',
+            'delivery_date' => '2003-03-03',
+            'status' => 'Ordered',
+            'assignee' => 3,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '5541',
+            'total_price' => '1503',
+            'max_discount' => 5,
+            'order_date' => '2005-05-28',
+            'preferable_date' => '2005-05-30',
+            'delivery_date' => '2005-06-01',
+            'status' => 'Delivered',
+            'assignee' => 4,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'fffddd',
+            'total_price' => '1280',
+            'max_discount' => 5,
+            'order_date' => '2008-05-02',
+            'preferable_date' => '2008-05-03',
+            'delivery_date' => '2008-08-01',
+            'status' => 'Ordered',
+            'assignee' => 5,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '1569',
+            'total_price' => '558',
+            'max_discount' => 16,
+            'order_date' => '2012-11-06',
+            'preferable_date' => '2012-11-15',
+            'delivery_date' => '2014-08-01',
+            'status' => 'Ordered',
+            'assignee' => 2,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'qrew',
+            'total_price' => '134',
+            'max_discount' => 33,
+            'order_date' => '2002-11-09',
+            'preferable_date' => '2002-11-09',
+            'delivery_date' => '2007-08-01',
+            'status' => 'Created',
+            'assignee' => 2,
+            'customer' => 5,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'aaa4',
+            'total_price' => '1402.29',
+            'max_discount' => 15,
+            'order_date' => '2002-11-09',
+            'preferable_date' => '2002-11-09',
+            'delivery_date' => '2007-08-01',
+            'status' => 'Created',
+            'assignee' => 2,
+            'customer' => 5,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'aaee4',
+            'total_price' => '4234',
+            'max_discount' => 23,
+            'order_date' => '2011-11-11',
+            'preferable_date' => '2011-01-10',
+            'delivery_date' => '0000-00-00',
+            'status' => 'Pending',
+            'assignee' => 2,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'adw2',
+            'total_price' => '1250',
+            'max_discount' => 12,
+            'order_date' => '2013-02-21',
+            'preferable_date' => '2200-11-09',
+            'delivery_date' => '0000-00-00',
+            'status' => 'Created',
+            'assignee' => 4,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '00001',
+            'total_price' => '1233',
+            'max_discount' => 11,
+            'order_date' => '2003-03-12',
+            'preferable_date' => '2003-05-28',
+            'delivery_date' => '2003-09-11',
+            'status' => 'Pending',
+            'assignee' => 1,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '1225',
+            'total_price' => '1500',
+            'max_discount' => 63,
+            'order_date' => '2010-09-15',
+            'preferable_date' => '2010-10-22',
+            'delivery_date' => '2013-08-01',
+            'status' => 'Delivered',
+            'assignee' => 3,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '12332',
+            'total_price' => '223',
+            'max_discount' => 4,
+            'order_date' => '2010-10-10',
+            'preferable_date' => '2011-11-11',
+            'delivery_date' => '2012-12-12',
+            'status' => 'Pending',
+            'assignee' => 1,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'aaa4',
+            'total_price' => '1402.29',
+            'max_discount' => 15,
+            'order_date' => '2013-11-09',
+            'preferable_date' => '2013-12-06',
+            'delivery_date' => '0000-00-00',
+            'status' => 'Ordered',
+            'assignee' => 4,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'gffr',
+            'total_price' => '1402.29',
+            'max_discount' => 15,
+            'order_date' => '2002-11-09',
+            'preferable_date' => '2002-11-09',
+            'delivery_date' => '2007-08-01',
+            'status' => 'Created',
+            'assignee' => 2,
+            'customer' => 5,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '112233',
+            'total_price' => '1520',
+            'max_discount' => 6,
+            'order_date' => '2013-08-10',
+            'preferable_date' => '2013-08-23',
+            'delivery_date' => '2013-08-23',
+            'status' => 'Ordered',
+            'assignee' => 2,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => '8888',
+            'total_price' => '888',
+            'max_discount' => 88,
+            'order_date' => '1988-08-08',
+            'preferable_date' => '1988-08-23',
+            'delivery_date' => '2012-09-28',
+            'status' => 'Delivered',
+            'assignee' => 4,
+            'customer' => 4,
+        ));
+
+
+        $this->insert('order', array(
+            'order_name' => 'aaa000',
+            'total_price' => '1000',
+            'max_discount' => 10,
+            'order_date' => '2013-10-15',
+            'preferable_date' => '2013-10-17',
+            'delivery_date' => '2013-10-17',
+            'status' => 'Ordered',
+            'assignee' => 2,
+            'customer' => 4,
+        ));
+
+
     }
 
 	public function down()

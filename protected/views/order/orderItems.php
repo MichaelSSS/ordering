@@ -1,6 +1,6 @@
 <?php
-    echo CHtml::link('Add Item', array('customer/additem'));
-    $grid = $this->widget('TGridView', array(
+echo CHtml::link('Add Item', array('customer/additem'));
+$grid = $this->widget('TGridView', array(
     'dataProvider' => $orderDetails,
     'type' => 'striped bordered condensed',
     'ajaxUpdate' => '',
@@ -32,36 +32,36 @@
             'value'=>'$data["id_item"]',
         ),
 
-		array(
+        array(
 
             'header'    => 'Item Name',
             'value'=>'$data["name"]',
-		),
-		array(
-            'header'    => 'Item Description',
-			'value'=>'$data["description"]',
-
-		),
+        ),
         array(
-                'header'    => 'Dimension',
-			    'value'=>'$data["dimension"]',
+            'header'    => 'Item Description',
+            'value'=>'$data["description"]',
 
-		),
-		array(
+        ),
+        array(
+            'header'    => 'Dimension',
+            'value'=>'$data["dimension"]',
+
+        ),
+        array(
             'header'    => 'Price',
-			'value'=>'(int)$data["price"] . "\$"',
+            'value'=>'(int)$data["price"] . "\$"',
 
-		),
-		array(
+        ),
+        array(
             'header'    => 'Quantity',
-			'value'=>'$data["quantity"]',
+            'value'=>'$data["quantity"]',
 
-		),
-		array(
+        ),
+        array(
             'header'    => 'Price Per Line',
-			'value'=>'$data["price_per_line"] . "\$"',
+            'value'=>'$data["price_per_line"] . "\$"',
 
-		),
+        ),
 
         array(
             'header'      => 'Edit',
@@ -76,7 +76,7 @@
                 ),
             )
         ),
-        
+
         array(
             'header' => 'Remove',
             'class' => 'bootstrap.widgets.TbButtonColumn',
@@ -96,7 +96,7 @@
                 ),
             )
         ),
-        ),
+    ),
 ));
 
 ?>

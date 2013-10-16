@@ -127,8 +127,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                                 ); ?>
                             </a>
                         </div>
-
-                    </div>
+</div>
                     <div class="span6">
                         <div class="row">
                             <div class="form-actions">

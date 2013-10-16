@@ -96,11 +96,10 @@ $(function(){
 
     // model representing a row
     var User = Backbone.Model.extend({
-        url: 'index.php?r=admin/user',
-
         fetchUser: function() {
             var that = this;
-            this.url = 'index.php?r=admin/user&id=' + this.get("id");
+            this.url = window.location.href.split('?',1)[0]
+                + '?r=admin/user&id=' + this.get("id");
             this.fetch({         
                 success: function() {
                     that.trigger('user:fetched');

@@ -70,7 +70,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'max_discount' => '11',
             'order_date' => '2002-11-09',
             'preferable_date' => '2002-11-09',
-            'delivery_date' => '4120-12-08',
+            'delivery_date' => '2002-12-08',
             'status' => 'Pending',
             'assignee' => 2,
             'customer' => 4,
@@ -122,7 +122,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'max_discount' => '5',
             'order_date' => '2002-11-09',
             'preferable_date' => '2002-11-09',
-            'delivery_date' => '2100-01-07',
+            'delivery_date' => '2005-01-07',
             'status' => 'Pending',
             'assignee' => 1,
             'customer' => 4,
@@ -195,7 +195,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'aaa4',
+            'order_name' => '3422',
             'total_price' => '1402.29',
             'max_discount' => 15,
             'order_date' => '2002-11-09',
@@ -263,9 +263,9 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
             'order_name' => '123456',
             'total_price' => '123456',
             'max_discount' => 123456,
-            'order_date' => '1234-05-06',
-            'preferable_date' => '1234-07-09',
-            'delivery_date' => '2200-08-13',
+            'order_date' => '1999-05-06',
+            'preferable_date' => '1999-07-09',
+            'delivery_date' => '1999-08-13',
             'status' => 'Pending',
             'assignee' => 2,
             'customer' => 4,
@@ -390,7 +390,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'aaa4',
+            'order_name' => 'ddrre',
             'total_price' => '1402.29',
             'max_discount' => 15,
             'order_date' => '2002-11-09',
@@ -468,7 +468,7 @@ class m130902_184202_ordering_tables_creation extends CDbMigration
 
 
         $this->insert('order', array(
-            'order_name' => 'aaa4',
+            'order_name' => 'ccxx',
             'total_price' => '1402.29',
             'max_discount' => 15,
             'order_date' => '2013-11-09',

@@ -40,6 +40,27 @@ form, .well, .form-actions {
     margin-top: 1em;
 }
 /*error-message*/
+.oval {
+    border: 1px solid #ddd;
+    padding: .6em;
+    position: relative;
+
+   -webkit-border-radius: 10em/5em ;
+   -moz-border-radius: 10em/5em ;
+   border-radius: 10em/5em ;
+  
+}
+.oval:after {
+    position: absolute;
+    content: '';
+   
+    border-right: 1em solid #ddd;
+    border-top: .5em solid transparent;
+    border-left: 1em solid transparent;
+    
+    bottom: 10px;
+    right: 22px;
+}
 .panel {
     margin-bottom: 21px;
     background-color: #fff;

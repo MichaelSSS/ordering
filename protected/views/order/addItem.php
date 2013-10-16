@@ -97,9 +97,8 @@
 <fieldset>
     <legend>Search <span>by</span></legend>
 
-
     <?php $searchForm = $this->beginWidget('CActiveForm', array(
-        'id' => 'search-form',
+        'id'     => 'search-form',
         'method' => 'GET',
     )); ?>
 
@@ -108,7 +107,7 @@
     </div>
     <div class="span3">
         <?php echo $searchForm->dropDownlist($model, 'searchCriteria', $model->searchCriterias, array(
-            'class' => 'span3',
+            'class'   => 'span3',
             'options' => array(
                 array_search('Item Name', $model->searchCriterias) => array('selected' => true)
             ),
@@ -120,10 +119,10 @@
 
     <div class="span2 pull-right">
         <?php $this->widget('bootstrap.widgets.TbButton', array(
-            'label' => 'Apply',
+            'label'      => 'Apply',
             'buttonType' => 'submit',
-            'type' => 'info', 
-            'size' => 'null', 
+            'type'       => 'info', 
+            'size'       => 'null', 
         )); ?>
         <?php echo CHtml::errorSummary($model) ?>
     </div>
@@ -132,12 +131,12 @@
 </fieldset>
 
 <?php $grid = $this->widget('TGridView', array(
-    'dataProvider' => $model->search(),
-    'type' => 'striped bordered condensed',
-    'ajaxUpdate' => '',
+    'dataProvider'   => $model->search(),
+    'type'           => 'striped bordered condensed',
+    'ajaxUpdate'     => '',
     'updateSelector' => '{page}, {sort}, #page-size, .yiiPager',
     'filterSelector' => '{filter}',
-    'template' => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
+    'template'       => "{selectPageSize}\n{items}\n<div class=\"grid-footer\">{summary}{pager}</div>",
     'pager' => array(
         'class' => 'OmsPager',
         'header' => '',
@@ -166,99 +165,97 @@
     ),
 )); ?>
    
- 
-
 <div class="span12">
     <div class="row">
         <fieldset>
             <legend class='text-right'>
                 <?php $this->widget('bootstrap.widgets.TbButton', array(
-                    'label' => ' Add ',
-                    'buttonType' => 'submit',
-                    'type' => 'success',
-                    'size' => 'null',
-                    'htmlOptions'=>array(
-                        'id'=>'get_name',
+                    'label'       => ' Add ',
+                    'buttonType'  => 'submit',
+                    'type'        => 'success',
+                    'size'        => 'null',
+                    'htmlOptions' => array(
+                        'id' => 'get_name',
                     )
                     //'class'=>'get_name'
                 )); ?>
             </legend>
-             <div class="row">
-                 <?php $itemForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-                     'id'=>'ItemForm',
-                     'type'=>'horizontal',
-                     'action'=>Yii::app()->createUrl('customer/saveitem'),
-                     'enableClientValidation'  =>  true,
-                     'clientOptions'           =>  array(
-                         'validateOnSubmit' => true 
-                         )
-                 )); ?>
-                 
-                 <div class="span7">
-                     <div class="control-group">
-                         <label class="control-label">Name:</label>
-                         <div class="controls">
-                             <span id="item_result_name">----//----</span>
-                         </div>
-                     </div>
-                     <div class="control-group">
-                         <label class="control-label">Price:</label>
-                         <div class="controls">
-                             <span id="item_result_price">0</span>$
-                         </div>
-                     </div>      
-                     
-                     <?php echo $itemForm->textFieldRow($orderDetails, 'quantity'); ?>
+            <div class="row">
+                <?php $itemForm = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+                'id'                      => 'ItemForm',
+                'type'                    => 'horizontal',
+                'action'                  => Yii::app()->createUrl('customer/saveitem'),
+                'enableClientValidation'  => true,
+                'clientOptions'           => array(
+                    'validateOnSubmit' => true 
+                    )
+                )); ?>
+
+                <div class="span7">
+                 <div class="control-group">
+                     <label class="control-label">Name:</label>
                      <div class="controls">
-                         <span class="help-inline error item_error"></span>
+                         <span id="item_result_name">----//----</span>
                      </div>
-                     <div class="control-group">
-                         <label class="control-label">Maximum quantity of item:</label>
-                         <div class="controls">
-                             <?php
-                                 echo $itemForm->hiddenField($orderDetails, 'id_item', array('id'=>'id_item')); 
-                                 echo $itemForm->hiddenField($model, 'quantity', array('id'=>'max_quantity')); 
-                                 echo $itemForm->hiddenField($orderDetails, 'id_customer', array('value'=>Yii::app()->user->id));
-                             ?>
-                             <span class="quantity_of_item">----//----</span>
-                         </div>
+                 </div>
+                 <div class="control-group">
+                     <label class="control-label">Price:</label>
+                     <div class="controls">
+                         <span id="item_result_price">0</span>$
                      </div>
-                     <div class="control-group">
-                         <label class="control-label">Dimension:</label>
-                         <div class="controls">
-                             <?php echo CHtml::dropDownList('OrderDetails[id_dimension]', null,
-                                 CHtml::listData(dimension::model()->findAll(), 'id_dimension', 'dimension')) ?>
-                         </div>
+                 </div>      
+                 
+                 <?php echo $itemForm->textFieldRow($orderDetails, 'quantity'); ?>
+                 <div class="controls">
+                     <span class="help-inline error item_error"></span>
+                 </div>
+                 <div class="control-group">
+                     <label class="control-label">Maximum quantity of item:</label>
+                     <div class="controls">
+                        <?php
+                        echo $itemForm->hiddenField($orderDetails, 'id_item', array('id'=>'id_item')); 
+                        echo $itemForm->hiddenField($model, 'quantity', array('id'=>'max_quantity')); 
+                        echo $itemForm->hiddenField($orderDetails, 'id_customer', array('value'=>Yii::app()->user->id));
+                        ?>
+                         <span class="quantity_of_item">----//----</span>
                      </div>
-                 </div>   
-             </div>
-             <div class="form-actions ">
-                 <div class="span3 pull-right">
-                     <?php $this->widget('bootstrap.widgets.TbButton', array(
-                         'buttonType' => 'submit',
-                         'type' => 'primary',
-                         'label' => 'Done',
-                         'htmlOptions' => array(
-                             'id' => 'save'
-                             )
-                     )); ?>
+                 </div>
+                 <div class="control-group">
+                     <label class="control-label">Dimension:</label>
+                     <div class="controls">
+                         <?php echo CHtml::dropDownList('OrderDetails[id_dimension]', null,
+                             CHtml::listData(dimension::model()->findAll(), 'id_dimension', 'dimension')) ?>
+                     </div>
+                 </div>
+                </div>   
+            </div>
+            <div class="form-actions ">
+                 <div class="pull-right">
+                    <?php $this->widget('bootstrap.widgets.TbButton', array(
+                        'buttonType'  => 'submit',
+                        'type'        => 'primary',
+                        'label'       => 'Done',
+                        'htmlOptions' => array(
+                            'id' => 'save'
+                            )
+                    )); ?>
 
                      <?php $this->widget('bootstrap.widgets.TbButton', array(
-                         'type' => 'inverse',
-                         'label' => 'Remove',
-                         'htmlOptions' => array(
-                             'id'=>'remove'
-                         ),
+                        'type'        => 'inverse',
+                        'label'       => 'Remove',
+                        'htmlOptions' => array(
+                            'id' => 'remove'
+                        ),
                      )); ?>
 
-                     <?php $this->widget('bootstrap.widgets.TbButton', array(
-                         'label' => 'Cancel',
-                         'type' => 'action',
-                         'url'=>'?r=customer/canselItem',
-                         'htmlOptions' => array(
-                             'data-toggle' => 'modal',   
-                         ),
-                     )); ?>
+                    <?php $this->widget('bootstrap.widgets.TbButton', array(
+                        'label'       => 'Cancel',
+                        'type'        => 'action',
+                        'url'         => '?r=customer/canselItem',
+                        'htmlOptions' => array(
+                            'data-toggle' => 'modal',   
+                        ),
+                    )); ?>
                  </div>
             </div>
         </fieldset>

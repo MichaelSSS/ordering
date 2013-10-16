@@ -25,8 +25,7 @@
 )); ?>
 
     <fieldset>
-        <legend>Search 
-            <span>by</span>
+        <legend>Search <span>by</span>
         </legend>
         <div class='control-group'>
             <div class='controls'>
@@ -41,13 +40,12 @@
                 <div class='span3'>
                     <?php echo $form->textField($model, 'searchValue', array('class' => 'span3')); ?>
                 </div>
-                <div class="span2 offset1 pull-right">
+                <div class="span2 pull-right">
                     <?php $this->widget('bootstrap.widgets.TbButton', array(
-                        'label' => 'Apply',
+                        'label'      => 'Apply',
                         'buttonType' => 'submit',
-                        'type' => 'info', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-                        'size' => 'null', // null, 'large', 'small' or 'mini'
-                    ));?>
+                        'type'       => 'info', 
+                    )); ?>
                 </div>
             </div>
         </div>
@@ -90,7 +88,7 @@
             ),
             'buttons'  => array(
                 'edit' => array(
-                    'icon' => 'icon-edit icon-large',
+                    'icon' => 'edit large',
                     'url'  => 'Yii::app()->createUrl(\'supervisor/edit\',array(\'id\'=>$data->id_item))',
                 ),
             )
@@ -106,7 +104,7 @@
             ),
             'buttons'    => array(
                 'remove' => array(
-                    'icon' => 'icon-remove icon-large',
+                    'icon' => 'remove large',
                     'url'  => 'Yii::app()->createUrl(\'supervisor/remove\',array(\'id\'=>$data->id_item))',
                 ),
             )

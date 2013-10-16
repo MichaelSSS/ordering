@@ -35,7 +35,7 @@ class AdminController extends Controller
             $currentTime = time();
             foreach($data as $i => $row) {
                 $data[$i] = $row->getAttributes(null);
-                if ( $user->isActive($row['id'], $currentTime) ) {
+                if ( OmsWebUser::isActive($row['id'], $currentTime) ) {
                     $data[$i] += array('active'=>true);
                 }
             }
@@ -152,8 +152,7 @@ class AdminController extends Controller
             $model->attributes = $_POST['User'];
 
             if (strlen($model->password) == 0 ) {
-                $ret = $model->save(true,
-                    array(
+                $ret = $model->save(true, array(
                         'username',
                         'role',
                         'firstname',
@@ -161,8 +160,7 @@ class AdminController extends Controller
                         'email',
                         'region',
                         'deleted'
-                    )
-                );
+                ));
             } else {
                 $ret = $model->save();
             }

@@ -74,7 +74,7 @@ class AdminController extends Controller
             $fields->keyField = array_search('User Name', $fields->keyFields);
             $fields->criteria = array_search('starts with', $fields->criterias);
             $fields->keyValue = '';
-            $this->render('index2',array('model'=>$model, 'fields'=>$fields));
+            $this->render('index',array('model'=>$model, 'fields'=>$fields));
         }
     }
 
@@ -100,9 +100,7 @@ class AdminController extends Controller
     {
         $response = CJSON::encode($this->loadModel($id)->getAttributes(array(
             'username', 'firstname', 'lastname', 'role', 'email', 'region', 'deleted'
-                 )
-            )
-        );
+        )));
         echo $response;
         Yii::app()->end();
     }
@@ -125,8 +123,7 @@ class AdminController extends Controller
         $this->layout='ajax';
         $this->render('create',array(
             'model'=>$model,
-            )
-        );
+        ));
 
     }
     public function actionRemove()
@@ -177,8 +174,7 @@ class AdminController extends Controller
             $this->layout='ajax';
             $this->render('edit',array(
                 'model'=>$model,
-                )
-            );
+            ));
         }
     }
     public function loadModel($id)
@@ -209,8 +205,7 @@ class AdminController extends Controller
             $this->layout='ajax';
             $this->render('duplicate',array(
                 'model'=>$model,
-                )
-            );
+            ));
         }
     }
 }

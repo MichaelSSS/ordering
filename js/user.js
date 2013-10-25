@@ -155,7 +155,7 @@ $(function(){
         model: User,
 
         initialize: function() { 
-            this.url = '/admin/index/';
+            this.url = 'admin/index/';
             this.on('request',function(model, xhr, options) {
                 $(oms.gridId).addClass('grid-view-loading');
             });
@@ -412,7 +412,7 @@ $(function(){
             });
 
             $('#confirm-deleting .btn-primary').on('click.oms', function() {
-                oms.users.url = this.href + oms.fields.queryString;
+                oms.users.url = this.href + oms.fields.makeString();
                 oms.users.fetch(oms.fetchOptions);
             });
 
@@ -641,6 +641,7 @@ $(function(){
 
     var actionCreate = {
         saveDone: function(resp, textStatus, jqXHR) {
+            oms.users.url = window.location.href.replace('#','/');
             oms.users.fetch(oms.fetchOptions);
         },
         name: "Create New User",
@@ -667,6 +668,7 @@ $(function(){
 
     var actionDuplicate = {
         saveDone: function(resp, textStatus, jqXHR) {
+            oms.users.url = window.location.href.replace('#','/');
             oms.users.fetch(oms.fetchOptions);
         },
         name: 'Duplicate User',
@@ -798,7 +800,7 @@ $(function(){
     }));
         
     Backbone.history.start({
-        pushState: false,
+        pushState: true,
         root: oms.root + 'admin/index/',
     });    
 });

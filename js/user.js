@@ -2,13 +2,20 @@ $(function(){
 
     Backbone.emulateHTTP = Backbone.emulateJSON = true;
 
-    // global object with general properties
-    oms = {
-        gridId: 'oms-grid-view0',
-        pageVar: 'User_page',
-        sortVar: 'User_sort',
-        showDeletedVar: 'showDel',
-        sortSelector: '.sort-link',
+    // models
+
+    // global model with general properties
+    oms = new (Backbone.Model.extend({
+        gridId          : '#oms-grid-view0',
+        sortSelector    : '.sort-link',
+        attributeLabels : {
+            'User Name'     : 'username',
+            'First Name'    : 'firstname',
+            'Last Name'     : 'lastname',
+            'Role'          : 'role',
+            'Email'         : 'email',
+            'Region'        : 'region'
+        },
         fetchOptions: {
             reset: true,
             error: function(collection, response, options) {
@@ -16,81 +23,101 @@ $(function(){
                     window.location.href = "";
                 } else {
                     alert("Error: " + response.status + " " + response.responseText);
-                    $('#'+oms.gridId).removeClass('grid-view-loading');
+                    $(oms.gridId).removeClass('grid-view-loading');
                 }
             }
+        },
+        initialize: function() {
+            var href = window.location.href
+                , indexPos = href.indexOf('.php');
+            this.fullRoot = href.slice(0, indexPos+4);
+            this.root = '/' + this.fullRoot.split('/').slice(3).join('/') + '/';
+            this.fullRoot += '/';
         }
-    };
-
-    // models
-
+    }));
+    
     // model representing all nonstatic data on the page, except row
     oms.fields = new (Backbone.Model.extend({
         nextPageSize: 25,
         pageSizes: {25: 10, 10: 25},
-        attributeLabels: {
-            'User Name': 'username',
-            'First Name': 'firstname',
-            'Last Name': 'lastname',
-            'Role': 'role',
-            'Email': 'email',
-            'Region': 'region'
-        },
-        defaults: {
-            userCount:    0,
-            showDeleted: 0,
-            currentPage:  1,
-            totalPages:    1,
-            buttons: {
-                First:    {
-                    enabled:false,
-                    cssClass:'first',
-                    url: '',
-                    getPageNumber: function() {
-                        return 1;
-                    }
-                },
-                Backward: {
-                    enabled:false,
-                    cssClass:'backward',
-                    url: '',
-                    getPageNumber: function() {
-                        return oms.fields.get("currentPage")-1;
-                    }
-                },
-                Forward:  {
-                    enabled:false,
-                    cssClass:'forward',
-                    url: '',
-                    getPageNumber: function() {
-                        return oms.fields.get("currentPage")+1;
-                    }
-                },
-                Last:     {
-                    enabled:false,
-                    cssClass:'last',
-                    url: '',
-                    getPageNumber: function() {
-                        return oms.fields.get("totalPages");
-                    }
+        userCount     : 0,
+        totalPages    : 1,
+        queryString   : '',
+        showDel       : 0,
+        pageSize      : 0,
+        sort          : '',
+        page          : 1,
+        filterField   : 0,
+        filterCriteria: 0,
+        filterValue   : '',
+        buttons: {
+            First:    {
+                enabled:false,
+                cssClass:'first',
+                getPageNumber: function() {
+                    return 1;
+                }
+            },
+            Backward: {
+                enabled:false,
+                cssClass:'backward',
+                getPageNumber: function() {
+                    return oms.fields.page-1;
+                }
+            },
+            Forward:  {
+                enabled:false,
+                cssClass:'forward',
+                getPageNumber: function() {
+                    return oms.fields.page+1;
+                }
+            },
+            Last:     {
+                enabled:false,
+                cssClass:'last',
+                getPageNumber: function() {
+                    return oms.fields.totalPages;
                 }
             }
         },
         setButtons: function() {
             // calculating total pages (userCount is set after reseting collection)
-            var newTotalPages = Math.ceil(this.get("userCount")/this.pageSizes[this.nextPageSize]);
+            var newTotalPages = Math.ceil(this.userCount/this.pageSizes[this.nextPageSize]);
             newTotalPages = newTotalPages || 1;
-            // setting current page (because of changed page size current page may become more than max page)
-            this.set({
-                "totalPages": newTotalPages,
-                "currentPage": this.get("currentPage")>newTotalPages ? newTotalPages : this.get("currentPage")
-            });
+
+            this.totalPages = newTotalPages;
+            if ( this.page > newTotalPages ) {
+                this.page = newTotalPages;
+            }
+
             // updating state of buttons with respect to new current and total pages
-            this.get("buttons").First.enabled = this.get("buttons").Backward.enabled
-                = (this.get("currentPage") > 1);
+            this.buttons.First.enabled = this.buttons.Backward.enabled
+                = (this.page > 1);
     
-            this.get("buttons").Last.enabled = this.get("buttons").Forward.enabled 
-                = (this.get("currentPage") < this.get("totalPages"));
+            this.buttons.Last.enabled = this.buttons.Forward.enabled 
+                = (this.page < this.totalPages);
+        },
+        // part of url with get parameters
+        makeString: function() {
+            this.queryString = '';
+            if ( this.showDel ) {
+                this.queryString += '/showDel/1';
+            }
+            if ( this.pageSize ) {
+                this.queryString += '/pageSize/' + this.pageSize;
+            }
+            if ( this.sort ) {
+                this.queryString += '/User_sort/' + this.sort;
+            }
+            if ( this.page ) {
+                this.queryString += '/User_page/' + this.page;
+            }
+            if ( this.filterValue ) {
+                this.queryString += '/AdminSearchForm%5BkeyField%5D/' + this.filterField
+                    + '/AdminSearchForm%5Bcriteria%5D/' + this.filterCriteria
+                    + '/AdminSearchForm%5BkeyValue%5D/' + encodeURI(this.filterValue);
+            }
+            return this.queryString;
         }
     }));
 
@@ -99,8 +126,7 @@ $(function(){
         fetchUser: function(options) {
             var that = this;
             options = $.extend({silent: false}, options || {})
-            this.url = window.location.href.split('?',1)[0]
-                + '?r=admin/user&id=' + this.get("id");
+            this.url = oms.fullRoot + 'admin/user/id/' + this.get("id");
             this.fetch({         
                 success: function() {
                     if ( !options.silent ) {
@@ -116,7 +142,7 @@ $(function(){
                     }
                 }
             }).always(function(){
-                $('#'+oms.gridId).removeClass('grid-view-loading');
+                $(oms.gridId).removeClass('grid-view-loading');
                 userEditWindow.$('.edit-shade').removeClass('loading');
             });            
         }
@@ -129,20 +155,17 @@ $(function(){
         model: User,
 
         initialize: function() { 
-            this.url = window.location.href.split('?',1)[0]
-                + '?r=admin/index&ajax=' + oms.gridId;
+            this.url = '/admin/index/';
             this.on('request',function(model, xhr, options) {
-                $('#'+oms.gridId).addClass('grid-view-loading');
+                $(oms.gridId).addClass('grid-view-loading');
             });
             this.on('reset',function() {
-                oms.fields.set({
-                    userCount: this.models[this.models.length-1].get("userCount")
-                });
+                oms.fields.userCount = this.models[this.models.length-1].get("userCount");
     
                 this.length = --(this.models.length);
 
                 userTable.addAll();
-                $('#'+oms.gridId).removeClass('grid-view-loading');
+                $(oms.gridId).removeClass('grid-view-loading');
             });
         },
     });
@@ -160,6 +183,7 @@ $(function(){
         render: function(){
             var row = this.model.toJSON();
             row.active = row.active?true:false;
+            row.root = oms.fullRoot;
             this.$el.html(this.template(row)); 
 
             if ( this.id%2 ) {
@@ -174,6 +198,9 @@ $(function(){
 
             this.$el.find('a[title="remove"]').on(
                 'click',
+                {
+                    modelId: row.id,
+                },
                 userTable.removeClick
             );
             this.$el.find('a[title="edit"]').on(
@@ -206,82 +233,70 @@ $(function(){
         el: $("#table-user"),
 
         showDeletedClick: function() {
-            var showDeleted = oms.fields.get("showDeleted"),
-                showDeletedParam,
-                pageNumberParam = oms.pageVar + "=" + oms.fields.get("currentPage");
-            showDeleted = showDeleted==1 ? 0 : 1;
-            oms.fields.set({
-                showDeleted: showDeleted
-            });
-            showDeletedParam = oms.showDeletedVar + "=" + showDeleted;
-            oms.users.url = $.param.querystring(oms.users.url, showDeletedParam + "&" + pageNumberParam);
-            oms.users.fetch(oms.fetchOptions);
+            oms.fields.showDel = !oms.fields.showDel;
+            router.navigate(oms.fields.makeString());
+            oms.users.url = window.location.href.replace('#','/');
+            oms.users.fetch(oms.fetchOptions);            
             return false;
         },
 
         searchFormSubmit: function(event) {
-            if ( $("input#AdminSearchForm_keyValue",this).val() ) {
-                var data = $(this).serialize();
-                data += '&' + oms.pageVar + '=1';
-                oms.fields.set({
-                    currentPage: 1
-                });
-                oms.users.url = $.param.querystring(oms.users.url,data);
-                oms.users.fetch(oms.fetchOptions);
+            if ( $("#AdminSearchForm_keyValue",this).val() ) {
+                oms.fields.page = 1;
+                oms.fields.filterField = $("#AdminSearchForm_keyField",this).val();
+                oms.fields.filterCriteria = $("#AdminSearchForm_criteria",this).val();
+                oms.fields.filterValue = $("#AdminSearchForm_keyValue",this).val();
+                router.navigate(oms.fields.makeString());
+                oms.users.url = window.location.href.replace('#','/');
+                oms.users.fetch(oms.fetchOptions);            
             }
             return false;
         },
 
-        searchFormReset: function(event) {
-            var url = oms.users.url,
-                params = $.deparam.querystring(url);
-
-            document.getElementById('btn-search').disabled=true;
-
-            delete params['AdminSearchForm'];
-            params[oms.pageVar] = 1;
-            oms.fields.set({
-                currentPage: 1
-            });
-
-            url = (url.split('?',1))[0];
-            oms.users.url = $.param.querystring(url,params);
-            oms.users.fetch(oms.fetchOptions);                
+        searchFormReset: function(event, opts) {
+            var options = {noop: false};
+            $.extend(options, opts || {});
+            
+            document.getElementById('btn-search').disabled = true;
+            
+            if ( !options.noop ) {
+                oms.fields.page = 1;
+                oms.fields.filterValue = '';
+                router.navigate(oms.fields.makeString());
+                oms.users.url = window.location.href.replace('#','/');
+                oms.users.fetch(oms.fetchOptions);
+            }
         },
 
         pageSizeClick: function(event) {
-            // changing page size may cause changing of current page number
-            var pageNumberParam = oms.pageVar + "=" + oms.fields.get("currentPage"),
-                pageSizeParam = "pageSize=" + oms.fields.nextPageSize;
-            // request string to server
-            oms.users.url = $.param.querystring(oms.users.url, pageNumberParam+"&"+pageSizeParam);
+            oms.fields.pageSize = oms.fields.nextPageSize;
+            
             // updating model
             oms.fields.nextPageSize = oms.fields.pageSizes[oms.fields.nextPageSize];
             
-            oms.users.fetch(oms.fetchOptions);                
+            router.navigate(oms.fields.makeString());
+            oms.users.url = window.location.href.replace('#','/');
+            oms.users.fetch(oms.fetchOptions);            
+
             return false;
         },
 
         pageButtonClick: function(event) {
             if ( !$(this).hasClass('hidden') ) {
                 var currentPage 
-                    = oms.fields.get("buttons")[$(this).text()].getPageNumber();
-                oms.fields.set({
-                    currentPage: currentPage
-                });
-
-                oms.users.url = $.param.querystring(
-                    oms.users.url, oms.pageVar + "=" + currentPage);
-                oms.users.fetch(oms.fetchOptions);
+                    = oms.fields.buttons[$(this).text()].getPageNumber();
+                oms.fields.page = currentPage;
+                router.navigate(oms.fields.makeString());
+                oms.users.url = window.location.href.replace('#','/');
+                oms.users.fetch(oms.fetchOptions);            
             }
             return false;
         },
 
         sortLinkClick: function(event){
             if ( event.ctrlKey ) {
-                var pageNumberParam = oms.pageVar + "=" + oms.fields.get("currentPage"),
-                    sortAdd = oms.fields.attributeLabels[$(this).text()],
-                    sortNow = $.deparam.querystring(oms.users.url)[oms.sortVar];
+                var sortAdd = oms.attributeLabels[$(this).text()],
+                    sortNow = oms.fields.sort;
                 if ( sortNow ) {
                     // if we already sorted by some column
                     var sortAttr = sortNow.split('-');
@@ -309,21 +324,19 @@ $(function(){
                     //have not sorted by either column
                     sortNow = sortAdd;
                 }
-                sortNow = oms.sortVar + '=' + sortNow;
 
-                oms.users.url = $.param.querystring(oms.users.url, sortNow + "&" + pageNumberParam);
-                this.href = oms.users.url;
-                oms.users.fetch(oms.fetchOptions);
+                oms.fields.sort = sortNow;
+
+                router.navigate(oms.fields.makeString());
+                oms.users.url = window.location.href.replace('#','/');
+                oms.users.fetch(oms.fetchOptions);            
+    
             }
             return false;
         },
 
-        removeClick: function(){
-            var url = this.href;
-            $('#confirm-deleting .btn-primary').click(function() {
-                oms.users.url = $.param.querystring(oms.users.url,url);
-                oms.users.fetch(oms.fetchOptions);
-            });
+        removeClick: function(event){
+            $('#confirm-deleting .btn-primary').attr('href', this.href);
             $('#confirm-deleting').modal();
             return false;
         },
@@ -374,6 +387,9 @@ $(function(){
             $('#check_toggle').on('change', this.showDeletedClick);
             $('#search-form').on('submit', this.searchFormSubmit);
             $('#search-form').on('reset', this.searchFormReset);
+            $("#search-form #AdminSearchForm_keyValue").on('keyup', function(){
+                $('#search-form #btn-search').prop('disabled',!this.value.length);
+            });
             $("#page-size").on('click', this.pageSizeClick);
             $('ul.yiiPager li').on("click", this.pageButtonClick);
             $(oms.sortSelector).on('click', this.sortLinkClick);
@@ -395,48 +411,49 @@ $(function(){
                 }
             });
 
+            $('#confirm-deleting .btn-primary').on('click.oms', function() {
+                oms.users.url = this.href + oms.fields.queryString;
+                oms.users.fetch(oms.fetchOptions);
+            });
+
         },
 
         render: function() {
             oms.fields.setButtons();            
             this.renderTotal();
+            $("#check_toggle").prop("checked",!!oms.fields.showDel);
             this.renderHeader();
             this.renderFooter();
             $("#page-size").text("show "+oms.fields.nextPageSize+" items");
         },
 
         renderHeader: function() {
-            var params = $.deparam.querystring(oms.users.url);
-            if ( params[oms.sortVar] ) {
-                var sortAttr = params[oms.sortVar].split('-');
-                $('#' + oms.gridId + ' th a').each(function(index) {
+            if ( oms.fields.sort ) {
+                var sortAttr = oms.fields.sort.split('-');
+                this.$('th a').each(function(index) {
                     var $this = $(this),
-                        attr = oms.fields.attributeLabels[$this.text()];
+                        attr = oms.attributeLabels[$this.text()];
                                    
                     if (0 <= sortAttr.indexOf(attr) ) {
-                        $this.removeClass('desc');
-                        $this.addClass('asc');
+                        $this.removeClass('desc').addClass('asc');
                     } else if (0 <= sortAttr.indexOf(attr+'.desc') ) {
-                        $this.removeClass('asc');
-                        $this.addClass('desc');                    
+                        $this.removeClass('asc').addClass('desc');                    
                     } else {
-                        $this.removeClass('asc');
-                        $this.removeClass('desc');                    
+                        $this.removeClass('asc').removeClass('desc');                    
                     }
                 });
             } else {
-                this.$('th a').removeClass('asc');
-                this.$('th a').removeClass('desc');                    
+                this.$('th a').removeClass('asc').removeClass('desc');                    
             }
         },
 
         renderTotal: function() {
-            $("#search-result-count").text(oms.fields.get("userCount"));
+            $("#search-result-count").text(oms.fields.userCount);
         },
         renderFooter: function() {
             if ( oms.users.length > 0 ) {
-                $(".summary").text("page #"+oms.fields.get("currentPage")
-                        +" of "+oms.fields.get("totalPages")).show();
+                $(".summary").text("page #"+oms.fields.page
+                        +" of "+oms.fields.totalPages).show();
                 pager.render();
             } else {
                 $(".summary").hide();
@@ -509,7 +526,7 @@ $(function(){
                             }
                         });
                     userEditWindow.modalHide();
-                    $('#'+oms.gridId).addClass('grid-view-loading');
+                    $(oms.gridId).addClass('grid-view-loading');
                 }
                 userEditWindow.validatedForms = 0;
             },600);
@@ -680,7 +697,7 @@ $(function(){
         saveDone: function(resp, textStatus, jqXHR) {
             userEditWindow.model.set($.parseJSON(resp));
             userEditWindow.model.row.render();
-            $('#'+oms.gridId).removeClass('grid-view-loading');
+            $(oms.gridId).removeClass('grid-view-loading');
 
         },
         name: 'Edit User',
@@ -718,7 +735,7 @@ $(function(){
         model: oms.fields,
 
         render: function(){
-            _.each(this.model.get("buttons"),this.renderButton,this);
+            _.each(this.model.buttons,this.renderButton,this);
             this.$el.show();
         },
 
@@ -733,8 +750,55 @@ $(function(){
 
     var pager = new Pager;
 
-    // instanciate table
+    // instantiate table
     var userTable = new UserTable;
     
-    var userEditWindow = new UserEditWindow;    
+    var userEditWindow = new UserEditWindow;
+
+    var router = new (Backbone.Router.extend({
+        initialize: function(options) {
+            this.firstTime = true;
+            this.route(/(.*)/, 'fetchTable');
+        },
+        fetchTable: function(pars) {
+            if ( !this.firstTime || pars ) {
+                pars = pars || '';
+                var page = pars.match(/User_page\/(\d+)/)
+                    , sort = pars.match(/User_sort\/([^\/]+)/)
+                    , showDel = pars.match(/showDel\/(\d)/)
+                    , pageSize = pars.match(/pageSize\/(\d+)/)
+                    , filters = pars.match(/AdminSearchForm\[keyField\]\/(\d+)\/AdminSearchForm\[criteria\]\/(\d+)\/AdminSearchForm\[keyValue\]\/([^\/]+)/);
+
+                oms.fields.page       = page && page[1] || 1;
+                oms.fields.sort       = sort && sort[1] || '';
+                oms.fields.showDel    = showDel && showDel[1] || 0;
+                oms.fields.pageSize   = pageSize && pageSize[1] || 10;
+                oms.fields.nextPageSize = oms.fields.pageSizes[oms.fields.pageSize];
+    
+                $('#search-form').trigger('reset',{noop: true});
+                if ( filters ) {
+                    oms.fields.filterField = filters[1];
+                    oms.fields.filterCriteria = filters[2];
+                    oms.fields.filterValue = filters[3];
+                    $("#search-form #AdminSearchForm_keyField option[value=" + filters[1] + "]").prop("selected",true);
+                    $("#search-form #AdminSearchForm_criteria option[value=" + filters[2] + "]").prop("selected",true);
+                    $("#search-form #AdminSearchForm_keyValue").val(filters[3]).triggerHandler('keyup');
+                } else {
+                    oms.fields.filterValue = '';
+                }
+                if ( this.firstTime ) {
+                    this.firstTime = false;
+                } else {
+                    oms.users.url = window.location.href.replace('#','/');
+                    oms.users.fetch(oms.fetchOptions);
+                }
+            }
+        }
+
+    }));
+        
+    Backbone.history.start({
+        pushState: false,
+        root: oms.root + 'admin/index/',
+    });    
 });

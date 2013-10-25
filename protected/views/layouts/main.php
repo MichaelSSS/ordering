@@ -11,10 +11,8 @@
         $cs->registerCssFile(Yii::app()->getBaseUrl() .  '/css/fontAwesome.css');
         $cs->registerCssFile(Yii::app()->getBaseUrl() .  '/css/switch.css');
 
-        Yii::app()->clientScript->registerCoreScript('jquery.ui');
-            Yii::app()->clientScript->registerCssFile(
-            Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css'
-        );
+        $cs->registerCoreScript('jquery.ui');
+        $cs->registerCssFile($cs->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
     ?>
     <title><?= Yii::app()->name.' Release 1.0, version 1.0,'. date(' m-d-Y'); ?></title>
 </head>

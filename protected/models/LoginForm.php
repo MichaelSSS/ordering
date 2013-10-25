@@ -108,7 +108,7 @@ class LoginForm extends CFormModel
             $userId = $this->_identity->getId();
             
             $isUserActive = OmsWebUser::isActive($userId, time());
-
+            //var_dump($isUserActive);die();
             // determine if user logged in another browser
             if ( $isUserActive 
                 && !OmsWebUser::isSameUserAgent($userId) ) {

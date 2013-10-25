@@ -34,7 +34,7 @@ class Controller extends CController
     {
         $user = Yii::app()->user;
 
-        if ( !$user->isGuest ) {
+        if ( $action->controller->id != 'site' ) {
             if ( OmsWebUser::isActive($user->id, time()) 
                     && OmsWebUser::isSameUserAgent($user->id) 
                     && !UserIdentity::isBlocked($_SERVER['REMOTE_ADDR']) ) {

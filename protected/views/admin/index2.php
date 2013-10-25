@@ -6,9 +6,10 @@
 
 <p>This page is appointed for creating new and managing existing users</p>
 
-<?php echo CHtml::link('Create New User', array('admin/create'), array('id' => 'create-user')); ?>
+<?php
+echo CHtml::link('Create New User', array('admin/create'), array('id' => 'create-user'));
 
-<?php /** @var BootActiveForm $form */
+/** @var BootActiveForm $form */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'                     => 'search-form',
     'enableClientValidation' => true,
@@ -19,7 +20,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'htmlOptions' => array(
         'class'   => '',
     )
-)); ?>
+)); 
+?>
 
 <fieldset>
     <legend>Search 
@@ -34,11 +36,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 <?php echo $form->dropDownListRow($fields, 'keyField',
                     $fields->keyFields,
                     array('class' => 'input-xlarge',
-                        'options' => array(
-                            array_search('User Name', $fields->keyFields) => array(
-                                'selected' => true,
-                            )
-                        ),
                     ));
                 ?>
             </div>
@@ -46,11 +43,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 <?php echo $form->dropDownListRow($fields, 'criteria',
                     $fields->criterias,
                     array('class' => 'input-xlarge',
-                        'options' => array(
-                            array_search('starts with', $fields->criterias) => array(
-                                'selected' => true
-                            )
-                        )
                     ));
                 ?>
             </div>
@@ -58,7 +50,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 <div class='span4'>
                     <div class='input-append'>
                         <?php echo $form->textField($fields, 'keyValue', array(
-                            'onkeyup' => 'document.getElementById(\'btn-search\').disabled = !(this.value.length);',
                             'class' => 'span2',
                             'placeholder' => 'Search'
                         )); ?>
@@ -85,11 +76,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         </div>
         <div class='span8'>
              <div class='metrouicss pull-right'>
-                <form>
-                    <label class='input-control switch' onclick=''>hide
+                <form> 
+                   
+                    <label class='input-control switch'>hide
                         <input type='checkbox'  id='check_toggle'>
                         <span class='helper'>show</span>
                     </label> 
+                    <p>deleted users</p>
                 </form>
             </div>
         </div>
@@ -97,26 +90,26 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 </div>
 
 <div id="oms-grid-view0" class="grid-view">
-    <div id="grid-extend"><a id="page-size" href="">show 25 items</a></div>
+    <div id="grid-extend"><a id="page-size">show 25 items</a></div>
     <table class="items table table-striped table-bordered table-condensed" id="table-user">
     <thead><tr>
         <th id="oms-grid-view0_c0">
-            <a class="sort-link" href="?r=admin/index&amp;User_sort=username">User Name<span class="caret"></span></a>
+            <a class="sort-link">User Name<span class="caret"></span></a>
         </th>
         <th id="oms-grid-view0_c1">
-            <a class="sort-link" href="?r=admin/index&amp;User_sort=firstname">First Name<span class="caret"></span></a>
+            <a class="sort-link">First Name<span class="caret"></span></a>
         </th>
         <th id="oms-grid-view0_c2">
-            <a class="sort-link" href="?r=admin/index&amp;User_sort=lastname">Last Name<span class="caret"></span></a>
+            <a class="sort-link">Last Name<span class="caret"></span></a>
         </th>
         <th id="oms-grid-view0_c3">
-            <a class="sort-link" href="?r=admin/index&amp;User_sort=role">Role<span class="caret"></span></a>
+            <a class="sort-link">Role<span class="caret"></span></a>
         </th>
         <th id="oms-grid-view0_c4">
-            <a class="sort-link" href="?r=admin/index&amp;User_sort=email">Email<span class="caret"></span></a>
+            <a class="sort-link">Email<span class="caret"></span></a>
         </th>
         <th id="oms-grid-view0_c5">
-            <a class="sort-link" href="?r=admin/index&amp;User_sort=region">Region<span class="caret"></span></a>
+            <a class="sort-link">Region<span class="caret"></span></a>
         </th>
         <th class="button-column" id="oms-grid-view0_c6">Edit</th>
         <th class="button-column" id="oms-grid-view0_c7">Remove</th>
@@ -138,14 +131,14 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <?php
     $cs=Yii::app()->getClientScript();
     $baseUrl = Yii::app()->getBaseUrl();
-    $cs->registerCssFile($baseUrl . '/gridview_JSON/pager.css');
+//    $cs->registerCssFile($baseUrl . '/css/pager.css');
 
     $cs->registerCoreScript('jquery');
     $cs->registerCoreScript('bbq');
 
-    $cs->registerScriptFile($baseUrl . '/gridview_JSON/underscore.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl . '/gridview_JSON/backbone_002.js', CClientScript::POS_END);
-    $cs->registerScriptFile($baseUrl . '/gridview_JSON/user.js', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/js/underscore.js', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/js/backbone_002.js', CClientScript::POS_END);
+    $cs->registerScriptFile($baseUrl . '/js/user.js', CClientScript::POS_END);
 
     $cs->registerScript('1','
         oms.users.reset(' . $this->prepareAjaxData($dataProvider) . ');
@@ -160,7 +153,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <td> <%= email %> </td>
     <td> <%= region %> </td>
     <td class="button-column">
-        <a title="edit" rel="tooltip" href= <%= '"?r=admin/edit&amp;id=' + id + '"' %> >
+        <a title="edit" rel="tooltip" href= <%= '"' + root + 'admin/edit/id/' + id + '"' %> >
             <i class="icon-edit icon-large">
     </i></a></td>
     <td class="remove" >
@@ -170,13 +163,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             (
                 ( active ) ? 
                 ('<a rel="tooltip" title="active user"><i class="icon-remove icon-large"></i></a>') : 
-                ('<a rel="tooltip" title="remove" href="?r=admin/remove&amp;id=' 
+                ('<a rel="tooltip" title="remove" href="' + root + 'admin/remove/id/' 
                     + id + '"><i class="icon-remove icon-large"></i></a>' )
             )
         %>
     </td>
     <td class="button-column">
-        <a title="duplicate" rel="tooltip" href= <%= '"?r=admin/duplicate&amp;id='+id+'"' %> >
+        <a title="duplicate" rel="tooltip" href= <%= '"' + root + 'admin/duplicate/id/'+id+'"' %> >
             <i class="icon-copy icon-large">
     </i></a></td>
 

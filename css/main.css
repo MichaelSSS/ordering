@@ -120,7 +120,7 @@ form, .well, .form-actions {
     display: none;
 }
 #modal-editing .edit-shade.loading{
-//  background: url(../gridview_JSON/loading.gif) no-repeat 50% 50%;
+//  background: url(../img/loading.gif) no-repeat 50% 50%;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -130,7 +130,12 @@ form, .well, .form-actions {
     background-color: white;
     display: block;
 }
-
+#page-size {
+    cursor:pointer;
+}
+#check_toggle{
+    text-transform: none;
+}
 tr.user-active {
     color: red;
 }
@@ -143,6 +148,12 @@ tr.user-deleted td.remove a{
     cursor: default;
     text-decoration: none;
 }
+
+th a, th a:link, th a:focus, th a:active{
+    border: none;
+    outline:none;
+}
+
 #toggle-deleted {
     display: none;
 }

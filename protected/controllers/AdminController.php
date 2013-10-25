@@ -46,7 +46,7 @@ class AdminController extends Controller
     public function actionIndex()
     {
         $model = new User;
-
+        //Yii::trace($_GET['pageSize']);
         if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
 
@@ -66,11 +66,14 @@ class AdminController extends Controller
                 $model->searchCriteria = $fields->getCriteria();
         }
 
-        if ( isset($_GET['ajax']) ) {
+        if ( Yii::app()->request->isAjaxRequest ) {
             $dataProvider = $model->search();
             echo $this->prepareAjaxData($dataProvider);
             Yii::app()->end();
         } else {
+            $fields->keyField = array_search('User Name', $fields->keyFields);
+            $fields->criteria = array_search('starts with', $fields->criterias);
+            $fields->keyValue = '';
             $this->render('index2',array('model'=>$model, 'fields'=>$fields));
         }
     }

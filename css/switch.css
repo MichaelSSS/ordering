@@ -83,3 +83,6 @@ input[type="radio"] {
     background: #333;
     z-index: 2;
 }
+.metrouicss p {
+    text-align: center;
+}

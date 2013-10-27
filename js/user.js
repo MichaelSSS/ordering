@@ -28,11 +28,10 @@ $(function(){
             }
         },
         initialize: function() {
-            var href = window.location.href
-                , indexPos = href.indexOf('.php');
-            this.fullRoot = href.slice(0, indexPos+4);
-            this.root = '/' + this.fullRoot.split('/').slice(3).join('/') + '/';
-            this.fullRoot += '/';
+            var relUrl = $('#base-url').text();
+            this.indexUrl = window.location.protocol + '//' 
+                + window.location.hostname + relUrl;
+            this.historyRoot = relUrl + '/admin/index/';
         }
     }));
     
@@ -69,7 +68,7 @@ $(function(){
                 enabled:false,
                 cssClass:'forward',
                 getPageNumber: function() {
-                    return oms.fields.page+1;
+                    return parseInt(oms.fields.page) + 1;
                 }
             },
             Last:     {
@@ -123,10 +122,11 @@ $(function(){
 
     // model representing a row
     var User = Backbone.Model.extend({
+        urlRoot: oms.indexUrl + '/admin/user/id',
         fetchUser: function(options) {
             var that = this;
             options = $.extend({silent: false}, options || {})
-            this.url = oms.fullRoot + 'admin/user/id/' + this.get("id");
+            //this.url = oms.indexUrl + '/admin/user/id/' + this.get("id");
             this.fetch({         
                 success: function() {
                     if ( !options.silent ) {
@@ -151,11 +151,8 @@ $(function(){
 
     // collection of rows
     var Users = Backbone.Collection.extend({
-
         model: User,
-
         initialize: function() { 
-            this.url = 'admin/index/';
             this.on('request',function(model, xhr, options) {
                 $(oms.gridId).addClass('grid-view-loading');
             });
@@ -182,8 +179,9 @@ $(function(){
 
         render: function(){
             var row = this.model.toJSON();
-            row.active = row.active?true:false;
-            row.root = oms.fullRoot;
+            row.active = !!row.active;
+            row.deleted = row.deleted==1;
+            row.root = oms.indexUrl;
             this.$el.html(this.template(row)); 
 
             if ( this.id%2 ) {
@@ -193,7 +191,7 @@ $(function(){
             }
 
             this.$el
-                .toggleClass('user-deleted',(row.deleted==1))
+                .toggleClass('user-deleted',row.deleted)
                 .toggleClass('user-active', row.active);
 
             this.$el.find('a[title="remove"]').on(
@@ -233,9 +231,9 @@ $(function(){
         el: $("#table-user"),
 
         showDeletedClick: function() {
-            oms.fields.showDel = !oms.fields.showDel;
+            oms.fields.showDel = oms.fields.showDel==1 ? 0 : 1;
             router.navigate(oms.fields.makeString());
-            oms.users.url = window.location.href.replace('#','/');
+            oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
             oms.users.fetch(oms.fetchOptions);            
             return false;
         },
@@ -247,7 +245,7 @@ $(function(){
                 oms.fields.filterCriteria = $("#AdminSearchForm_criteria",this).val();
                 oms.fields.filterValue = $("#AdminSearchForm_keyValue",this).val();
                 router.navigate(oms.fields.makeString());
-                oms.users.url = window.location.href.replace('#','/');
+                oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
                 oms.users.fetch(oms.fetchOptions);            
             }
             return false;
@@ -263,7 +261,7 @@ $(function(){
                 oms.fields.page = 1;
                 oms.fields.filterValue = '';
                 router.navigate(oms.fields.makeString());
-                oms.users.url = window.location.href.replace('#','/');
+                oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
                 oms.users.fetch(oms.fetchOptions);
             }
         },
@@ -275,7 +273,7 @@ $(function(){
             oms.fields.nextPageSize = oms.fields.pageSizes[oms.fields.nextPageSize];
             
             router.navigate(oms.fields.makeString());
-            oms.users.url = window.location.href.replace('#','/');
+            oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
             oms.users.fetch(oms.fetchOptions);            
 
             return false;
@@ -287,7 +285,7 @@ $(function(){
                     = oms.fields.buttons[$(this).text()].getPageNumber();
                 oms.fields.page = currentPage;
                 router.navigate(oms.fields.makeString());
-                oms.users.url = window.location.href.replace('#','/');
+                oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
                 oms.users.fetch(oms.fetchOptions);            
             }
             return false;
@@ -328,7 +326,7 @@ $(function(){
                 oms.fields.sort = sortNow;
 
                 router.navigate(oms.fields.makeString());
-                oms.users.url = window.location.href.replace('#','/');
+                oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
                 oms.users.fetch(oms.fetchOptions);            
     
             }
@@ -347,13 +345,13 @@ $(function(){
                 prevAction = userEditWindow.action;
             userEditWindow.url = url;
             userEditWindow.action = event.data.action;
+            model.row = event.data.row;
             userEditWindow.model = model;
             userEditWindow.listenTo(
                 userEditWindow.model,
                 'user:fetched',
                 userEditWindow.render
             );
-            model.row = event.data.row;
             userEditWindow.$('.edit-shade').addClass('loading');
             userEditWindow.modalShow();
             if ( prevAction == userEditWindow.action ) {
@@ -421,7 +419,7 @@ $(function(){
         render: function() {
             oms.fields.setButtons();            
             this.renderTotal();
-            $("#check_toggle").prop("checked",!!oms.fields.showDel);
+            $("#check_toggle").prop("checked",oms.fields.showDel==1);
             this.renderHeader();
             this.renderFooter();
             $("#page-size").text("show "+oms.fields.nextPageSize+" items");
@@ -556,15 +554,10 @@ $(function(){
                         e.preventDefault();
                         return false;
                     });
-        
-                    $('#cofirm-edit-cancel').on('shown',function(){
-                        $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
-                    });
-                    $('#cofirm-edit-cancel').on('hidden',function(){
-                        $('.modal-backdrop').remove();
-                    });
-
                     that.renderBrace();
+                    that.$('*').on('hidden.bs.tooltip', function(event){
+                        event.stopPropagation();
+                    });
                     
                     that.$('#modal-editing-body').scrollTop(0);
 
@@ -584,19 +577,19 @@ $(function(){
         initialize: function() { 
             var $modalWindow = this.$el,
                 that = this;
-            $modalWindow.on('hidden',function(){
+            $modalWindow.on('hidden.bs.modal',function(){
                 $modalWindow.find('#modal-editing-body').scrollTop(0);
                 that.stopListening();
                 $('.modal-backdrop').remove();
             });
-            $modalWindow.on('shown',function(){
+            $modalWindow.on('shown.bs.modal',function(){
                 $modalWindow.find('#modal-editing-body').scrollTop(0);
             });
 
-            $('#cofirm-edit-cancel').on('shown',function(){
+            $('#cofirm-edit-cancel').on('shown.bs.modal',function(){
                 $('.modal-backdrop:last').insertBefore('#cofirm-edit-cancel');
             });
-            $('#cofirm-edit-cancel').on('hidden',function(){
+            $('#cofirm-edit-cancel').on('hidden.bs.modal',function(){
                 $('.modal-backdrop').remove();
             });
             this.$('.edit-cancel-yes').click(function() {
@@ -641,7 +634,7 @@ $(function(){
 
     var actionCreate = {
         saveDone: function(resp, textStatus, jqXHR) {
-            oms.users.url = window.location.href.replace('#','/');
+            oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.makeString();
             oms.users.fetch(oms.fetchOptions);
         },
         name: "Create New User",
@@ -668,7 +661,7 @@ $(function(){
 
     var actionDuplicate = {
         saveDone: function(resp, textStatus, jqXHR) {
-            oms.users.url = window.location.href.replace('#','/');
+            oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.makeString();
             oms.users.fetch(oms.fetchOptions);
         },
         name: 'Duplicate User',
@@ -762,45 +755,48 @@ $(function(){
             this.firstTime = true;
             this.route(/(.*)/, 'fetchTable');
         },
+        setParams: function(pars) {
+            pars = pars || '';
+            var page = pars.match(/User_page\/(\d+)/)
+                , sort = pars.match(/User_sort\/([^\/]+)/)
+                , showDel = pars.match(/showDel\/(\d)/)
+                , pageSize = pars.match(/pageSize\/(\d+)/)
+                , filters = pars.match(/AdminSearchForm\[keyField\]\/(\d+)\/AdminSearchForm\[criteria\]\/(\d+)\/AdminSearchForm\[keyValue\]\/([^\/]+)/);
+
+            oms.fields.page       = page && parseInt(page[1]) || 1;
+            oms.fields.sort       = sort && sort[1] || '';
+            oms.fields.showDel    = showDel && parseInt(showDel[1]) || 0;
+            oms.fields.pageSize   = pageSize && parseInt(pageSize[1]) || 10;
+            oms.fields.nextPageSize = oms.fields.pageSizes[oms.fields.pageSize];
+
+            $('#search-form').trigger('reset',{noop: true});
+            if ( filters ) {
+                oms.fields.filterField = filters[1];
+                oms.fields.filterCriteria = filters[2];
+                oms.fields.filterValue = filters[3];
+                $("#search-form #AdminSearchForm_keyField option[value=" + filters[1] + "]").prop("selected",true);
+                $("#search-form #AdminSearchForm_criteria option[value=" + filters[2] + "]").prop("selected",true);
+                $("#search-form #AdminSearchForm_keyValue").val(filters[3]).triggerHandler('keyup');
+            } else {
+                oms.fields.filterValue = '';
+            }
+        },
+
         fetchTable: function(pars) {
             if ( !this.firstTime || pars ) {
-                pars = pars || '';
-                var page = pars.match(/User_page\/(\d+)/)
-                    , sort = pars.match(/User_sort\/([^\/]+)/)
-                    , showDel = pars.match(/showDel\/(\d)/)
-                    , pageSize = pars.match(/pageSize\/(\d+)/)
-                    , filters = pars.match(/AdminSearchForm\[keyField\]\/(\d+)\/AdminSearchForm\[criteria\]\/(\d+)\/AdminSearchForm\[keyValue\]\/([^\/]+)/);
-
-                oms.fields.page       = page && page[1] || 1;
-                oms.fields.sort       = sort && sort[1] || '';
-                oms.fields.showDel    = showDel && showDel[1] || 0;
-                oms.fields.pageSize   = pageSize && pageSize[1] || 10;
-                oms.fields.nextPageSize = oms.fields.pageSizes[oms.fields.pageSize];
-    
-                $('#search-form').trigger('reset',{noop: true});
-                if ( filters ) {
-                    oms.fields.filterField = filters[1];
-                    oms.fields.filterCriteria = filters[2];
-                    oms.fields.filterValue = filters[3];
-                    $("#search-form #AdminSearchForm_keyField option[value=" + filters[1] + "]").prop("selected",true);
-                    $("#search-form #AdminSearchForm_criteria option[value=" + filters[2] + "]").prop("selected",true);
-                    $("#search-form #AdminSearchForm_keyValue").val(filters[3]).triggerHandler('keyup');
-                } else {
-                    oms.fields.filterValue = '';
-                }
-                if ( this.firstTime ) {
-                    this.firstTime = false;
-                } else {
-                    oms.users.url = window.location.href.replace('#','/');
+                this.setParams(pars);
+                if ( !this.firstTime || window.location.hash ) {
+                    oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.makeString();
                     oms.users.fetch(oms.fetchOptions);
                 }
             }
+            this.firstTime = false;
         }
 
     }));
         
     Backbone.history.start({
         pushState: true,
-        root: oms.root + 'admin/index/',
+        root: oms.historyRoot,
     });    
 });

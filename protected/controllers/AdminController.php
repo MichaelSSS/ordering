@@ -43,10 +43,20 @@ class AdminController extends Controller
             return CJSON::encode($data);
     }
 
+    public function prepareAjaxRendering()
+    {
+        $this->layout='ajax';
+        $cs=Yii::app()->clientScript;
+        $cs->defaultScriptPosition = $cs::POS_END;
+        $cs->packages['yiiactiveform'] = array(
+    		'js'=>array('jquery.yiiactiveform.js')
+        );
+    }
     public function actionIndex()
     {
         $model = new User;
-        //Yii::trace($_GET['pageSize']);
+        //Yii::log(print_r($_SERVER,true),'error');
+
         if( isset($_GET['pageSize']) && OmsGridView::validatePageSize($_GET['pageSize']) )
             $model->currentPageSize = $_GET['pageSize'];
 
@@ -120,7 +130,7 @@ class AdminController extends Controller
             }
         }
 
-        $this->layout='ajax';
+        $this->prepareAjaxRendering();
         $this->render('create',array(
             'model'=>$model,
         ));
@@ -171,7 +181,7 @@ class AdminController extends Controller
             }
 
         } else {
-            $this->layout='ajax';
+            $this->prepareAjaxRendering();
             $this->render('edit',array(
                 'model'=>$model,
             ));
@@ -202,7 +212,7 @@ class AdminController extends Controller
                 throw new Exception(print_r($duplicate->getErrors(), true));
             }
         } else {
-            $this->layout='ajax';
+            $this->prepareAjaxRendering();
             $this->render('duplicate',array(
                 'model'=>$model,
             ));

@@ -5,7 +5,9 @@
 ?>
 
 <p>This page is appointed for creating new and managing existing users</p>
-
+<div style="display:none" id="base-url"><?php 
+    echo Yii::app()->getUrlManager()->getBaseUrl();
+?></div>
 <?php
 echo CHtml::link('Create New User', array('admin/create'), array('id' => 'create-user'));
 
@@ -153,7 +155,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <td> <%= email %> </td>
     <td> <%= region %> </td>
     <td class="button-column">
-        <a title="edit" rel="tooltip" href= <%= '"' + root + 'admin/edit/id/' + id + '"' %> >
+        <a title="edit" rel="tooltip" href= <%= '"' + root + '/admin/edit/id/' + id + '"' %> >
             <i class="icon-edit icon-large">
     </i></a></td>
     <td class="remove" >
@@ -163,13 +165,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             (
                 ( active ) ? 
                 ('<a rel="tooltip" title="active user"><i class="icon-remove icon-large"></i></a>') : 
-                ('<a rel="tooltip" title="remove" href="' + root + 'admin/remove/id/' 
+                ('<a rel="tooltip" title="remove" href="' + root + '/admin/remove/id/' 
                     + id + '"><i class="icon-remove icon-large"></i></a>' )
             )
         %>
     </td>
     <td class="button-column">
-        <a title="duplicate" rel="tooltip" href= <%= '"' + root + 'admin/duplicate/id/'+id+'"' %> >
+        <a title="duplicate" rel="tooltip" href= <%= '"' + root + '/admin/duplicate/id/'+id+'"' %> >
             <i class="icon-copy icon-large">
     </i></a></td>
 

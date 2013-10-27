@@ -52,9 +52,12 @@ return array(
             //'showScriptName'=>false,
 
             'rules'=>array(
-                '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
                 '<controller:\w+>/<action:\w+>/*'=>'<controller>/<action>',
+                /*array(
+                    'class' => 'application.components.OmsUrlRule',
+                    'route' => '<controller>/<action>',
+                    'pattern' => '<controller:\w+>/<action:\w+>/*',
+                ),*/
             ),
             
         ),

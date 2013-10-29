@@ -28,10 +28,10 @@ $(function(){
             }
         },
         initialize: function() {
-            var relUrl = $('#base-url').text();
+            var relUrl = $('#base-url').text() + '/admin';
             this.indexUrl = window.location.protocol + '//' 
                 + window.location.hostname + relUrl;
-            this.historyRoot = relUrl + '/admin/index/';
+            this.historyRoot = relUrl + '/';
         }
     }));
     
@@ -122,11 +122,10 @@ $(function(){
 
     // model representing a row
     var User = Backbone.Model.extend({
-        urlRoot: oms.indexUrl + '/admin/user/id',
+        urlRoot: oms.indexUrl + '/user/id',
         fetchUser: function(options) {
             var that = this;
             options = $.extend({silent: false}, options || {})
-            //this.url = oms.indexUrl + '/admin/user/id/' + this.get("id");
             this.fetch({         
                 success: function() {
                     if ( !options.silent ) {
@@ -157,8 +156,8 @@ $(function(){
                 $(oms.gridId).addClass('grid-view-loading');
             });
             this.on('reset',function() {
+                // extracting total user count from response
                 oms.fields.userCount = this.models[this.models.length-1].get("userCount");
-    
                 this.length = --(this.models.length);
 
                 userTable.addAll();
@@ -179,7 +178,7 @@ $(function(){
 
         render: function(){
             var row = this.model.toJSON();
-            row.active = !!row.active;
+            row.active = row.active==1;
             row.deleted = row.deleted==1;
             row.root = oms.indexUrl;
             this.$el.html(this.template(row)); 
@@ -233,7 +232,7 @@ $(function(){
         showDeletedClick: function() {
             oms.fields.showDel = oms.fields.showDel==1 ? 0 : 1;
             router.navigate(oms.fields.makeString());
-            oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
+            oms.users.url = oms.indexUrl + oms.fields.queryString;
             oms.users.fetch(oms.fetchOptions);            
             return false;
         },
@@ -245,7 +244,7 @@ $(function(){
                 oms.fields.filterCriteria = $("#AdminSearchForm_criteria",this).val();
                 oms.fields.filterValue = $("#AdminSearchForm_keyValue",this).val();
                 router.navigate(oms.fields.makeString());
-                oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
+                oms.users.url = oms.indexUrl + oms.fields.queryString;
                 oms.users.fetch(oms.fetchOptions);            
             }
             return false;
@@ -261,7 +260,7 @@ $(function(){
                 oms.fields.page = 1;
                 oms.fields.filterValue = '';
                 router.navigate(oms.fields.makeString());
-                oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
+                oms.users.url = oms.indexUrl + oms.fields.queryString;
                 oms.users.fetch(oms.fetchOptions);
             }
         },
@@ -273,7 +272,7 @@ $(function(){
             oms.fields.nextPageSize = oms.fields.pageSizes[oms.fields.nextPageSize];
             
             router.navigate(oms.fields.makeString());
-            oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
+            oms.users.url = oms.indexUrl + oms.fields.queryString;
             oms.users.fetch(oms.fetchOptions);            
 
             return false;
@@ -285,7 +284,7 @@ $(function(){
                     = oms.fields.buttons[$(this).text()].getPageNumber();
                 oms.fields.page = currentPage;
                 router.navigate(oms.fields.makeString());
-                oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
+                oms.users.url = oms.indexUrl + oms.fields.queryString;
                 oms.users.fetch(oms.fetchOptions);            
             }
             return false;
@@ -326,7 +325,7 @@ $(function(){
                 oms.fields.sort = sortNow;
 
                 router.navigate(oms.fields.makeString());
-                oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.queryString;
+                oms.users.url = oms.indexUrl + oms.fields.queryString;
                 oms.users.fetch(oms.fetchOptions);            
     
             }
@@ -355,8 +354,10 @@ $(function(){
             userEditWindow.$('.edit-shade').addClass('loading');
             userEditWindow.modalShow();
             if ( prevAction == userEditWindow.action ) {
+                // only update model and rerender form
                 model.fetchUser({silent:false});
             } else {
+                // load form and update model to update row in table
                 model.fetchUser({silent:true});
                 userEditWindow.loadForm();
             }
@@ -389,14 +390,8 @@ $(function(){
                 $('#search-form #btn-search').prop('disabled',!this.value.length);
             });
             $("#page-size").on('click', this.pageSizeClick);
-            $('ul.yiiPager li').on("click", this.pageButtonClick);
+            $('ul.plainPager li').on("click", this.pageButtonClick);
             $(oms.sortSelector).on('click', this.sortLinkClick);
-            $('a.dropdown-toggle').on('click', function(e) {
-                $('li.dropdown').toggleClass('open');
-                e.stopPropagation();
-                e.preventDefault();
-                return false;
-            });
             $(oms.sortSelector).css('cursor','default');
             $(document).on('keydown',function(e) {
                 if ( e.ctrlKey ) {
@@ -479,6 +474,29 @@ $(function(){
         }
     });
 
+    // pager view
+    var Pager = Backbone.View.extend({
+        el: $('ul.plainPager'),
+
+        model: oms.fields,
+
+        render: function(){
+            _.each(this.model.buttons,this.renderButton,this);
+            this.$el.show();
+        },
+
+        renderButton: function(button,key,list) {
+            this.$("."+button.cssClass).toggleClass('hidden',!button.enabled);
+        },
+
+        hide: function(){
+            this.$el.hide();
+        }
+    });
+
+    var pager = new Pager;
+
+    // view for window containing user form
     var UserEditWindow = Backbone.View.extend({
         el: $('#modal-editing'),
         model: new Backbone.Model,
@@ -503,12 +521,14 @@ $(function(){
                 ,data = ''
                 ,validated = 0;
 
+            // triggering Yii validators
             $form.each(function() {
                 if ( $(this).triggerHandler('submit') ) {
                     validated++;
                 };
             });
 
+            // timeout is needed because of timeout in Yii's validate function
             setTimeout(function(){
                 if ( (userEditWindow.validatedForms + validated)==1 ) {
                     $form.each(function() {
@@ -634,7 +654,7 @@ $(function(){
 
     var actionCreate = {
         saveDone: function(resp, textStatus, jqXHR) {
-            oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.makeString();
+            oms.users.url = oms.indexUrl + oms.fields.makeString();
             oms.users.fetch(oms.fetchOptions);
         },
         name: "Create New User",
@@ -661,7 +681,7 @@ $(function(){
 
     var actionDuplicate = {
         saveDone: function(resp, textStatus, jqXHR) {
-            oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.makeString();
+            oms.users.url = oms.indexUrl + oms.fields.makeString();
             oms.users.fetch(oms.fetchOptions);
         },
         name: 'Duplicate User',
@@ -723,27 +743,6 @@ $(function(){
         }
     };
 
-    // pager view
-    var Pager = Backbone.View.extend({
-        el: $('ul.yiiPager'),
-
-        model: oms.fields,
-
-        render: function(){
-            _.each(this.model.buttons,this.renderButton,this);
-            this.$el.show();
-        },
-
-        renderButton: function(button,key,list) {
-            this.$("."+button.cssClass).toggleClass('hidden',!button.enabled);
-        },
-
-        hide: function(){
-            this.$el.hide();
-        }
-    });
-
-    var pager = new Pager;
 
     // instantiate table
     var userTable = new UserTable;
@@ -783,10 +782,12 @@ $(function(){
         },
 
         fetchTable: function(pars) {
+            // starting history triggers this handler at first time
+            // but we need it only if there were some parameters in url
             if ( !this.firstTime || pars ) {
                 this.setParams(pars);
                 if ( !this.firstTime || window.location.hash ) {
-                    oms.users.url = oms.indexUrl + '/admin/index' + oms.fields.makeString();
+                    oms.users.url = oms.indexUrl + oms.fields.makeString();
                     oms.users.fetch(oms.fetchOptions);
                 }
             }

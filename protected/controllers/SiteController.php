@@ -32,7 +32,7 @@ class SiteController extends Controller
                 $model->attributes=$_POST['LoginForm'];
 
                 if ( $model->validate() && $model->login() ) {
-                    $this->redirect(Yii::app()->createUrl(Yii::app()->user->homeController . '/index'));
+                    $this->redirect(Yii::app()->createUrl(Yii::app()->user->homeController));
 
                 } else {
                     $errorCode = $model->getErrorCode();

@@ -1,7 +1,6 @@
 <?php
     $this->renderPartial('_modal-confirm-delete');
     $this->renderPartial('_modal-edit');
-    $this->renderPartial('_password');
 ?>
 
 <p>This page is appointed for creating new and managing existing users</p>
@@ -121,7 +120,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <div class="grid-footer">
         <div class="summary">Page # : </div>
         <div class="oms-pager">
-            <ul class="yiiPager" id="yw1">
+            <ul class="plainPager">
                 <li class="first hidden">First</li>
                 <li class="backward hidden">Backward</li>
                 <li class="forward hidden">Forward</li>
@@ -155,7 +154,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     <td> <%= email %> </td>
     <td> <%= region %> </td>
     <td class="button-column">
-        <a title="edit" rel="tooltip" href= <%= '"' + root + '/admin/edit/id/' + id + '"' %> >
+        <a title="edit" rel="tooltip" href= <%= '"' + root + '/edit/id/' + id + '"' %> >
             <i class="icon-edit icon-large">
     </i></a></td>
     <td class="remove" >
@@ -165,13 +164,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
             (
                 ( active ) ? 
                 ('<a rel="tooltip" title="active user"><i class="icon-remove icon-large"></i></a>') : 
-                ('<a rel="tooltip" title="remove" href="' + root + '/admin/remove/id/' 
+                ('<a rel="tooltip" title="remove" href="' + root + '/remove/id/' 
                     + id + '"><i class="icon-remove icon-large"></i></a>' )
             )
         %>
     </td>
     <td class="button-column">
-        <a title="duplicate" rel="tooltip" href= <%= '"' + root + '/admin/duplicate/id/'+id+'"' %> >
+        <a title="duplicate" rel="tooltip" href= <%= '"' + root + '/duplicate/id/'+id+'"' %> >
             <i class="icon-copy icon-large">
     </i></a></td>
 

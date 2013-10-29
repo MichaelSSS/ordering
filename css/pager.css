@@ -6,12 +6,18 @@
     display: inline;
     float: left;
 }
-.yiiPager {
+.yiiPager, .plainPager {
     margin-right: -25%;
     line-height: 100%;
     float: right;
 }
 .yiiPager li {
+    display: inline-block;
+    margin: 0 .1em;
+    padding: .1em .4em;
+}
+
+.plainPager li {
     display: inline-block;
     margin: 0 .1em;
     padding: .1em .4em;
@@ -23,7 +29,7 @@
     border-radius: 1em;
     cursor: pointer;
 }
-.yiiPager li.hidden  {
+.plainPager li.hidden  {
     padding: .1em .4em;
     background-color: #fff;
     border: 1px solid #ddd;

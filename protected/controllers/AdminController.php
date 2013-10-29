@@ -47,7 +47,7 @@ class AdminController extends Controller
     {
         $this->layout='ajax';
         $cs=Yii::app()->clientScript;
-        $cs->defaultScriptPosition = $cs::POS_END;
+        $cs->defaultScriptPosition = CClientScript::POS_END;
         $cs->packages['yiiactiveform'] = array(
     		'js'=>array('jquery.yiiactiveform.js')
         );

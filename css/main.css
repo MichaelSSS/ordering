@@ -157,10 +157,10 @@ form, .well, .form-actions {
 #check_toggle{
     text-transform: none;
 }
-tr.user-active {
-    color: red;
+#table-user tr.user-active td {
+    background-color: #fee ;
 }
-tr.user-deleted {
+#table-user tr.user-deleted {
     color: #bbb;
 }
 

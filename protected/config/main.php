@@ -49,15 +49,12 @@ return array(
         'urlManager' => array(
             'urlFormat'=>'path',
             
-            //'showScriptName'=>false,
+            'showScriptName'=>false,
 
             'rules'=>array(
+                'admin/<action:(create|edit|duplicate|remove|user|index)>/*'=>'admin/<action>',
+                'admin/*'=>'admin/index',
                 '<controller:\w+>/<action:\w+>/*'=>'<controller>/<action>',
-                /*array(
-                    'class' => 'application.components.OmsUrlRule',
-                    'route' => '<controller>/<action>',
-                    'pattern' => '<controller:\w+>/<action:\w+>/*',
-                ),*/
             ),
             
         ),
